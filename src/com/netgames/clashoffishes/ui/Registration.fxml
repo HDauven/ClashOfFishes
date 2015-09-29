@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="143.0" layoutY="83.0" text="Registration">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="82.0" layoutY="157.0" text="Username" />
+      <Label layoutX="100.0" layoutY="274.0" prefHeight="17.0" prefWidth="34.0" text="E-mail" />
+      <Label layoutX="84.0" layoutY="234.0" text="Password" />
+      <Label layoutX="84.0" layoutY="192.0" text="Password" />
+      <TextField layoutX="151.0" layoutY="153.0" promptText="Username" />
+      <TextField layoutX="151.0" layoutY="188.0" promptText="Password" />
+      <TextField layoutX="151.0" layoutY="230.0" promptText="Password" />
+      <TextField layoutX="151.0" layoutY="270.0" promptText="E-mail" />
+      <Button layoutX="68.0" layoutY="307.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="116.0" text="Register" />
+      <Button layoutX="201.0" layoutY="307.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="116.0" text="Cancel" />
+   </children>
+</AnchorPane>
