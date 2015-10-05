@@ -1,5 +1,6 @@
 package com.netgames.clashoffishes;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,13 +9,20 @@ import java.util.List;
  */
 public class Administration {
 
-    private static Administration instance;
+    private static Administration instance = null;
 
-    private final List<User> users = new ArrayList<>();
+    private final ArrayList<User> users;
 
-    private Administration() {
-
+    protected Administration() {
+        users = new ArrayList<>();
     }
+    
+    public static Administration get() {
+      if(instance == null) {
+         instance = new Administration();
+      }
+      return instance;
+   }
 
     public User addUser(String username, String email) {
         User user = new User(username, email, 0);
@@ -27,8 +35,9 @@ public class Administration {
                 .filter(u -> u.getUsername().equalsIgnoreCase(username))
                 .findFirst().orElse(null);
     }
-
-    public static Administration get() {
-        return instance == null ? (instance = new Administration()) : instance;
+    
+    public void clear()
+    {
+        instance = new Administration();
     }
 }

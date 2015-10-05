@@ -28,7 +28,7 @@ public class ClashOfFishes extends Application
         root = (Parent) loader.load();
 
         //Stage stage = new Stage();
-        stage.setTitle("My New Stage Title");
+        stage.setTitle("Login");
         stage.setScene(new Scene(root));
         stage.show();
         }
