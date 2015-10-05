@@ -1,0 +1,165 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 6, 2015, 12:00:30 AM
+    Author     : Hein Dauven
+*/
+
+/* UI Background style */
+.background-gradient {
+    -fx-padding: 40;
+    -fx-background-color: 
+        radial-gradient(
+            center 50% 50%, 
+            radius 100%, 
+            rgba(64,154,207,1) 0%,
+            rgba(34,86,169,1) 100%);
+}
+
+/* UI button style */
+.button {
+    -fx-background-color: 
+        #000000,
+        #486380,
+        #486380,
+        linear-gradient(#345574, #123150);
+    -fx-background-insets: 0,2,3,1;
+    -fx-background-radius: 2,0,2,0;
+    -fx-padding: 12 30 12 30;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+.button:hover {
+    -fx-background-color: 
+        #000000,
+        #6694b5,
+        #6694b5,
+        linear-gradient(#427ea3, #255a84);
+}
+
+.button:pressed {
+    -fx-background-color: 
+        #000000,
+        #203f5e,
+        #203f5e,
+        linear-gradient(#153357, #264969);
+}
+
+/* UI radio-button style */
+.radio-button {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-border-width: 0px;
+}
+
+.radio-button .radio {
+   -fx-background-color: 
+       #163049, 
+       #325571, 
+       #325571, 
+       #FFFFFF;
+   -fx-background-insets: 0 0 0 0, 0, 1, 2;
+   -fx-background-radius: 0;
+   -fx-padding: 4;
+}
+
+.radio-button .dot {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 3;
+}
+
+.radio-button:selected .dot {
+   -fx-background-color: #427ca1, #427ca1;
+   -fx-background-insets: 0 0 -1 0, 0;
+}
+
+/* UI label style */
+.label {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+}
+
+/* UI combo-box style */
+.combo-box {
+    -fx-background-color: 
+        #000000,
+        #6694b5,
+        #6694b5,
+        linear-gradient(#427ea3, #255a84);
+    -fx-background-insets: 0,2,3,1;
+    -fx-background-radius: 0;
+    -fx-cell-size: 1.66667em; 
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: #FFFFFF;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: 
+        #000000,
+        #6694b5,
+        #6694b5,
+        linear-gradient(#427ea3, #255a84);
+    -fx-background-insets: 0,2,3,1;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+}
+
+.combo-box-popup .list-cell {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #000000;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #407aa0;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* UI table-view style */
+.table-view {
+    -fx-base: #2c6189;
+    -fx-control-inner-background: #1d1d1d;
+    -fx-background-color: 
+        radial-gradient(
+            center 50% 50%, 
+            radius 140%, 
+            rgba(64,154,207,1) 0%,
+            rgba(34,86,169,1) 100%);
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-border-color: #18384d;
+    -fx-padding: 5;   
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 35;
+    -fx-border-width: 1 0 1 0;
+    -fx-border-color: #18384d;
+    -fx-background-color: 
+        #000000,
+        #486380,
+        #486380,
+        linear-gradient(#345574, #123150);
+    -fx-border-insets: 0,2,3,1;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 12pt;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-opacity: 1;
+}
+
+
