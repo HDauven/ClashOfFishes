@@ -15,23 +15,35 @@ import javafx.stage.Stage;
  *
  * @author Bram
  */
-public class ClashOfFishes extends Application {
-    
+public class ClashOfFishes extends Application
+{
+
     @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("ui/FXMLMainMenu.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
+    public void start(Stage stage) throws Exception
+    {
+        Parent root;
+        try
+        {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/netgames/clashoffishes/ui/Login.fxml"));
+        root = (Parent) loader.load();
+
+        //Stage stage = new Stage();
+        stage.setTitle("My New Stage Title");
+        stage.setScene(new Scene(root));
         stage.show();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.toString());
+        }
     }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch(args);
     }
-    
+
 }
