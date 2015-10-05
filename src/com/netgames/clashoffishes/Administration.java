@@ -7,7 +7,14 @@ import java.util.List;
  * Created by bram on 1/10/15.
  */
 public class Administration {
-    List<User> users = new ArrayList<>();
+
+    private static Administration instance;
+
+    private final List<User> users = new ArrayList<>();
+
+    private Administration() {
+
+    }
 
     public User addUser(String username, String email) {
         User user = new User(username, email, 0);
@@ -19,5 +26,9 @@ public class Administration {
         return users.stream()
                 .filter(u -> u.getUsername().equalsIgnoreCase(username))
                 .findFirst().orElse(null);
+    }
+
+    public static Administration get() {
+        return instance == null ? (instance = new Administration()) : instance;
     }
 }
