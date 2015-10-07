@@ -1,17 +1,30 @@
 package com.netgames.clashoffishes.data;
 
 import com.netgames.clashoffishes.Administration;
-import com.netgames.clashoffishes.User;
+import java.io.IOException;
 
-import java.util.List;
 
 /**
- * Created by bram on 1/10/15.
+ * Storage
+ * Interface that functions as mediator between the various
+ * types of storage methods available.
+ * 
+ * @author Hein Dauven
+ * @version 1.0
  */
 public interface Storage {
+    /**
+     * @return administration is initialized with the data stored at the 
+     * configured location
+     * @throws IOException
+     */
+    Administration load() throws IOException;
 
-    Administration load();
-
-    void save(Administration admin);
+    /**
+     * administration is stored at the configured location
+     * @param admin
+     * @throws IOException 
+     */
+    void save(Administration admin) throws IOException;
 
 }
