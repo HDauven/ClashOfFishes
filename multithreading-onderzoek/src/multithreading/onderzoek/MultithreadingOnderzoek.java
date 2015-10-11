@@ -93,31 +93,19 @@ public class MultithreadingOnderzoek {
      * 
      */
     private static void runRunnableImplementation() {
-        TimeStamp stamp = new TimeStamp();
-        stamp.setBegin("Begin Runnable implementation");
-    
         RunnableClass r1 = new RunnableClass("Runnable-1");
         r1.start();
         RunnableClass r2 = new RunnableClass("Runnable-2");
         r2.start();  
-        
-        stamp.setEnd("End Runnable implementation");
-        System.err.println(stamp.toString());
     }
     
     /**
      * 
      */
-    private static void runThreadImplementation() {
-        TimeStamp stamp = new TimeStamp();
-        stamp.setBegin("Begin Thread implementation");
-        
+    private static void runThreadImplementation() {        
         ThreadClass t1 = new ThreadClass("Thread-1");
         t1.start();
         ThreadClass t2 = new ThreadClass("Thread-2");
         t2.start(); 
-        
-        stamp.setEnd("End Thread implementation");
-        System.err.println(stamp.toString());
     }
 }

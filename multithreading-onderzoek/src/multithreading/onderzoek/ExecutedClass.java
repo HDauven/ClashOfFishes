@@ -1,11 +1,14 @@
 package multithreading.onderzoek;
 
+import timeutil.TimeStamp;
+
 /**
  * ExecutedClass test
  * @author Hein Dauven
  */
 public class ExecutedClass implements Runnable{
     private final String threadName;
+    private TimeStamp ts = new TimeStamp();
     
     /**
      * 
@@ -21,16 +24,13 @@ public class ExecutedClass implements Runnable{
      */
     @Override
     public void run() {
+        ts.setBegin();
         System.out.println("Running " + threadName);
-        try {
-            for (int i = 100000; i > 0; i--) {
-                System.out.println("Thread: " + threadName + ", " + i);
-                // Let the thread sleep for a second
-                Thread.sleep(1);
-            }
-        } catch (InterruptedException e) {
-            System.out.println("Thread " + threadName + " interruped");
+        for (int i = 100000; i > 0; i--) {
+            System.out.println("Thread: " + threadName + ", " + i);
         }
         System.out.println("Thread " + threadName + " exiting.");
+        ts.setEnd();
+        System.out.println(ts.toString());
     }    
 }
