@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 /**
  * Test setup for the Multi-threading research assignment.
- * @author Hein Dauven & Stef Philips
+ * @author Hein Dauven & Stef Philipsen
  */
 public class MultithreadingOnderzoek {
     private final static Scanner sc = new Scanner(System.in);
@@ -38,7 +38,7 @@ public class MultithreadingOnderzoek {
      */
     private static void welcome() {
         System.out.println("Welcome to the Multithreading research application.");
-        System.out.println("By Stef Philips & Hein Dauven\n");
+        System.out.println("By Stef Philipsen & Hein Dauven\n");
         System.out.println("This program tests 5 different implementations of multithreading.");
         System.out.println("1 - A class that implements Runnable");
         System.out.println("2 - A class that extends Thread");
