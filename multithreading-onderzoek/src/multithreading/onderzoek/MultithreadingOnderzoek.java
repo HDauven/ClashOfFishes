@@ -1,6 +1,7 @@
 package multithreading.onderzoek;
 
 import java.util.Scanner;
+import timeutil.TimeStamp;
 
 /**
  * Test setup for the Multi-threading research assignment.
@@ -13,14 +14,6 @@ public class MultithreadingOnderzoek {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        startUp();
-        // TODO code application logic here
-    }
-    
-    /**
-     * 
-     */
-    private static void startUp() {
         welcome();
         int input;
         do {
@@ -56,15 +49,15 @@ public class MultithreadingOnderzoek {
         switch (input) {
             case 0:
                 System.out.println("You chose 0 - Run all 5 implementations");
-                // runAllImplementations();
+                runAllImplementations();
                 break;
             case 1:
                 System.out.println("You chose 1 - A class that implements Runnable");
-                // runRunnableImplementation();
+                runRunnableImplementation();
                 break;
             case 2:
                 System.out.println("You chose 2 - A class that extends Thread");
-                // runThreadImplementation();
+                runThreadImplementation();
                 break;
             case 3: 
                 System.out.println("You chose 3 - A class that is part of an ExecutorPool");
@@ -79,5 +72,52 @@ public class MultithreadingOnderzoek {
                 // runForkJoinImplementation();
                 break;
         }
+    }
+    
+    /**
+     * 
+     */
+    private static void runAllImplementations() {
+        TimeStamp stamp = new TimeStamp();
+        stamp.setBegin("Begin all implementations");
+        // runRunnableImplementation();
+        // runThreadImplementation();
+        // runExecutedImplementation();
+        // runCallableImplementation();
+        // runForkJoinImplementation();
+        stamp.setEnd("End all implementations");
+        System.err.println(stamp.toString());
+    }
+    
+    /**
+     * 
+     */
+    private static void runRunnableImplementation() {
+        TimeStamp stamp = new TimeStamp();
+        stamp.setBegin("Begin Runnable implementation");
+    
+        RunnableClass r1 = new RunnableClass("Runnable-1");
+        r1.start();
+        RunnableClass r2 = new RunnableClass("Runnable-2");
+        r2.start();  
+        
+        stamp.setEnd("End Runnable implementation");
+        System.err.println(stamp.toString());
+    }
+    
+    /**
+     * 
+     */
+    private static void runThreadImplementation() {
+        TimeStamp stamp = new TimeStamp();
+        stamp.setBegin("Begin Thread implementation");
+        
+        ThreadClass t1 = new ThreadClass("Thread-1");
+        t1.start();
+        ThreadClass t2 = new ThreadClass("Thread-2");
+        t2.start(); 
+        
+        stamp.setEnd("End Thread implementation");
+        System.err.println(stamp.toString());
     }
 }
