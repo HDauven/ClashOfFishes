@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import timeutil.TimeStamp;
 import util.UserLogging;
 
@@ -82,7 +83,7 @@ public class MultithreadingOnderzoek
                 break;
             case 3:
                 System.out.println("You chose 3 - A class that is part of an ExecutorPool");
-                // runExecutedImplementation();
+                runExecutedImplementation();
                 break;
             case 4:
                 System.out.println("You chose 4 - A class that makes use of Futures/Callable");
@@ -129,6 +130,25 @@ public class MultithreadingOnderzoek
         r4.start();        
     }
 
+    /**
+     *
+     */
+    private static void runExecutedImplementation()
+    {
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+        // heavy load test
+        ExecutedClass e1 = new ExecutedClass("Executed-1", 100000);
+        executor.execute(e1);
+        ExecutedClass e2 = new ExecutedClass("Executed-2", 100000);
+        executor.execute(e2);
+        // low load test
+        ExecutedClass e3 = new ExecutedClass("Executed-3", 10000);
+        executor.execute(e3);
+        ExecutedClass e4 = new ExecutedClass("Executed-4", 10000);
+        executor.execute(e4);   
+        executor.shutdown();
+    }
+    
     /**
      *
      */
