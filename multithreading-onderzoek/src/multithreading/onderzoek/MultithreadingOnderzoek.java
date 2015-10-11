@@ -5,6 +5,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import timeutil.TimeStamp;
 import util.UserLogging;
 
@@ -19,16 +21,7 @@ public class MultithreadingOnderzoek
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws Exception
-    {
-        startUp();
-        // TODO code application logic here
-    }
-
-    /**
-     *
-     */
-    private static void startUp() throws Exception
+    public static void main(String[] args) 
     {
         welcome();
         int input;
@@ -65,7 +58,7 @@ public class MultithreadingOnderzoek
      *
      * @param input
      */
-    private static void getUserInput(int input) throws Exception
+    private static void getUserInput(int input)
     {
         switch (input)
         {
@@ -105,8 +98,8 @@ public class MultithreadingOnderzoek
         stamp.setBegin("Begin all implementations");
         runRunnableImplementation();
         runThreadImplementation();
-        // runExecutedImplementation();
-        // runCallableImplementation();
+        runExecutedImplementation();
+        runCallableImplementation();
         // runForkJoinImplementation();
         stamp.setEnd("End all implementations");
         System.out.println(stamp.toString());
@@ -146,6 +139,7 @@ public class MultithreadingOnderzoek
         executor.execute(e3);
         ExecutedClass e4 = new ExecutedClass("Executed-4", 10000);
         executor.execute(e4);   
+        // no more threads allowed
         executor.shutdown();
     }
     
@@ -166,10 +160,14 @@ public class MultithreadingOnderzoek
         t4.start();        
     }
 
-    private static void runCallableImplementation() throws Exception
+    private static void runCallableImplementation()
     {
         CallableClass callable = new CallableClass();
-        Long l = callable.call();
+        try {
+            Long l = callable.call();
+        } catch (Exception ex) {
+            Logger.getLogger(MultithreadingOnderzoek.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
         Future<Long> submit = executor.submit(callable);
