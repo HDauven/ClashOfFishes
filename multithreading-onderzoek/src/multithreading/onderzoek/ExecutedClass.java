@@ -1,16 +1,22 @@
 package multithreading.onderzoek;
 
+import timeutil.TimeStamp;
+
 /**
  * ExecutedClass test
  * @author Hein Dauven
  */
 public class ExecutedClass implements Runnable{
-
+    private final String threadName;
+    private TimeStamp ts = new TimeStamp();
+    
     /**
      * 
+     * @param name
      */
-    public ExecutedClass() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public ExecutedClass(String name) {
+        threadName = name;
+        System.out.println("Creating " + threadName);
     }
     
     /**
@@ -18,6 +24,13 @@ public class ExecutedClass implements Runnable{
      */
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ts.setBegin();
+        System.out.println("Running " + threadName);
+        for (int i = 100000; i > 0; i--) {
+            System.out.println("Thread: " + threadName + ", " + i);
+        }
+        System.out.println("Thread " + threadName + " exiting.");
+        ts.setEnd();
+        System.out.println(ts.toString());
     }    
 }

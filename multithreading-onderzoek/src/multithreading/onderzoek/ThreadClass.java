@@ -1,16 +1,23 @@
 package multithreading.onderzoek;
 
+import timeutil.TimeStamp;
+
 /**
  * ThreadClass test
  * @author Hein Dauven
  */
 public class ThreadClass extends Thread {
-
+    private Thread t;
+    private final String threadName;
+    private TimeStamp ts = new TimeStamp();
+    
     /**
      * 
+     * @param name
      */
-    public ThreadClass() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public ThreadClass(String name) {
+        threadName = name;
+        System.out.println("Creating " + threadName);
     }
     
     /**
@@ -18,7 +25,15 @@ public class ThreadClass extends Thread {
      */
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.println("Running " + threadName);
+        ts.setBegin();
+        System.out.println("Running " + threadName);
+        for (int i = 100000; i > 0; i--) {
+            System.out.println("Thread: " + threadName + ", " + i);
+        }
+        System.out.println("Thread " + threadName + " exiting.");
+        ts.setEnd();
+        System.out.println(ts.toString());
     }
     
     /**
@@ -26,6 +41,10 @@ public class ThreadClass extends Thread {
      */
     @Override
     public void start() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.println("Starting " + threadName);
+        if (t == null) {
+            t = new Thread(this, threadName);
+            t.start();
+        }
     }     
 }
