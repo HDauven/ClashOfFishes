@@ -1,7 +1,7 @@
 package multithreading.onderzoek;
 
 /**
- *
+ * ThreadClass test
  * @author Hein
  */
 public class ThreadClass extends Thread {
