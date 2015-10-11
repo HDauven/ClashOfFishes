@@ -1,6 +1,9 @@
 package multithreading.onderzoek;
 
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Test setup for the Multi-threading research assignment.
@@ -12,7 +15,7 @@ public class MultithreadingOnderzoek {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         startUp();
         // TODO code application logic here
     }
@@ -20,7 +23,7 @@ public class MultithreadingOnderzoek {
     /**
      * 
      */
-    private static void startUp() {
+    private static void startUp() throws Exception {
         welcome();
         int input;
         do {
@@ -52,7 +55,7 @@ public class MultithreadingOnderzoek {
      * 
      * @param input 
      */
-    private static void getUserInput(int input) {
+    private static void getUserInput(int input) throws Exception {
         switch (input) {
             case 0:
                 System.out.println("You chose 0 - Run all 5 implementations");
@@ -72,12 +75,21 @@ public class MultithreadingOnderzoek {
                 break;
             case 4: 
                 System.out.println("You chose 4 - A class that makes use of Futures/Callable");
-                // runCallableImplementation();
+                 runCallableImplementation();
                 break;
             case 5:
                 System.out.println("You chose 5 - A class that makes use of the Fork/Join framework");
                 // runForkJoinImplementation();
                 break;
         }
+    }
+
+    private static void runCallableImplementation() throws Exception
+    {
+        CallableClass callable = new CallableClass();
+        Long l = callable.call();
+        
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        Future<Long> submit = executor.submit(callable);
     }
 }
