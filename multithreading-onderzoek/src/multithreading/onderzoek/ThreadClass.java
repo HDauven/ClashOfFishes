@@ -1,6 +1,7 @@
 package multithreading.onderzoek;
 
 import timeutil.TimeStamp;
+import util.UserLogging;
 
 /**
  * ThreadClass test
@@ -34,6 +35,7 @@ public class ThreadClass extends Thread {
         System.out.println("Thread " + threadName + " exiting.");
         ts.setEnd();
         System.out.println(ts.toString());
+        UserLogging.logAction(threadName, ts.toString());
     }
     
     /**

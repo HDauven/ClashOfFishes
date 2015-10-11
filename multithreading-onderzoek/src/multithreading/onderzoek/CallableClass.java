@@ -2,6 +2,7 @@ package multithreading.onderzoek;
 
 import java.util.concurrent.Callable;
 import timeutil.TimeStamp;
+import util.UserLogging;
 
 /**
  * CallableClass test
@@ -25,6 +26,7 @@ public class CallableClass implements Callable<Long> {
         }
         ts.setEnd();
         System.out.println(ts.toString());
+        UserLogging.logAction("Callable", ts.toString());
         return (long) a;
     }   
 }

@@ -1,6 +1,7 @@
 package multithreading.onderzoek;
 
 import timeutil.TimeStamp;
+import util.UserLogging;
 
 /**
  * ExecutedClass test
@@ -32,5 +33,6 @@ public class ExecutedClass implements Runnable{
         System.out.println("Thread " + threadName + " exiting.");
         ts.setEnd();
         System.out.println(ts.toString());
+        UserLogging.logAction(threadName, ts.toString());
     }    
 }
