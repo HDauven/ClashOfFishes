@@ -18,7 +18,7 @@ public class CallableClass implements Callable<Long> {
     public Long call() throws Exception {
         int a = 0;
         ts.setBegin();
-        for (int i = 0; i < 10000; i++)
+        for (int i = 0; i < 10_000; i++)
         {
             System.out.println("Hallo");
             a = i;
