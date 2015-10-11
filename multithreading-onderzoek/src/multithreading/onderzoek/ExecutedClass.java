@@ -2,14 +2,14 @@ package multithreading.onderzoek;
 
 /**
  * ExecutedClass test
- * @author Hein
+ * @author Hein Dauven
  */
 public class ExecutedClass implements Runnable{
 
     /**
      * 
      */
-    ExecutedClass() {
+    public ExecutedClass() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
@@ -19,6 +19,5 @@ public class ExecutedClass implements Runnable{
     @Override
     public void run() {
         throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
+    }    
 }

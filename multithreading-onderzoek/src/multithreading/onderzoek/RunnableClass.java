@@ -9,7 +9,7 @@ public class RunnableClass implements Runnable {
     /**
      * 
      */
-    RunnableClass() {
+    public RunnableClass() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     

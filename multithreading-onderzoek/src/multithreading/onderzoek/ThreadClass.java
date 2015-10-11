@@ -2,14 +2,14 @@ package multithreading.onderzoek;
 
 /**
  * ThreadClass test
- * @author Hein
+ * @author Hein Dauven
  */
 public class ThreadClass extends Thread {
 
     /**
      * 
      */
-    ThreadClass() {
+    public ThreadClass() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     

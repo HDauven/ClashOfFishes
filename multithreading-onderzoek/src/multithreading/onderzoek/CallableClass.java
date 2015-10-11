@@ -4,7 +4,7 @@ import java.util.concurrent.Callable;
 
 /**
  * CallableClass test
- * @author Hein
+ * @author Hein Dauven
  */
 public class CallableClass implements Callable<Long> {
 
