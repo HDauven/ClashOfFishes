@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import timeutil.TimeStamp;
+import util.UserLogging;
 
 /**
  * Test setup for the Multi-threading research assignment.
@@ -101,13 +102,14 @@ public class MultithreadingOnderzoek
     {
         TimeStamp stamp = new TimeStamp();
         stamp.setBegin("Begin all implementations");
-        // runRunnableImplementation();
-        // runThreadImplementation();
+        runRunnableImplementation();
+        runThreadImplementation();
         // runExecutedImplementation();
         // runCallableImplementation();
         // runForkJoinImplementation();
         stamp.setEnd("End all implementations");
-        System.err.println(stamp.toString());
+        System.out.println(stamp.toString());
+        UserLogging.logAction("Run All", stamp.toString());
     }
 
     /**
@@ -115,10 +117,16 @@ public class MultithreadingOnderzoek
      */
     private static void runRunnableImplementation()
     {
-        RunnableClass r1 = new RunnableClass("Runnable-1");
+        // heavy load test
+        RunnableClass r1 = new RunnableClass("Runnable-1", 100000);
         r1.start();
-        RunnableClass r2 = new RunnableClass("Runnable-2");
+        RunnableClass r2 = new RunnableClass("Runnable-2", 100000);
         r2.start();
+        // low load test
+        RunnableClass r3 = new RunnableClass("Runnable-3", 10000);
+        r3.start();
+        RunnableClass r4 = new RunnableClass("Runnable-4", 10000);
+        r4.start();        
     }
 
     /**
@@ -126,10 +134,16 @@ public class MultithreadingOnderzoek
      */
     private static void runThreadImplementation()
     {
-        ThreadClass t1 = new ThreadClass("Thread-1");
+        // heavy load test
+        ThreadClass t1 = new ThreadClass("Thread-1", 100000);
         t1.start();
-        ThreadClass t2 = new ThreadClass("Thread-2");
+        ThreadClass t2 = new ThreadClass("Thread-2", 100000);
         t2.start();
+        // low load test
+        ThreadClass t3 = new ThreadClass("Thread-3", 10000);
+        t3.start();
+        ThreadClass t4 = new ThreadClass("Thread-4", 10000);
+        t4.start();        
     }
 
     private static void runCallableImplementation() throws Exception
