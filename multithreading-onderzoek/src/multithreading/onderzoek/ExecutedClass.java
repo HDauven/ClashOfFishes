@@ -5,12 +5,15 @@ package multithreading.onderzoek;
  * @author Hein Dauven
  */
 public class ExecutedClass implements Runnable{
-
+    private final String threadName;
+    
     /**
      * 
+     * @param name
      */
-    public ExecutedClass() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public ExecutedClass(String name) {
+        threadName = name;
+        System.out.println("Creating " + threadName);
     }
     
     /**
@@ -18,6 +21,16 @@ public class ExecutedClass implements Runnable{
      */
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.println("Running " + threadName);
+        try {
+            for (int i = 100000; i > 0; i--) {
+                System.out.println("Thread: " + threadName + ", " + i);
+                // Let the thread sleep for a second
+                Thread.sleep(1);
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Thread " + threadName + " interruped");
+        }
+        System.out.println("Thread " + threadName + " exiting.");
     }    
 }

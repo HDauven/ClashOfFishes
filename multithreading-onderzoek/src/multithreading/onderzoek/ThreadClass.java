@@ -5,12 +5,16 @@ package multithreading.onderzoek;
  * @author Hein Dauven
  */
 public class ThreadClass extends Thread {
-
+    private Thread t;
+    private final String threadName;
+    
     /**
      * 
+     * @param name
      */
-    public ThreadClass() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public ThreadClass(String name) {
+        threadName = name;
+        System.out.println("Creating " + threadName);
     }
     
     /**
@@ -18,7 +22,17 @@ public class ThreadClass extends Thread {
      */
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.println("Running " + threadName);
+        try {
+            for (int i = 100000; i > 0; i--) {
+                System.out.println("Thread: " + threadName + ", " + i);
+                // Let the thread sleep for a second
+                Thread.sleep(1);
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Thread " + threadName + " interruped");
+        }
+        System.out.println("Thread " + threadName + " exiting.");
     }
     
     /**
@@ -26,6 +40,10 @@ public class ThreadClass extends Thread {
      */
     @Override
     public void start() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.println("Starting " + threadName);
+        if (t == null) {
+            t = new Thread(this, threadName);
+            t.start();
+        }
     }     
 }
