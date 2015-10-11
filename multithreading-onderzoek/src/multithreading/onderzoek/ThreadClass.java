@@ -10,14 +10,16 @@ import util.UserLogging;
 public class ThreadClass extends Thread {
     private Thread t;
     private final String threadName;
+    private int iterations;
     private TimeStamp ts = new TimeStamp();
     
     /**
      * 
      * @param name
      */
-    public ThreadClass(String name) {
-        threadName = name;
+    public ThreadClass(String name, int iterations) {
+        this.threadName = name;
+        this.iterations = iterations;
         System.out.println("Creating " + threadName);
     }
     
@@ -29,7 +31,7 @@ public class ThreadClass extends Thread {
         System.out.println("Running " + threadName);
         ts.setBegin();
         System.out.println("Running " + threadName);
-        for (int i = 100000; i > 0; i--) {
+        for (int i = iterations; i > 0; i--) {
             System.out.println("Thread: " + threadName + ", " + i);
         }
         System.out.println("Thread " + threadName + " exiting.");
