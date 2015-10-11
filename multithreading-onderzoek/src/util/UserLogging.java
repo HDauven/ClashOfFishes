@@ -156,10 +156,9 @@ public class UserLogging {
                                new FileWriter(logFilePath, true)))) {
             out.println("#Version: 0.1");
             out.println("#Date: " + timeFormatting("yyyy-MM-dd HH:mm:ss"));
-            out.println("#Software: Stamboom Applicatie");
+            out.println("#Software: Multithreading Test Application");
             out.println("#Authors: Stef Philips & Hein Dauven");
             out.println("#Remark: This is an automatically generated log file.");
-            out.println("#Remark: Customer-Care can request these files if necessary.");
             out.close();
         }catch (IOException ex) {
             System.err.println("SEVERE ERROR: Log file not written to!");
