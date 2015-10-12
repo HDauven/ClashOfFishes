@@ -5,6 +5,7 @@
  */
 package com.netgames.clashoffishes.ui;
 
+import com.netgames.clashoffishes.Administration;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -18,6 +19,7 @@ import javafx.fxml.Initializable;
  */
 public class StartMenuController implements Initializable
 {
+    private Administration administration;
 
     /**
      * Initializes the controller class.
@@ -25,7 +27,8 @@ public class StartMenuController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
+        this.administration = Administration.get();
+        System.out.println(this.administration.getUser("MuK").getEmail());
     }    
 
     @FXML
