@@ -17,6 +17,8 @@ import util.UserLogging;
 public class MultithreadingOnderzoek
 {
     private final static Scanner sc = new Scanner(System.in);
+    private final static int ITERATIONS_LOW = 100_000;
+    private final static int ITERATIONS_HIGH = 10_000;
 
     /**
      * @param args the command line arguments
@@ -112,14 +114,14 @@ public class MultithreadingOnderzoek
     private static void runRunnableImplementation()
     {
         // heavy load test
-        RunnableClass r1 = new RunnableClass("Runnable-1", 100000);
+        RunnableClass r1 = new RunnableClass("Runnable-1", ITERATIONS_HIGH);
         r1.start();
-        RunnableClass r2 = new RunnableClass("Runnable-2", 100000);
+        RunnableClass r2 = new RunnableClass("Runnable-2", ITERATIONS_HIGH);
         r2.start();
         // low load test
-        RunnableClass r3 = new RunnableClass("Runnable-3", 10000);
+        RunnableClass r3 = new RunnableClass("Runnable-3", ITERATIONS_LOW);
         r3.start();
-        RunnableClass r4 = new RunnableClass("Runnable-4", 10000);
+        RunnableClass r4 = new RunnableClass("Runnable-4", ITERATIONS_LOW);
         r4.start();        
     }
 
@@ -130,14 +132,14 @@ public class MultithreadingOnderzoek
     {
         ExecutorService executor = Executors.newFixedThreadPool(4);
         // heavy load test
-        ExecutedClass e1 = new ExecutedClass("Executed-1", 100000);
+        ExecutedClass e1 = new ExecutedClass("Executed-1", ITERATIONS_HIGH);
         executor.execute(e1);
-        ExecutedClass e2 = new ExecutedClass("Executed-2", 100000);
+        ExecutedClass e2 = new ExecutedClass("Executed-2", ITERATIONS_HIGH);
         executor.execute(e2);
         // low load test
-        ExecutedClass e3 = new ExecutedClass("Executed-3", 10000);
+        ExecutedClass e3 = new ExecutedClass("Executed-3", ITERATIONS_LOW);
         executor.execute(e3);
-        ExecutedClass e4 = new ExecutedClass("Executed-4", 10000);
+        ExecutedClass e4 = new ExecutedClass("Executed-4", ITERATIONS_LOW);
         executor.execute(e4);   
         // no more threads allowed
         executor.shutdown();
@@ -149,20 +151,20 @@ public class MultithreadingOnderzoek
     private static void runThreadImplementation()
     {
         // heavy load test
-        ThreadClass t1 = new ThreadClass("Thread-1", 100000);
+        ThreadClass t1 = new ThreadClass("Thread-1", ITERATIONS_HIGH);
         t1.start();
-        ThreadClass t2 = new ThreadClass("Thread-2", 100000);
+        ThreadClass t2 = new ThreadClass("Thread-2", ITERATIONS_HIGH);
         t2.start();
         // low load test
-        ThreadClass t3 = new ThreadClass("Thread-3", 10000);
+        ThreadClass t3 = new ThreadClass("Thread-3", ITERATIONS_LOW);
         t3.start();
-        ThreadClass t4 = new ThreadClass("Thread-4", 10000);
+        ThreadClass t4 = new ThreadClass("Thread-4", ITERATIONS_LOW);
         t4.start();        
     }
 
     private static void runCallableImplementation()
     {
-        CallableClass callable = new CallableClass();
+        CallableClass callable = new CallableClass(ITERATIONS_HIGH);
         try {
             Long l = callable.call();
         } catch (Exception ex) {

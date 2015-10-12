@@ -6,20 +6,30 @@ import util.UserLogging;
 
 /**
  * CallableClass test
+ *
  * @author Hein Dauven
  */
-public class CallableClass implements Callable<Long> {
+public class CallableClass implements Callable<Long>
+{
+
     TimeStamp ts = new TimeStamp();
+    private int iterations;
+
+    public CallableClass(int iterations)
+    {
+        this.iterations = iterations;
+    }
+
     /**
-     * 
-     * @return
-     * @throws Exception 
+     *
+     * @return @throws Exception
      */
     @Override
-    public Long call() throws Exception {
+    public Long call() throws Exception
+    {
         int a = 0;
         ts.setBegin();
-        for (int i = 0; i < 10000; i++)
+        for (int i = 0; i < iterations; i++)
         {
             System.out.println("Hallo");
             a = i;
@@ -28,5 +38,5 @@ public class CallableClass implements Callable<Long> {
         System.out.println(ts.toString());
         UserLogging.logAction("Callable", ts.toString());
         return (long) a;
-    }   
+    }
 }
