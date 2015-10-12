@@ -22,18 +22,13 @@ public class ClashOfFishes extends Application
     public void start(Stage stage) throws Exception
     {
         Parent root;
-        try
-        {
+        try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/netgames/clashoffishes/ui/Login.fxml"));
         root = (Parent) loader.load();
-
-        //Stage stage = new Stage();
         stage.setTitle("Login");
         stage.setScene(new Scene(root));
         stage.show();
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             System.out.println(e.toString());
         }
     }
