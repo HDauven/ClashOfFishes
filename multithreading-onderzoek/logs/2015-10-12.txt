@@ -1,0 +1,21 @@
+#Version: 0.1
+#Date: 2015-10-12 09:24:25
+#Software: Multithreading Test Application
+#Authors: Stef Philips & Hein Dauven
+#Remark: This is an automatically generated log file.
+09:24:25 Runnable-4: From '1' till '2' is 3107 mSec.
+
+09:24:25 Runnable-3: From '0' till '3' is 3321 mSec.
+
+09:24:36 Runnable-1: From '0' till '4' is 14223 mSec.
+
+09:24:37 Runnable-2: From '1' till '5' is 14637 mSec.
+
+09:24:54 Thread-4: From '3' till '4' is 2458 mSec.
+
+09:24:54 Thread-3: From '2' till '5' is 3268 mSec.
+
+09:25:04 Thread-2: From '1' till '6' is 12787 mSec.
+
+09:25:05 Thread-1: From '0' till '7' is 13736 mSec.
+
