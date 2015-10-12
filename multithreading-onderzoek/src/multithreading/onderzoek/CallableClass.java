@@ -11,13 +11,15 @@ import util.UserLogging;
  */
 public class CallableClass implements Callable<Long>
 {
-
     TimeStamp ts = new TimeStamp();
+    private final String threadName;
     private int iterations;
 
-    public CallableClass(int iterations)
+    public CallableClass(String name, int iterations)
     {
+        this.threadName = name;
         this.iterations = iterations;
+        System.out.println("Creating " + threadName);
     }
 
     /**
@@ -27,16 +29,14 @@ public class CallableClass implements Callable<Long>
     @Override
     public Long call() throws Exception
     {
-        int a = 0;
+        int i = 0;
         ts.setBegin();
-        for (int i = 0; i < iterations; i++)
-        {
-            System.out.println("Hallo");
-            a = i;
+        for (i = iterations; i > 0; i--) {
+            System.out.println("Thread: " + threadName + ", " + i);
         }
         ts.setEnd();
         System.out.println(ts.toString());
         UserLogging.logAction("Callable", ts.toString());
-        return (long) a;
+        return (long) i;
     }
 }

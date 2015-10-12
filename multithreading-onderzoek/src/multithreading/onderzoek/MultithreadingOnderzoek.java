@@ -17,8 +17,8 @@ import util.UserLogging;
 public class MultithreadingOnderzoek
 {
     private final static Scanner sc = new Scanner(System.in);
-    private final static int ITERATIONS_LOW = 100_000;
-    private final static int ITERATIONS_HIGH = 10_000;
+    private final static int ITERATIONS_LOW = 10_000;
+    private final static int ITERATIONS_HIGH = 100_000;
 
     /**
      * @param args the command line arguments
@@ -87,6 +87,7 @@ public class MultithreadingOnderzoek
             case 5:
                 System.out.println("You chose 5 - A class that makes use of the Fork/Join framework");
                 // runForkJoinImplementation();
+                System.out.println("Not implemented. Sorry. :(");
                 break;
         }
     }
@@ -164,14 +165,15 @@ public class MultithreadingOnderzoek
 
     private static void runCallableImplementation()
     {
-        CallableClass callable = new CallableClass(ITERATIONS_HIGH);
-        try {
-            Long l = callable.call();
-        } catch (Exception ex) {
-            Logger.getLogger(MultithreadingOnderzoek.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        ExecutorService executor = Executors.newFixedThreadPool(2);
-        Future<Long> submit = executor.submit(callable);
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+        Future<Long> submit;
+        CallableClass callable1 = new CallableClass("Callable-1", ITERATIONS_HIGH);
+        submit = executor.submit(callable1);
+        CallableClass callable2 = new CallableClass("Callable-2", ITERATIONS_HIGH);
+        submit = executor.submit(callable2);    
+        CallableClass callable3 = new CallableClass("Callable-3", ITERATIONS_LOW);
+        submit = executor.submit(callable3);
+        CallableClass callable4 = new CallableClass("Callable-4", ITERATIONS_LOW);
+        submit = executor.submit(callable4); 
     }
 }
