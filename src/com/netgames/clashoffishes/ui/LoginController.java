@@ -88,7 +88,7 @@ public class LoginController implements Initializable {
             this.password = null;
         } else if (result > 0) {
             this.administration = Administration.get();
-            this.administration.addUser(this.userIdentifier, this.email);
+            this.administration.addUser(new User(this.userIdentifier, this.email, 0));
             
             //Login is succesfull we are now redirected to a new UI StartMenu.FXML
             try {
