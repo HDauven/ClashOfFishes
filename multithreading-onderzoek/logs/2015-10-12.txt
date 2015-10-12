@@ -1,80 +1,48 @@
 #Version: 0.1
-#Date: 2015-10-12 00:04:21
+#Date: 2015-10-12 00:23:35
 #Software: Multithreading Test Application
 #Authors: Stef Philips & Hein Dauven
 #Remark: This is an automatically generated log file.
-00:04:21 Runnable-3: From '2' till '4' is 4744 mSec.
+00:23:35 Callable: From '0' till '3' is 3034 mSec.
 
-00:04:21 Runnable-4: From '3' till '5' is 4995 mSec.
+00:23:35 Run All: From 'Begin all implementations' till 'End all implementations' is 3124 mSec.
 
-00:04:36 Runnable-2: From '1' till '6' is 20434 mSec.
+00:23:39 Callable: From '0' till '3' is 3034 mSec.
+From '4' till '5' is 4455 mSec.
 
-00:04:42 Runnable-1: From '0' till '7' is 26205 mSec.
+00:23:46 Runnable-1: From '0' till '6' is 13925 mSec.
 
-00:06:51 Run All: From 'Begin all implementations' till 'End all implementations' is 9 mSec.
+00:23:46 Thread-1: From '0' till '7' is 13941 mSec.
 
-00:06:59 Runnable-3: From '0' till '2' is 8253 mSec.
+00:23:46 Runnable-2: From '0' till '8' is 14459 mSec.
 
-00:06:59 Runnable-4: From '1' till '3' is 8337 mSec.
+00:23:47 Executed-1: From '0' till '9' is 14859 mSec.
 
-00:07:00 Thread-3: From '0' till '4' is 8598 mSec.
+00:23:47 Executed-2: From '1' till '10' is 15065 mSec.
 
-00:07:00 Thread-4: From '1' till '5' is 8752 mSec.
+00:23:47 Thread-2: From '1' till '11' is 15125 mSec.
 
-00:07:29 Thread-2: From '0' till '6' is 38268 mSec.
+00:24:29 Runnable-4: From '0' till '12' is 56659 mSec.
 
-00:07:30 Runnable-1: From '0' till '7' is 39408 mSec.
+00:24:33 Executed-3: From '1' till '13' is 61388 mSec.
 
-00:07:40 Runnable-2: From '0' till '8' is 48624 mSec.
+00:24:41 Runnable-3: From '1' till '14' is 69467 mSec.
 
-00:07:40 Thread-1: From '2' till '9' is 48771 mSec.
+00:24:42 Thread-4: From '1' till '15' is 70457 mSec.
 
-00:08:29 Callable: From '0' till '2' is 1979 mSec.
+00:24:44 Executed-4: From '2' till '16' is 71732 mSec.
 
-00:08:29 Run All: From 'Begin all implementations' till 'End all implementations' is 2060 mSec.
+00:24:46 Thread-3: From '0' till '17' is 74281 mSec.
 
-00:08:34 Callable: From '0' till '2' is 1979 mSec.
-From '3' till '4' is 4719 mSec.
+00:35:15 Callable: From '0' till '1' is 554 mSec.
 
-00:08:39 Runnable-3: From '0' till '5' is 12134 mSec.
+00:35:15 Callable: From '0' till '1' is 554 mSec.
+From '2' till '3' is 585 mSec.
 
-00:08:41 Thread-4: From '4' till '6' is 13682 mSec.
+00:39:38 Callable: From '0' till '1' is 1216 mSec.
 
-00:08:41 Executed-3: From '2' till '7' is 14035 mSec.
+00:39:50 Callable: From '2' till '3' is 11985 mSec.
 
-00:08:42 Thread-3: From '3' till '9' is 14659 mSec.
-
-00:08:42 Runnable-4: From '1' till '8' is 14646 mSec.
-
-00:08:42 Executed-4: From '1' till '10' is 14861 mSec.
-
-00:09:32 Runnable-1: From '0' till '11' is 64737 mSec.
-
-00:09:33 Runnable-2: From '0' till '12' is 66217 mSec.
-
-00:09:34 Thread-1: From '2' till '13' is 67056 mSec.
-
-00:09:37 Thread-2: From '5' till '14' is 70079 mSec.
-
-00:09:40 Executed-2: From '1' till '15' is 72834 mSec.
-
-00:09:42 Executed-1: From '0' till '16' is 75450 mSec.
-
-00:11:06 Runnable-3: From '2' till '4' is 5875 mSec.
-
-00:11:07 Runnable-4: From '3' till '5' is 6544 mSec.
-
-00:11:22 Runnable-1: From '0' till '6' is 21393 mSec.
-
-00:11:29 Runnable-2: From '1' till '7' is 28678 mSec.
-
-00:17:49 Callable: From '0' till '1' is 603 mSec.
-
-00:17:50 Callable: From '0' till '1' is 603 mSec.
-From '2' till '3' is 563 mSec.
-
-00:18:53 Callable: From '0' till '1' is 557 mSec.
-
-00:18:54 Callable: From '0' till '1' is 557 mSec.
-From '2' till '3' is 595 mSec.
+00:39:51 Callable: From '0' till '1' is 1216 mSec.
+From '4' till '5' is 1093 mSec.
 
