@@ -1,9 +1,6 @@
 package com.netgames.clashoffishes;
 
 import com.netgames.clashoffishes.data.DatabaseStorage;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by bram on 1/10/15.
@@ -39,10 +36,9 @@ public class Administration {
     {
         instance = new Administration();
     }
-
-    public void load(Administration load)
+    
+    public User logIn(String username_email, String password)
     {
-        this.clear();
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return dbStorage.logIn(username_email, password);
     }
 }
