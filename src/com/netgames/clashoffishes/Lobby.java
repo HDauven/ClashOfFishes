@@ -2,9 +2,8 @@ package com.netgames.clashoffishes;
 
 import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.engine.GameMode;
-import com.netgames.clashoffishes.engine.object.Player;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,46 +12,51 @@ import java.util.Map;
  * Created by bram on 1/10/15.
  */
 public class Lobby {
-    private List<User> players = new ArrayList<>();
-    private Map<User, Boolean> playersReadyMap = new HashMap<>();
-    private GameMode selectedGameMode = GameMode.EVOLVED;
+    private List<User> users = new ArrayList<>();
+    private Map<User, Boolean> usersReadyMap = new HashMap<>();
+    private GameMode gameMode = GameMode.EVOLVED;
 
-    public void addPlayer(User user) {
-        if (!players.contains(user)) {
-            players.add(user);
+    public void addUser(User user) {
+        if (!users.contains(user)) {
+            users.add(user);
         }
     }
 
-    public void removePlayer(User user) {
-        players.remove(user);
+    public void removeUser(User user) {
+        users.remove(user);
     }
 
-    public void playerIsReady(User user, boolean ready) {
-        playersReadyMap.put(user, ready);
+    public void userIsReady(User user, boolean ready) {
+        usersReadyMap.put(user, ready);
     }
 
     public boolean isEveryoneReady() {
-        for (User player : players) {
-            if (!playersReadyMap.get(player))
+        for (User user : users) {
+            if (!usersReadyMap.get(user))
                 return false;
         }
 
         return true;
     }
 
-    public boolean isPlayerReady(Player player) {
-        return playersReadyMap.get(player);
+    public boolean isUserReady(User user) {
+        return usersReadyMap.get(user);
     }
 
-    public GameMode getSelectedGameMode() {
-        return selectedGameMode;
+    public GameMode getGameMode() {
+        return gameMode;
     }
 
-    public void setSelectedGameMode(GameMode selectedGameMode) {
-        this.selectedGameMode = selectedGameMode;
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
     }
 
     public GameManager createGame() {
         return null;
+    }
+
+    public List<User> getUsers()
+    {
+        return Collections.unmodifiableList(users);
     }
 }

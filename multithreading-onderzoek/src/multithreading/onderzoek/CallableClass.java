@@ -13,10 +13,12 @@ public class CallableClass implements Callable<Long>
 {
 
     TimeStamp ts = new TimeStamp();
-    private int iterations;
+    private final String threadName;
+    private final int iterations;
 
-    public CallableClass(int iterations)
+    public CallableClass(String name, int iterations)
     {
+        this.threadName = name;
         this.iterations = iterations;
     }
 
@@ -31,7 +33,7 @@ public class CallableClass implements Callable<Long>
         ts.setBegin();
         for (int i = 0; i < iterations; i++)
         {
-            System.out.println("Hallo");
+            System.out.println("Thread: " + threadName + ", " + i);
             a = i;
         }
         ts.setEnd();
