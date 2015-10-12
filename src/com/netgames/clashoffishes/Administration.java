@@ -1,8 +1,6 @@
 package com.netgames.clashoffishes;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
-import java.util.ArrayList;
-import java.util.List;
+import com.netgames.clashoffishes.data.DatabaseStorage;
 
 /**
  * Created by bram on 1/10/15.
@@ -10,11 +8,12 @@ import java.util.List;
 public class Administration {
 
     private static Administration instance = null;
-
-    private final ArrayList<User> users;
+    private final User user;
+    private DatabaseStorage dbStorage;
 
     protected Administration() {
-        users = new ArrayList<>();
+        user = null;
+        dbStorage = new DatabaseStorage();
     }
     
     public static Administration get() {
@@ -24,20 +23,22 @@ public class Administration {
       return instance;
    }
 
-    public User addUser(String username, String email) {
-        User user = new User(username, email, 0);
-        users.add(user);
+    public User addUser(User user) {
+        dbStorage.addUser(user);
         return user;
     }
 
     public User getUser(String username) {
-        return users.stream()
-                .filter(u -> u.getUsername().equalsIgnoreCase(username))
-                .findFirst().orElse(null);
+        return dbStorage.getUser(username);
     }
     
     public void clear()
     {
         instance = new Administration();
+    }
+    
+    public User logIn(String username_email, String password)
+    {
+        return dbStorage.logIn(username_email, password);
     }
 }

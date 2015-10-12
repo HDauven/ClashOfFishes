@@ -165,6 +165,7 @@ public class MultithreadingOnderzoek
 
     private static void runCallableImplementation()
     {
+<<<<<<< HEAD
         ExecutorService executor = Executors.newFixedThreadPool(4);
         Future<Long> submit;
         CallableClass callable1 = new CallableClass("Callable-1", ITERATIONS_HIGH);
@@ -175,5 +176,18 @@ public class MultithreadingOnderzoek
         submit = executor.submit(callable3);
         CallableClass callable4 = new CallableClass("Callable-4", ITERATIONS_LOW);
         submit = executor.submit(callable4); 
+=======
+        CallableClass callable = new CallableClass("Callable-1", ITERATIONS_HIGH);
+        CallableClass callable2 = new CallableClass("Callable-2", ITERATIONS_LOW);
+        try {
+            Long l = callable.call();
+            Long L2 = callable2.call();
+        } catch (Exception ex) {
+            Logger.getLogger(MultithreadingOnderzoek.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        Future<Long> submit = executor.submit(callable);
+>>>>>>> origin/master
     }
 }
