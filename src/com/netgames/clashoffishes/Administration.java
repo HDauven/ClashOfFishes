@@ -23,9 +23,10 @@ public class Administration {
       return instance;
    }
 
-    public User addUser(User user) {
-        dbStorage.addUser(user);
-        return user;
+    public Boolean addUser(String username, String confirmedPassword, String email) {
+        Boolean userAdded = false;
+        userAdded = dbStorage.addUser(username, confirmedPassword, email);
+        return userAdded;
     }
 
     public User getUser(String username) {

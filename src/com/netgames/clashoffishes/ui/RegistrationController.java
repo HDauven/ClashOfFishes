@@ -5,6 +5,7 @@
  */
 package com.netgames.clashoffishes.ui;
 
+import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.util.GuiUtilities;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,17 +38,43 @@ public class RegistrationController implements Initializable {
     @FXML
     private Button btnCancel;
 
+    //Datafields
+    private Administration administration;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        this.administration = Administration.get();
     }
 
     @FXML
     private void btnRegister_OnClick(ActionEvent event) {
-        System.out.println("test");
+        
+        //Retrieve all the text from the input fields.
+        String username, password, confirmedPassword, email;
+        username = this.txtUsername.getText();
+        password = this.txtPassword.getText();
+        confirmedPassword = this.txtConfirmPassword.getText();
+        email = this.txtEmail.getText();
+        
+        //Check if the password and confirmPassword fields are equeal
+            // if so we try to add the user into the administration
+            // we tell the user about the result.
+        if (password.equals(confirmedPassword)) {
+            if (this.administration.addUser(username,password,email)) {
+                //Gebruiker is toegevoegd
+                System.out.println("Gebruiker is toegevoegd");
+                ClearTextFields();
+            } else {
+                //User is not added into database. Reason: Username or Email already in use.
+                System.out.println("User is not added into database. Reason: Username or Email already in use.");
+            }
+        } else {
+            //password and confirmedPassword do not match
+            System.out.println("password and confirmedPassword do not match");
+        }  
     }
 
     @FXML
@@ -55,4 +82,10 @@ public class RegistrationController implements Initializable {
         GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Login", "Login");  
     }
 
+    private void ClearTextFields () {
+        this.txtUsername.setText("");
+        this.txtPassword.setText("");
+        this.txtConfirmPassword.setText("");
+        this.txtEmail.setText("");
+    }
 }

@@ -7,25 +7,15 @@ package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.*;
 import com.netgames.clashoffishes.data.DatabaseConnector;
-import com.netgames.clashoffishes.data.Statement;
 import com.netgames.clashoffishes.util.GuiUtilities;
-import java.io.IOException;
 import java.net.URL;
-import java.sql.CallableStatement;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -46,8 +36,6 @@ public class LoginController implements Initializable {
     private Button btnRegister;
 
     // Datafields
-    private DatabaseConnector databaseConnector;
-
     private String userIdentifier, password, email;
 
     private Administration administration;
@@ -57,7 +45,6 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.databaseConnector = new DatabaseConnector();
         this.administration = Administration.get();
     }
 

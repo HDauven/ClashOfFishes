@@ -20,9 +20,23 @@ public class DatabaseStorage implements Storage {
     }
     
     @Override
-    public void addUser(User u)
+    public Boolean addUser(String username, String confirmedPassword, String email)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Boolean userAdded = false;
+        
+        CallableStatement registerUserStatement = this.databaseConnector.getStatement(Statement.REGISTER_USER);
+        try {
+            registerUserStatement.setString(1, username);
+            registerUserStatement.setString(2, confirmedPassword);
+            registerUserStatement.setString(3, email);
+            registerUserStatement.registerOutParameter(4, java.sql.Types.BOOLEAN);
+            registerUserStatement.execute();
+            userAdded = registerUserStatement.getBoolean(4);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return userAdded;
+        }
     }
 
     @Override

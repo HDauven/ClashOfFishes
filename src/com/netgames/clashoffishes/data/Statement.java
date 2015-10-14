@@ -11,6 +11,7 @@ package com.netgames.clashoffishes.data;
  */
 public enum Statement {
     
-    LOGIN 
+    LOGIN,
+    REGISTER_USER
     
 }
