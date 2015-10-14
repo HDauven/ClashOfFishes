@@ -47,6 +47,7 @@ public class RegistrationController implements Initializable {
 
     @FXML
     private void btnRegister_OnClick(ActionEvent event) {
+        System.out.println("test");
     }
 
     @FXML
