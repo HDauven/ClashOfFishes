@@ -9,7 +9,7 @@ import com.netgames.clashoffishes.User;
 public class DatabaseStorage implements Storage {
 
     @Override
-    public void addUser(User u)
+    public void addUser(User u, String password)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -20,7 +20,8 @@ public class DatabaseStorage implements Storage {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public User logIn(String username_email, String password)
+    @Override
+    public User logIn(String username_or_email, String password)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

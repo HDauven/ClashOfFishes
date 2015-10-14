@@ -23,8 +23,8 @@ public class Administration {
       return instance;
    }
 
-    public User addUser(User user) {
-        dbStorage.addUser(user);
+    public User addUser(User user, String wachtwoord) {
+        dbStorage.addUser(user, wachtwoord);
         return user;
     }
 
