@@ -9,7 +9,7 @@ import com.netgames.clashoffishes.User;
 public class FileStorage implements Storage {
 
     @Override
-    public void addUser(User u, String password)
+    public void addUser(User u, String wachtwoord)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

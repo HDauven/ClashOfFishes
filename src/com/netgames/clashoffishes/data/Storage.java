@@ -14,7 +14,7 @@ import java.io.IOException;
  * @version 1.0
  */
 public interface Storage {
-    public void addUser(User u, String password);
+    public void addUser(User u, String wachtwoord);
     public User getUser(String username);
     public User logIn(String username_or_email, String password);
 }

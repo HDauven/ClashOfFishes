@@ -8,7 +8,7 @@ import com.netgames.clashoffishes.data.DatabaseStorage;
 public class Administration {
 
     private static Administration instance = null;
-    private final User user;
+    private User user;
     private DatabaseStorage dbStorage;
 
     protected Administration() {
@@ -32,13 +32,19 @@ public class Administration {
         return dbStorage.getUser(username);
     }
     
+    
     public void clear()
     {
         instance = new Administration();
     }
     
-    public User logIn(String username_email, String password)
+    public User logIn(String userIdentifier, String password)
     {
-        return dbStorage.logIn(username_email, password);
+        this.user = dbStorage.logIn(userIdentifier, password);
+        return this.user;
+    }
+    
+    public User getLoggedInUser() {
+        return this.user;
     }
 }
