@@ -1,6 +1,5 @@
 package com.netgames.clashoffishes.data;
 
-import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.User;
 
 /**
