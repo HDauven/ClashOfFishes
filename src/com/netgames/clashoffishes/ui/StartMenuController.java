@@ -28,7 +28,8 @@ public class StartMenuController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         this.administration = Administration.get();
-        System.out.println(this.administration.getUser("MuK").getEmail());
+        System.out.println(this.administration.getLoggedInUser().getUsername());
+        System.out.println(this.administration.getLoggedInUser().getEmail());
     }    
 
     @FXML

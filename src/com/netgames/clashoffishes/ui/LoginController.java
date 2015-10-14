@@ -8,6 +8,7 @@ package com.netgames.clashoffishes.ui;
 import com.netgames.clashoffishes.*;
 import com.netgames.clashoffishes.data.DatabaseConnector;
 import com.netgames.clashoffishes.data.Statement;
+import com.netgames.clashoffishes.util.GuiUtilities;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.CallableStatement;
@@ -48,65 +49,34 @@ public class LoginController implements Initializable {
     private DatabaseConnector databaseConnector;
 
     private String userIdentifier, password, email;
-    
+
     private Administration administration;
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.databaseConnector = new DatabaseConnector();
+        this.administration = Administration.get();
     }
 
     @FXML
     private void login_OnClick(ActionEvent event) {
         this.userIdentifier = this.txtUsername.getText();
         this.password = this.txtPassword.getText();
-        this.email = null;
         
-        int result = 0;
-        
-        CallableStatement loginStatement = this.databaseConnector.getStatement(Statement.LOGIN);
-        try {
-            loginStatement.setString(1, this.userIdentifier);
-            loginStatement.setString(2, this.password);
-            loginStatement.registerOutParameter(3, java.sql.Types.INTEGER);
-            loginStatement.registerOutParameter(4, java.sql.Types.VARCHAR);
-            loginStatement.registerOutParameter(5, java.sql.Types.VARCHAR);
-            loginStatement.execute();
-            result = loginStatement.getInt(3);
-            this.userIdentifier = loginStatement.getString(4);
-            this.email = loginStatement.getString(5);
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        if (result == 0) {
+        if (this.administration.logIn(userIdentifier, password) == null) {
             this.userIdentifier = null;
             this.password = null;
-        } else if (result > 0) {
-            this.administration = Administration.get();
-            this.administration.addUser(new User(this.userIdentifier, this.email, 0));
-            
-            //Login is succesfull we are now redirected to a new UI StartMenu.FXML
-            try {
-                Stage stage = (Stage) this.paneMainForm.getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/netgames/clashoffishes/ui/StartMenu.fxml"));
-                Parent root = (Parent)loader.load();
-                stage.setTitle("Welcome back " + this.userIdentifier);
-                stage.setScene(new Scene(root));
-                stage.show();
-            } catch (IOException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        } else {
+            GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", "Welcome back: " + this.administration.getLoggedInUser().getUsername());
         }
     }
 
     @FXML
-    private void register_OnClick(ActionEvent event) {
-
+    private void register_OnClick(ActionEvent event) {     
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Registration", "Register a new account");   
     }
 
 }
