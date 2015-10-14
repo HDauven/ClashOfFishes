@@ -45,6 +45,7 @@ public class Administration {
     }
     
     public User getLoggedInUser() {
+        
         return this.user;
     }
 }
