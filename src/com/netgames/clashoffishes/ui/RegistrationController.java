@@ -74,7 +74,8 @@ public class RegistrationController implements Initializable {
         } else {
             //password and confirmedPassword do not match
             System.out.println("password and confirmedPassword do not match");
-        }  
+        }
+        
     }
 
     @FXML
