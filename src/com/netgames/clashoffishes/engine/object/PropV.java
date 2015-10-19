@@ -1,14 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.netgames.clashoffishes.engine.object;
 
+import javafx.scene.image.Image;
+
 /**
- *
- * @author Hein
+ * Static game objects that will be flipped around the Y axis.
+ * 
+ * @author Hein Dauven
  */
-public class PropV {
-    
+public class PropV extends GameObject {
+
+    public PropV(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
+        super(SVGData, xLocation, yLocation, spriteCels);
+        this.setIsFlipV(true);
+        /* Flips the image around the X axis */
+        spriteFrame.setScaleY(-1);
+        /* Alters the location of the node */
+        spriteFrame.setTranslateX(xLocation);
+        spriteFrame.setTranslateY(yLocation);
+    }
+
+    @Override
+    public void update() {
+        /* not implemented yet */
+    }    
 }

@@ -9,6 +9,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import com.netgames.clashoffishes.engine.object.*;
+import javafx.scene.image.ImageView;
 
 /**
  * Class that manages the game itself.
@@ -21,6 +23,7 @@ public class GameManager extends Application {
     private boolean wKey, aKey, sKey, dKey;
     private Scene scene;
     private StackPane root;
+    private ImageView gameWindow;
     private GameLoop gameLoop;
     private ObjectManager objectManager;
     
@@ -34,25 +37,32 @@ public class GameManager extends Application {
     private Image cleo1, cleo2, cleo3, cleo4;
     private Image fred1, fred2, fred3, fred4;
     private Image gill1, gill2, gill3, gill4;
+    private URL playerDir;
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Background images declaration">
     private Image backgroundLayer1;
+    Prop bgLayer1;
     private Image backLayer1;
+    Prop bLayer1;
     private Image middleLayer1;
+    Prop mLayer1;
     private Image frontLayer1;
+    Prop fLayer1;
     private Image boatClassic1, boatClassic2, boatClassic3;
     private Image boatModern1, boatModern2, boatModern3;
+    private URL backgroundDir;
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Event images declaration">
     private Image jeffrey1, jeffrey2, jeffrey3;
     private Image energyDrink;
+    private URL eventDir;
     // </editor-fold>
     
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("InvinciBagel");
+        primaryStage.setTitle("Clash of Fishes");
         root = new StackPane();
         scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
         primaryStage.setScene(scene);
@@ -111,7 +121,7 @@ public class GameManager extends Application {
         // TODO loading audio asset format:
         // URL object = this.getClass().getResource("/resource/sound.wav");
         // AudioClip object = new AudioClip(URL object.toString());
-        biteSoundFile0 = this.getClass().getResource("/resources/com/netgames/clashoffishes/audio/bite.wav");
+        biteSoundFile0 = this.getClass().getResource("/com/netgames/clashoffishes/audio/bite.wav");
         biteSound0 = new AudioClip(biteSoundFile0.toString());
     }
     
@@ -121,54 +131,57 @@ public class GameManager extends Application {
     private void loadImageAssets() {
         // TODO adding image asset format:
         // Image object = new Image("/resource/image.png", width, height, true, false, true);
+        backgroundDir = this.getClass().getResource("/com/netgames/clashoffishes/images/background/");
         // <editor-fold defaultstate="collapsed" desc="Background layer image instantiation">
-        backgroundLayer1 = new Image("/resources/com/netgames/clashoffishes/images/background/BackgroundLayer1.png", 1024, 768, true, false, true);
+        backgroundLayer1 = new Image(backgroundDir.toString() + "BackgroundLayer1.png", 1024, 768, true, false, true);
         // </editor-fold>        
         
         // <editor-fold defaultstate="collapsed" desc="Back layer image instantiation">
-        backLayer1 = new Image("/resources/com/netgames/clashoffishes/images/background/BackLayer1.png", 1024, 506, true, false, true);
+        backLayer1 = new Image(backgroundDir.toString() + "BackLayer1.png", 1024, 506, true, false, true);
         // </editor-fold>
         
         // <editor-fold defaultstate="collapsed" desc="Middle layer image instantiation">
-        middleLayer1 = new Image("/resources/com/netgames/clashoffishes/images/background/MiddleLayer1.png", 1024, 212, true, false, true);
+        middleLayer1 = new Image(backgroundDir.toString() + "MiddleLayer1.png", 1024, 212, true, false, true);
         // </editor-fold>
         
-        // <editor-fold defaultstate="collapsed" desc="Back layer image instantiation">
-        frontLayer1 = new Image("/resources/com/netgames/clashoffishes/images/background/FrontLayer1.png", 1024, 316, true, false, true);
+        // <editor-fold defaultstate="collapsed" desc="Front layer image instantiation">
+        frontLayer1 = new Image(backgroundDir.toString() + "FrontLayer1.png", 1024, 316, true, false, true);
         // </editor-fold>
         
+        playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
         // <editor-fold defaultstate="collapsed" desc="Bubbles image instantiation">
-        bubbles1 = new Image("/resources/com/netgames/clashoffishes/images/player/Bubbles1.png", 125, 78, true, false, true);
-        bubbles2 = new Image("/resources/com/netgames/clashoffishes/images/player/Bubbles2.png", 125, 78, true, false, true);
-        bubbles3 = new Image("/resources/com/netgames/clashoffishes/images/player/Bubbles3.png", 125, 78, true, false, true);
-        bubbles4 = new Image("/resources/com/netgames/clashoffishes/images/player/Bubbles4.png", 125, 78, true, false, true);
+        bubbles1 = new Image(playerDir.toString() + "Bubbles1.png", 125, 78, true, false, true);
+        bubbles2 = new Image(playerDir.toString() + "Bubbles2.png", 125, 78, true, false, true);
+        bubbles3 = new Image(playerDir.toString() + "Bubbles3.png", 125, 78, true, false, true);
+        bubbles4 = new Image(playerDir.toString() + "Bubbles4.png", 125, 78, true, false, true);
         // </editor-fold>
         
         // <editor-fold defaultstate="collapsed" desc="Cleo image instantiation">        
-        cleo1 = new Image("/resources/com/netgames/clashoffishes/images/player/Cleo1.png", 105, 66, true, false, true);
-        cleo2 = new Image("/resources/com/netgames/clashoffishes/images/player/Cleo2.png", 105, 66, true, false, true);
-        cleo3 = new Image("/resources/com/netgames/clashoffishes/images/player/Cleo3.png", 105, 66, true, false, true);
-        cleo4 = new Image("/resources/com/netgames/clashoffishes/images/player/Cleo4.png", 105, 66, true, false, true);
+        cleo1 = new Image(playerDir.toString() + "Cleo1.png", 105, 66, true, false, true);
+        cleo2 = new Image(playerDir.toString() + "Cleo2.png", 105, 66, true, false, true);
+        cleo3 = new Image(playerDir.toString() + "Cleo3.png", 105, 66, true, false, true);
+        cleo4 = new Image(playerDir.toString() + "Cleo4.png", 105, 66, true, false, true);
         // </editor-fold>
         
         // <editor-fold defaultstate="collapsed" desc="Fred image instantiation">
-        fred1 = new Image("/resources/com/netgames/clashoffishes/images/player/Fred1.png", 160, 109, true, false, true);
-        fred2 = new Image("/resources/com/netgames/clashoffishes/images/player/Fred2.png", 160, 109, true, false, true);
-        fred3 = new Image("/resources/com/netgames/clashoffishes/images/player/Fred3.png", 160, 109, true, false, true);
-        fred4 = new Image("/resources/com/netgames/clashoffishes/images/player/Fred4.png", 160, 109, true, false, true);
+        fred1 = new Image(playerDir.toString() + "Fred1.png", 160, 109, true, false, true);
+        fred2 = new Image(playerDir.toString() + "Fred2.png", 160, 109, true, false, true);
+        fred3 = new Image(playerDir.toString() + "Fred3.png", 160, 109, true, false, true);
+        fred4 = new Image(playerDir.toString() + "Fred4.png", 160, 109, true, false, true);
         // </editor-fold>
         
         // <editor-fold defaultstate="collapsed" desc="Gill image instantiation">
-        gill1 = new Image("/resources/com/netgames/clashoffishes/images/player/Gill1.png", 126, 72, true, false, true);
-        gill2 = new Image("/resources/com/netgames/clashoffishes/images/player/Gill2.png", 126, 72, true, false, true);
-        gill3 = new Image("/resources/com/netgames/clashoffishes/images/player/Gill3.png", 126, 72, true, false, true);
-        gill4 = new Image("/resources/com/netgames/clashoffishes/images/player/Gill4.png", 126, 72, true, false, true);
+        gill1 = new Image(playerDir.toString() + "Gill1.png", 126, 72, true, false, true);
+        gill2 = new Image(playerDir.toString() + "Gill2.png", 126, 72, true, false, true);
+        gill3 = new Image(playerDir.toString() + "Gill3.png", 126, 72, true, false, true);
+        gill4 = new Image(playerDir.toString() + "Gill4.png", 126, 72, true, false, true);
         // </editor-fold>
         
+        eventDir = this.getClass().getResource("/com/netgames/clashoffishes/images/event/");
         // <editor-fold defaultstate="collapsed" desc="Jeffrey image instantiation">
-        jeffrey1 = new Image("/resources/com/netgames/clashoffishes/images/player/Jeffrey1.png", 110, 105, true, false, true);
-        jeffrey2 = new Image("/resources/com/netgames/clashoffishes/images/player/Jeffrey2.png", 110, 105, true, false, true);
-        jeffrey3 = new Image("/resources/com/netgames/clashoffishes/images/player/Jeffrey3.png", 110, 105, true, false, true);
+        jeffrey1 = new Image(eventDir.toString() + "Jeffrey1.png", 110, 105, true, false, true);
+        jeffrey2 = new Image(eventDir.toString() + "Jeffrey2.png", 110, 105, true, false, true);
+        jeffrey3 = new Image(eventDir.toString() + "Jeffrey3.png", 110, 105, true, false, true);
         // </editor-fold>
     }
     
@@ -178,6 +191,10 @@ public class GameManager extends Application {
     private void createGameObjects() {
         // TODO adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
+        bgLayer1 = new Prop("", 0, 0, backgroundLayer1);
+        bLayer1 = new Prop("", 0, ((HEIGHT / 2) - (backLayer1.getRequestedHeight() / 2)), backLayer1);
+        mLayer1 = new Prop("", 0, ((HEIGHT / 2) - (middleLayer1.getRequestedHeight() / 2)), middleLayer1);
+        fLayer1 = new Prop("", 0, ((HEIGHT / 2) - (frontLayer1.getRequestedHeight() / 2)), frontLayer1);
     }
     
     /**
@@ -186,6 +203,10 @@ public class GameManager extends Application {
     private void addGameObjectNodes() {
         // TODO adding game object nodes
         // root.getChildren().add(gameObject);
+        root.getChildren().add(bgLayer1.getSpriteFrame());
+        root.getChildren().add(bLayer1.getSpriteFrame());
+        root.getChildren().add(mLayer1.getSpriteFrame());
+        root.getChildren().add(fLayer1.getSpriteFrame());
     }
     
     /**
@@ -195,6 +216,10 @@ public class GameManager extends Application {
         objectManager = new ObjectManager();
         // TODO adding an object to the object manager format:
         // objectManager.addCurrentObject(newobject);
+        objectManager.addCurrentObject(bgLayer1);
+        objectManager.addCurrentObject(bLayer1);
+        objectManager.addCurrentObject(mLayer1);
+        objectManager.addCurrentObject(fLayer1);
     }
     
     /**
@@ -203,11 +228,14 @@ public class GameManager extends Application {
     private void createSplashScreenAndGameMenuNodes() {
         // TODO create a splashscreen and add menu items:
         // 
+        //gameWindow = new ImageView();
+        //gameWindow.setImage(backgroundLayer1);
     }
     
     private void addNodesToStackPane() {
         // TODO add nodes to the stack pane:
         // root.getChildren().add(container);
+        //root.getChildren().add(gameWindow);
     }
     
     /**
