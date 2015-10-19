@@ -176,6 +176,32 @@ public abstract class GameObject {
         this.isAlive = isAlive;
     }
     
+    public boolean isFixed() {
+        return isFixed;
+    }
+
+    public void setIsFixed(boolean isFixed) {
+        this.isFixed = isFixed;
+    }
+
+    public boolean isBonus() {
+        return isBonus;
+    }
+
+    public void setIsBonus(boolean isBonus) {
+        this.isBonus = isBonus;
+    }
+
+    public boolean hasValue() {
+        return hasValue;
+    }
+
+    public void setHasValue(boolean hasValue) {
+        this.hasValue = hasValue;
+    }
+    
+    
+    
     /**
      * The update method updates the position of the GameObject.
      */
