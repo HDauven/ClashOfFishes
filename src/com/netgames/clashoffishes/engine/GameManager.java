@@ -20,7 +20,7 @@ public class GameManager extends Application {
     private StackPane root;
     
     private final GameMode gameMode;
-    private GameLoop gamePlayLoop;
+    private GameLoop gameLoop;
     private ObjectManager castDirector;
     
     
@@ -77,6 +77,11 @@ public class GameManager extends Application {
                 case D:     dKey  = false; break;    
             }
         });
+    }
+    
+    private void createStartGameLoop() {
+        gameLoop = new GameLoop(this);
+        gameLoop.start();
     }
 
     public GameManager(GameMode gameMode) {
