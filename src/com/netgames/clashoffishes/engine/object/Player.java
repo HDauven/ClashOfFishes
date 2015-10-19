@@ -22,8 +22,9 @@ public class Player extends AnimatedObject {
     int framecounter = 0;
     int runningspeed = 6;
     
-    public Player(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
+    public Player(GameManager manager,String SVGData, double xLocation, double yLocation, Image... spriteCels) {
         super(SVGData, xLocation, yLocation, spriteCels);
+        gameManager = manager;
         vX = 2;
         vY = 2;
     }
@@ -32,9 +33,16 @@ public class Player extends AnimatedObject {
     @Override
     public void update() {
         // TODO implement the update method for a player
-        // setXYLocation();
+        setXYLocation();
         // setBoundaries();
         // setImageState();
         // movePlayer(iX, iY);
+    }
+    
+    private void setXYLocation() {
+        if (gameManager.isRight()) { iX += vX; }
+        if (gameManager.isLeft())  { iX -= vX; }
+        if (gameManager.isDown())  { iY += vY; }
+        if (gameManager.isUp())    { iY -= vY; }
     }
 }
