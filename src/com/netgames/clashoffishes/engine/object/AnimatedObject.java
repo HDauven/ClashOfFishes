@@ -147,4 +147,36 @@ public abstract class AnimatedObject extends GameObject {
     public void setOffsetY(double offsetY) {
         this.offsetY = offsetY;
     }
+    
+    /**
+     * 
+     * @return 
+     */
+    public double getBoundScale() {
+        return boundScale;
+    }
+
+    /**
+     * 
+     * @param boundScale 
+     */
+    public void setBoundScale(double boundScale) {
+        this.boundScale = boundScale;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public double getBoundRot() {
+        return boundRot;
+    }
+
+    /**
+     * 
+     * @param boundRot 
+     */
+    public void setBoundRot(double boundRot) {
+        this.boundRot = boundRot;
+    }
 }
