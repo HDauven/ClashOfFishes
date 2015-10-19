@@ -1,9 +1,12 @@
 package com.netgames.clashoffishes.engine;
 
+import java.net.URL;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -21,6 +24,31 @@ public class GameManager extends Application {
     private GameLoop gameLoop;
     private ObjectManager objectManager;
     
+    // <editor-fold defaultstate="collapsed" desc="Audioclips & URL declaration">
+    private AudioClip biteSound0;
+    private URL biteSoundFile0;
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Player images declaration">
+    private Image bubbles1, bubbles2, bubbles3, bubbles4;
+    private Image cleo1, cleo2, cleo3, cleo4;
+    private Image fred1, fred2, fred3, fred4;
+    private Image gill1, gill2, gill3, gill4;
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Background images declaration">
+    private Image backgroundLayer1;
+    private Image backLayer1;
+    private Image middleLayer1;
+    private Image frontLayer1;
+    private Image boatClassic1, boatClassic2, boatClassic3;
+    private Image boatModern1, boatModern2, boatModern3;
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Event images declaration">
+    private Image jeffrey1, jeffrey2, jeffrey3;
+    private Image energyDrink;
+    // </editor-fold>
     
     @Override
     public void start(Stage primaryStage) {
@@ -83,6 +111,8 @@ public class GameManager extends Application {
         // TODO loading audio asset format:
         // URL object = this.getClass().getResource("/resource/sound.wav");
         // AudioClip object = new AudioClip(URL object.toString());
+        biteSoundFile0 = this.getClass().getResource("/resources/com/netgames/clashoffishes/audio/bite.wav");
+        biteSound0 = new AudioClip(biteSoundFile0.toString());
     }
     
     /**
@@ -91,6 +121,55 @@ public class GameManager extends Application {
     private void loadImageAssets() {
         // TODO adding image asset format:
         // Image object = new Image("/resource/image.png", width, height, true, false, true);
+        // <editor-fold defaultstate="collapsed" desc="Background layer image instantiation">
+        backgroundLayer1 = new Image("/resources/com/netgames/clashoffishes/images/background/BackgroundLayer1.png", 1024, 768, true, false, true);
+        // </editor-fold>        
+        
+        // <editor-fold defaultstate="collapsed" desc="Back layer image instantiation">
+        backLayer1 = new Image("/resources/com/netgames/clashoffishes/images/background/BackLayer1.png", 1024, 506, true, false, true);
+        // </editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="Middle layer image instantiation">
+        middleLayer1 = new Image("/resources/com/netgames/clashoffishes/images/background/MiddleLayer1.png", 1024, 212, true, false, true);
+        // </editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="Back layer image instantiation">
+        frontLayer1 = new Image("/resources/com/netgames/clashoffishes/images/background/FrontLayer1.png", 1024, 316, true, false, true);
+        // </editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="Bubbles image instantiation">
+        bubbles1 = new Image("/resources/com/netgames/clashoffishes/images/player/Bubbles1.png", 125, 78, true, false, true);
+        bubbles2 = new Image("/resources/com/netgames/clashoffishes/images/player/Bubbles2.png", 125, 78, true, false, true);
+        bubbles3 = new Image("/resources/com/netgames/clashoffishes/images/player/Bubbles3.png", 125, 78, true, false, true);
+        bubbles4 = new Image("/resources/com/netgames/clashoffishes/images/player/Bubbles4.png", 125, 78, true, false, true);
+        // </editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="Cleo image instantiation">        
+        cleo1 = new Image("/resources/com/netgames/clashoffishes/images/player/Cleo1.png", 105, 66, true, false, true);
+        cleo2 = new Image("/resources/com/netgames/clashoffishes/images/player/Cleo2.png", 105, 66, true, false, true);
+        cleo3 = new Image("/resources/com/netgames/clashoffishes/images/player/Cleo3.png", 105, 66, true, false, true);
+        cleo4 = new Image("/resources/com/netgames/clashoffishes/images/player/Cleo4.png", 105, 66, true, false, true);
+        // </editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="Fred image instantiation">
+        fred1 = new Image("/resources/com/netgames/clashoffishes/images/player/Fred1.png", 160, 109, true, false, true);
+        fred2 = new Image("/resources/com/netgames/clashoffishes/images/player/Fred2.png", 160, 109, true, false, true);
+        fred3 = new Image("/resources/com/netgames/clashoffishes/images/player/Fred3.png", 160, 109, true, false, true);
+        fred4 = new Image("/resources/com/netgames/clashoffishes/images/player/Fred4.png", 160, 109, true, false, true);
+        // </editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="Gill image instantiation">
+        gill1 = new Image("/resources/com/netgames/clashoffishes/images/player/Gill1.png", 126, 72, true, false, true);
+        gill2 = new Image("/resources/com/netgames/clashoffishes/images/player/Gill2.png", 126, 72, true, false, true);
+        gill3 = new Image("/resources/com/netgames/clashoffishes/images/player/Gill3.png", 126, 72, true, false, true);
+        gill4 = new Image("/resources/com/netgames/clashoffishes/images/player/Gill4.png", 126, 72, true, false, true);
+        // </editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="Jeffrey image instantiation">
+        jeffrey1 = new Image("/resources/com/netgames/clashoffishes/images/player/Jeffrey1.png", 110, 105, true, false, true);
+        jeffrey2 = new Image("/resources/com/netgames/clashoffishes/images/player/Jeffrey2.png", 110, 105, true, false, true);
+        jeffrey3 = new Image("/resources/com/netgames/clashoffishes/images/player/Jeffrey3.png", 110, 105, true, false, true);
+        // </editor-fold>
     }
     
     /**
