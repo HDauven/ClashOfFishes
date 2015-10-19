@@ -12,7 +12,18 @@ import javafx.scene.image.Image;
  * @version %I%, %G%
  */
 public abstract class AnimatedObject extends GameObject {
-
+    protected double vX;
+    protected double vY;
+    protected double lifeSpan;
+    protected double damage;
+    protected double offsetX;
+    protected double offsetY;
+    protected double boundScale;
+    protected double boundRot;
+    protected double friction;
+    protected double gravity;
+    protected double bounce;
+    
     /**
      * The constructor of an AnimatedObject object.
      * @param SVGData
@@ -22,6 +33,17 @@ public abstract class AnimatedObject extends GameObject {
      */
     public AnimatedObject(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
         super(SVGData, xLocation, yLocation, spriteCels);
+        lifeSpan = 1000;
+        vX = 0;
+        vY = 0;
+        damage = 0;
+        offsetX = 0;
+        offsetY = 0;
+        boundScale = 0;
+        boundRot = 0;
+        friction = 0;
+        gravity = 0;
+        bounce = 0;
     }
     
 }
