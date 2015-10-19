@@ -21,6 +21,7 @@ public class GameManager extends Application {
     public static final double WIDTH = 1024, HEIGHT = 768;
     private boolean up, down, left, right;
     private boolean wKey, aKey, sKey, dKey;
+    private boolean space;
     private Scene scene;
     private StackPane root;
     private ImageView gameWindow;
@@ -97,7 +98,8 @@ public class GameManager extends Application {
                 case W:     wKey  = true; break;
                 case A:     aKey  = true; break;
                 case S:     sKey  = true; break;
-                case D:     dKey  = true; break;    
+                case D:     dKey  = true; break; 
+                case SPACE: space = true; break;
             }
         });
         
@@ -110,7 +112,8 @@ public class GameManager extends Application {
                 case W:     wKey  = false; break;
                 case A:     aKey  = false; break;
                 case S:     sKey  = false; break;
-                case D:     dKey  = false; break;    
+                case D:     dKey  = false; break;  
+                case SPACE: space = false; break;   
             }
         });
     }
@@ -378,5 +381,28 @@ public class GameManager extends Application {
      */
     public void setdKey(boolean dKey) {
         this.dKey = dKey;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public boolean isSpace() {
+        return space;
+    }
+
+    /**
+     * 
+     * @param space 
+     */
+    public void setSpace(boolean space) {
+        this.space = space;
+    }
+    
+    /**
+     * 
+     */
+    public void playBiteSound() {
+        this.biteSound0.play();
     }
 }

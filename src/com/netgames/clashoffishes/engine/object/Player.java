@@ -47,6 +47,7 @@ public class Player extends AnimatedObject {
         setBoundaries();
         setImageState();
         movePlayer(iX, iY);
+        playAudioClip();
     }
     
     /**
@@ -155,5 +156,12 @@ public class Player extends AnimatedObject {
     private void movePlayer(double x, double y) {
         spriteFrame.setTranslateX(x);
         spriteFrame.setTranslateY(y);
+    }
+    
+    /**
+     * 
+     */
+    private void playAudioClip() {
+        if (gameManager.isSpace()) { gameManager.playBiteSound(); }
     }
 }
