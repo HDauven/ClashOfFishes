@@ -48,6 +48,7 @@ public class Player extends AnimatedObject {
         setImageState();
         movePlayer(iX, iY);
         playAudioClip();
+        checkCollision();
     }
     
     /**
@@ -163,5 +164,20 @@ public class Player extends AnimatedObject {
      */
     private void playAudioClip() {
         if (gameManager.isSpace()) { gameManager.playBiteSound(); }
+    }
+    
+    /**
+     * 
+     */
+    public void checkCollision() {
+       for (int i = 0; i < gameManager.objectManager.getCurrentObject().size(); i++) {
+           GameObject object = gameManager.objectManager.getCurrentObject().get(i);
+           collide(object);
+       } 
+    }
+    
+    @Override
+    public boolean collide(GameObject object) {
+        return false;
     }
 }

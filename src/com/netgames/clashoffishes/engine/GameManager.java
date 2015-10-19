@@ -26,7 +26,7 @@ public class GameManager extends Application {
     private StackPane root;
     private ImageView gameWindow;
     private GameLoop gameLoop;
-    private ObjectManager objectManager;
+    public ObjectManager objectManager;
     public Player player;
     
     // <editor-fold defaultstate="collapsed" desc="Audioclips & URL declaration">
