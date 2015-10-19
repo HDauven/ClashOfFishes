@@ -55,6 +55,22 @@ public abstract class GameObject {
         this.isFlipV = false;
         this.isFlipH = false;
     }
+    
+    /**
+     * 
+     * @return 
+     */
+    public List<Image> getImageStates() {
+        return imageStates;
+    }
+
+    /**
+     * 
+     * @param imageStates 
+     */
+    public void setImageStates(List<Image> imageStates) {
+        this.imageStates = imageStates;
+    }
 
     /**
      * The update method updates the position of the GameObject.
