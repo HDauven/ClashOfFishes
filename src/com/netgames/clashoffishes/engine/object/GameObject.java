@@ -71,6 +71,22 @@ public abstract class GameObject {
     public void setImageStates(List<Image> imageStates) {
         this.imageStates = imageStates;
     }
+    
+    /**
+     * 
+     * @return 
+     */
+    public ImageView getSpriteFrame() {
+        return spriteFrame;
+    }
+
+    /**
+     * 
+     * @param spriteFrame 
+     */
+    public void setSpriteFrame(ImageView spriteFrame) {
+        this.spriteFrame = spriteFrame;
+    }
 
     /**
      * The update method updates the position of the GameObject.
