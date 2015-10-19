@@ -38,7 +38,7 @@ public class GameManager extends Application {
         createGameObjects();
         addGameObjectNodes();
         createObjectManager();
-        createSplashScreenNodes();
+        createSplashScreenAndGameMenuNodes();
         addNodesToStackPane();
         createStartGameLoop();
     }
@@ -118,6 +118,19 @@ public class GameManager extends Application {
         objectManager = new ObjectManager();
         // TODO adding an object to the object manager format:
         // objectManager.addCurrentObject(newobject);
+    }
+    
+    /**
+     * 
+     */
+    private void createSplashScreenAndGameMenuNodes() {
+        // TODO create a splashscreen and add menu items:
+        // 
+    }
+    
+    private void addNodesToStackPane() {
+        // TODO add nodes to the stack pane:
+        // root.getChildren().add(container);
     }
     
     /**
