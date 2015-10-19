@@ -179,4 +179,52 @@ public abstract class AnimatedObject extends GameObject {
     public void setBoundRot(double boundRot) {
         this.boundRot = boundRot;
     }
+    
+    /**
+     * 
+     * @return 
+     */
+    public double getFriction() {
+        return friction;
+    }
+
+    /**
+     * 
+     * @param friction 
+     */
+    public void setFriction(double friction) {
+        this.friction = friction;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public double getGravity() {
+        return gravity;
+    }
+
+    /**
+     * 
+     * @param gravity 
+     */
+    public void setGravity(double gravity) {
+        this.gravity = gravity;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public double getBounce() {
+        return bounce;
+    }
+    
+    /**
+     * 
+     * @param bounce 
+     */
+    public void setBounce(double bounce) {
+        this.bounce = bounce;
+    }
 }
