@@ -82,5 +82,37 @@ public abstract class AnimatedObject extends GameObject {
      */
     public void setvY(double vY) {
         this.vY = vY;
-    }    
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public double getLifeSpan() {
+        return lifeSpan;
+    }
+
+    /**
+     * 
+     * @param lifeSpan 
+     */
+    public void setLifeSpan(double lifeSpan) {
+        this.lifeSpan = lifeSpan;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public double getDamage() {
+        return damage;
+    }
+
+    /**
+     * 
+     * @param damage 
+     */
+    public void setDamage(double damage) {
+        this.damage = damage;
+    }
 }
