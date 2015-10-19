@@ -35,7 +35,7 @@ public class GameManager extends Application {
         createSceneEventHandling();
         loadAudioAssets();
         loadImageAssets();
-        createGameObject();
+        createGameObjects();
         addGameObjectNodes();
         createObjectManager();
         createSplashScreenNodes();
@@ -62,7 +62,6 @@ public class GameManager extends Application {
                 case S:     sKey  = true; break;
                 case D:     dKey  = true; break;    
             }
-            
         });
         
         scene.setOnKeyReleased((KeyEvent event) -> {
@@ -94,6 +93,22 @@ public class GameManager extends Application {
     private void loadImageAssets() {
         // TODO adding image asset format:
         // Image object = new Image("/resource/image.png", width, height, true, false, true);
+    }
+    
+    /**
+     * 
+     */
+    private void createGameObjects() {
+        // TODO adding game objects format:
+        // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
+    }
+    
+    /**
+     * 
+     */
+    private void addGameObjectNodes() {
+        // TODO adding game object nodes
+        // root.getChildren().add(gameObject);
     }
     
     /**
