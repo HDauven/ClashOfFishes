@@ -115,4 +115,36 @@ public abstract class AnimatedObject extends GameObject {
     public void setDamage(double damage) {
         this.damage = damage;
     }
+    
+    /**
+     * 
+     * @return 
+     */
+    public double getOffsetX() {
+        return offsetX;
+    }
+
+    /**
+     * 
+     * @param offsetX 
+     */
+    public void setOffsetX(double offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public double getOffsetY() {
+        return offsetY;
+    }
+
+    /**
+     * 
+     * @param offsetY 
+     */
+    public void setOffsetY(double offsetY) {
+        this.offsetY = offsetY;
+    }
 }
