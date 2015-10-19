@@ -12,7 +12,7 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cbGameMode" layoutX="29.0" layoutY="77.0" prefHeight="25.0" prefWidth="311.0" promptText="Modus" />
+      <ComboBox fx:id="cbGameMode" layoutX="29.0" layoutY="77.0" onAction="#cbGameMode_OnChange" prefHeight="25.0" prefWidth="311.0" promptText="Modus" />
       <TableView fx:id="tbvHighscore" layoutX="29.0" layoutY="111.0" prefHeight="325.0" prefWidth="311.0">
         <columns>
           <TableColumn fx:id="clmPlayers" prefWidth="160.0" text="Players" />

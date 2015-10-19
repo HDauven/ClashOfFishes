@@ -56,7 +56,7 @@ public class HostedGamesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //TODO initialize components for controller
-        //this.tbvHostedGames.getItems().add("Test Lobby");
+        this.administration = Administration.get();
         
         clmPoolName.setCellValueFactory(new PropertyValueFactory<Lobby, String>("PoolNameProperty"));
         clmPlayers.setCellValueFactory(new PropertyValueFactory<Lobby, String>("PlayersProperty"));
@@ -78,7 +78,7 @@ public class HostedGamesController implements Initializable {
 
     @FXML
     private void btnJoinGame_OnClick(ActionEvent event) {
-        GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "FishPool", GuiUtilities.FISH_POOL_TITLE);
+        GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "FishPool", GuiUtilities.getFishPoolTitle());
     }
 
     @FXML

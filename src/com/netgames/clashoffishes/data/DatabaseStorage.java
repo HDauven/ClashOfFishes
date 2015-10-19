@@ -81,14 +81,24 @@ public class DatabaseStorage implements Storage {
     }
     
     public List<Highscore> getAllUserHighscoresForGameMode(GameMode gameMode) {
-       
         
-        
-        
-        
-        
-        //TODO return
-        return null;
+        List<Highscore> UserHighscores = new ArrayList<>();
+        CallableStatement highscoreStatement = this.databaseConnector.getStatement(Statement.GET_ALL_USER_HIGHSCORES);
+        try {
+            highscoreStatement.setString(1, gameMode.toString());
+            ResultSet resultSet = highscoreStatement.executeQuery();
+            while (resultSet.next()) {
+                Highscore newHighscore = new Highscore(GameMode.valueOf(resultSet.getString(2)),resultSet.getString(1), resultSet.getInt(3));
+                System.out.println(newHighscore.toString());
+                UserHighscores.add(newHighscore);
+            }
+        } catch (SQLException ex) {
+            //TODO Betere exception afhandeling
+            System.out.println("Fout met verbinden database");
+        }
+          
+   
+        return UserHighscores;
     }
     
     

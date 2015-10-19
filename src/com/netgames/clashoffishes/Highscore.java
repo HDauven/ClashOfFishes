@@ -24,10 +24,6 @@ public class Highscore {
         this.score = score;
     }
 
-    public Highscore() {
-
-    }
-
     public GameMode getGameMode() {
         return gameMode;
     }
@@ -50,6 +46,11 @@ public class Highscore {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "Highscore{" + "gameMode=" + gameMode + ", username=" + username + ", score=" + score + '}';
     }
     
     

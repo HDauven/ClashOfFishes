@@ -60,9 +60,8 @@ public class Administration {
     }
 
     public List<Highscore> getAllUserHighscoresForGameMode(GameMode gameMode) {
-        if (this.allUserHighscoresForGameMode.get(0).getGameMode() == gameMode) {
-            return this.allUserHighscoresForGameMode;
-        } return null;
+        this.allUserHighscoresForGameMode = this.dbStorage.getAllUserHighscoresForGameMode(gameMode);
+        return this.allUserHighscoresForGameMode;
     }
 
     
