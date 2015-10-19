@@ -72,4 +72,32 @@ public class ObjectManager {
         collideChecklist.clear();
         collideChecklist.addAll(currentObjects);
     }
+    
+    /**
+     * 
+     * @return 
+     */
+    public Set getRemovedActors() {
+        return removedObjects;
+    }
+    
+    /**
+     * 
+     * @param actors 
+     */
+    public void addToRemovedActors(GameObject... actors) {
+        if (actors.length > 1) {
+            removedObjects.addAll(Arrays.asList((GameObject[]) actors));
+        }else {
+            removedObjects.add(actors[0]);
+        }
+    }
+    
+    /**
+     * 
+     */
+    public void resetRemovedActors() {
+        currentObjects.removeAll(removedObjects);
+        removedObjects.clear();
+    }
 }
