@@ -46,4 +46,10 @@ public abstract class AnimatedObject extends GameObject {
         bounce = 0;
     }
     
+    /**
+     * The update method updates the position of the AnimatedObject.
+     */
+    @Override
+    public abstract void update(); 
+    
 }
