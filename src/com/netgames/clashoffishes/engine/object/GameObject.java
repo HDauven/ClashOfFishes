@@ -168,6 +168,14 @@ public abstract class GameObject {
         this.pY = pY;
     }
     
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setIsAlive(boolean isAlive) {
+        this.isAlive = isAlive;
+    }
+    
     /**
      * The update method updates the position of the GameObject.
      */
