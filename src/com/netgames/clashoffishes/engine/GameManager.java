@@ -91,6 +91,14 @@ public class GameManager extends Application {
     /**
      * 
      */
+    private void loadImageAssets() {
+        // TODO adding image asset format:
+        // Image object = new Image("/resource/image.png", width, height, true, false, true);
+    }
+    
+    /**
+     * 
+     */
     public void createObjectManager() {
         objectManager = new ObjectManager();
         // TODO adding an object to the object manager format:
