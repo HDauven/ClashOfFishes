@@ -82,8 +82,19 @@ public class GameManager extends Application {
     /**
      * 
      */
+    private void loadAudioAssets() {
+        // TODO loading audio asset format:
+        // URL object = this.getClass().getResource("/resource/sound.wav");
+        // AudioClip object = new AudioClip(URL object.toString());
+    }
+    
+    /**
+     * 
+     */
     public void createObjectManager() {
         objectManager = new ObjectManager();
+        // TODO adding an object to the object manager format:
+        // objectManager.addCurrentObject(newobject);
     }
     
     /**
