@@ -1,11 +1,40 @@
 package com.netgames.clashoffishes.engine.object;
 
+import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
+import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
+import com.netgames.clashoffishes.engine.GameManager;
+import javafx.scene.image.Image;
 
 /**
+ * Class that represents an actual in-game player.
  * 
+ * @author Hein Dauven
  */
-public class Player {
+public class Player extends AnimatedObject {
+    protected GameManager gameManager;
+    protected static final double SPRITE_PIXELS_X = 81;
+    protected static final double SPRITE_PIXELS_Y = 81;
+    protected static final double rightBoundary   = (WIDTH/2 - SPRITE_PIXELS_X/2);
+    protected static final double leftBoundary    = -(WIDTH/2 - SPRITE_PIXELS_X/2);
+    protected static final double bottomBoundary  = (HEIGHT/2 - SPRITE_PIXELS_Y/2);
+    protected static final double topBoundary     = -(HEIGHT/2 - SPRITE_PIXELS_Y/2);
+    boolean animator = false;
+    int framecounter = 0;
+    int runningspeed = 6;
+    
+    public Player(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
+        super(SVGData, xLocation, yLocation, spriteCels);
+        vX = 2;
+        vY = 2;
+    }
 
-    public Player() {
+
+    @Override
+    public void update() {
+        // TODO implement the update method for a player
+        // setXYLocation();
+        // setBoundaries();
+        // setImageState();
+        // movePlayer(iX, iY);
     }
 }

@@ -18,7 +18,7 @@ import javafx.scene.image.ImageView;
  * @author Hein Dauven
  */
 public class GameManager extends Application {
-    static final double WIDTH = 1024, HEIGHT = 768;
+    public static final double WIDTH = 1024, HEIGHT = 768;
     private boolean up, down, left, right;
     private boolean wKey, aKey, sKey, dKey;
     private Scene scene;
