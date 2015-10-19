@@ -245,4 +245,131 @@ public class GameManager extends Application {
         gameLoop = new GameLoop(this);
         gameLoop.start();
     }
+    
+    /**
+     * 
+     * @return 
+     */
+    public boolean isUp() {
+        return up;
+    }
+
+    /**
+     * 
+     * @param up 
+     */
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public boolean isDown() {
+        return down;
+    }
+
+    /**
+     * 
+     * @param down 
+     */
+    public void setDown(boolean down) {
+        this.down = down;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public boolean isLeft() {
+        return left;
+    }
+
+    /**
+     * 
+     * @param left 
+     */
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public boolean isRight() {
+        return right;
+    }
+
+    /**
+     * 
+     * @param right 
+     */
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public boolean iswKey() {
+        return wKey;
+    }
+
+    /**
+     * 
+     * @param wKey 
+     */
+    public void setwKey(boolean wKey) {
+        this.wKey = wKey;
+    }
+    /**
+     * 
+     * @return 
+     */
+    public boolean isaKey() {
+        return aKey;
+    }
+
+    /**
+     * 
+     * @param aKey 
+     */
+    public void setaKey(boolean aKey) {
+        this.aKey = aKey;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public boolean issKey() {
+        return sKey;
+    }
+
+    /**
+     * 
+     * @param sKey 
+     */
+    public void setsKey(boolean sKey) {
+        this.sKey = sKey;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public boolean isdKey() {
+        return dKey;
+    }
+
+    /**
+     * 
+     * @param dKey 
+     */
+    public void setdKey(boolean dKey) {
+        this.dKey = dKey;
+    }
 }
