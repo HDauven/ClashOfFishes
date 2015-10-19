@@ -168,39 +168,101 @@ public abstract class GameObject {
         this.pY = pY;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public boolean isAlive() {
         return isAlive;
     }
 
+    /**
+     * 
+     * @param isAlive 
+     */
     public void setIsAlive(boolean isAlive) {
         this.isAlive = isAlive;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public boolean isFixed() {
         return isFixed;
     }
 
+    /**
+     * 
+     * @param isFixed 
+     */
     public void setIsFixed(boolean isFixed) {
         this.isFixed = isFixed;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public boolean isBonus() {
         return isBonus;
     }
 
+    /**
+     * 
+     * @param isBonus 
+     */
     public void setIsBonus(boolean isBonus) {
         this.isBonus = isBonus;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public boolean hasValue() {
         return hasValue;
     }
 
+    /**
+     * 
+     * @param hasValue 
+     */
     public void setHasValue(boolean hasValue) {
         this.hasValue = hasValue;
     }
     
-    
+    /**
+     * 
+     * @return 
+     */
+    public boolean isFlipV() {
+        return isFlipV;
+    }
+
+    /**
+     * 
+     * @param isFlipV 
+     */
+    public void setIsFlipV(boolean isFlipV) {
+        this.isFlipV = isFlipV;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public boolean isFlipH() {
+        return isFlipH;
+    }
+
+    /**
+     * 
+     * @param isFlipH 
+     */
+    public void setIsFlipH(boolean isFlipH) {
+        this.isFlipH = isFlipH;
+    }
     
     /**
      * The update method updates the position of the GameObject.
