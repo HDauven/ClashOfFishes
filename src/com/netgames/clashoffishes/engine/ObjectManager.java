@@ -14,16 +14,16 @@ import java.util.Set;
  */
 public class ObjectManager {
     private final List<GameObject> currentObjects;
-    private final List<GameObject> collisionChecklist;
+    private final List<GameObject> collideChecklist;
     private final Set<GameObject>  removedObjects;
     
     /**
      * 
      */
     public ObjectManager() {
-        this.currentObjects = new ArrayList<>();
-        this.collisionChecklist = new ArrayList<>();
-        this.removedObjects = new HashSet<>();
+        this.currentObjects   = new ArrayList<>();
+        this.collideChecklist = new ArrayList<>();
+        this.removedObjects   = new HashSet<>();
     }
     
     /**
@@ -55,5 +55,21 @@ public class ObjectManager {
      */
     public void resetCurrentObject() {
         currentObjects.clear();
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public List getCollideChecklist() {
+        return collideChecklist;
+    }
+    
+    /**
+     * 
+     */
+    public void resetCollideChecklist() {
+        collideChecklist.clear();
+        collideChecklist.addAll(currentObjects);
     }
 }
