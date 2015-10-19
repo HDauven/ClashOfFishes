@@ -22,6 +22,14 @@ public class Player extends AnimatedObject {
     int framecounter = 0;
     int runningspeed = 6;
     
+    /**
+     * 
+     * @param manager
+     * @param SVGData
+     * @param xLocation
+     * @param yLocation
+     * @param spriteCels 
+     */
     public Player(GameManager manager,String SVGData, double xLocation, double yLocation, Image... spriteCels) {
         super(SVGData, xLocation, yLocation, spriteCels);
         gameManager = manager;
@@ -29,20 +37,37 @@ public class Player extends AnimatedObject {
         vY = 2;
     }
 
-
+    /**
+     * 
+     */
     @Override
     public void update() {
         // TODO implement the update method for a player
         setXYLocation();
-        // setBoundaries();
+        setBoundaries();
         // setImageState();
         // movePlayer(iX, iY);
     }
     
+    /**
+     * 
+     */
     private void setXYLocation() {
         if (gameManager.isRight()) { iX += vX; }
         if (gameManager.isLeft())  { iX -= vX; }
         if (gameManager.isDown())  { iY += vY; }
         if (gameManager.isUp())    { iY -= vY; }
     }
+    
+    /**
+     * 
+     */
+    private void setBoundaries() {
+        if (iX >= rightBoundary)  { iX = rightBoundary; }
+        if (iX <= leftBoundary)   { iX = leftBoundary; }
+        if (iY >= bottomBoundary) { iY = bottomBoundary; }
+        if (iY <= topBoundary)    { iY = topBoundary; }
+    }
+    
+    
 }
