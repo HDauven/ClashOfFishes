@@ -137,6 +137,38 @@ public abstract class GameObject {
     }
     
     /**
+     * 
+     * @return 
+     */
+    public double getpX() {
+        return pX;
+    }
+
+    /**
+     * 
+     * @param pX 
+     */
+    public void setpX(double pX) {
+        this.pX = pX;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public double getpY() {
+        return pY;
+    }
+
+    /**
+     * 
+     * @param pY 
+     */
+    public void setpY(double pY) {
+        this.pY = pY;
+    }
+    
+    /**
      * The update method updates the position of the GameObject.
      */
     protected abstract void update();
