@@ -89,6 +89,22 @@ public abstract class GameObject {
     }
 
     /**
+     * 
+     * @return 
+     */
+    public SVGPath getSpriteBound() {
+        return spriteBound;
+    }
+
+    /**
+     * 
+     * @param spriteBound 
+     */
+    public void setSpriteBound(SVGPath spriteBound) {
+        this.spriteBound = spriteBound;
+    }
+    
+    /**
      * The update method updates the position of the GameObject.
      */
     protected abstract void update();
