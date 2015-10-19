@@ -21,7 +21,13 @@ import javafx.stage.Stage;
  */
 public class GuiUtilities {
     
-    
+    //TODO GuiTitles aanvullen
+    public static final String FISH_POOL_TITLE = "<PLACEHOLDER TITLE>";   
+    public static final String GAME_WORLD_TITLE = "<PLACEHOLDER TITLE>";
+    public static final String HIGHSCORE_TITLE = "<PLACEHOLDER TITLE>";  
+    public static final String HOSTED_GAMES_TITLE = "<PLACEHOLDER TITLE>";
+    public static final String LOGIN_TITLE = "Welcome - Please login using your username/email & password.";   
+    public static final String REGISTRATION_TITLE = "Register a new account.";
     
     public static void buildStage(Object window, String fileName, String title) {
         try {
@@ -36,5 +42,12 @@ public class GuiUtilities {
             }
     }
     
-    
+    public static String getStartMenuTitle() {
+        Administration administration = Administration.get();
+        String username = "";
+        if (administration.getLoggedInUser() != null) {
+            username = administration.getLoggedInUser().getUsername();
+        }
+        return "Welcome back: " + username;
+    } 
 }

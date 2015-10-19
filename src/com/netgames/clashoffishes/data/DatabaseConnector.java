@@ -43,6 +43,7 @@ public class DatabaseConnector
             
             statements.put(Statement.LOGIN, connection.prepareCall("{call spLogin(?, ?, ?, ?, ?)}"));
             statements.put(Statement.REGISTER_USER, connection.prepareCall("{call spRegister_User(?, ?, ?, ?)}"));
+            statements.put(Statement.GET_ALL_USER_HIGHSCORES, connection.prepareCall("{call spGetAllUserHighscores(?)}"));
             
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println(ex.toString());

@@ -6,11 +6,14 @@
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
+import com.netgames.clashoffishes.util.GuiUtilities;
+import java.lang.invoke.MethodHandles;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -20,6 +23,8 @@ import javafx.fxml.Initializable;
 public class StartMenuController implements Initializable
 {
     private Administration administration;
+    @FXML
+    private AnchorPane paneMainForm;
 
     /**
      * Initializes the controller class.
@@ -35,21 +40,28 @@ public class StartMenuController implements Initializable
     @FXML
     private void hostGame(ActionEvent event)
     {
+        //TODO Hein code om applicatie op te starten.
+        System.out.println("TODO Hein code om applicatie op te starten.");
+        System.out.println("TODO Hein code om applicatie op te starten.");
+        System.out.println("TODO Hein code om applicatie op te starten.");
     }
 
     @FXML
     private void joinGame(ActionEvent event)
     {
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "HostedGames", GuiUtilities.HOSTED_GAMES_TITLE);
     }
 
     @FXML
     private void highscore(ActionEvent event)
     {
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Highscore", GuiUtilities.HIGHSCORE_TITLE);
     }
 
     @FXML
     private void quitGame(ActionEvent event)
     {
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Login", GuiUtilities.LOGIN_TITLE);
     }
     
 }

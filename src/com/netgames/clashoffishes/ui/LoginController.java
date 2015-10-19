@@ -57,13 +57,13 @@ public class LoginController implements Initializable {
             this.userIdentifier = null;
             this.password = null;
         } else {
-            GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", "Welcome back: " + this.administration.getLoggedInUser().getUsername());
+            GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", GuiUtilities.getStartMenuTitle());
         }
     }
 
     @FXML
     private void register_OnClick(ActionEvent event) {     
-        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Registration", "Register a new account");   
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Registration", GuiUtilities.REGISTRATION_TITLE);   
     }
 
 }

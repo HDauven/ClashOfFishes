@@ -6,17 +6,17 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="352.0" prefWidth="536.0" styleClass="background-gradient" stylesheets="@OceanUI.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="paneMainForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="352.0" prefWidth="536.0" styleClass="background-gradient" stylesheets="@OceanUI.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.netgames.clashoffishes.ui.FishPoolController">
    <children>
-      <Label layoutX="56.0" layoutY="32.0" text="\$Username's game">
+      <Label fx:id="lblLobbyName" layoutX="56.0" layoutY="32.0" text="\$Username's game">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <TableView layoutX="56.0" layoutY="100.0" prefHeight="195.0" prefWidth="238.0">
+      <TableView fx:id="tbvPlayers" layoutX="56.0" layoutY="100.0" prefHeight="195.0" prefWidth="238.0">
         <columns>
-          <TableColumn prefWidth="117.0" text="Players" />
-          <TableColumn prefWidth="120.0" text="Ready" />
+          <TableColumn fx:id="clmPlayers" prefWidth="117.0" text="Players" />
+          <TableColumn fx:id="clmReady" prefWidth="120.0" text="Ready" />
         </columns>
       </TableView>
       <Label layoutX="377.0" layoutY="133.0" text="GameMode">
@@ -24,8 +24,10 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <RadioButton layoutX="377.0" layoutY="169.0" mnemonicParsing="false" text="Last Fish Swimming" />
-      <RadioButton layoutX="377.0" layoutY="192.0" mnemonicParsing="false" text="Evolution of Time" />
-      <RadioButton layoutX="377.0" layoutY="214.0" mnemonicParsing="false" text="Evolved" />
+      <RadioButton fx:id="rbLastFishSwimming" layoutX="377.0" layoutY="169.0" mnemonicParsing="false" text="Last Fish Swimming" />
+      <RadioButton fx:id="rbEvolutionOfTime" layoutX="377.0" layoutY="192.0" mnemonicParsing="false" text="Evolution of Time" />
+      <RadioButton fx:id="rbEvolved" layoutX="377.0" layoutY="214.0" mnemonicParsing="false" text="Evolved" />
+      <Button fx:id="btnReady" layoutX="363.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnReady_OnClick" prefHeight="41.0" prefWidth="126.0" text="I'm ready!" />
+      <Button fx:id="btnStartGame" layoutX="363.0" layoutY="295.0" mnemonicParsing="false" onAction="#btnStartGame_OnClick" prefHeight="41.0" prefWidth="126.0" text="Start game!" />
    </children>
 </AnchorPane>

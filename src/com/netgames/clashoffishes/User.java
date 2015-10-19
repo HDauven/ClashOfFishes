@@ -1,5 +1,7 @@
 package com.netgames.clashoffishes;
 
+import java.util.List;
+
 /**
  * Created by bram on 1/10/15.
  */
@@ -8,34 +10,26 @@ public class User
 
     private final String username;
     private final String email;
-    private final int score;
+    private List<Highscore> highscores;
 
-    public User(String username, String email)
-    {
+    public User(String username, String email, List<Highscore> highscores) {
         this.username = username;
         this.email = email;
-        this.score = 0;
+        this.highscores = highscores;
     }
-
-    public User(String username, String email, int score)
-    {
-        this.username = username;
-        this.email = email;
-        this.score = score;
-    }
-
-    public String getUsername()
-    {
+    
+    public String getUsername() {
         return username;
     }
 
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
 
-    public int getScore()
-    {
-        return score;
+    public List<Highscore> getHighscores() {
+        return highscores;
     }
+
+
+
 }

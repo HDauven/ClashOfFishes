@@ -12,6 +12,7 @@ package com.netgames.clashoffishes.data;
 public enum Statement {
     
     LOGIN,
-    REGISTER_USER
+    REGISTER_USER,
+    GET_ALL_USER_HIGHSCORES
     
 }

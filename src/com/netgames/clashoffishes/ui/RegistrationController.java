@@ -80,7 +80,7 @@ public class RegistrationController implements Initializable {
 
     @FXML
     private void btnCancel_OnClick(ActionEvent event) {
-        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Login", "Login");  
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Login", GuiUtilities.LOGIN_TITLE);  
     }
 
     private void ClearTextFields () {

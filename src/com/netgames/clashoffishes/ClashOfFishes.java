@@ -5,6 +5,7 @@
  */
 package com.netgames.clashoffishes;
 
+import com.netgames.clashoffishes.util.GuiUtilities;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,7 +26,7 @@ public class ClashOfFishes extends Application
         try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/netgames/clashoffishes/ui/Login.fxml"));
         root = (Parent) loader.load();
-        stage.setTitle("Login");
+        stage.setTitle(GuiUtilities.LOGIN_TITLE);
         stage.setScene(new Scene(root));
         stage.show();
         } catch(Exception e) {
