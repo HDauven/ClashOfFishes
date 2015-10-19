@@ -21,7 +21,7 @@ public class GameManager extends Application {
     
     private final GameMode gameMode;
     private GameLoop gameLoop;
-    private ObjectManager castDirector;
+    private ObjectManager objectManager;
     
     
     @Override
@@ -79,6 +79,16 @@ public class GameManager extends Application {
         });
     }
     
+    /**
+     * 
+     */
+    public void createObjectManager() {
+        objectManager = new ObjectManager();
+    }
+    
+    /**
+     * 
+     */
     private void createStartGameLoop() {
         gameLoop = new GameLoop(this);
         gameLoop.start();
