@@ -2,6 +2,7 @@ package com.netgames.clashoffishes.engine;
 
 import com.netgames.clashoffishes.engine.object.GameObject;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,9 +17,43 @@ public class ObjectManager {
     private final List<GameObject> collisionChecklist;
     private final Set<GameObject>  removedObjects;
     
+    /**
+     * 
+     */
     public ObjectManager() {
         this.currentObjects = new ArrayList<>();
         this.collisionChecklist = new ArrayList<>();
         this.removedObjects = new HashSet<>();
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public List<GameObject> getCurrentObject() {
+        return currentObjects;
+    }
+    
+    /**
+     * 
+     * @param objects 
+     */
+    public void addCurrentObject(GameObject... objects) {
+        currentObjects.addAll(Arrays.asList(objects));
+    }
+    
+    /**
+     * 
+     * @param objects 
+     */
+    public void removeCurrentObject(GameObject... objects) {
+        currentObjects.removeAll(Arrays.asList(objects));
+    }
+    
+    /**
+     * 
+     */
+    public void resetCurrentObject() {
+        currentObjects.clear();
     }
 }
