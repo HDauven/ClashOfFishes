@@ -13,19 +13,17 @@ import javafx.stage.Stage;
  * @author Hein Dauven
  */
 public class GameManager extends Application {
-    static final double WIDTH = 640, HEIGHT = 400;
+    static final double WIDTH = 1024, HEIGHT = 768;
     private boolean up, down, left, right;
     private boolean wKey, aKey, sKey, dKey;
     private Scene scene;
     private StackPane root;
-    
-    private final GameMode gameMode;
     private GameLoop gameLoop;
     private ObjectManager objectManager;
     
     
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         primaryStage.setTitle("InvinciBagel");
         root = new StackPane();
         scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
@@ -139,9 +137,5 @@ public class GameManager extends Application {
     private void createStartGameLoop() {
         gameLoop = new GameLoop(this);
         gameLoop.start();
-    }
-
-    public GameManager(GameMode gameMode) {
-        this.gameMode = gameMode;
     }
 }
