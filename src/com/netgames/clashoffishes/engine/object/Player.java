@@ -88,6 +88,7 @@ public class Player extends AnimatedObject {
                 if (framecounter >= runningspeed) {
                     animator = true;
                     framecounter = 0;
+                    spriteFrame.setRotate(0);
                 } else { 
                     framecounter += 1; 
                 }                
@@ -96,6 +97,7 @@ public class Player extends AnimatedObject {
                 if (framecounter >= runningspeed) {
                     animator = false;
                     framecounter = 0;
+                    spriteFrame.setRotate(0);
                 } else {
                     framecounter += 1;
                 }
@@ -110,6 +112,7 @@ public class Player extends AnimatedObject {
                 if (framecounter >= runningspeed) {
                     animator = true;
                     framecounter = 0;
+                    spriteFrame.setRotate(0);
                 } else { 
                     framecounter += 1; 
                 }                
@@ -118,11 +121,30 @@ public class Player extends AnimatedObject {
                 if (framecounter >= runningspeed) {
                     animator = false;
                     framecounter = 0;
+                    spriteFrame.setRotate(0);
                 } else {
                     framecounter += 1;
                 }
             }            
-        }        
+        }
+        
+        if (gameManager.isDown()) {
+            spriteFrame.setImage(imageStates.get(1));
+            if (gameManager.isLeft()) {
+                spriteFrame.setRotate(-45);
+            } else if (gameManager.isRight()) {
+                spriteFrame.setRotate(45);
+            }
+        }
+        
+        if (gameManager.isUp()) {
+            spriteFrame.setImage(imageStates.get(1));
+            if (gameManager.isLeft()) {
+                spriteFrame.setRotate(45);
+            } else if (gameManager.isRight()) {
+                spriteFrame.setRotate(-45);
+            }
+        }
     }
     
     /**
