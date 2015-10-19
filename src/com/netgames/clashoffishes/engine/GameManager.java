@@ -26,6 +26,7 @@ public class GameManager extends Application {
     private ImageView gameWindow;
     private GameLoop gameLoop;
     private ObjectManager objectManager;
+    public Player player;
     
     // <editor-fold defaultstate="collapsed" desc="Audioclips & URL declaration">
     private AudioClip biteSound0;
@@ -195,6 +196,8 @@ public class GameManager extends Application {
         bLayer1 = new Prop("", 0, ((HEIGHT / 2) - (backLayer1.getRequestedHeight() / 2)), backLayer1);
         mLayer1 = new Prop("", 0, ((HEIGHT / 2) - (middleLayer1.getRequestedHeight() / 2)), middleLayer1);
         fLayer1 = new Prop("", 0, ((HEIGHT / 2) - (frontLayer1.getRequestedHeight() / 2)), frontLayer1);
+        
+        player = new Player(this, "", 0, 0, bubbles1, bubbles2, bubbles3, bubbles4);
     }
     
     /**
@@ -207,6 +210,8 @@ public class GameManager extends Application {
         root.getChildren().add(bLayer1.getSpriteFrame());
         root.getChildren().add(mLayer1.getSpriteFrame());
         root.getChildren().add(fLayer1.getSpriteFrame());
+        
+        root.getChildren().add(player.getSpriteFrame());
     }
     
     /**
@@ -220,6 +225,8 @@ public class GameManager extends Application {
         objectManager.addCurrentObject(bLayer1);
         objectManager.addCurrentObject(mLayer1);
         objectManager.addCurrentObject(fLayer1);
+        
+        objectManager.addCurrentObject(player);
     }
     
     /**

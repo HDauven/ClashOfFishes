@@ -17,7 +17,7 @@ public class GameLoop extends AnimationTimer {
     @Override
     public void handle(long now) {
         // TODO
-        // gamemanaer.player.update();
+        gameManager.player.update();
     }
     
     @Override

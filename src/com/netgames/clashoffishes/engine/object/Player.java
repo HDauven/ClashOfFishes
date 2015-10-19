@@ -45,7 +45,7 @@ public class Player extends AnimatedObject {
         // TODO implement the update method for a player
         setXYLocation();
         setBoundaries();
-        // setImageState();
+        setImageState();
         movePlayer(iX, iY);
     }
     
@@ -67,6 +67,62 @@ public class Player extends AnimatedObject {
         if (iX <= leftBoundary)   { iX = leftBoundary; }
         if (iY >= bottomBoundary) { iY = bottomBoundary; }
         if (iY <= topBoundary)    { iY = topBoundary; }
+    }
+    
+    private void setImageState() {
+        /* check whether the character stands still */
+        if (!gameManager.isRight() &&
+            !gameManager.isLeft()  &&
+            !gameManager.isDown()  &&
+            !gameManager.isUp()) {
+            spriteFrame.setImage(imageStates.get(0));
+            animator = false;
+            framecounter = 0;
+        }  
+        
+        if (gameManager.isRight()) {
+            spriteFrame.setScaleX(1);
+            this.setIsFlipH(false);
+            if (!animator && (!gameManager.isDown() && !gameManager.isUp())) {
+                spriteFrame.setImage(imageStates.get(1));
+                if (framecounter >= runningspeed) {
+                    animator = true;
+                    framecounter = 0;
+                } else { 
+                    framecounter += 1; 
+                }                
+            } else if (animator) {
+                spriteFrame.setImage(imageStates.get(2));
+                if (framecounter >= runningspeed) {
+                    animator = false;
+                    framecounter = 0;
+                } else {
+                    framecounter += 1;
+                }
+            }            
+        }
+        
+        if (gameManager.isLeft()) {
+            spriteFrame.setScaleX(-1);
+            this.setIsFlipH(true);
+            if (!animator && (!gameManager.isDown() && !gameManager.isUp())) {
+                spriteFrame.setImage(imageStates.get(1));
+                if (framecounter >= runningspeed) {
+                    animator = true;
+                    framecounter = 0;
+                } else { 
+                    framecounter += 1; 
+                }                
+            } else if (animator) {
+                spriteFrame.setImage(imageStates.get(2));
+                if (framecounter >= runningspeed) {
+                    animator = false;
+                    framecounter = 0;
+                } else {
+                    framecounter += 1;
+                }
+            }            
+        }        
     }
     
     /**
