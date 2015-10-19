@@ -52,4 +52,35 @@ public abstract class AnimatedObject extends GameObject {
     @Override
     public abstract void update(); 
     
+    /**
+     * 
+     * @return 
+     */
+    public double getvX() {
+        return vX;
+    }
+
+    /**
+     * 
+     * @param vX 
+     */
+    public void setvX(double vX) {
+        this.vX = vX;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public double getvY() {
+        return vY;
+    }
+
+    /**
+     * 
+     * @param vY 
+     */
+    public void setvY(double vY) {
+        this.vY = vY;
+    }    
 }
