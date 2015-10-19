@@ -46,7 +46,7 @@ public class Player extends AnimatedObject {
         setXYLocation();
         setBoundaries();
         // setImageState();
-        // movePlayer(iX, iY);
+        movePlayer(iX, iY);
     }
     
     /**
@@ -69,5 +69,13 @@ public class Player extends AnimatedObject {
         if (iY <= topBoundary)    { iY = topBoundary; }
     }
     
-    
+    /**
+     * 
+     * @param x
+     * @param y 
+     */
+    private void movePlayer(double x, double y) {
+        spriteFrame.setTranslateX(x);
+        spriteFrame.setTranslateY(y);
+    }
 }
