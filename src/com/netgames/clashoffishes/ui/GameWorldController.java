@@ -23,7 +23,7 @@ public class GameWorldController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
+        // TODO initialize components for controller
     }    
     
 }
