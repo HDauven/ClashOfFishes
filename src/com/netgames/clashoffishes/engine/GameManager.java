@@ -12,6 +12,9 @@ import com.netgames.clashoffishes.engine.object.*;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 /**
  * Class that manages the game itself.
@@ -31,6 +34,10 @@ public class GameManager extends Application {
     private GameLoop gameLoop;
     private ObjectManager objectManager;
     private Player player;
+    private int gameScore = 0;
+    private Text scoreText;
+    private Text playerTextOne, playerTextTwo, playerTextThree, playerTextFour;
+    private Text scoreTextOne, scoreTextTwo, scoreTextThree, scoreTextFour;
     
     // <editor-fold defaultstate="collapsed" desc="Audioclips & URL declaration">
     private AudioClip biteSound0;
@@ -247,9 +254,9 @@ public class GameManager extends Application {
         //gameWindow.setImage(backgroundLayer1);
         menu = new Group();
         
-        scoreWindow = new Rectangle(100, 360, Color.BLACK);
+        scoreWindow = new Rectangle(100, 440, Color.BLACK);
         scoreWindow.setTranslateX(0);
-        scoreWindow.setTranslateY((HEIGHT / 2) - 180);
+        scoreWindow.setTranslateY((HEIGHT / 2) - 220);
         scoreWindow.opacityProperty().set(0.5);
         menu.getChildren().add(scoreWindow);
         
@@ -262,7 +269,79 @@ public class GameManager extends Application {
         miniMap = new Rectangle(200, 200, Color.BLACK);
         miniMap.setTranslateX(WIDTH - 200);
         miniMap.opacityProperty().set(0.5);
-        menu.getChildren().add(miniMap);     
+        menu.getChildren().add(miniMap);   
+        
+        scoreText = new Text();
+        scoreText.setText("Scoreboard");
+        scoreText.setFill(Color.WHITE);
+        scoreText.setFont(Font.font("System", FontWeight.BOLD, 14));
+        scoreText.setLayoutX(10);
+        scoreText.setLayoutY((HEIGHT / 2) - 195);
+        menu.getChildren().add(scoreText);
+        
+        playerTextOne = new Text();
+        playerTextOne.setText("Player one: ");
+        playerTextOne.setFill(Color.WHITE);
+        playerTextOne.setFont(Font.font("System", FontWeight.BOLD, 12));
+        playerTextOne.setLayoutX(10);
+        playerTextOne.setLayoutY((HEIGHT / 2) - 170);
+        menu.getChildren().add(playerTextOne);
+        
+        scoreTextOne = new Text();
+        scoreTextOne.setText("Score: ");
+        scoreTextOne.setFill(Color.WHITE);
+        scoreTextOne.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreTextOne.setLayoutX(10);
+        scoreTextOne.setLayoutY((HEIGHT / 2) - 90);
+        menu.getChildren().add(scoreTextOne);
+        
+        playerTextTwo = new Text();
+        playerTextTwo.setText("Player two: ");
+        playerTextTwo.setFill(Color.WHITE);
+        playerTextTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
+        playerTextTwo.setLayoutX(10);
+        playerTextTwo.setLayoutY((HEIGHT / 2) - 70);
+        menu.getChildren().add(playerTextTwo);
+        
+        scoreTextTwo = new Text();
+        scoreTextTwo.setText("Score: ");
+        scoreTextTwo.setFill(Color.WHITE);
+        scoreTextTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreTextTwo.setLayoutX(10);
+        scoreTextTwo.setLayoutY((HEIGHT / 2) + 10);
+        menu.getChildren().add(scoreTextTwo);
+        
+        playerTextThree = new Text();
+        playerTextThree.setText("Player three: ");
+        playerTextThree.setFill(Color.WHITE);
+        playerTextThree.setFont(Font.font("System", FontWeight.BOLD, 12));
+        playerTextThree.setLayoutX(10);
+        playerTextThree.setLayoutY((HEIGHT / 2) + 30);
+        menu.getChildren().add(playerTextThree);
+        
+        scoreTextThree = new Text();
+        scoreTextThree.setText("Score: ");
+        scoreTextThree.setFill(Color.WHITE);
+        scoreTextThree.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreTextThree.setLayoutX(10);
+        scoreTextThree.setLayoutY((HEIGHT / 2) + 110);
+        menu.getChildren().add(scoreTextThree);
+        
+        playerTextFour = new Text();
+        playerTextFour.setText("Player four: ");
+        playerTextFour.setFill(Color.WHITE);
+        playerTextFour.setFont(Font.font("System", FontWeight.BOLD, 12));
+        playerTextFour.setLayoutX(10);
+        playerTextFour.setLayoutY((HEIGHT / 2) + 130);
+        menu.getChildren().add(playerTextFour);
+        
+        scoreTextFour = new Text();
+        scoreTextFour.setText("Score: ");
+        scoreTextFour.setFill(Color.WHITE);
+        scoreTextFour.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreTextFour.setLayoutX(10);
+        scoreTextFour.setLayoutY((HEIGHT / 2) + 210);
+        menu.getChildren().add(scoreTextFour);
     }
     
     private void addNodesToGroup() {
