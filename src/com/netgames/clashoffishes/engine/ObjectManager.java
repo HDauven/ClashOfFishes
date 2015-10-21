@@ -77,7 +77,7 @@ public class ObjectManager {
      * 
      * @return 
      */
-    public Set getRemovedActors() {
+    public Set getRemovedObject() {
         return removedObjects;
     }
     
@@ -85,18 +85,18 @@ public class ObjectManager {
      * 
      * @param actors 
      */
-    public void addToRemovedActors(GameObject... actors) {
-        if (actors.length > 1) {
-            removedObjects.addAll(Arrays.asList((GameObject[]) actors));
+    public void addToRemovedObjects(GameObject... objects) {
+        if (objects.length > 1) {
+            removedObjects.addAll(Arrays.asList((GameObject[]) objects));
         }else {
-            removedObjects.add(actors[0]);
+            removedObjects.add(objects[0]);
         }
     }
     
     /**
      * 
      */
-    public void resetRemovedActors() {
+    public void resetRemovedObjects() {
         currentObjects.removeAll(removedObjects);
         removedObjects.clear();
     }

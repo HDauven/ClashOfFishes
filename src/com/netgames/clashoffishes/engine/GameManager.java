@@ -5,12 +5,16 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import com.netgames.clashoffishes.engine.object.*;
+import javafx.scene.Group;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 /**
  * Class that manages the game itself.
@@ -23,11 +27,19 @@ public class GameManager extends Application {
     private boolean wKey, aKey, sKey, dKey;
     private boolean space;
     private Scene scene;
-    private StackPane root;
+    private Group root;
+    private Group menu;
+    private Rectangle scoreWindow, menuBar, miniMap;
     private ImageView gameWindow;
     private GameLoop gameLoop;
     private ObjectManager objectManager;
-    public Player player;
+    private Player player;
+    private int gameScore = 0;
+    private Text scoreText;
+    private Text playerTextOne, playerTextTwo, playerTextThree, playerTextFour;
+    private Text scoreTextOne, scoreTextTwo, scoreTextThree, scoreTextFour;
+    private ImageView playerViewOne, playerViewTwo, playerViewThree, playerViewFour;
+    private Image playerIconOne, playerIconTwo, playerIconThree, playerIconFour;
     
     // <editor-fold defaultstate="collapsed" desc="Audioclips & URL declaration">
     private AudioClip biteSound0;
@@ -61,11 +73,12 @@ public class GameManager extends Application {
     private Image energyDrink;
     private URL eventDir;
     // </editor-fold>
-    
+    // TODO make this class dynamic. 
+    // TODO if this class becomes dynamic we will ascend to god status.
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Clash of Fishes");
-        root = new StackPane();
+        root = new Group();
         scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -77,7 +90,7 @@ public class GameManager extends Application {
         addGameObjectNodes();
         createObjectManager();
         createSplashScreenAndGameMenuNodes();
-        addNodesToStackPane();
+        addNodesToGroup();
         createStartGameLoop();
     }
     
@@ -86,7 +99,9 @@ public class GameManager extends Application {
     }
     
     /**
-     *  
+     * Sets event handling for the scene object.
+     * Based on user input, booleans are triggered to decide whether an user 
+     * is actively using a key or not.
      */
     private void createSceneEventHandling() {
         scene.setOnKeyPressed((KeyEvent event) -> {
@@ -119,7 +134,7 @@ public class GameManager extends Application {
     }
     
     /**
-     * 
+     * Loads audio assets into the game.
      */
     private void loadAudioAssets() {
         // TODO loading audio asset format:
@@ -130,7 +145,7 @@ public class GameManager extends Application {
     }
     
     /**
-     * 
+     * Loads image assets into the game.
      */
     private void loadImageAssets() {
         // TODO adding image asset format:
@@ -190,21 +205,22 @@ public class GameManager extends Application {
     }
     
     /**
-     * 
+     * Creates the necessary GameObjects for the game.
      */
     private void createGameObjects() {
         // TODO adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
         bgLayer1 = new Prop("", 0, 0, backgroundLayer1);
-        bLayer1 = new Prop("", 0, ((HEIGHT / 2) - (backLayer1.getRequestedHeight() / 2)), backLayer1);
-        mLayer1 = new Prop("", 0, ((HEIGHT / 2) - (middleLayer1.getRequestedHeight() / 2)), middleLayer1);
-        fLayer1 = new Prop("", 0, ((HEIGHT / 2) - (frontLayer1.getRequestedHeight() / 2)), frontLayer1);
+        bLayer1 = new Prop("", 0, (HEIGHT - backLayer1.getRequestedHeight()), backLayer1);
+        mLayer1 = new Prop("", 0, (HEIGHT - middleLayer1.getRequestedHeight()), middleLayer1);
+        fLayer1 = new Prop("", 0, (HEIGHT - frontLayer1.getRequestedHeight()), frontLayer1);
+        // ((HEIGHT / 2) - (frontLayer1.getRequestedHeight() / 2))
         
-        player = new Player(this, "", 0, 0, bubbles1, bubbles2, bubbles3, bubbles4);
+        player = new Player(this, "", WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
     }
     
     /**
-     * 
+     * Adds GameObjects to the root node.
      */
     private void addGameObjectNodes() {
         // TODO adding game object nodes
@@ -218,7 +234,8 @@ public class GameManager extends Application {
     }
     
     /**
-     * 
+     * Creates the ObjectManager object. This is necessary for the detection of
+     * collision and the removal of objects from the game.
      */
     public void createObjectManager() {
         objectManager = new ObjectManager();
@@ -233,23 +250,145 @@ public class GameManager extends Application {
     }
     
     /**
-     * 
+     * Sets up the necessary game menu items.
      */
     private void createSplashScreenAndGameMenuNodes() {
         // TODO create a splashscreen and add menu items:
         // 
         //gameWindow = new ImageView();
         //gameWindow.setImage(backgroundLayer1);
-    }
-    
-    private void addNodesToStackPane() {
-        // TODO add nodes to the stack pane:
-        // root.getChildren().add(container);
-        //root.getChildren().add(gameWindow);
+        menu = new Group();
+        
+        scoreWindow = new Rectangle(100, 440, Color.BLACK);
+        scoreWindow.setTranslateX(0);
+        scoreWindow.setTranslateY((HEIGHT / 2) - 220);
+        scoreWindow.opacityProperty().set(0.5);
+        menu.getChildren().add(scoreWindow);
+        
+        menuBar = new Rectangle(600, 50, Color.BLACK);
+        menuBar.setTranslateX((WIDTH - 600) / 2);
+        menuBar.setTranslateY(HEIGHT - 50);
+        menuBar.opacityProperty().set(0.5);
+        menu.getChildren().add(menuBar);
+        
+        miniMap = new Rectangle(200, 200, Color.BLACK);
+        miniMap.setTranslateX(WIDTH - 200);
+        miniMap.opacityProperty().set(0.5);
+        menu.getChildren().add(miniMap);   
+        
+        scoreText = new Text();
+        scoreText.setText("Scoreboard");
+        scoreText.setFill(Color.WHITE);
+        scoreText.setFont(Font.font("System", FontWeight.BOLD, 14));
+        scoreText.setLayoutX(10);
+        scoreText.setLayoutY((HEIGHT / 2) - 195);
+        menu.getChildren().add(scoreText);
+        
+        playerTextOne = new Text();
+        playerTextOne.setText("Player one: ");
+        playerTextOne.setFill(Color.WHITE);
+        playerTextOne.setFont(Font.font("System", FontWeight.BOLD, 12));
+        playerTextOne.setLayoutX(10);
+        playerTextOne.setLayoutY((HEIGHT / 2) - 170);
+        menu.getChildren().add(playerTextOne);
+        
+        playerViewOne = new ImageView();
+        playerIconOne = new Image(playerDir.toString() + "Bubbles1.png", 80, 49, true, false, true);
+        playerViewOne.setImage(playerIconOne);
+        playerViewOne.setLayoutX(10);
+        playerViewOne.setLayoutY((HEIGHT / 2) - 160);
+        menu.getChildren().add(playerViewOne);
+        
+        scoreTextOne = new Text();
+        scoreTextOne.setText("Score: ");
+        scoreTextOne.setFill(Color.WHITE);
+        scoreTextOne.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreTextOne.setLayoutX(10);
+        scoreTextOne.setLayoutY((HEIGHT / 2) - 90);
+        menu.getChildren().add(scoreTextOne);
+        
+        playerTextTwo = new Text();
+        playerTextTwo.setText("Player two: ");
+        playerTextTwo.setFill(Color.WHITE);
+        playerTextTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
+        playerTextTwo.setLayoutX(10);
+        playerTextTwo.setLayoutY((HEIGHT / 2) - 70);
+        menu.getChildren().add(playerTextTwo);
+        
+        playerViewTwo = new ImageView();
+        playerIconTwo = new Image(playerDir.toString() + "Cleo1.png", 80, 50, true, false, true);
+        playerViewTwo.setImage(playerIconTwo);
+        playerViewTwo.setLayoutX(10);
+        playerViewTwo.setLayoutY((HEIGHT / 2) - 60);
+        menu.getChildren().add(playerViewTwo);
+        
+        scoreTextTwo = new Text();
+        scoreTextTwo.setText("Score: ");
+        scoreTextTwo.setFill(Color.WHITE);
+        scoreTextTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreTextTwo.setLayoutX(10);
+        scoreTextTwo.setLayoutY((HEIGHT / 2) + 10);
+        menu.getChildren().add(scoreTextTwo);
+        
+        playerTextThree = new Text();
+        playerTextThree.setText("Player three: ");
+        playerTextThree.setFill(Color.WHITE);
+        playerTextThree.setFont(Font.font("System", FontWeight.BOLD, 12));
+        playerTextThree.setLayoutX(10);
+        playerTextThree.setLayoutY((HEIGHT / 2) + 30);
+        menu.getChildren().add(playerTextThree);
+        
+        playerViewThree = new ImageView();
+        playerIconThree = new Image(playerDir.toString() + "Fred1.png", 80, 54, true, false, true);
+        playerViewThree.setImage(playerIconThree);
+        playerViewThree.setLayoutX(10);
+        playerViewThree.setLayoutY((HEIGHT / 2) + 40);
+        menu.getChildren().add(playerViewThree);
+        
+        scoreTextThree = new Text();
+        scoreTextThree.setText("Score: ");
+        scoreTextThree.setFill(Color.WHITE);
+        scoreTextThree.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreTextThree.setLayoutX(10);
+        scoreTextThree.setLayoutY((HEIGHT / 2) + 110);
+        menu.getChildren().add(scoreTextThree);
+        
+        playerTextFour = new Text();
+        playerTextFour.setText("Player four: ");
+        playerTextFour.setFill(Color.WHITE);
+        playerTextFour.setFont(Font.font("System", FontWeight.BOLD, 12));
+        playerTextFour.setLayoutX(10);
+        playerTextFour.setLayoutY((HEIGHT / 2) + 130);
+        menu.getChildren().add(playerTextFour);
+        
+        playerViewFour = new ImageView();
+        playerIconFour = new Image(playerDir.toString() + "Gill1.png", 126, 45, true, false, true);
+        playerViewFour.setImage(playerIconFour);
+        playerViewFour.setLayoutX(10);
+        playerViewFour.setLayoutY((HEIGHT / 2) + 140);
+        menu.getChildren().add(playerViewFour);
+        
+        scoreTextFour = new Text();
+        scoreTextFour.setText("Score: ");
+        scoreTextFour.setFill(Color.WHITE);
+        scoreTextFour.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreTextFour.setLayoutX(10);
+        scoreTextFour.setLayoutY((HEIGHT / 2) + 210);
+        menu.getChildren().add(scoreTextFour);
     }
     
     /**
-     * 
+     * Adds other nodes to the root Group object.
+     */
+    private void addNodesToGroup() {
+        // TODO add nodes to the root Group:
+        // root.getChildren().add(container);
+        //root.getChildren().add(gameWindow);
+        root.getChildren().add(menu);
+    }
+    
+    /**
+     * Creates a GameLoop object and runs an instance of this class.
      */
     private void createStartGameLoop() {
         gameLoop = new GameLoop(this);
@@ -400,9 +539,34 @@ public class GameManager extends Application {
     }
     
     /**
-     * 
+     * Plays the bite sound of a fish.
      */
     public void playBiteSound() {
         this.biteSound0.play();
+    }
+
+    /**
+     * Gets the Group node instance that belongs to this GameManager and holds 
+     * all the GameObjects.
+     * @return the root Group belonging to this game session.
+     */
+    public Group getRoot() {
+        return root;
+    }
+
+    /**
+     * Gets the ObjectManager instance that belongs to this GameManager.
+     * @return the objectManager belonging to this game session.
+     */
+    public ObjectManager getObjectManager() {
+        return objectManager;
+    }
+
+    /**
+     * Gets the Player instance that belongs to this GameManager.
+     * @return The player belonging to this game session.
+     */
+    public Player getPlayer() {
+        return player;
     }
 }

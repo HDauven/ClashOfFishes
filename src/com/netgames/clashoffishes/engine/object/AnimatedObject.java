@@ -53,6 +53,16 @@ public abstract class AnimatedObject extends GameObject {
     public abstract void update(); 
     
     /**
+     * The collide method checks whether an AnimatedObject has collided
+     * with a GameObject.
+     * @param object A GameObject that is currently in game.
+     * @return Whether the collision is true or false.
+     */
+    public boolean collide(GameObject object) {
+        return false;
+    }
+    
+    /**
      * 
      * @return 
      */
