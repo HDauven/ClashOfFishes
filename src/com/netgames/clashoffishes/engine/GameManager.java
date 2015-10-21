@@ -5,14 +5,12 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import com.netgames.clashoffishes.engine.object.*;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -26,14 +24,13 @@ public class GameManager extends Application {
     private boolean wKey, aKey, sKey, dKey;
     private boolean space;
     private Scene scene;
-    //public StackPane root;
-    public Group root;
+    private Group root;
     private Group menu;
     private Rectangle scoreWindow, menuBar, miniMap;
     private ImageView gameWindow;
     private GameLoop gameLoop;
-    public ObjectManager objectManager;
-    public Player player;
+    private ObjectManager objectManager;
+    private Player player;
     
     // <editor-fold defaultstate="collapsed" desc="Audioclips & URL declaration">
     private AudioClip biteSound0;
@@ -431,5 +428,25 @@ public class GameManager extends Application {
      */
     public void playBiteSound() {
         this.biteSound0.play();
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public Group getRoot() {
+        return root;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public ObjectManager getObjectManager() {
+        return objectManager;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

@@ -172,16 +172,16 @@ public class Player extends AnimatedObject {
      * 
      */
     public void checkCollision() {
-       for (int i = 0; i < gameManager.objectManager.getCurrentObject().size(); i++) {
-           GameObject object = gameManager.objectManager.getCurrentObject().get(i);
+       for (int i = 0; i < gameManager.getObjectManager().getCurrentObject().size(); i++) {
+           GameObject object = gameManager.getObjectManager().getCurrentObject().get(i);
            if(collide(object)) {
                 gameManager.playBiteSound();
                 // Adds the object that the player collided with to the RemovedObjects list.
-                gameManager.objectManager.addToRemovedObjects(object);
+                gameManager.getObjectManager().addToRemovedObjects(object);
                 // Removes the object that the player collided with from the root Node.
-                gameManager.root.getChildren().remove(object.getSpriteFrame());
+                gameManager.getRoot().getChildren().remove(object.getSpriteFrame());
                 // Deletes all the removed objects from the game.
-                gameManager.objectManager.resetRemovedObjects();
+                gameManager.getObjectManager().resetRemovedObjects();
            }
        } 
     }
@@ -207,13 +207,13 @@ public class Player extends AnimatedObject {
     @Override
     public boolean collide(GameObject object) {
         // Checks if the player ImageView has collided with objects ImageView.
-        if (gameManager.player.spriteFrame.getBoundsInParent().intersects(
+        if (gameManager.getPlayer().spriteFrame.getBoundsInParent().intersects(
             object.getSpriteFrame().getBoundsInParent())) {
             
             // A shape is generated based on the SVG path of the player and the object
             // If the shapes intersect, a new shape is created.
             Shape intersection = SVGPath.intersect(
-                    gameManager.player.getSpriteBound(),
+                    gameManager.getPlayer().getSpriteBound(),
                     object.getSpriteBound());
             
             // Based on the prior intersection we will check whether the collision really
