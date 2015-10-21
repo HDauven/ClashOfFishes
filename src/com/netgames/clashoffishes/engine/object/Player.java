@@ -187,13 +187,15 @@ public class Player extends AnimatedObject {
        for (int i = 0; i < gameManager.getObjectManager().getCurrentObject().size(); i++) {
            GameObject object = gameManager.getObjectManager().getCurrentObject().get(i);
            if(collide(object)) {
-                gameManager.playBiteSound();
-                // Adds the object that the player collided with to the RemovedObjects list.
-                gameManager.getObjectManager().addToRemovedObjects(object);
-                // Removes the object that the player collided with from the root Node.
-                gameManager.getRoot().getChildren().remove(object.getSpriteFrame());
-                // Deletes all the removed objects from the game.
-                gameManager.getObjectManager().resetRemovedObjects();
+               // Calculates the amount of scores a Player gets after a collision takes place.
+               scoringEngine(object);
+               gameManager.playBiteSound();
+               // Adds the object that the player collided with to the RemovedObjects list.
+               gameManager.getObjectManager().addToRemovedObjects(object);
+               // Removes the object that the player collided with from the root Node.
+               gameManager.getRoot().getChildren().remove(object.getSpriteFrame());
+               // Deletes all the removed objects from the game.
+               gameManager.getObjectManager().resetRemovedObjects();
            }
        } 
     }
@@ -238,5 +240,13 @@ public class Player extends AnimatedObject {
             }
         }        
         return false;
+    }
+    
+    /**
+     * Framework that controls the scoring mechanism for the game.
+     * @param object that the Player object has collision with.
+     */
+    private void scoringEngine(GameObject object) {
+        
     }
 }
