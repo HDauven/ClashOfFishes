@@ -23,7 +23,7 @@ public class GameManager extends Application {
     private boolean wKey, aKey, sKey, dKey;
     private boolean space;
     private Scene scene;
-    private StackPane root;
+    public StackPane root;
     private ImageView gameWindow;
     private GameLoop gameLoop;
     public ObjectManager objectManager;

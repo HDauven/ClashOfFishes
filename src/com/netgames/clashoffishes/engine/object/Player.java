@@ -174,7 +174,15 @@ public class Player extends AnimatedObject {
     public void checkCollision() {
        for (int i = 0; i < gameManager.objectManager.getCurrentObject().size(); i++) {
            GameObject object = gameManager.objectManager.getCurrentObject().get(i);
-           collide(object);
+           if(collide(object)) {
+                gameManager.playBiteSound();
+                // Adds the object that the player collided with to the RemovedObjects list.
+                gameManager.objectManager.addToRemovedObjects(object);
+                // Removes the object that the player collided with from the root Node.
+                gameManager.root.getChildren().remove(object.getSpriteFrame());
+                // Deletes all the removed objects from the game.
+                gameManager.objectManager.resetRemovedObjects();
+           }
        } 
     }
     
@@ -198,9 +206,6 @@ public class Player extends AnimatedObject {
      */
     @Override
     public boolean collide(GameObject object) {
-        // Boolean used to confirm whether collision was detected or not.
-        boolean collisionDetect = false;
-        
         // Checks if the player ImageView has collided with objects ImageView.
         if (gameManager.player.spriteFrame.getBoundsInParent().intersects(
             object.getSpriteFrame().getBoundsInParent())) {
@@ -217,9 +222,9 @@ public class Player extends AnimatedObject {
             // We check here for the opposite of '-1' (0 and more) to see whether collision
             // took place.
             if (intersection.getBoundsInLocal().getWidth() != -1) {
-                collisionDetect = true;
+                return true;
             }
         }        
-        return collisionDetect;
+        return false;
     }
 }
