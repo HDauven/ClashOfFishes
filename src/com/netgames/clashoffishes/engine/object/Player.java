@@ -178,6 +178,24 @@ public class Player extends AnimatedObject {
        } 
     }
     
+    /**
+     * This method checks for collision detection between the Player object and
+     * another GameObject object. It goes through a number of steps to ascertain
+     * whether collision has taken place with the given object.
+     * 
+     * First, it checks whether the Player objects ImageView node and the 
+     * GameObjects ImageView node have intersected. (via the BoundsInParent of Node)
+     * 
+     * If this is the case, the SVG path of both objects are used to create a new 
+     * Shape via the SVGPath class intersect method. (which returns a new shape)
+     * 
+     * Based on the result of this intersect, the new Shape will be checked to 
+     * see whether it has a width. If the new Shape has no width, we know the 
+     * shape is empty and no intersection took place.
+     * 
+     * @param object A GameObject that is part of the ObjectManager.
+     * @return Whether collision took place or not.
+     */
     @Override
     public boolean collide(GameObject object) {
         // Boolean used to confirm whether collision was detected or not.
@@ -185,7 +203,7 @@ public class Player extends AnimatedObject {
         
         // Checks if the player ImageView has collided with objects ImageView.
         if (gameManager.player.spriteFrame.getBoundsInParent().intersects(
-            object.getSpriteFrame().getBoundsInLocal())) {
+            object.getSpriteFrame().getBoundsInParent())) {
             
             // A shape is generated based on the SVG path of the player and the object
             // If the shapes intersect, a new shape is created.
