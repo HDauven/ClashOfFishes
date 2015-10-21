@@ -38,6 +38,8 @@ public class GameManager extends Application {
     private Text scoreText;
     private Text playerTextOne, playerTextTwo, playerTextThree, playerTextFour;
     private Text scoreTextOne, scoreTextTwo, scoreTextThree, scoreTextFour;
+    private ImageView playerViewOne, playerViewTwo, playerViewThree, playerViewFour;
+    private Image playerIconOne, playerIconTwo, playerIconThree, playerIconFour;
     
     // <editor-fold defaultstate="collapsed" desc="Audioclips & URL declaration">
     private AudioClip biteSound0;
@@ -71,11 +73,11 @@ public class GameManager extends Application {
     private Image energyDrink;
     private URL eventDir;
     // </editor-fold>
-    
+    // TODO make this class dynamic. 
+    // TODO if this class becomes dynamic we will ascend to god status.
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Clash of Fishes");
-        //root = new StackPane();
         root = new Group();
         scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
         primaryStage.setScene(scene);
@@ -97,7 +99,9 @@ public class GameManager extends Application {
     }
     
     /**
-     *  
+     * Sets event handling for the scene object.
+     * Based on user input, booleans are triggered to decide whether an user 
+     * is actively using a key or not.
      */
     private void createSceneEventHandling() {
         scene.setOnKeyPressed((KeyEvent event) -> {
@@ -130,7 +134,7 @@ public class GameManager extends Application {
     }
     
     /**
-     * 
+     * Loads audio assets into the game.
      */
     private void loadAudioAssets() {
         // TODO loading audio asset format:
@@ -141,7 +145,7 @@ public class GameManager extends Application {
     }
     
     /**
-     * 
+     * Loads image assets into the game.
      */
     private void loadImageAssets() {
         // TODO adding image asset format:
@@ -201,7 +205,7 @@ public class GameManager extends Application {
     }
     
     /**
-     * 
+     * Creates the necessary GameObjects for the game.
      */
     private void createGameObjects() {
         // TODO adding game objects format:
@@ -216,7 +220,7 @@ public class GameManager extends Application {
     }
     
     /**
-     * 
+     * Adds GameObjects to the root node.
      */
     private void addGameObjectNodes() {
         // TODO adding game object nodes
@@ -230,7 +234,8 @@ public class GameManager extends Application {
     }
     
     /**
-     * 
+     * Creates the ObjectManager object. This is necessary for the detection of
+     * collision and the removal of objects from the game.
      */
     public void createObjectManager() {
         objectManager = new ObjectManager();
@@ -245,7 +250,7 @@ public class GameManager extends Application {
     }
     
     /**
-     * 
+     * Sets up the necessary game menu items.
      */
     private void createSplashScreenAndGameMenuNodes() {
         // TODO create a splashscreen and add menu items:
@@ -287,6 +292,13 @@ public class GameManager extends Application {
         playerTextOne.setLayoutY((HEIGHT / 2) - 170);
         menu.getChildren().add(playerTextOne);
         
+        playerViewOne = new ImageView();
+        playerIconOne = new Image(playerDir.toString() + "Bubbles1.png", 80, 49, true, false, true);
+        playerViewOne.setImage(playerIconOne);
+        playerViewOne.setLayoutX(10);
+        playerViewOne.setLayoutY((HEIGHT / 2) - 160);
+        menu.getChildren().add(playerViewOne);
+        
         scoreTextOne = new Text();
         scoreTextOne.setText("Score: ");
         scoreTextOne.setFill(Color.WHITE);
@@ -302,6 +314,13 @@ public class GameManager extends Application {
         playerTextTwo.setLayoutX(10);
         playerTextTwo.setLayoutY((HEIGHT / 2) - 70);
         menu.getChildren().add(playerTextTwo);
+        
+        playerViewTwo = new ImageView();
+        playerIconTwo = new Image(playerDir.toString() + "Cleo1.png", 80, 50, true, false, true);
+        playerViewTwo.setImage(playerIconTwo);
+        playerViewTwo.setLayoutX(10);
+        playerViewTwo.setLayoutY((HEIGHT / 2) - 60);
+        menu.getChildren().add(playerViewTwo);
         
         scoreTextTwo = new Text();
         scoreTextTwo.setText("Score: ");
@@ -319,6 +338,13 @@ public class GameManager extends Application {
         playerTextThree.setLayoutY((HEIGHT / 2) + 30);
         menu.getChildren().add(playerTextThree);
         
+        playerViewThree = new ImageView();
+        playerIconThree = new Image(playerDir.toString() + "Fred1.png", 80, 54, true, false, true);
+        playerViewThree.setImage(playerIconThree);
+        playerViewThree.setLayoutX(10);
+        playerViewThree.setLayoutY((HEIGHT / 2) + 40);
+        menu.getChildren().add(playerViewThree);
+        
         scoreTextThree = new Text();
         scoreTextThree.setText("Score: ");
         scoreTextThree.setFill(Color.WHITE);
@@ -335,6 +361,13 @@ public class GameManager extends Application {
         playerTextFour.setLayoutY((HEIGHT / 2) + 130);
         menu.getChildren().add(playerTextFour);
         
+        playerViewFour = new ImageView();
+        playerIconFour = new Image(playerDir.toString() + "Gill1.png", 126, 45, true, false, true);
+        playerViewFour.setImage(playerIconFour);
+        playerViewFour.setLayoutX(10);
+        playerViewFour.setLayoutY((HEIGHT / 2) + 140);
+        menu.getChildren().add(playerViewFour);
+        
         scoreTextFour = new Text();
         scoreTextFour.setText("Score: ");
         scoreTextFour.setFill(Color.WHITE);
@@ -344,15 +377,18 @@ public class GameManager extends Application {
         menu.getChildren().add(scoreTextFour);
     }
     
+    /**
+     * Adds other nodes to the root Group object.
+     */
     private void addNodesToGroup() {
-        // TODO add nodes to the stack pane:
+        // TODO add nodes to the root Group:
         // root.getChildren().add(container);
         //root.getChildren().add(gameWindow);
         root.getChildren().add(menu);
     }
     
     /**
-     * 
+     * Creates a GameLoop object and runs an instance of this class.
      */
     private void createStartGameLoop() {
         gameLoop = new GameLoop(this);
@@ -503,28 +539,33 @@ public class GameManager extends Application {
     }
     
     /**
-     * 
+     * Plays the bite sound of a fish.
      */
     public void playBiteSound() {
         this.biteSound0.play();
     }
 
     /**
-     * 
-     * @return 
+     * Gets the Group node instance that belongs to this GameManager and holds 
+     * all the GameObjects.
+     * @return the root Group belonging to this game session.
      */
     public Group getRoot() {
         return root;
     }
 
     /**
-     * 
-     * @return 
+     * Gets the ObjectManager instance that belongs to this GameManager.
+     * @return the objectManager belonging to this game session.
      */
     public ObjectManager getObjectManager() {
         return objectManager;
     }
 
+    /**
+     * Gets the Player instance that belongs to this GameManager.
+     * @return The player belonging to this game session.
+     */
     public Player getPlayer() {
         return player;
     }
