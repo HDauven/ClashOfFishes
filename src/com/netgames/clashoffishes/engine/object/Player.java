@@ -14,9 +14,11 @@ import javafx.scene.shape.Shape;
  */
 public class Player extends AnimatedObject {
     protected GameManager gameManager;
+    // TODO make the sprite size dynamic
     protected static final double SPRITE_PIXELS_X = 81;
     protected static final double SPRITE_PIXELS_Y = 81;
-    protected static final double rightBoundary   = (WIDTH - SPRITE_PIXELS_X); //(WIDTH/2 - SPRITE_PIXELS_X/2
+    // TODO make the boundaries dynamic
+    protected static final double rightBoundary   = (WIDTH - SPRITE_PIXELS_X);
     protected static final double leftBoundary    = 0;
     protected static final double bottomBoundary  = (HEIGHT - SPRITE_PIXELS_Y);
     protected static final double topBoundary     = 0;
@@ -25,12 +27,12 @@ public class Player extends AnimatedObject {
     int runningspeed = 6;
     
     /**
-     * 
-     * @param manager
-     * @param SVGData
-     * @param xLocation
-     * @param yLocation
-     * @param spriteCels 
+     * Constructor for a Player object.
+     * @param manager Reference to the GameManager object that manages the game.
+     * @param SVGData The vector path of a Player object.
+     * @param xLocation The x start coordinate of a Player object.
+     * @param yLocation The y start coordinate of a Player object.
+     * @param spriteCels The images that form the animation of a Player object.
      */
     public Player(GameManager manager,String SVGData, double xLocation, double yLocation, Image... spriteCels) {
         super(SVGData, xLocation, yLocation, spriteCels);
@@ -40,11 +42,10 @@ public class Player extends AnimatedObject {
     }
 
     /**
-     * 
+     * Executes a number of methods every game refresh.
      */
     @Override
     public void update() {
-        // TODO implement the update method for a player
         setXYLocation();
         setBoundaries();
         setImageState();
@@ -54,7 +55,7 @@ public class Player extends AnimatedObject {
     }
     
     /**
-     * 
+     * Changes the X and Y location of the Player object, based on given user inputs.
      */
     private void setXYLocation() {
         if (gameManager.isRight()) { iX += vX; }
@@ -64,7 +65,8 @@ public class Player extends AnimatedObject {
     }
     
     /**
-     * 
+     * Sets the values of a Player objects boundaries, based on the size of the
+     * game window.
      */
     private void setBoundaries() {
         if (iX >= rightBoundary)  { iX = rightBoundary; }
@@ -73,6 +75,10 @@ public class Player extends AnimatedObject {
         if (iY <= topBoundary)    { iY = topBoundary; }
     }
     
+    /**
+     * Sets the image state of the Player object, based on user actions. 
+     * Effectively realizes animation.
+     */
     private void setImageState() {
         /* check whether the character stands still */
         if (!gameManager.isRight() &&
@@ -152,9 +158,9 @@ public class Player extends AnimatedObject {
     }
     
     /**
-     * 
-     * @param x
-     * @param y 
+     * Sets the Player objects new location, based on the new X and Y coordinates.
+     * @param x coordinate of the Player object
+     * @param y coordinate of the Player object
      */
     private void movePlayer(double x, double y) {
         spriteFrame.setTranslateX(x);
@@ -162,7 +168,7 @@ public class Player extends AnimatedObject {
     }
     
     /**
-     * 
+     * Controls the playing of an AudioClip based on certain conditions.
      */
     private void playAudioClip() {
         if (gameManager.isSpace()) { gameManager.playBiteSound(); }
@@ -170,7 +176,9 @@ public class Player extends AnimatedObject {
     
     /**
      * This method checks for each GameObject whether it has collision with the 
-     * player of the game. 
+     * player of the game. The detection algorithm is called each time a new 
+     * screen refresh has been called upon.
+     * 
      * This method will call the collide method on all GameObjects and if it 
      * detects collision with the player, get rid of the object it has collision
      * with.
