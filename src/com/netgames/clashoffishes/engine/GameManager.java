@@ -10,7 +10,10 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import com.netgames.clashoffishes.engine.object.*;
+import javafx.scene.Group;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.shape.Rectangle;
 
 /**
  * Class that manages the game itself.
@@ -23,7 +26,10 @@ public class GameManager extends Application {
     private boolean wKey, aKey, sKey, dKey;
     private boolean space;
     private Scene scene;
-    public StackPane root;
+    //public StackPane root;
+    public Group root;
+    private Group menu;
+    private Rectangle scoreWindow, menuBar, miniMap;
     private ImageView gameWindow;
     private GameLoop gameLoop;
     public ObjectManager objectManager;
@@ -65,7 +71,8 @@ public class GameManager extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Clash of Fishes");
-        root = new StackPane();
+        //root = new StackPane();
+        root = new Group();
         scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -77,7 +84,7 @@ public class GameManager extends Application {
         addGameObjectNodes();
         createObjectManager();
         createSplashScreenAndGameMenuNodes();
-        addNodesToStackPane();
+        addNodesToGroup();
         createStartGameLoop();
     }
     
@@ -196,11 +203,12 @@ public class GameManager extends Application {
         // TODO adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
         bgLayer1 = new Prop("", 0, 0, backgroundLayer1);
-        bLayer1 = new Prop("", 0, ((HEIGHT / 2) - (backLayer1.getRequestedHeight() / 2)), backLayer1);
-        mLayer1 = new Prop("", 0, ((HEIGHT / 2) - (middleLayer1.getRequestedHeight() / 2)), middleLayer1);
-        fLayer1 = new Prop("", 0, ((HEIGHT / 2) - (frontLayer1.getRequestedHeight() / 2)), frontLayer1);
+        bLayer1 = new Prop("", 0, (HEIGHT - backLayer1.getRequestedHeight()), backLayer1);
+        mLayer1 = new Prop("", 0, (HEIGHT - middleLayer1.getRequestedHeight()), middleLayer1);
+        fLayer1 = new Prop("", 0, (HEIGHT - frontLayer1.getRequestedHeight()), frontLayer1);
+        // ((HEIGHT / 2) - (frontLayer1.getRequestedHeight() / 2))
         
-        player = new Player(this, "", 0, 0, bubbles1, bubbles2, bubbles3, bubbles4);
+        player = new Player(this, "", WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
     }
     
     /**
@@ -240,12 +248,31 @@ public class GameManager extends Application {
         // 
         //gameWindow = new ImageView();
         //gameWindow.setImage(backgroundLayer1);
+        menu = new Group();
+        
+        scoreWindow = new Rectangle(100, 300, Color.BLACK);
+        scoreWindow.setTranslateX(0);
+        scoreWindow.setTranslateY((HEIGHT / 2) - 150);
+        scoreWindow.opacityProperty().set(0.5);
+        menu.getChildren().add(scoreWindow);
+        
+        menuBar = new Rectangle(600, 50, Color.BLACK);
+        menuBar.setTranslateX((WIDTH - 600) / 2);
+        menuBar.setTranslateY(HEIGHT - 50);
+        menuBar.opacityProperty().set(0.5);
+        menu.getChildren().add(menuBar);
+        
+        miniMap = new Rectangle(200, 200, Color.BLACK);
+        miniMap.setTranslateX(WIDTH - 200);
+        miniMap.opacityProperty().set(0.5);
+        menu.getChildren().add(miniMap);     
     }
     
-    private void addNodesToStackPane() {
+    private void addNodesToGroup() {
         // TODO add nodes to the stack pane:
         // root.getChildren().add(container);
         //root.getChildren().add(gameWindow);
+        root.getChildren().add(menu);
     }
     
     /**

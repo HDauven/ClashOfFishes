@@ -16,10 +16,10 @@ public class Player extends AnimatedObject {
     protected GameManager gameManager;
     protected static final double SPRITE_PIXELS_X = 81;
     protected static final double SPRITE_PIXELS_Y = 81;
-    protected static final double rightBoundary   = (WIDTH/2 - SPRITE_PIXELS_X/2);
-    protected static final double leftBoundary    = -(WIDTH/2 - SPRITE_PIXELS_X/2);
-    protected static final double bottomBoundary  = (HEIGHT/2 - SPRITE_PIXELS_Y/2);
-    protected static final double topBoundary     = -(HEIGHT/2 - SPRITE_PIXELS_Y/2);
+    protected static final double rightBoundary   = (WIDTH - SPRITE_PIXELS_X); //(WIDTH/2 - SPRITE_PIXELS_X/2
+    protected static final double leftBoundary    = 0;
+    protected static final double bottomBoundary  = (HEIGHT - SPRITE_PIXELS_Y);
+    protected static final double topBoundary     = 0;
     boolean animator = false;
     int framecounter = 0;
     int runningspeed = 6;
