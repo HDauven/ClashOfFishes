@@ -169,7 +169,11 @@ public class Player extends AnimatedObject {
     }
     
     /**
-     * 
+     * This method checks for each GameObject whether it has collision with the 
+     * player of the game. 
+     * This method will call the collide method on all GameObjects and if it 
+     * detects collision with the player, get rid of the object it has collision
+     * with.
      */
     public void checkCollision() {
        for (int i = 0; i < gameManager.getObjectManager().getCurrentObject().size(); i++) {
