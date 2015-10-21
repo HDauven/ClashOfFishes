@@ -250,9 +250,9 @@ public class GameManager extends Application {
         //gameWindow.setImage(backgroundLayer1);
         menu = new Group();
         
-        scoreWindow = new Rectangle(100, 300, Color.BLACK);
+        scoreWindow = new Rectangle(100, 360, Color.BLACK);
         scoreWindow.setTranslateX(0);
-        scoreWindow.setTranslateY((HEIGHT / 2) - 150);
+        scoreWindow.setTranslateY((HEIGHT / 2) - 180);
         scoreWindow.opacityProperty().set(0.5);
         menu.getChildren().add(scoreWindow);
         
