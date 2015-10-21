@@ -4,6 +4,8 @@ import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
 import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import com.netgames.clashoffishes.engine.GameManager;
 import javafx.scene.image.Image;
+import javafx.scene.shape.SVGPath;
+import javafx.scene.shape.Shape;
 
 /**
  * Class that represents an actual in-game player.
@@ -178,6 +180,28 @@ public class Player extends AnimatedObject {
     
     @Override
     public boolean collide(GameObject object) {
-        return false;
+        // Boolean used to confirm whether collision was detected or not.
+        boolean collisionDetect = false;
+        
+        // Checks if the player ImageView has collided with objects ImageView.
+        if (gameManager.player.spriteFrame.getBoundsInParent().intersects(
+            object.getSpriteFrame().getBoundsInLocal())) {
+            
+            // A shape is generated based on the SVG path of the player and the object
+            // If the shapes intersect, a new shape is created.
+            Shape intersection = SVGPath.intersect(
+                    gameManager.player.getSpriteBound(),
+                    object.getSpriteBound());
+            
+            // Based on the prior intersection we will check whether the collision really
+            // took place. If no collision took place, the object shouldn't have any size,
+            // so the width would result in a '-1' (-1 meaning no width available).
+            // We check here for the opposite of '-1' (0 and more) to see whether collision
+            // took place.
+            if (intersection.getBoundsInLocal().getWidth() != -1) {
+                collisionDetect = true;
+            }
+        }        
+        return collisionDetect;
     }
 }

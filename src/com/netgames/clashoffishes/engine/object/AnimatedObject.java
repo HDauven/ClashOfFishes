@@ -58,7 +58,9 @@ public abstract class AnimatedObject extends GameObject {
      * @param object A GameObject that is currently in game.
      * @return Whether the collision is true or false.
      */
-    protected abstract boolean collide(GameObject object);
+    public boolean collide(GameObject object) {
+        return false;
+    }
     
     /**
      * 
