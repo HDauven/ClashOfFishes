@@ -10,8 +10,12 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import com.netgames.clashoffishes.engine.object.*;
 import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
+import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -28,12 +32,15 @@ public class GameManager extends Application {
     private boolean wKey, aKey, sKey, dKey;
     private boolean space;
     private Scene scene;
-    private Group root, scoreMenuGroup, menuBarGroup, miniMapGroup;
-    private Rectangle scoreWindow, menuBar, miniMap;
     private GameLoop gameLoop;
     private ObjectManager objectManager;
     private Player player;
     private int gameScore = 0;
+    private GameState gameState;
+    private Group root, scoreMenuGroup, menuBarGroup, miniMapGroup;
+    private Rectangle scoreWindow, menuBar, miniMap;
+    private Button pauseGameButton, continueGameButton;
+    private HBox menuBarBox;
     private Text scoreText;
     private Text playerTextOne, playerTextTwo, playerTextThree, playerTextFour;
     private Text scoreTextOne, scoreTextTwo, scoreTextThree, scoreTextFour;
@@ -297,6 +304,25 @@ public class GameManager extends Application {
         menuBar.opacityProperty().set(0.5);
         menuBarGroup.getChildren().add(menuBar);
         
+        menuBarBox = new HBox(20);
+        menuBarBox.setPadding(new Insets(10));
+        menuBarBox.setTranslateX((WIDTH - 600) / 2);
+        menuBarBox.setTranslateY(HEIGHT - 50);
+        
+        pauseGameButton = new Button();
+        pauseGameButton.setText("Pause Game");
+        pauseGameButton.setOnAction((ActionEvent event) -> {
+            gameLoop.stop();
+        });
+        menuBarBox.getChildren().add(pauseGameButton); 
+        
+        continueGameButton = new Button();
+        continueGameButton.setText("Continue Game");
+        continueGameButton.setOnAction((ActionEvent event) -> {
+            gameLoop.start();
+        });
+        menuBarBox.getChildren().add(continueGameButton);
+        
         miniMap = new Rectangle(200, 200, Color.BLACK);
         miniMap.setTranslateX(WIDTH - 200);
         miniMap.opacityProperty().set(0.5);
@@ -450,6 +476,7 @@ public class GameManager extends Application {
         // TODO add nodes to the root Group:
         // root.getChildren().add(container);
         //root.getChildren().add(gameWindow);
+        menuBarGroup.getChildren().add(menuBarBox);
         root.getChildren().add(scoreMenuGroup);
         root.getChildren().add(menuBarGroup);
         root.getChildren().add(miniMapGroup);
@@ -461,6 +488,7 @@ public class GameManager extends Application {
     private void createStartGameLoop() {
         gameLoop = new GameLoop(this);
         gameLoop.start();
+        gameState = GameState.RUNNING;
     }
     
     /**
