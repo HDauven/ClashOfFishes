@@ -50,7 +50,7 @@ public class Player extends AnimatedObject {
         setBoundaries();
         setImageState();
         movePlayer(iX, iY);
-        playAudioClip();
+        //playAudioClip();
         checkCollision();
     }
     
@@ -249,17 +249,11 @@ public class Player extends AnimatedObject {
     private void scoringEngine(GameObject object) {
         if (object instanceof Prop) { 
             gameManager.setGameScore(5); 
-        }
-        
-        if (object instanceof PropV) { 
+        } else if (object instanceof PropV) { 
             gameManager.setGameScore(4); 
-        }
-        
-        if (object instanceof PropH) { 
+        } else if (object instanceof PropH) { 
             gameManager.setGameScore(3); 
-        }
-        
-        if (object instanceof PropB) { 
+        } else if (object instanceof PropB) { 
             gameManager.setGameScore(2); 
         }       
         gameManager.updateScoreLabelOne();

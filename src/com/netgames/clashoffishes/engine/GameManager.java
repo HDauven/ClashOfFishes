@@ -248,7 +248,7 @@ public class GameManager extends Application {
         objectManager.addCurrentObject(mLayer1);
         objectManager.addCurrentObject(fLayer1);
         
-        objectManager.addCurrentObject(player);
+        //objectManager.addCurrentObject(player);
     }
     
     /**
@@ -615,15 +615,18 @@ public class GameManager extends Application {
     }
 
     /**
-     * Sets the score of the current Player instance.
-     * @param gameScore score
+     * Sets the score of the current Player instance based on the added value.
+     * @param gameScoreAddition added value
      */
-    public void setGameScore(int gameScore) {
-        this.gameScore = gameScore;
+    public void setGameScore(int gameScoreAddition) {
+        this.gameScore = this.gameScore + gameScoreAddition;
     }
 
-    public void setScoreLabelOne(Text scoreLabelOne) {
-        this.scoreLabelOne = scoreLabelOne;
+    /**
+     * Updates the score for Player one on screen.
+     */
+    public void updateScoreLabelOne() {
+        this.scoreLabelOne.setText(String.valueOf(this.gameScore));
     }
     
     
