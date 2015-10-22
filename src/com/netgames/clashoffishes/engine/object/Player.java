@@ -88,6 +88,7 @@ public class Player extends AnimatedObject {
             spriteFrame.setImage(imageStates.get(0));
             animator = false;
             framecounter = 0;
+            spriteFrame.setRotate(0);
         }  
         
         if (gameManager.isRight()) {
