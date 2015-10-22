@@ -9,6 +9,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import com.netgames.clashoffishes.engine.object.*;
+import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
@@ -40,6 +41,8 @@ public class GameManager extends Application {
     private Text scoreLabelOne, scoreLabelTwo, scoreLabelThree, scoreLabelFour;
     private ImageView playerViewOne, playerViewTwo, playerViewThree, playerViewFour;
     private Image playerIconOne, playerIconTwo, playerIconThree, playerIconFour;
+    
+    EnergyDrink energy;
     
     // <editor-fold defaultstate="collapsed" desc="Audioclips & URL declaration">
     private AudioClip biteSound0;
@@ -237,6 +240,7 @@ public class GameManager extends Application {
         // ((HEIGHT / 2) - (frontLayer1.getRequestedHeight() / 2))
         
         player = new Player(this, "", WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
+        energy = new EnergyDrink("", 200, 200, energyDrink);
     }
     
     /**
@@ -251,6 +255,8 @@ public class GameManager extends Application {
         root.getChildren().add(fLayer1.getSpriteFrame());
         
         root.getChildren().add(player.getSpriteFrame());
+        
+        root.getChildren().add(energy.getSpriteFrame());
     }
     
     /**

@@ -18,6 +18,8 @@ public class EnergyDrink extends GameObject implements RandomEvent {
      */
     public EnergyDrink(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
         super(SVGData, xLocation, yLocation, spriteCels);
+        spriteFrame.setTranslateX(xLocation);
+        spriteFrame.setTranslateY(yLocation);
         hasValue = true;
         isBonus  = true;
     }
