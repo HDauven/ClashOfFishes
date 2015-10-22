@@ -36,8 +36,10 @@ public class GameManager extends Application {
     private Player player;
     private int gameScore = 0;
     private Text scoreText;
+    private Font scoreFont;
     private Text playerTextOne, playerTextTwo, playerTextThree, playerTextFour;
     private Text scoreTextOne, scoreTextTwo, scoreTextThree, scoreTextFour;
+    private Text scoreLabelOne, scoreLabelTwo, scoreLabelThree, scoreLabelFour;
     private ImageView playerViewOne, playerViewTwo, playerViewThree, playerViewFour;
     private Image playerIconOne, playerIconTwo, playerIconThree, playerIconFour;
     
@@ -259,12 +261,6 @@ public class GameManager extends Application {
         //gameWindow.setImage(backgroundLayer1);
         menu = new Group();
         
-        scoreWindow = new Rectangle(100, 440, Color.BLACK);
-        scoreWindow.setTranslateX(0);
-        scoreWindow.setTranslateY((HEIGHT / 2) - 220);
-        scoreWindow.opacityProperty().set(0.5);
-        menu.getChildren().add(scoreWindow);
-        
         menuBar = new Rectangle(600, 50, Color.BLACK);
         menuBar.setTranslateX((WIDTH - 600) / 2);
         menuBar.setTranslateY(HEIGHT - 50);
@@ -275,6 +271,13 @@ public class GameManager extends Application {
         miniMap.setTranslateX(WIDTH - 200);
         miniMap.opacityProperty().set(0.5);
         menu.getChildren().add(miniMap);   
+        
+        // <editor-fold defaultstate="collapsed" desc="Scoreboard">
+        scoreWindow = new Rectangle(100, 440, Color.BLACK);
+        scoreWindow.setTranslateX(0);
+        scoreWindow.setTranslateY((HEIGHT / 2) - 220);
+        scoreWindow.opacityProperty().set(0.5);
+        menu.getChildren().add(scoreWindow);
         
         scoreText = new Text();
         scoreText.setText("Scoreboard");
@@ -307,6 +310,14 @@ public class GameManager extends Application {
         scoreTextOne.setLayoutY((HEIGHT / 2) - 90);
         menu.getChildren().add(scoreTextOne);
         
+        scoreLabelOne = new Text();
+        scoreLabelOne.setText(String.valueOf(gameScore));
+        scoreLabelOne.setFill(Color.WHITE);
+        scoreLabelOne.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreLabelOne.setLayoutX(50);
+        scoreLabelOne.setLayoutY((HEIGHT / 2) - 90);
+        menu.getChildren().add(scoreLabelOne);
+        
         playerTextTwo = new Text();
         playerTextTwo.setText("Player two: ");
         playerTextTwo.setFill(Color.WHITE);
@@ -329,6 +340,14 @@ public class GameManager extends Application {
         scoreTextTwo.setLayoutX(10);
         scoreTextTwo.setLayoutY((HEIGHT / 2) + 10);
         menu.getChildren().add(scoreTextTwo);
+        
+        scoreLabelTwo = new Text();
+        scoreLabelTwo.setText("0");
+        scoreLabelTwo.setFill(Color.WHITE);
+        scoreLabelTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreLabelTwo.setLayoutX(50);
+        scoreLabelTwo.setLayoutY((HEIGHT / 2) + 10);
+        menu.getChildren().add(scoreLabelTwo);
         
         playerTextThree = new Text();
         playerTextThree.setText("Player three: ");
@@ -353,6 +372,14 @@ public class GameManager extends Application {
         scoreTextThree.setLayoutY((HEIGHT / 2) + 110);
         menu.getChildren().add(scoreTextThree);
         
+        scoreLabelThree = new Text();
+        scoreLabelThree.setText("0");
+        scoreLabelThree.setFill(Color.WHITE);
+        scoreLabelThree.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreLabelThree.setLayoutX(50);
+        scoreLabelThree.setLayoutY((HEIGHT / 2) + 110);
+        menu.getChildren().add(scoreLabelThree);
+        
         playerTextFour = new Text();
         playerTextFour.setText("Player four: ");
         playerTextFour.setFill(Color.WHITE);
@@ -375,6 +402,15 @@ public class GameManager extends Application {
         scoreTextFour.setLayoutX(10);
         scoreTextFour.setLayoutY((HEIGHT / 2) + 210);
         menu.getChildren().add(scoreTextFour);
+        
+        scoreLabelFour = new Text();
+        scoreLabelFour.setText("0");
+        scoreLabelFour.setFill(Color.WHITE);
+        scoreLabelFour.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreLabelFour.setLayoutX(50);
+        scoreLabelFour.setLayoutY((HEIGHT / 2) + 210);
+        menu.getChildren().add(scoreLabelFour);
+        // </editor-fold>
     }
     
     /**
@@ -569,4 +605,6 @@ public class GameManager extends Application {
     public Player getPlayer() {
         return player;
     }
+    
+    
 }
