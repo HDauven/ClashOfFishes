@@ -9,6 +9,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import com.netgames.clashoffishes.engine.object.*;
+import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
@@ -27,10 +28,8 @@ public class GameManager extends Application {
     private boolean wKey, aKey, sKey, dKey;
     private boolean space;
     private Scene scene;
-    private Group root;
-    private Group menu;
+    private Group root, scoreMenuGroup, menuBarGroup, miniMapGroup;
     private Rectangle scoreWindow, menuBar, miniMap;
-    private ImageView gameWindow;
     private GameLoop gameLoop;
     private ObjectManager objectManager;
     private Player player;
@@ -38,20 +37,15 @@ public class GameManager extends Application {
     private Text scoreText;
     private Text playerTextOne, playerTextTwo, playerTextThree, playerTextFour;
     private Text scoreTextOne, scoreTextTwo, scoreTextThree, scoreTextFour;
+    private Text scoreLabelOne, scoreLabelTwo, scoreLabelThree, scoreLabelFour;
     private ImageView playerViewOne, playerViewTwo, playerViewThree, playerViewFour;
     private Image playerIconOne, playerIconTwo, playerIconThree, playerIconFour;
+    
+    EnergyDrink energy;
     
     // <editor-fold defaultstate="collapsed" desc="Audioclips & URL declaration">
     private AudioClip biteSound0;
     private URL biteSoundFile0;
-    // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="Player images declaration">
-    private Image bubbles1, bubbles2, bubbles3, bubbles4;
-    private Image cleo1, cleo2, cleo3, cleo4;
-    private Image fred1, fred2, fred3, fred4;
-    private Image gill1, gill2, gill3, gill4;
-    private URL playerDir;
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Background images declaration">
@@ -68,11 +62,26 @@ public class GameManager extends Application {
     private URL backgroundDir;
     // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="Player images declaration">
+    private Image bubbles1, bubbles2, bubbles3, bubbles4;
+    private Image cleo1, cleo2, cleo3, cleo4;
+    private Image fred1, fred2, fred3, fred4;
+    private Image gill1, gill2, gill3, gill4;
+    private URL playerDir;
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="NPC images declaration">
+    private Image fish1, fish2, fish3;
+    private Image plankton1, plankton2, plankton3, plankton4;
+    private URL npcDir;
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Event images declaration">
     private Image jeffrey1, jeffrey2, jeffrey3;
-    private Image energyDrink;
+    private Image energyDrink1, fishHook1, seaweed1, diver1;
     private URL eventDir;
     // </editor-fold>
+    
     // TODO make this class dynamic. 
     // TODO if this class becomes dynamic we will ascend to god status.
     @Override
@@ -169,31 +178,42 @@ public class GameManager extends Application {
         
         playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
         // <editor-fold defaultstate="collapsed" desc="Bubbles image instantiation">
-        bubbles1 = new Image(playerDir.toString() + "Bubbles1.png", 125, 78, true, false, true);
-        bubbles2 = new Image(playerDir.toString() + "Bubbles2.png", 125, 78, true, false, true);
-        bubbles3 = new Image(playerDir.toString() + "Bubbles3.png", 125, 78, true, false, true);
-        bubbles4 = new Image(playerDir.toString() + "Bubbles4.png", 125, 78, true, false, true);
+        bubbles1 = new Image(playerDir.toString() + "Bubbles1.png", 103, 66, true, false, true);
+        bubbles2 = new Image(playerDir.toString() + "Bubbles2.png", 100, 66, true, false, true);
+        bubbles3 = new Image(playerDir.toString() + "Bubbles3.png", 103, 66, true, false, true);
+        bubbles4 = new Image(playerDir.toString() + "Bubbles4.png", 105, 66, true, false, true);
         // </editor-fold>
         
         // <editor-fold defaultstate="collapsed" desc="Cleo image instantiation">        
-        cleo1 = new Image(playerDir.toString() + "Cleo1.png", 105, 66, true, false, true);
-        cleo2 = new Image(playerDir.toString() + "Cleo2.png", 105, 66, true, false, true);
-        cleo3 = new Image(playerDir.toString() + "Cleo3.png", 105, 66, true, false, true);
-        cleo4 = new Image(playerDir.toString() + "Cleo4.png", 105, 66, true, false, true);
+        cleo1 = new Image(playerDir.toString() + "Cleo1.png", 120, 75, true, false, true);
+        cleo2 = new Image(playerDir.toString() + "Cleo2.png", 117, 76, true, false, true);
+        cleo3 = new Image(playerDir.toString() + "Cleo3.png", 120, 78, true, false, true);
+        cleo4 = new Image(playerDir.toString() + "Cleo4.png", 125, 72, true, false, true);
         // </editor-fold>
         
         // <editor-fold defaultstate="collapsed" desc="Fred image instantiation">
-        fred1 = new Image(playerDir.toString() + "Fred1.png", 160, 109, true, false, true);
+        fred1 = new Image(playerDir.toString() + "Fred1.png", 153, 109, true, false, true);
         fred2 = new Image(playerDir.toString() + "Fred2.png", 160, 109, true, false, true);
-        fred3 = new Image(playerDir.toString() + "Fred3.png", 160, 109, true, false, true);
-        fred4 = new Image(playerDir.toString() + "Fred4.png", 160, 109, true, false, true);
+        fred3 = new Image(playerDir.toString() + "Fred3.png", 157, 109, true, false, true);
+        fred4 = new Image(playerDir.toString() + "Fred4.png", 147, 109, true, false, true);
         // </editor-fold>
         
         // <editor-fold defaultstate="collapsed" desc="Gill image instantiation">
-        gill1 = new Image(playerDir.toString() + "Gill1.png", 126, 72, true, false, true);
+        gill1 = new Image(playerDir.toString() + "Gill1.png", 123, 72, true, false, true);
         gill2 = new Image(playerDir.toString() + "Gill2.png", 126, 72, true, false, true);
-        gill3 = new Image(playerDir.toString() + "Gill3.png", 126, 72, true, false, true);
-        gill4 = new Image(playerDir.toString() + "Gill4.png", 126, 72, true, false, true);
+        gill3 = new Image(playerDir.toString() + "Gill3.png", 123, 72, true, false, true);
+        gill4 = new Image(playerDir.toString() + "Gill4.png", 120, 72, true, false, true);
+        // </editor-fold>
+        
+        npcDir = this.getClass().getResource("/com/netgames/clashoffishes/images/npc/");
+        // <editor-fold defaultstate="collapsed" desc="NPC image instantiation">
+        //fish1 = new Image(npcDir.toString() + "*.png", 1, 1, true, false, true);
+        //fish2 = new Image(npcDir.toString() + "*.png", 1, 1, true, false, true);
+        //fish3 = new Image(npcDir.toString() + "*.png", 1, 1, true, false, true);
+        //plankton1 = new Image(npcDir.toString() + "Plankton1.png", 25, 28, true, false, true);
+        //plankton2 = new Image(npcDir.toString() + "Plankton2.png", 30, 32, true, false, true);
+        //plankton3 = new Image(npcDir.toString() + "Plankton3.png", 33, 29, true, false, true);
+        //plankton4 = new Image(npcDir.toString() + "Plankton4.png", 62, 77, true, false, true);
         // </editor-fold>
         
         eventDir = this.getClass().getResource("/com/netgames/clashoffishes/images/event/");
@@ -201,7 +221,11 @@ public class GameManager extends Application {
         jeffrey1 = new Image(eventDir.toString() + "Jeffrey1.png", 110, 105, true, false, true);
         jeffrey2 = new Image(eventDir.toString() + "Jeffrey2.png", 110, 105, true, false, true);
         jeffrey3 = new Image(eventDir.toString() + "Jeffrey3.png", 110, 105, true, false, true);
-        // </editor-fold>
+        // </editor-fold>        
+        energyDrink1 = new Image(eventDir.toString() + "EnergyDrink1.png", 50, 241, true, false, true);
+        //fishHook1    = new Image(eventDir.toString() + "FishHook1.png", 89, 905, true, false, true);
+        //seaweed1     = new Image(eventDir.toString() + "Seaweed1.png", 193, 558, true, false, true);
+        //diver1       = new Image(eventDir.toString() + "Diver1.png", 243, 184, true, false, true);
     }
     
     /**
@@ -216,7 +240,10 @@ public class GameManager extends Application {
         fLayer1 = new Prop("", 0, (HEIGHT - frontLayer1.getRequestedHeight()), frontLayer1);
         // ((HEIGHT / 2) - (frontLayer1.getRequestedHeight() / 2))
         
-        player = new Player(this, "", WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
+        player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z", 
+                WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
+        energy = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", 
+                200, 200, energyDrink1);
     }
     
     /**
@@ -231,6 +258,8 @@ public class GameManager extends Application {
         root.getChildren().add(fLayer1.getSpriteFrame());
         
         root.getChildren().add(player.getSpriteFrame());
+        
+        root.getChildren().add(energy.getSpriteFrame());
     }
     
     /**
@@ -241,12 +270,13 @@ public class GameManager extends Application {
         objectManager = new ObjectManager();
         // TODO adding an object to the object manager format:
         // objectManager.addCurrentObject(newobject);
-        objectManager.addCurrentObject(bgLayer1);
-        objectManager.addCurrentObject(bLayer1);
-        objectManager.addCurrentObject(mLayer1);
-        objectManager.addCurrentObject(fLayer1);
+        //objectManager.addCurrentObject(bgLayer1);
+        //objectManager.addCurrentObject(bLayer1);
+        //objectManager.addCurrentObject(mLayer1);
+        //objectManager.addCurrentObject(fLayer1);
         
-        objectManager.addCurrentObject(player);
+        objectManager.addCurrentObject(energy);
+        //objectManager.addCurrentObject(player);
     }
     
     /**
@@ -257,24 +287,27 @@ public class GameManager extends Application {
         // 
         //gameWindow = new ImageView();
         //gameWindow.setImage(backgroundLayer1);
-        menu = new Group();
-        
-        scoreWindow = new Rectangle(100, 440, Color.BLACK);
-        scoreWindow.setTranslateX(0);
-        scoreWindow.setTranslateY((HEIGHT / 2) - 220);
-        scoreWindow.opacityProperty().set(0.5);
-        menu.getChildren().add(scoreWindow);
+        scoreMenuGroup = new Group();
+        menuBarGroup   = new Group();
+        miniMapGroup   = new Group();
         
         menuBar = new Rectangle(600, 50, Color.BLACK);
         menuBar.setTranslateX((WIDTH - 600) / 2);
         menuBar.setTranslateY(HEIGHT - 50);
         menuBar.opacityProperty().set(0.5);
-        menu.getChildren().add(menuBar);
+        menuBarGroup.getChildren().add(menuBar);
         
         miniMap = new Rectangle(200, 200, Color.BLACK);
         miniMap.setTranslateX(WIDTH - 200);
         miniMap.opacityProperty().set(0.5);
-        menu.getChildren().add(miniMap);   
+        miniMapGroup.getChildren().add(miniMap);   
+        
+        // <editor-fold defaultstate="collapsed" desc="Scoreboard">
+        scoreWindow = new Rectangle(100, 440, Color.BLACK);
+        scoreWindow.setTranslateX(0);
+        scoreWindow.setTranslateY((HEIGHT / 2) - 220);
+        scoreWindow.opacityProperty().set(0.5);
+        scoreMenuGroup.getChildren().add(scoreWindow);
         
         scoreText = new Text();
         scoreText.setText("Scoreboard");
@@ -282,7 +315,7 @@ public class GameManager extends Application {
         scoreText.setFont(Font.font("System", FontWeight.BOLD, 14));
         scoreText.setLayoutX(10);
         scoreText.setLayoutY((HEIGHT / 2) - 195);
-        menu.getChildren().add(scoreText);
+        scoreMenuGroup.getChildren().add(scoreText);
         
         playerTextOne = new Text();
         playerTextOne.setText("Player one: ");
@@ -290,14 +323,14 @@ public class GameManager extends Application {
         playerTextOne.setFont(Font.font("System", FontWeight.BOLD, 12));
         playerTextOne.setLayoutX(10);
         playerTextOne.setLayoutY((HEIGHT / 2) - 170);
-        menu.getChildren().add(playerTextOne);
+        scoreMenuGroup.getChildren().add(playerTextOne);
         
         playerViewOne = new ImageView();
-        playerIconOne = new Image(playerDir.toString() + "Bubbles1.png", 80, 49, true, false, true);
+        playerIconOne = new Image(playerDir.toString() + "BubblesIcon.png", 80, 51, true, false, true);
         playerViewOne.setImage(playerIconOne);
         playerViewOne.setLayoutX(10);
         playerViewOne.setLayoutY((HEIGHT / 2) - 160);
-        menu.getChildren().add(playerViewOne);
+        scoreMenuGroup.getChildren().add(playerViewOne);
         
         scoreTextOne = new Text();
         scoreTextOne.setText("Score: ");
@@ -305,7 +338,15 @@ public class GameManager extends Application {
         scoreTextOne.setFont(Font.font("System", FontWeight.BOLD, 12));
         scoreTextOne.setLayoutX(10);
         scoreTextOne.setLayoutY((HEIGHT / 2) - 90);
-        menu.getChildren().add(scoreTextOne);
+        scoreMenuGroup.getChildren().add(scoreTextOne);
+        
+        scoreLabelOne = new Text();
+        scoreLabelOne.setText(String.valueOf(gameScore));
+        scoreLabelOne.setFill(Color.WHITE);
+        scoreLabelOne.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreLabelOne.setLayoutX(50);
+        scoreLabelOne.setLayoutY((HEIGHT / 2) - 90);
+        scoreMenuGroup.getChildren().add(scoreLabelOne);
         
         playerTextTwo = new Text();
         playerTextTwo.setText("Player two: ");
@@ -313,14 +354,14 @@ public class GameManager extends Application {
         playerTextTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
         playerTextTwo.setLayoutX(10);
         playerTextTwo.setLayoutY((HEIGHT / 2) - 70);
-        menu.getChildren().add(playerTextTwo);
+        scoreMenuGroup.getChildren().add(playerTextTwo);
         
         playerViewTwo = new ImageView();
-        playerIconTwo = new Image(playerDir.toString() + "Cleo1.png", 80, 50, true, false, true);
+        playerIconTwo = new Image(playerDir.toString() + "CleoIcon.png", 80, 50, true, false, true);
         playerViewTwo.setImage(playerIconTwo);
         playerViewTwo.setLayoutX(10);
         playerViewTwo.setLayoutY((HEIGHT / 2) - 60);
-        menu.getChildren().add(playerViewTwo);
+        scoreMenuGroup.getChildren().add(playerViewTwo);
         
         scoreTextTwo = new Text();
         scoreTextTwo.setText("Score: ");
@@ -328,7 +369,15 @@ public class GameManager extends Application {
         scoreTextTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
         scoreTextTwo.setLayoutX(10);
         scoreTextTwo.setLayoutY((HEIGHT / 2) + 10);
-        menu.getChildren().add(scoreTextTwo);
+        scoreMenuGroup.getChildren().add(scoreTextTwo);
+        
+        scoreLabelTwo = new Text();
+        scoreLabelTwo.setText("0");
+        scoreLabelTwo.setFill(Color.WHITE);
+        scoreLabelTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreLabelTwo.setLayoutX(50);
+        scoreLabelTwo.setLayoutY((HEIGHT / 2) + 10);
+        scoreMenuGroup.getChildren().add(scoreLabelTwo);
         
         playerTextThree = new Text();
         playerTextThree.setText("Player three: ");
@@ -336,14 +385,14 @@ public class GameManager extends Application {
         playerTextThree.setFont(Font.font("System", FontWeight.BOLD, 12));
         playerTextThree.setLayoutX(10);
         playerTextThree.setLayoutY((HEIGHT / 2) + 30);
-        menu.getChildren().add(playerTextThree);
+        scoreMenuGroup.getChildren().add(playerTextThree);
         
         playerViewThree = new ImageView();
-        playerIconThree = new Image(playerDir.toString() + "Fred1.png", 80, 54, true, false, true);
+        playerIconThree = new Image(playerDir.toString() + "FredIcon.png", 80, 57, true, false, true);
         playerViewThree.setImage(playerIconThree);
         playerViewThree.setLayoutX(10);
         playerViewThree.setLayoutY((HEIGHT / 2) + 40);
-        menu.getChildren().add(playerViewThree);
+        scoreMenuGroup.getChildren().add(playerViewThree);
         
         scoreTextThree = new Text();
         scoreTextThree.setText("Score: ");
@@ -351,7 +400,15 @@ public class GameManager extends Application {
         scoreTextThree.setFont(Font.font("System", FontWeight.BOLD, 12));
         scoreTextThree.setLayoutX(10);
         scoreTextThree.setLayoutY((HEIGHT / 2) + 110);
-        menu.getChildren().add(scoreTextThree);
+        scoreMenuGroup.getChildren().add(scoreTextThree);
+        
+        scoreLabelThree = new Text();
+        scoreLabelThree.setText("0");
+        scoreLabelThree.setFill(Color.WHITE);
+        scoreLabelThree.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreLabelThree.setLayoutX(50);
+        scoreLabelThree.setLayoutY((HEIGHT / 2) + 110);
+        scoreMenuGroup.getChildren().add(scoreLabelThree);
         
         playerTextFour = new Text();
         playerTextFour.setText("Player four: ");
@@ -359,14 +416,14 @@ public class GameManager extends Application {
         playerTextFour.setFont(Font.font("System", FontWeight.BOLD, 12));
         playerTextFour.setLayoutX(10);
         playerTextFour.setLayoutY((HEIGHT / 2) + 130);
-        menu.getChildren().add(playerTextFour);
+        scoreMenuGroup.getChildren().add(playerTextFour);
         
         playerViewFour = new ImageView();
-        playerIconFour = new Image(playerDir.toString() + "Gill1.png", 126, 45, true, false, true);
+        playerIconFour = new Image(playerDir.toString() + "GillIcon.png", 80, 47, true, false, true);
         playerViewFour.setImage(playerIconFour);
         playerViewFour.setLayoutX(10);
         playerViewFour.setLayoutY((HEIGHT / 2) + 140);
-        menu.getChildren().add(playerViewFour);
+        scoreMenuGroup.getChildren().add(playerViewFour);
         
         scoreTextFour = new Text();
         scoreTextFour.setText("Score: ");
@@ -374,7 +431,16 @@ public class GameManager extends Application {
         scoreTextFour.setFont(Font.font("System", FontWeight.BOLD, 12));
         scoreTextFour.setLayoutX(10);
         scoreTextFour.setLayoutY((HEIGHT / 2) + 210);
-        menu.getChildren().add(scoreTextFour);
+        scoreMenuGroup.getChildren().add(scoreTextFour);
+        
+        scoreLabelFour = new Text();
+        scoreLabelFour.setText("0");
+        scoreLabelFour.setFill(Color.WHITE);
+        scoreLabelFour.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreLabelFour.setLayoutX(50);
+        scoreLabelFour.setLayoutY((HEIGHT / 2) + 210);
+        scoreMenuGroup.getChildren().add(scoreLabelFour);
+        // </editor-fold>
     }
     
     /**
@@ -384,7 +450,9 @@ public class GameManager extends Application {
         // TODO add nodes to the root Group:
         // root.getChildren().add(container);
         //root.getChildren().add(gameWindow);
-        root.getChildren().add(menu);
+        root.getChildren().add(scoreMenuGroup);
+        root.getChildren().add(menuBarGroup);
+        root.getChildren().add(miniMapGroup);
     }
     
     /**
@@ -569,4 +637,29 @@ public class GameManager extends Application {
     public Player getPlayer() {
         return player;
     }
+
+    /**
+     * Gets the score of the current Player instance.
+     * @return game score
+     */
+    public int getGameScore() {
+        return gameScore;
+    }
+
+    /**
+     * Sets the score of the current Player instance based on the added value.
+     * @param gameScoreAddition added value
+     */
+    public void setGameScore(int gameScoreAddition) {
+        this.gameScore = this.gameScore + gameScoreAddition;
+    }
+
+    /**
+     * Updates the score for Player one on screen.
+     */
+    public void updateScoreLabelOne() {
+        this.scoreLabelOne.setText(String.valueOf(this.gameScore));
+    }
+    
+    
 }

@@ -3,9 +3,12 @@ package com.netgames.clashoffishes.engine.object;
 import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
 import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import com.netgames.clashoffishes.engine.GameManager;
+import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
+import javafx.scene.shape.StrokeType;
 
 /**
  * Class that represents an actual in-game player.
@@ -50,7 +53,7 @@ public class Player extends AnimatedObject {
         setBoundaries();
         setImageState();
         movePlayer(iX, iY);
-        playAudioClip();
+        //playAudioClip();
         checkCollision();
     }
     
@@ -88,10 +91,13 @@ public class Player extends AnimatedObject {
             spriteFrame.setImage(imageStates.get(0));
             animator = false;
             framecounter = 0;
+            spriteFrame.setRotate(0);
+            spriteBound.setRotate(0);
         }  
         
         if (gameManager.isRight()) {
             spriteFrame.setScaleX(1);
+            spriteBound.setScaleX(1);
             this.setIsFlipH(false);
             if (!animator && (!gameManager.isDown() && !gameManager.isUp())) {
                 spriteFrame.setImage(imageStates.get(1));
@@ -99,6 +105,7 @@ public class Player extends AnimatedObject {
                     animator = true;
                     framecounter = 0;
                     spriteFrame.setRotate(0);
+                    spriteBound.setRotate(0);
                 } else { 
                     framecounter += 1; 
                 }                
@@ -108,6 +115,7 @@ public class Player extends AnimatedObject {
                     animator = false;
                     framecounter = 0;
                     spriteFrame.setRotate(0);
+                    spriteBound.setRotate(0);
                 } else {
                     framecounter += 1;
                 }
@@ -116,6 +124,7 @@ public class Player extends AnimatedObject {
         
         if (gameManager.isLeft()) {
             spriteFrame.setScaleX(-1);
+            spriteBound.setScaleX(-1);
             this.setIsFlipH(true);
             if (!animator && (!gameManager.isDown() && !gameManager.isUp())) {
                 spriteFrame.setImage(imageStates.get(1));
@@ -123,6 +132,7 @@ public class Player extends AnimatedObject {
                     animator = true;
                     framecounter = 0;
                     spriteFrame.setRotate(0);
+                    spriteBound.setRotate(0);
                 } else { 
                     framecounter += 1; 
                 }                
@@ -132,6 +142,7 @@ public class Player extends AnimatedObject {
                     animator = false;
                     framecounter = 0;
                     spriteFrame.setRotate(0);
+                    spriteBound.setRotate(0);
                 } else {
                     framecounter += 1;
                 }
@@ -142,8 +153,10 @@ public class Player extends AnimatedObject {
             spriteFrame.setImage(imageStates.get(1));
             if (gameManager.isLeft()) {
                 spriteFrame.setRotate(-45);
+                spriteBound.setRotate(-45);
             } else if (gameManager.isRight()) {
                 spriteFrame.setRotate(45);
+                spriteBound.setRotate(45);
             }
         }
         
@@ -151,8 +164,10 @@ public class Player extends AnimatedObject {
             spriteFrame.setImage(imageStates.get(1));
             if (gameManager.isLeft()) {
                 spriteFrame.setRotate(45);
+                spriteBound.setRotate(45);
             } else if (gameManager.isRight()) {
                 spriteFrame.setRotate(-45);
+                spriteBound.setRotate(-45);
             }
         }
     }
@@ -221,7 +236,7 @@ public class Player extends AnimatedObject {
     @Override
     public boolean collide(GameObject object) {
         // Checks if the player ImageView has collided with objects ImageView.
-        if (gameManager.getPlayer().spriteFrame.getBoundsInParent().intersects(
+        if (this.spriteFrame.getBoundsInParent().intersects(
             object.getSpriteFrame().getBoundsInParent())) {
             
             // A shape is generated based on the SVG path of the player and the object
@@ -230,7 +245,7 @@ public class Player extends AnimatedObject {
                     gameManager.getPlayer().getSpriteBound(),
                     object.getSpriteBound());
             
-            // Based on the prior intersection we will check whether the collision really
+            // Based on the prior succes iiintersection we will check whether the collision really
             // took place. If no collision took place, the object shouldn't have any size,
             // so the width would result in a '-1' (-1 meaning no width available).
             // We check here for the opposite of '-1' (0 and more) to see whether collision
@@ -247,6 +262,17 @@ public class Player extends AnimatedObject {
      * @param object that the Player object has collision with.
      */
     private void scoringEngine(GameObject object) {
-        
+        if (object instanceof Prop) { 
+            gameManager.setGameScore(-5); 
+        } else if (object instanceof PropV) { 
+            gameManager.setGameScore(-4); 
+        } else if (object instanceof PropH) { 
+            gameManager.setGameScore(-3); 
+        } else if (object instanceof PropB) { 
+            gameManager.setGameScore(-2); 
+        } else if (object instanceof EnergyDrink) { 
+            gameManager.setGameScore(10); 
+        }       
+        gameManager.updateScoreLabelOne();
     }
 }

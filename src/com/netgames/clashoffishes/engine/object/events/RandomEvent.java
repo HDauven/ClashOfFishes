@@ -9,4 +9,5 @@ package com.netgames.clashoffishes.engine.object.events;
  * @version 1.0
  */
 public interface RandomEvent {
+    
 }
