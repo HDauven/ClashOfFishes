@@ -73,15 +73,13 @@ public class GameManager extends Application {
     
     // <editor-fold defaultstate="collapsed" desc="NPC images declaration">
     private Image fish1, fish2, fish3;
-    private Image plankton1;
+    private Image plankton1, plankton2, plankton3, plankton4;
     private URL npcDir;
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Event images declaration">
     private Image jeffrey1, jeffrey2, jeffrey3;
-    private Image energyDrink;
-    private Image fishHook;
-    private Image seaweed;
+    private Image energyDrink1, fishHook1, seaweed1, diver1;
     private URL eventDir;
     // </editor-fold>
     
@@ -213,7 +211,10 @@ public class GameManager extends Application {
         //fish1 = new Image(npcDir.toString() + "*.png", 1, 1, true, false, true);
         //fish2 = new Image(npcDir.toString() + "*.png", 1, 1, true, false, true);
         //fish3 = new Image(npcDir.toString() + "*.png", 1, 1, true, false, true);
-        //plankton1 = new Image(npcDir.toString() + "*.png", 1, 1, true, false, true);
+        //plankton1 = new Image(npcDir.toString() + "Plankton1.png", 25, 28, true, false, true);
+        //plankton2 = new Image(npcDir.toString() + "Plankton2.png", 30, 32, true, false, true);
+        //plankton3 = new Image(npcDir.toString() + "Plankton3.png", 33, 29, true, false, true);
+        //plankton4 = new Image(npcDir.toString() + "Plankton4.png", 62, 77, true, false, true);
         // </editor-fold>
         
         eventDir = this.getClass().getResource("/com/netgames/clashoffishes/images/event/");
@@ -222,9 +223,10 @@ public class GameManager extends Application {
         jeffrey2 = new Image(eventDir.toString() + "Jeffrey2.png", 110, 105, true, false, true);
         jeffrey3 = new Image(eventDir.toString() + "Jeffrey3.png", 110, 105, true, false, true);
         // </editor-fold>        
-        energyDrink = new Image(eventDir.toString() + "EnergyDrink.png", 150, 79, true, false, true);
-        //fishHook    = new Image(eventDir.toString() + "*.png", 1, 1, true, false, true);
-        //seaweed     = new Image(eventDir.toString() + "*.png", 1, 1, true, false, true);
+        energyDrink1 = new Image(eventDir.toString() + "EnergyDrink1.png", 50, 241, true, false, true);
+        //fishHook1    = new Image(eventDir.toString() + "FishHook1.png", 89, 905, true, false, true);
+        //seaweed1     = new Image(eventDir.toString() + "Seaweed1.png", 193, 558, true, false, true);
+        //diver1       = new Image(eventDir.toString() + "Diver1.png", 243, 184, true, false, true);
     }
     
     /**
@@ -239,8 +241,10 @@ public class GameManager extends Application {
         fLayer1 = new Prop("", 0, (HEIGHT - frontLayer1.getRequestedHeight()), frontLayer1);
         // ((HEIGHT / 2) - (frontLayer1.getRequestedHeight() / 2))
         
-        player = new Player(this, "", WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
-        energy = new EnergyDrink("", 200, 200, energyDrink);
+        player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z", 
+                WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
+        energy = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", 
+                200, 200, energyDrink1);
     }
     
     /**
@@ -267,11 +271,12 @@ public class GameManager extends Application {
         objectManager = new ObjectManager();
         // TODO adding an object to the object manager format:
         // objectManager.addCurrentObject(newobject);
-        objectManager.addCurrentObject(bgLayer1);
-        objectManager.addCurrentObject(bLayer1);
-        objectManager.addCurrentObject(mLayer1);
-        objectManager.addCurrentObject(fLayer1);
+        //objectManager.addCurrentObject(bgLayer1);
+        //objectManager.addCurrentObject(bLayer1);
+        //objectManager.addCurrentObject(mLayer1);
+        //objectManager.addCurrentObject(fLayer1);
         
+        objectManager.addCurrentObject(energy);
         //objectManager.addCurrentObject(player);
     }
     

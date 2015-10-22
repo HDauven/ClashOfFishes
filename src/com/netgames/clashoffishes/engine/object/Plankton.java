@@ -19,6 +19,7 @@ public class Plankton extends GameObject implements NPC {
         super(SVGData, xLocation, yLocation, spriteCels);
         spriteFrame.setTranslateX(xLocation);
         spriteFrame.setTranslateY(yLocation);
+        isFixed  = false;
         hasValue = true;
         isBonus  = true;
     }
@@ -28,6 +29,6 @@ public class Plankton extends GameObject implements NPC {
      */
     @Override
     protected void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //  empty
     }
 }
