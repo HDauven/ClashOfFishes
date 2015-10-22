@@ -178,31 +178,31 @@ public class GameManager extends Application {
         
         playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
         // <editor-fold defaultstate="collapsed" desc="Bubbles image instantiation">
-        bubbles1 = new Image(playerDir.toString() + "Bubbles1.png", 125, 78, true, false, true);
-        bubbles2 = new Image(playerDir.toString() + "Bubbles2.png", 125, 78, true, false, true);
-        bubbles3 = new Image(playerDir.toString() + "Bubbles3.png", 125, 78, true, false, true);
-        bubbles4 = new Image(playerDir.toString() + "Bubbles4.png", 125, 78, true, false, true);
+        bubbles1 = new Image(playerDir.toString() + "Bubbles1.png", 103, 66, true, false, true);
+        bubbles2 = new Image(playerDir.toString() + "Bubbles2.png", 100, 66, true, false, true);
+        bubbles3 = new Image(playerDir.toString() + "Bubbles3.png", 103, 66, true, false, true);
+        bubbles4 = new Image(playerDir.toString() + "Bubbles4.png", 105, 66, true, false, true);
         // </editor-fold>
         
         // <editor-fold defaultstate="collapsed" desc="Cleo image instantiation">        
-        cleo1 = new Image(playerDir.toString() + "Cleo1.png", 105, 66, true, false, true);
-        cleo2 = new Image(playerDir.toString() + "Cleo2.png", 105, 66, true, false, true);
-        cleo3 = new Image(playerDir.toString() + "Cleo3.png", 105, 66, true, false, true);
-        cleo4 = new Image(playerDir.toString() + "Cleo4.png", 105, 66, true, false, true);
+        cleo1 = new Image(playerDir.toString() + "Cleo1.png", 120, 75, true, false, true);
+        cleo2 = new Image(playerDir.toString() + "Cleo2.png", 117, 76, true, false, true);
+        cleo3 = new Image(playerDir.toString() + "Cleo3.png", 120, 78, true, false, true);
+        cleo4 = new Image(playerDir.toString() + "Cleo4.png", 125, 72, true, false, true);
         // </editor-fold>
         
         // <editor-fold defaultstate="collapsed" desc="Fred image instantiation">
-        fred1 = new Image(playerDir.toString() + "Fred1.png", 160, 109, true, false, true);
+        fred1 = new Image(playerDir.toString() + "Fred1.png", 153, 109, true, false, true);
         fred2 = new Image(playerDir.toString() + "Fred2.png", 160, 109, true, false, true);
-        fred3 = new Image(playerDir.toString() + "Fred3.png", 160, 109, true, false, true);
-        fred4 = new Image(playerDir.toString() + "Fred4.png", 160, 109, true, false, true);
+        fred3 = new Image(playerDir.toString() + "Fred3.png", 157, 109, true, false, true);
+        fred4 = new Image(playerDir.toString() + "Fred4.png", 147, 109, true, false, true);
         // </editor-fold>
         
         // <editor-fold defaultstate="collapsed" desc="Gill image instantiation">
-        gill1 = new Image(playerDir.toString() + "Gill1.png", 126, 72, true, false, true);
+        gill1 = new Image(playerDir.toString() + "Gill1.png", 123, 72, true, false, true);
         gill2 = new Image(playerDir.toString() + "Gill2.png", 126, 72, true, false, true);
-        gill3 = new Image(playerDir.toString() + "Gill3.png", 126, 72, true, false, true);
-        gill4 = new Image(playerDir.toString() + "Gill4.png", 126, 72, true, false, true);
+        gill3 = new Image(playerDir.toString() + "Gill3.png", 123, 72, true, false, true);
+        gill4 = new Image(playerDir.toString() + "Gill4.png", 120, 72, true, false, true);
         // </editor-fold>
         
         npcDir = this.getClass().getResource("/com/netgames/clashoffishes/images/npc/");
@@ -219,7 +219,7 @@ public class GameManager extends Application {
         jeffrey2 = new Image(eventDir.toString() + "Jeffrey2.png", 110, 105, true, false, true);
         jeffrey3 = new Image(eventDir.toString() + "Jeffrey3.png", 110, 105, true, false, true);
         // </editor-fold>        
-        //energyDrink = new Image(eventDir.toString() + "*.png", 1, 1, true, false, true);
+        energyDrink = new Image(eventDir.toString() + "EnergyDrink.png", 150, 79, true, false, true);
         //fishHook    = new Image(eventDir.toString() + "*.png", 1, 1, true, false, true);
         //seaweed     = new Image(eventDir.toString() + "*.png", 1, 1, true, false, true);
     }
@@ -287,7 +287,7 @@ public class GameManager extends Application {
         
         miniMap = new Rectangle(200, 200, Color.BLACK);
         miniMap.setTranslateX(WIDTH - 200);
-        miniMap.opacityProperty().set(0.5);
+        miniMap.opacityProperty().set(0.0);
         menu.getChildren().add(miniMap);   
         
         // <editor-fold defaultstate="collapsed" desc="Scoreboard">
@@ -314,7 +314,7 @@ public class GameManager extends Application {
         menu.getChildren().add(playerTextOne);
         
         playerViewOne = new ImageView();
-        playerIconOne = new Image(playerDir.toString() + "Bubbles1.png", 80, 49, true, false, true);
+        playerIconOne = new Image(playerDir.toString() + "BubblesIcon.png", 80, 51, true, false, true);
         playerViewOne.setImage(playerIconOne);
         playerViewOne.setLayoutX(10);
         playerViewOne.setLayoutY((HEIGHT / 2) - 160);
@@ -345,7 +345,7 @@ public class GameManager extends Application {
         menu.getChildren().add(playerTextTwo);
         
         playerViewTwo = new ImageView();
-        playerIconTwo = new Image(playerDir.toString() + "Cleo1.png", 80, 50, true, false, true);
+        playerIconTwo = new Image(playerDir.toString() + "CleoIcon.png", 80, 50, true, false, true);
         playerViewTwo.setImage(playerIconTwo);
         playerViewTwo.setLayoutX(10);
         playerViewTwo.setLayoutY((HEIGHT / 2) - 60);
@@ -376,7 +376,7 @@ public class GameManager extends Application {
         menu.getChildren().add(playerTextThree);
         
         playerViewThree = new ImageView();
-        playerIconThree = new Image(playerDir.toString() + "Fred1.png", 80, 54, true, false, true);
+        playerIconThree = new Image(playerDir.toString() + "FredIcon.png", 80, 57, true, false, true);
         playerViewThree.setImage(playerIconThree);
         playerViewThree.setLayoutX(10);
         playerViewThree.setLayoutY((HEIGHT / 2) + 40);
@@ -407,7 +407,7 @@ public class GameManager extends Application {
         menu.getChildren().add(playerTextFour);
         
         playerViewFour = new ImageView();
-        playerIconFour = new Image(playerDir.toString() + "Gill1.png", 126, 45, true, false, true);
+        playerIconFour = new Image(playerDir.toString() + "GillIcon.png", 80, 47, true, false, true);
         playerViewFour.setImage(playerIconFour);
         playerViewFour.setLayoutX(10);
         playerViewFour.setLayoutY((HEIGHT / 2) + 140);
