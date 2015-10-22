@@ -48,14 +48,6 @@ public class GameManager extends Application {
     private URL biteSoundFile0;
     // </editor-fold>
     
-    // <editor-fold defaultstate="collapsed" desc="Player images declaration">
-    private Image bubbles1, bubbles2, bubbles3, bubbles4;
-    private Image cleo1, cleo2, cleo3, cleo4;
-    private Image fred1, fred2, fred3, fred4;
-    private Image gill1, gill2, gill3, gill4;
-    private URL playerDir;
-    // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Background images declaration">
     private Image backgroundLayer1;
     Prop bgLayer1;
@@ -70,11 +62,28 @@ public class GameManager extends Application {
     private URL backgroundDir;
     // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="Player images declaration">
+    private Image bubbles1, bubbles2, bubbles3, bubbles4;
+    private Image cleo1, cleo2, cleo3, cleo4;
+    private Image fred1, fred2, fred3, fred4;
+    private Image gill1, gill2, gill3, gill4;
+    private URL playerDir;
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="NPC images declaration">
+    private Image fish1, fish2, fish3, fish4;
+    private Image plankton1;
+    private URL npcDir;
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Event images declaration">
     private Image jeffrey1, jeffrey2, jeffrey3;
     private Image energyDrink;
+    private Image fishHook;
+    private Image seaweed;
     private URL eventDir;
     // </editor-fold>
+    
     // TODO make this class dynamic. 
     // TODO if this class becomes dynamic we will ascend to god status.
     @Override

@@ -18,6 +18,8 @@ public class Seaweed extends GameObject implements RandomEvent {
      */
     public Seaweed(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
         super(SVGData, xLocation, yLocation, spriteCels);
+        hasValue = true;
+        isBonus  = true;
     }
 
     /**

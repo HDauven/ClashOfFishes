@@ -19,6 +19,8 @@ public class JellyFish extends GameObject implements RandomEvent {
      */
     public JellyFish(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
         super(SVGData, xLocation, yLocation, spriteCels);
+        hasValue = true;
+        isBonus  = true;
     }
 
     /**

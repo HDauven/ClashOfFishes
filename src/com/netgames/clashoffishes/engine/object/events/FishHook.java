@@ -18,6 +18,8 @@ public class FishHook extends GameObject implements RandomEvent {
      */
     public FishHook(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
         super(SVGData, xLocation, yLocation, spriteCels);
+        hasValue = true;
+        isBonus  = true;
     }
 
     /**
