@@ -30,13 +30,11 @@ public class GameManager extends Application {
     private Group root;
     private Group menu;
     private Rectangle scoreWindow, menuBar, miniMap;
-    private ImageView gameWindow;
     private GameLoop gameLoop;
     private ObjectManager objectManager;
     private Player player;
     private int gameScore = 0;
     private Text scoreText;
-    private Font scoreFont;
     private Text playerTextOne, playerTextTwo, playerTextThree, playerTextFour;
     private Text scoreTextOne, scoreTextTwo, scoreTextThree, scoreTextFour;
     private Text scoreLabelOne, scoreLabelTwo, scoreLabelThree, scoreLabelFour;
@@ -71,7 +69,7 @@ public class GameManager extends Application {
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="NPC images declaration">
-    private Image fish1, fish2, fish3, fish4;
+    private Image fish1, fish2, fish3;
     private Image plankton1;
     private URL npcDir;
     // </editor-fold>
@@ -207,12 +205,23 @@ public class GameManager extends Application {
         gill4 = new Image(playerDir.toString() + "Gill4.png", 126, 72, true, false, true);
         // </editor-fold>
         
+        npcDir = this.getClass().getResource("/com/netgames/clashoffishes/images/npc/");
+        // <editor-fold defaultstate="collapsed" desc="NPC image instantiation">
+        //fish1 = new Image(npcDir.toString() + "*.png", 1, 1, true, false, true);
+        //fish2 = new Image(npcDir.toString() + "*.png", 1, 1, true, false, true);
+        //fish3 = new Image(npcDir.toString() + "*.png", 1, 1, true, false, true);
+        //plankton1 = new Image(npcDir.toString() + "*.png", 1, 1, true, false, true);
+        // </editor-fold>
+        
         eventDir = this.getClass().getResource("/com/netgames/clashoffishes/images/event/");
         // <editor-fold defaultstate="collapsed" desc="Jeffrey image instantiation">
         jeffrey1 = new Image(eventDir.toString() + "Jeffrey1.png", 110, 105, true, false, true);
         jeffrey2 = new Image(eventDir.toString() + "Jeffrey2.png", 110, 105, true, false, true);
         jeffrey3 = new Image(eventDir.toString() + "Jeffrey3.png", 110, 105, true, false, true);
-        // </editor-fold>
+        // </editor-fold>        
+        //energyDrink = new Image(eventDir.toString() + "*.png", 1, 1, true, false, true);
+        //fishHook    = new Image(eventDir.toString() + "*.png", 1, 1, true, false, true);
+        //seaweed     = new Image(eventDir.toString() + "*.png", 1, 1, true, false, true);
     }
     
     /**
