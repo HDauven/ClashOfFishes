@@ -247,6 +247,21 @@ public class Player extends AnimatedObject {
      * @param object that the Player object has collision with.
      */
     private void scoringEngine(GameObject object) {
+        if (object instanceof Prop) { 
+            gameManager.setGameScore(5); 
+        }
         
+        if (object instanceof PropV) { 
+            gameManager.setGameScore(4); 
+        }
+        
+        if (object instanceof PropH) { 
+            gameManager.setGameScore(3); 
+        }
+        
+        if (object instanceof PropB) { 
+            gameManager.setGameScore(2); 
+        }       
+        gameManager.updateScoreLabelOne();
     }
 }

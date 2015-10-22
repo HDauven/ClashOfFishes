@@ -605,6 +605,26 @@ public class GameManager extends Application {
     public Player getPlayer() {
         return player;
     }
+
+    /**
+     * Gets the score of the current Player instance.
+     * @return game score
+     */
+    public int getGameScore() {
+        return gameScore;
+    }
+
+    /**
+     * Sets the score of the current Player instance.
+     * @param gameScore score
+     */
+    public void setGameScore(int gameScore) {
+        this.gameScore = gameScore;
+    }
+
+    public void setScoreLabelOne(Text scoreLabelOne) {
+        this.scoreLabelOne = scoreLabelOne;
+    }
     
     
 }
