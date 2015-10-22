@@ -305,21 +305,39 @@ public class GameManager extends Application {
         menuBarGroup.getChildren().add(menuBar);
         
         menuBarBox = new HBox(20);
-        menuBarBox.setPadding(new Insets(10));
+        menuBarBox.setPadding(new Insets(5));
         menuBarBox.setTranslateX((WIDTH - 600) / 2);
         menuBarBox.setTranslateY(HEIGHT - 50);
         
         pauseGameButton = new Button();
         pauseGameButton.setText("Pause Game");
+        pauseGameButton.setStyle("-fx-font: 12 system; -fx-text-fill: white;"
+                + "-fx-padding: 10 20 10 20; "
+                + "-fx-background-color: #090a0c, "
+                + "linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+                + "linear-gradient(#20262b, #191d22),"
+                + "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));"
+                + "-fx-background-radius: 15,14,13,15;"
+                + "-fx-background-insets: 0,1,2,0;");
         pauseGameButton.setOnAction((ActionEvent event) -> {
             gameLoop.stop();
+            gameState = GameState.PAUSED;
         });
         menuBarBox.getChildren().add(pauseGameButton); 
         
         continueGameButton = new Button();
         continueGameButton.setText("Continue Game");
+        continueGameButton.setStyle("-fx-font: 12 system; -fx-text-fill: white;"
+                + "-fx-padding: 10 20 10 20; "
+                + "-fx-background-color: #090a0c, "
+                + "linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
+                + "linear-gradient(#20262b, #191d22),"
+                + "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));"
+                + "-fx-background-radius: 15,14,13,15;"
+                + "-fx-background-insets: 0,1,2,0;");
         continueGameButton.setOnAction((ActionEvent event) -> {
             gameLoop.start();
+            gameState = GameState.RUNNING;
         });
         menuBarBox.getChildren().add(continueGameButton);
         
