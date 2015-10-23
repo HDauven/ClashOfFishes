@@ -36,6 +36,11 @@ public class User
         return highscores;
     }
 
+    public int getScore(GameMode m)
+    {
+        return highscores.get(m);
+    }
+
     //Voegt gehaalde score bij de bestaande score;
     public Integer updateHighScore(GameMode mode, Integer score)
     {
