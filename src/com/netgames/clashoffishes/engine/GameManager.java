@@ -22,7 +22,6 @@ import javafx.stage.Stage;
  * @author Hein Dauven
  */
 public class GameManager extends Application {
-
     public static final double WIDTH = 1024, HEIGHT = 768;
     private boolean up, down, left, right;
     private boolean wKey, aKey, sKey, dKey;
@@ -151,23 +150,14 @@ public class GameManager extends Application {
     private void loadImageAssets() {
         // TODO adding image asset format:
         // Image object = new Image("/resource/image.png", width, height, true, false, true);
-        backgroundDir = this.getClass().getResource("/com/netgames/clashoffishes/images/background/");
-        // <editor-fold defaultstate="collapsed" desc="Background layer image instantiation">
+        // <editor-fold defaultstate="collapsed" desc="Background images instantiation">
+        backgroundDir = this.getClass().getResource("/com/netgames/clashoffishes/images/background/");        
         backgroundLayer1 = new Image(backgroundDir.toString() + "BackgroundLayer1.png", 1024, 768, true, false, true);
-        // </editor-fold>        
-
-        // <editor-fold defaultstate="collapsed" desc="Back layer image instantiation">
         backLayer1 = new Image(backgroundDir.toString() + "BackLayer1.png", 1024, 506, true, false, true);
-        // </editor-fold>
-
-        // <editor-fold defaultstate="collapsed" desc="Middle layer image instantiation">
         middleLayer1 = new Image(backgroundDir.toString() + "MiddleLayer1.png", 1024, 212, true, false, true);
-        // </editor-fold>
-
-        // <editor-fold defaultstate="collapsed" desc="Front layer image instantiation">
         frontLayer1 = new Image(backgroundDir.toString() + "FrontLayer1.png", 1024, 316, true, false, true);
         // </editor-fold>
-
+        
         playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
         // <editor-fold defaultstate="collapsed" desc="Bubbles image instantiation">
         bubbles1 = new Image(playerDir.toString() + "Bubbles1.png", 103, 66, true, false, true);
