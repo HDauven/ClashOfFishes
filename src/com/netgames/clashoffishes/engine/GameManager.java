@@ -1,23 +1,28 @@
 package com.netgames.clashoffishes.engine;
 
+import com.netgames.clashoffishes.engine.object.GameObject;
+import com.netgames.clashoffishes.engine.object.Player;
+import com.netgames.clashoffishes.engine.object.Prop;
+import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
+import com.netgames.clashoffishes.engine.object.events.FishHook;
+import com.netgames.clashoffishes.engine.object.events.Seaweed;
 import java.net.URL;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import com.netgames.clashoffishes.engine.object.*;
-import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
-import javafx.scene.Group;
 
 /**
  * Class that manages the game itself.
- * 
+ *
  * @author Hein Dauven
  */
 public class GameManager extends Application {
+
     public static final double WIDTH = 1024, HEIGHT = 768;
     private boolean up, down, left, right;
     private boolean wKey, aKey, sKey, dKey;
@@ -31,14 +36,14 @@ public class GameManager extends Application {
     private int gameScore = 0;
     private GameState gameState;
     private Group root;
-    
+
     EnergyDrink energy;
-    
+
     // <editor-fold defaultstate="collapsed" desc="Audioclips & URL declaration">
     private AudioClip biteSound0;
     private URL biteSoundFile0;
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Background images declaration">
     private Image backgroundLayer1;
     Prop bgLayer1;
@@ -50,7 +55,7 @@ public class GameManager extends Application {
     Prop fLayer1;
     private URL backgroundDir;
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Player images declaration">
     private Image bubbles1, bubbles2, bubbles3, bubbles4;
     private Image cleo1, cleo2, cleo3, cleo4;
@@ -58,19 +63,19 @@ public class GameManager extends Application {
     private Image gill1, gill2, gill3, gill4;
     private URL playerDir;
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="NPC images declaration">
     private Image fish1, fish2, fish3;
     private Image plankton1, plankton2, plankton3, plankton4;
     private URL npcDir;
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Event images declaration">
     private Image jeffrey1, jeffrey2, jeffrey3;
     private Image energyDrink1, fishHook1, seaweed1, diver1;
     private URL eventDir;
     // </editor-fold>
-    
+
     // TODO make this class dynamic. 
     // TODO if this class becomes dynamic we will ascend to god status.
     @Override
@@ -80,7 +85,7 @@ public class GameManager extends Application {
         scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
         primaryStage.setScene(scene);
         primaryStage.show();
-        
+
         createSceneEventHandling();
         loadAudioAssets();
         loadImageAssets();
@@ -90,15 +95,14 @@ public class GameManager extends Application {
         addNodesToGroup();
         createStartGameLoop();
     }
-    
+
     public static void main(String[] args) {
         launch(args);
     }
-    
+
     /**
-     * Sets event handling for the scene object.
-     * Based on user input, booleans are triggered to decide whether an user 
-     * is actively using a key or not.
+     * Sets event handling for the scene object. Based on user input, booleans
+     * are triggered to decide whether an user is actively using a key or not.
      */
     private void createSceneEventHandling() {
         scene.setOnKeyPressed((KeyEvent event) -> {
@@ -114,7 +118,7 @@ public class GameManager extends Application {
                 case SPACE: space = true; break;
             }
         });
-        
+
         scene.setOnKeyReleased((KeyEvent event) -> {
             switch (event.getCode()) {
                 case UP:    up    = false; break;
@@ -125,11 +129,11 @@ public class GameManager extends Application {
                 case A:     aKey  = false; break;
                 case S:     sKey  = false; break;
                 case D:     dKey  = false; break;  
-                case SPACE: space = false; break;   
+                case SPACE: space = false; break; 
             }
         });
     }
-    
+
     /**
      * Loads audio assets into the game.
      */
@@ -140,7 +144,7 @@ public class GameManager extends Application {
         biteSoundFile0 = this.getClass().getResource("/com/netgames/clashoffishes/audio/bite.wav");
         biteSound0 = new AudioClip(biteSoundFile0.toString());
     }
-    
+
     /**
      * Loads image assets into the game.
      */
@@ -151,19 +155,19 @@ public class GameManager extends Application {
         // <editor-fold defaultstate="collapsed" desc="Background layer image instantiation">
         backgroundLayer1 = new Image(backgroundDir.toString() + "BackgroundLayer1.png", 1024, 768, true, false, true);
         // </editor-fold>        
-        
+
         // <editor-fold defaultstate="collapsed" desc="Back layer image instantiation">
         backLayer1 = new Image(backgroundDir.toString() + "BackLayer1.png", 1024, 506, true, false, true);
         // </editor-fold>
-        
+
         // <editor-fold defaultstate="collapsed" desc="Middle layer image instantiation">
         middleLayer1 = new Image(backgroundDir.toString() + "MiddleLayer1.png", 1024, 212, true, false, true);
         // </editor-fold>
-        
+
         // <editor-fold defaultstate="collapsed" desc="Front layer image instantiation">
         frontLayer1 = new Image(backgroundDir.toString() + "FrontLayer1.png", 1024, 316, true, false, true);
         // </editor-fold>
-        
+
         playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
         // <editor-fold defaultstate="collapsed" desc="Bubbles image instantiation">
         bubbles1 = new Image(playerDir.toString() + "Bubbles1.png", 103, 66, true, false, true);
@@ -171,28 +175,28 @@ public class GameManager extends Application {
         bubbles3 = new Image(playerDir.toString() + "Bubbles3.png", 103, 66, true, false, true);
         bubbles4 = new Image(playerDir.toString() + "Bubbles4.png", 105, 66, true, false, true);
         // </editor-fold>
-        
+
         // <editor-fold defaultstate="collapsed" desc="Cleo image instantiation">        
         cleo1 = new Image(playerDir.toString() + "Cleo1.png", 120, 75, true, false, true);
         cleo2 = new Image(playerDir.toString() + "Cleo2.png", 117, 76, true, false, true);
         cleo3 = new Image(playerDir.toString() + "Cleo3.png", 120, 78, true, false, true);
         cleo4 = new Image(playerDir.toString() + "Cleo4.png", 125, 72, true, false, true);
         // </editor-fold>
-        
+
         // <editor-fold defaultstate="collapsed" desc="Fred image instantiation">
         fred1 = new Image(playerDir.toString() + "Fred1.png", 153, 109, true, false, true);
         fred2 = new Image(playerDir.toString() + "Fred2.png", 160, 109, true, false, true);
         fred3 = new Image(playerDir.toString() + "Fred3.png", 157, 109, true, false, true);
         fred4 = new Image(playerDir.toString() + "Fred4.png", 147, 109, true, false, true);
         // </editor-fold>
-        
+
         // <editor-fold defaultstate="collapsed" desc="Gill image instantiation">
         gill1 = new Image(playerDir.toString() + "Gill1.png", 123, 72, true, false, true);
         gill2 = new Image(playerDir.toString() + "Gill2.png", 126, 72, true, false, true);
         gill3 = new Image(playerDir.toString() + "Gill3.png", 123, 72, true, false, true);
         gill4 = new Image(playerDir.toString() + "Gill4.png", 120, 72, true, false, true);
         // </editor-fold>
-        
+
         npcDir = this.getClass().getResource("/com/netgames/clashoffishes/images/npc/");
         // <editor-fold defaultstate="collapsed" desc="NPC image instantiation">
         //fish1 = new Image(npcDir.toString() + "*.png", 1, 1, true, false, true);
@@ -203,7 +207,7 @@ public class GameManager extends Application {
         //plankton3 = new Image(npcDir.toString() + "Plankton3.png", 33, 29, true, false, true);
         //plankton4 = new Image(npcDir.toString() + "Plankton4.png", 62, 77, true, false, true);
         // </editor-fold>
-        
+
         eventDir = this.getClass().getResource("/com/netgames/clashoffishes/images/event/");
         // <editor-fold defaultstate="collapsed" desc="Jeffrey image instantiation">
         jeffrey1 = new Image(eventDir.toString() + "Jeffrey1.png", 110, 105, true, false, true);
@@ -212,10 +216,10 @@ public class GameManager extends Application {
         // </editor-fold>        
         energyDrink1 = new Image(eventDir.toString() + "EnergyDrink1.png", 50, 241, true, false, true);
         //fishHook1    = new Image(eventDir.toString() + "FishHook1.png", 89, 905, true, false, true);
-        //seaweed1     = new Image(eventDir.toString() + "Seaweed1.png", 193, 558, true, false, true);
+        seaweed1 = new Image(eventDir.toString() + "Seaweed1.png", 193, 558, true, false, true);
         //diver1       = new Image(eventDir.toString() + "Diver1.png", 243, 184, true, false, true);
     }
-    
+
     /**
      * Creates the necessary GameObjects for the game.
      */
@@ -227,15 +231,15 @@ public class GameManager extends Application {
         mLayer1 = new Prop("", 0, (HEIGHT - middleLayer1.getRequestedHeight()), middleLayer1);
         fLayer1 = new Prop("", 0, (HEIGHT - frontLayer1.getRequestedHeight()), frontLayer1);
         // ((HEIGHT / 2) - (frontLayer1.getRequestedHeight() / 2))
-        map = new GameMap((int)WIDTH, (int)HEIGHT);
+        map = new GameMap((int) WIDTH, (int) HEIGHT);
         menu = new GameMenu(this);
-        
-        player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z", 
+
+        player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
                 WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
-        energy = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", 
+        energy = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z",
                 200, 200, energyDrink1);
     }
-    
+
     /**
      * Adds GameObjects to the root node.
      */
@@ -246,15 +250,15 @@ public class GameManager extends Application {
         root.getChildren().add(bLayer1.getSpriteFrame());
         root.getChildren().add(mLayer1.getSpriteFrame());
         root.getChildren().add(fLayer1.getSpriteFrame());
-        
+
         // Comment this out to get the regular background
         root.getChildren().add(map.getMap());
-        
+
         root.getChildren().add(player.getSpriteFrame());
-        
+
         root.getChildren().add(energy.getSpriteFrame());
     }
-    
+
     /**
      * Creates the ObjectManager object. This is necessary for the detection of
      * collision and the removal of objects from the game.
@@ -263,11 +267,11 @@ public class GameManager extends Application {
         objectManager = new ObjectManager();
         // TODO adding an object to the object manager format:
         // objectManager.addCurrentObject(newobject);
-        
+
         objectManager.addCurrentObject(energy);
         //objectManager.addCurrentObject(player);
     }
-    
+
     /**
      * Adds nodes to the root Group object.
      */
@@ -279,7 +283,7 @@ public class GameManager extends Application {
         root.getChildren().add(menu.getMenuBarGroup());
         root.getChildren().add(menu.getMiniMapGroup());
     }
-    
+
     /**
      * Creates a GameLoop object and runs an instance of this class.
      */
@@ -288,150 +292,189 @@ public class GameManager extends Application {
         gameLoop.start();
         gameState = GameState.RUNNING;
     }
-    
+
+    public void addRandomObject() {
+        //Aanmaken waarden
+        Image image;
+        GameObject object = null;
+        Stage stage = (Stage) getRoot().getScene().getWindow();
+        double px = stage.getWidth() * Math.random() + 50;
+        double py = stage.getHeight() * Math.random() + 50;
+        int range = (3 - 1) + 1; // 3 moet veranderen als er meer objecten bijkomen.
+        int randomGetal = (int) (Math.random() * range + 1);
+
+        //Random object genereren
+        if (randomGetal == 1) {
+            image = new Image(eventDir.toString() + "EnergyDrink1.png", 50, 241, true, false, true);
+            object = new EnergyDrink("", px, py, image);
+        }
+
+        if (randomGetal == 2) {
+            image = new Image(eventDir.toString() + "FishHook1.png", 89, 905, true, false, true);
+            object = new FishHook("", px, py, image);
+        }
+
+        if (randomGetal == 3) {
+            image = new Image(eventDir.toString() + "Seaweed1.png", 30, 87, true, false, true);
+            object = new Seaweed("", px, py, image);
+        }
+        //TODO Diver object aanmaken
+/*
+         if (randomGetal == 4)
+         {
+         image = new Image(eventDir.toString() + "Diver1.png", 243, 184, true, false, true);
+         object = new Diver("", px, py, image);
+         }
+         */
+        //Moet altijd uitgevoerd worden
+        root.getChildren().add(object.getSpriteFrame());
+        objectManager.addCurrentObject(object);
+    }
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isUp() {
         return up;
     }
 
     /**
-     * 
-     * @param up 
+     *
+     * @param up
      */
     public void setUp(boolean up) {
         this.up = up;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isDown() {
         return down;
     }
 
     /**
-     * 
-     * @param down 
+     *
+     * @param down
      */
     public void setDown(boolean down) {
         this.down = down;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isLeft() {
         return left;
     }
 
     /**
-     * 
-     * @param left 
+     *
+     * @param left
      */
     public void setLeft(boolean left) {
         this.left = left;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isRight() {
         return right;
     }
 
     /**
-     * 
-     * @param right 
+     *
+     * @param right
      */
     public void setRight(boolean right) {
         this.right = right;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean iswKey() {
         return wKey;
     }
 
     /**
-     * 
-     * @param wKey 
+     *
+     * @param wKey
      */
     public void setwKey(boolean wKey) {
         this.wKey = wKey;
     }
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isaKey() {
         return aKey;
     }
 
     /**
-     * 
-     * @param aKey 
+     *
+     * @param aKey
      */
     public void setaKey(boolean aKey) {
         this.aKey = aKey;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean issKey() {
         return sKey;
     }
 
     /**
-     * 
-     * @param sKey 
+     *
+     * @param sKey
      */
     public void setsKey(boolean sKey) {
         this.sKey = sKey;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isdKey() {
         return dKey;
     }
 
     /**
-     * 
-     * @param dKey 
+     *
+     * @param dKey
      */
     public void setdKey(boolean dKey) {
         this.dKey = dKey;
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isSpace() {
         return space;
     }
 
     /**
-     * 
-     * @param space 
+     *
+     * @param space
      */
     public void setSpace(boolean space) {
         this.space = space;
     }
-    
+
     /**
      * Plays the bite sound of a fish.
      */
@@ -440,8 +483,9 @@ public class GameManager extends Application {
     }
 
     /**
-     * Gets the Group node instance that belongs to this GameManager and holds 
+     * Gets the Group node instance that belongs to this GameManager and holds
      * all the GameObjects.
+     *
      * @return the root Group belonging to this game session.
      */
     public Group getRoot() {
@@ -450,6 +494,7 @@ public class GameManager extends Application {
 
     /**
      * Gets the ObjectManager instance that belongs to this GameManager.
+     *
      * @return the objectManager belonging to this game session.
      */
     public ObjectManager getObjectManager() {
@@ -458,6 +503,7 @@ public class GameManager extends Application {
 
     /**
      * Gets the Player instance that belongs to this GameManager.
+     *
      * @return The player belonging to this game session.
      */
     public Player getPlayer() {
@@ -466,6 +512,7 @@ public class GameManager extends Application {
 
     /**
      * Gets the score of the current Player instance.
+     *
      * @return game score
      */
     public int getGameScore() {
@@ -474,6 +521,7 @@ public class GameManager extends Application {
 
     /**
      * Sets the score of the current Player instance based on the added value.
+     *
      * @param gameScoreAddition added value
      */
     public void setGameScore(int gameScoreAddition) {
@@ -490,6 +538,7 @@ public class GameManager extends Application {
 
     /**
      * Gets the GameLoop reference that belongs to this GameManager instance.
+     *
      * @return GameLoop
      */
     public GameLoop getGameLoop() {
@@ -498,6 +547,7 @@ public class GameManager extends Application {
 
     /**
      * Gets the current state of the game and returns it to the caller.
+     *
      * @return gameState enum
      */
     public GameState getGameState() {
@@ -506,6 +556,7 @@ public class GameManager extends Application {
 
     /**
      * Sets the current state of the game, based on the GameState enum.
+     *
      * @param gameState GameState enum
      */
     public void setGameState(GameState gameState) {
