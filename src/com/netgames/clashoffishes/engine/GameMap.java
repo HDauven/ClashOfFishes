@@ -64,7 +64,7 @@ public class GameMap {
      * Based on these variables, a loop will iterate a number of given times that
      * adds lines to the GraphicsContext object, which closes the path once the 
      * loop is done. This will create a layer shape that will then be filled.
-     * @param gc A GraphicsContext object reference that holds the path and gradient information.
+     * @param gc A GraphicsContext object that issues draw calls to the canvas.
      * @param markers A list that contains all the line points of a given layer.
      * @param beginPoint The beginning point of the layer.
      * @param bias A differentiation item that allows the layers to lean more towards going up or going down.
@@ -105,14 +105,14 @@ public class GameMap {
             
             y = Math.max(ymin, Math.min(ymax, y));
             x = x + xoffset;
-            //gc.lineTo(x, y);
             markers.add(new Marker(x, y));
             gc.bezierCurveTo(xOld, yOld, x, y, x, y);
-            //gc.quadraticCurveTo(xOld, yOld, x, y);
         }
         
         gc.lineTo(WIDTH, HEIGHT);
         gc.closePath();
         gc.fill();
     }
+    
+    
 }
