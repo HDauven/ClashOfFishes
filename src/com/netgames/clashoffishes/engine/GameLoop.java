@@ -12,6 +12,7 @@ import javafx.animation.AnimationTimer;
 public class GameLoop extends AnimationTimer {
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
     long prev = System.nanoTime();
+    Random random = new Random();
     
     /* A reference to the GameManager class. */
     protected GameManager gameManager;
@@ -33,8 +34,7 @@ public class GameLoop extends AnimationTimer {
     public void handle(long now) {
         // TODO
         gameManager.getPlayer().update();
-
-        Random random = new Random();
+        
         long elapsed = now - prev;
         int randInt = (int) (Math.random() * 10000 + 1);
         //System.out.println(elapsed);
