@@ -34,6 +34,7 @@ public class GameManager extends Application {
     private Scene scene;
     private GameLoop gameLoop;
     private ObjectManager objectManager;
+    private GameMap map;
     private Player player;
     private int gameScore = 0;
     private GameState gameState;
@@ -64,8 +65,6 @@ public class GameManager extends Application {
     Prop mLayer1;
     private Image frontLayer1;
     Prop fLayer1;
-    private Image boatClassic1, boatClassic2, boatClassic3;
-    private Image boatModern1, boatModern2, boatModern3;
     private URL backgroundDir;
     // </editor-fold>
     
@@ -246,6 +245,7 @@ public class GameManager extends Application {
         mLayer1 = new Prop("", 0, (HEIGHT - middleLayer1.getRequestedHeight()), middleLayer1);
         fLayer1 = new Prop("", 0, (HEIGHT - frontLayer1.getRequestedHeight()), frontLayer1);
         // ((HEIGHT / 2) - (frontLayer1.getRequestedHeight() / 2))
+        map = new GameMap((int)WIDTH, (int)HEIGHT);
         
         player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z", 
                 WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
@@ -263,6 +263,9 @@ public class GameManager extends Application {
         root.getChildren().add(bLayer1.getSpriteFrame());
         root.getChildren().add(mLayer1.getSpriteFrame());
         root.getChildren().add(fLayer1.getSpriteFrame());
+        
+        // Comment this out to get the regular background
+        root.getChildren().add(map.getMap());
         
         root.getChildren().add(player.getSpriteFrame());
         

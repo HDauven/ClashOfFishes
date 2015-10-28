@@ -20,30 +20,39 @@ import javafx.scene.paint.Stop;
 public class GameMap {
     private Canvas map; // Holds the map data 
     private final GraphicsContext gc; // Issues draw calls to the canvas
-    private final int WIDTH;
-    private final int HEIGHT;
-    private final List<Marker> marker;
-    private final URL backgroundDir;
+    private final int WIDTH;  // Width of the GameMap
+    private final int HEIGHT; // Height of the GameMap
+    private final List<Marker> backMarker; // Holds the marker points of the back layer
+    private final List<Marker> middleMarker; // Holds the marker points of the middle layer
+    private final List<Marker> frontMarker; // Holds the marker points of the front layer
+    private final URL backgroundDir; // URL to the folder where all the background related images are located
     private final Random rand;
     
     public GameMap(int WIDTH, int HEIGHT) {
+        // Instantiation/initialization of all the variables belonging to the GameMap
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;
         this.map = new Canvas(WIDTH, HEIGHT);
         this.gc = map.getGraphicsContext2D();
-        this.marker = new ArrayList<>();
+        this.backMarker = new ArrayList<>();
+        this.middleMarker = new ArrayList<>();
+        this.frontMarker = new ArrayList<>();
         this.backgroundDir = this.getClass().getResource("/com/netgames/clashoffishes/images/background/");
         this.rand = new Random();
         
+        // Method calls that generate the GameMap
         generateBackground(gc, "#1cc3dd", "#117d97");
         
-        proceduralLayerAlgorithm(gc, marker, HEIGHT - 350, -1, "#24617c", "#24617c");
-        proceduralLayerAlgorithm(gc, marker, HEIGHT - 220, 0, "#10496a", "#183150");
-        proceduralLayerAlgorithm(gc, marker, HEIGHT - 100, 1, "#151424", "#0f1f2c");
+        proceduralLayerAlgorithm(gc, backMarker,   HEIGHT - 350, -1, "#24617c", "#24617c");
+        proceduralLayerAlgorithm(gc, middleMarker, HEIGHT - 220,  0, "#10496a", "#183150");
+        proceduralLayerAlgorithm(gc, frontMarker,  HEIGHT - 100,  1, "#151424", "#0f1f2c");
         
-        proceduralBoatPlacement(gc, marker);
+        proceduralBoatPlacement(gc, backMarker); // The boat will always be placed on the back layer 
         
-        proceduralMarkerPlacementAlgorithm(gc, marker);
+        // Meant for debugging purpose, comment out to get rid of the black dots in the actual game
+        proceduralMarkerPlacementAlgorithm(gc, backMarker);
+        proceduralMarkerPlacementAlgorithm(gc, middleMarker);
+        proceduralMarkerPlacementAlgorithm(gc, frontMarker);
     }
     
     /**
