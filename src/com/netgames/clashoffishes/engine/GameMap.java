@@ -18,7 +18,7 @@ import javafx.scene.paint.Stop;
  * @author Hein
  */
 public class GameMap {
-    private final Canvas map; // Holds the map data 
+    private Canvas map; // Holds the map data 
     private final GraphicsContext gc; // Issues draw calls to the canvas
     private final int WIDTH;
     private final int HEIGHT;
@@ -202,5 +202,13 @@ public class GameMap {
             }
             line.strokeLine(m.getX(), m.getY(), m.getX(), m.getY() + 1);
         }
+    }
+
+    public Canvas getMap() {
+        return map;
+    }
+    
+    public void setMap(Canvas map) {
+        this.map = map;
     }
 }
