@@ -42,6 +42,8 @@ public class GameMap {
         proceduralLayerAlgorithm(gc, marker, HEIGHT - 100, 1, "#151424", "#0f1f2c");
         
         proceduralBoatPlacement(gc, marker);
+        
+        proceduralMarkerPlacementAlgorithm(gc, marker);
     }
     
     /**
@@ -178,5 +180,27 @@ public class GameMap {
                 break;
         }
         return boatImage;
+    }
+    
+    /**
+     * Based on the generated markers, this method places a dot on each of the 
+     * corresponding markers to indicate where the markers are located.
+     * These markers are used to place objects on top of them if they're free, 
+     * else an object cannot be placed on top of them.
+     * Note: This method is for debugging purposes.
+     * @param gc A GraphicsContext object that issues draw calls to the canvas.
+     * @param markers A list that contains all the line points of a given layer. 
+     */
+    private static void proceduralMarkerPlacementAlgorithm(GraphicsContext line, List<Marker> markers) {
+        line.setStroke(Color.BLACK);
+        line.setLineWidth(3);
+        for (Marker m : markers) {
+            if (m.isPopulated()) {
+                line.setStroke(Color.RED);
+            } else {
+                line.setStroke(Color.BLACK);
+            }
+            line.strokeLine(m.getX(), m.getY(), m.getX(), m.getY() + 1);
+        }
     }
 }
