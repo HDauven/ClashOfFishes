@@ -1,10 +1,12 @@
 package com.netgames.clashoffishes.engine;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -21,7 +23,8 @@ public class GameMap {
     private final int WIDTH;
     private final int HEIGHT;
     private final List<Marker> marker;
-    private static Random rand = new Random();
+    private final URL backgroundDir;
+    private final Random rand;
     
     public GameMap(int WIDTH, int HEIGHT) {
         this.WIDTH = WIDTH;
@@ -29,12 +32,16 @@ public class GameMap {
         this.map = new Canvas(WIDTH, HEIGHT);
         this.gc = map.getGraphicsContext2D();
         this.marker = new ArrayList<>();
+        this.backgroundDir = this.getClass().getResource("/com/netgames/clashoffishes/images/background/");
+        this.rand = new Random();
         
         generateBackground(gc, "#1cc3dd", "#117d97");
         
         proceduralLayerAlgorithm(gc, marker, HEIGHT - 350, -1, "#24617c", "#24617c");
         proceduralLayerAlgorithm(gc, marker, HEIGHT - 220, 0, "#10496a", "#183150");
         proceduralLayerAlgorithm(gc, marker, HEIGHT - 100, 1, "#151424", "#0f1f2c");
+        
+        proceduralBoatPlacement(gc, marker);
     }
     
     /**
@@ -114,5 +121,62 @@ public class GameMap {
         gc.fill();
     }
     
+    /**
+     * Places a boat on a randomly chosen marker, based on a number of conditions.
+     * These conditions being that the marker does not allow the boat to be placed
+     * outside of the game field itself.
+     * Once a position is decided upon, all the markers that fall within the boats
+     * reach, will be marked is populated, so that no objects can be placed on top
+     * of the boat.
+     * @param gc A GraphicsContext object that issues draw calls to the canvas.
+     * @param markers A list that contains all the line points of a given layer.
+     */
+    private void proceduralBoatPlacement(GraphicsContext gc, List<Marker> markers) {
+        Image boat = pickABoat();
+        
+        int pos = rand.nextInt(markers.size() - ((int)(boat.getWidth() / 10)) + 1);
+
+        gc.drawImage(boat, markers.get(pos).getX(), markers.get(pos).getY() - boat.getHeight() + 75, boat.getWidth(), boat.getHeight());
+        markers.get(pos).setIsObjectHolder(true);
+        
+        int beginBoat = markers.get(pos).getX();
+        int endBoat = markers.get(pos).getX() + (int)boat.getWidth();
+        
+        for (Marker m : markers) {
+            if (m.getX() >= beginBoat && m.getX() <= endBoat) {
+                m.setIsPopulated(true);
+            }
+        }
+    }
     
+    /**
+     * Picks one of the available Boat images through a random number generated 
+     * from 0 inclusive to 6 exclusive.
+     * @return One of the chosen images.
+     */
+    private Image pickABoat() {
+        int boat = rand.nextInt(6);
+        Image boatImage = null;
+        switch (boat) {
+            case 0:
+                boatImage = new Image(backgroundDir.toString() + "BoatClassic1.png");
+                break;
+            case 1:
+                boatImage = new Image(backgroundDir.toString() + "BoatClassic2.png");
+                break;
+            case 2:
+                boatImage = new Image(backgroundDir.toString() + "BoatClassic3.png");
+                break;
+            case 3:
+                boatImage = new Image(backgroundDir.toString() + "BoatModern1.png");
+                break;
+            case 4:
+                boatImage = new Image(backgroundDir.toString() + "BoatModern2.png");
+                break;
+            case 5:
+                boatImage = new Image(backgroundDir.toString() + "BoatModern3.png");
+                break;
+        }
+        return boatImage;
+    }
 }
