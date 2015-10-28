@@ -6,11 +6,17 @@ import java.net.URL;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -24,7 +30,8 @@ import javafx.scene.text.Text;
 public class GameMenu {
     private GameManager gameManager;
     private Group scoreMenuGroup, menuBarGroup, miniMapGroup;
-    private Rectangle scoreWindow, menuBar, miniMap;
+    private Canvas menuBar, miniMap, scoreWindow;
+    private GraphicsContext gc;
     private Button pauseGameButton, continueGameButton;
     private HBox menuBarBox;
     private Text scoreText;
@@ -57,26 +64,41 @@ public class GameMenu {
     /**
      * Method that creates the Menu bar.
      */
-    private void menuBar() {
-        menuBar = new Rectangle(600, 50, Color.BLACK);
+    private void menuBar() {   
+        menuBar = new Canvas(600, 50);
+        gc = menuBar.getGraphicsContext2D();
+        gc.beginPath();
+        gc.moveTo(0, 50);
+        gc.lineTo(0, 20);
+        gc.quadraticCurveTo(0, 0, 20, 0);
+        gc.lineTo(580, 0);
+        gc.quadraticCurveTo(600, 0, 600, 20);
+        gc.lineTo(600, 50);
+        gc.closePath();
+        gc.setFill(generateLinearGradient("60979c", "2b4c55"));
+        gc.setGlobalAlpha(0.5);
+        gc.fill();
+        gc.setStroke(Color.web("#8ed0cf"));
+        gc.setLineWidth(2);
+        gc.stroke();
         menuBar.setTranslateX((WIDTH - 600) / 2);
         menuBar.setTranslateY(HEIGHT - 50);
-        menuBar.opacityProperty().set(0.5);
         menuBarGroup.getChildren().add(menuBar);
         
         menuBarBox = new HBox(20);
-        menuBarBox.setPadding(new Insets(5));
+        menuBarBox.setPadding(new Insets(7));
         menuBarBox.setTranslateX((WIDTH - 600) / 2);
         menuBarBox.setTranslateY(HEIGHT - 50);
         
         pauseGameButton = new Button();
         pauseGameButton.setText("Pause Game");
-        pauseGameButton.setStyle("-fx-font: 12 system; -fx-text-fill: white;"
+        pauseGameButton.setStyle("-fx-font: 12 system; -fx-text-fill: black;"
+                + "-fx-font-weight: bold;"
                 + "-fx-padding: 10 20 10 20; "
-                + "-fx-background-color: #090a0c, "
-                + "linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
-                + "linear-gradient(#20262b, #191d22),"
-                + "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));"
+                + "-fx-background-color: #87c4c7, "
+                + "linear-gradient(#4f7e86 0%, #608b94 20%, #3f6a70 100%),"
+                + "linear-gradient(#8dd5d4, #4f9094),"
+                + "radial-gradient(center 50% 0%, radius 100%, rgba(205,225,236,0.9), rgba(255,255,255,0));"
                 + "-fx-background-radius: 15,14,13,15;"
                 + "-fx-background-insets: 0,1,2,0;");
         pauseGameButton.setOnAction((ActionEvent event) -> {
@@ -87,12 +109,13 @@ public class GameMenu {
         
         continueGameButton = new Button();
         continueGameButton.setText("Continue Game");
-        continueGameButton.setStyle("-fx-font: 12 system; -fx-text-fill: white;"
+        continueGameButton.setStyle("-fx-font: 12 system; -fx-text-fill: black;"
+                + "-fx-font-weight: bold;"
                 + "-fx-padding: 10 20 10 20; "
-                + "-fx-background-color: #090a0c, "
-                + "linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
-                + "linear-gradient(#20262b, #191d22),"
-                + "radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));"
+                + "-fx-background-color: #87c4c7, "
+                + "linear-gradient(#4f7e86 0%, #608b94 20%, #3f6a70 100%),"
+                + "linear-gradient(#8dd5d4, #4f9094),"
+                + "radial-gradient(center 50% 0%, radius 100%, rgba(205,225,236,0.9), rgba(255,255,255,0));"
                 + "-fx-background-radius: 15,14,13,15;"
                 + "-fx-background-insets: 0,1,2,0;");
         continueGameButton.setOnAction((ActionEvent event) -> {
@@ -106,11 +129,31 @@ public class GameMenu {
      * Method that creates the Score menu.
      */
     private void scoreMenu() {
-        scoreWindow = new Rectangle(100, 440, Color.BLACK);
+        scoreWindow = new Canvas(100, 440);
+        gc = scoreWindow.getGraphicsContext2D();
+        gc.beginPath();
+        gc.moveTo(0, 0);
+        gc.lineTo(0, 440);
+        gc.lineTo(75, 440);
+        gc.quadraticCurveTo(100, 440, 100, 415);
+        gc.lineTo(100, 25);
+        gc.quadraticCurveTo(100, 0, 75, 0);
+        gc.closePath();
+        gc.setFill(generateLinearGradient("60979c", "2b4c55"));
+        gc.setGlobalAlpha(0.5);
+        gc.fill();
+        gc.setStroke(Color.web("#8ed0cf"));
+        gc.setLineWidth(2);
+        gc.stroke();
         scoreWindow.setTranslateX(0);
         scoreWindow.setTranslateY((HEIGHT / 2) - 220);
-        scoreWindow.opacityProperty().set(0.5);
         scoreMenuGroup.getChildren().add(scoreWindow);
+        
+//        scoreWindow = new Rectangle(100, 440, Color.BLACK);
+//        scoreWindow.setTranslateX(0);
+//        scoreWindow.setTranslateY((HEIGHT / 2) - 220);
+//        scoreWindow.opacityProperty().set(0.5);
+//        scoreMenuGroup.getChildren().add(scoreWindow);
         
         scoreText = new Text();
         scoreText.setText("Scoreboard");
@@ -249,12 +292,33 @@ public class GameMenu {
      * Method that creates the minimap.
      */
     private void miniMap() {
-        miniMap = new Rectangle(200, 200, Color.BLACK);
+        miniMap = new Canvas(200, 200);
+        gc = miniMap.getGraphicsContext2D();
+        gc.beginPath();
+        gc.moveTo(0, 0);
+        gc.lineTo(200, 0);
+        gc.lineTo(200, 200);
+        gc.quadraticCurveTo(0, 200, 0, 0);
+        gc.closePath();
+        gc.setFill(generateLinearGradient("60979c", "2b4c55"));
+        gc.setGlobalAlpha(0.5);
+        gc.fill();
+        gc.setStroke(Color.web("#8ed0cf"));
+        gc.setLineWidth(2);
+        gc.stroke();
         miniMap.setTranslateX(WIDTH - 200);
-        miniMap.opacityProperty().set(0.5);
-        miniMapGroup.getChildren().add(miniMap);  
+        miniMapGroup.getChildren().add(miniMap);
     }
 
+    private LinearGradient generateLinearGradient(String beginColor, String endColor) {
+        Stop[] stops = new Stop[] { 
+            new Stop(0, Color.web(beginColor)), new Stop(1, Color.web(endColor)) 
+        };
+        LinearGradient linearGradient = new LinearGradient(0,0,0,1, true, CycleMethod.NO_CYCLE, stops);
+        return linearGradient;
+    }
+    
+    
     /**
      * Updates the score for Player one on screen.
      */
