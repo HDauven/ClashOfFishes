@@ -13,26 +13,30 @@ import javafx.scene.paint.Stop;
  * @author Hein
  */
 public class GameMap {
-    private Canvas map; // Holds the map data 
-    private GraphicsContext gc; // Issues draw calls to the canvas
-    
+    private final Canvas map; // Holds the map data 
+    private final GraphicsContext gc; // Issues draw calls to the canvas
+    private final int WIDTH;
+    private final int HEIGHT;
     
     public GameMap(int WIDTH, int HEIGHT) {
-        map = new Canvas(WIDTH, HEIGHT);
-        gc = map.getGraphicsContext2D();
+        this.WIDTH = WIDTH;
+        this.HEIGHT = HEIGHT;
+        this.map = new Canvas(WIDTH, HEIGHT);
+        this.gc = map.getGraphicsContext2D();
+        
         generateBackground(gc, "#1cc3dd", "#117d97");
     }
     
     /**
-     * Generates the background for the scene node.
+     * Generates the background for the canvas node.
      * It does this by first creating a gradient, then creating a rectangle that 
      * fills the given size of the game map and then fills the rectangle with 
      * the created gradient.
-     * @param gc A GraphicsContext object reference that holds the background information.
+     * @param gc A GraphicsContext object that issues draw calls to the canvas.
      * @param beginColor The begin color of the gradient, in hex.
      * @param endColor  The end color of the gradient, in hex.
      */
-    private static void generateBackground(GraphicsContext gc, String beginColor, String endColor) {
+    private void generateBackground(GraphicsContext gc, String beginColor, String endColor) {
         Stop[] stops = new Stop[] { 
             new Stop(0, Color.web(beginColor)), new Stop(1, Color.web(endColor)) 
         };
