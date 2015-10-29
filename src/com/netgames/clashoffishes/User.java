@@ -14,11 +14,14 @@ public class User
     //HashMap zodat je een GameMode niet meerdere keren toe kunt voegen.
     private final HashMap<GameMode, Integer> highscores;
 
-    public User(String username, String email, HashMap<GameMode, Integer> highscores)
+    public User(String username, String email)
     {
         this.username = username;
         this.email = email;
-        this.highscores = highscores;
+        highscores = new HashMap<>();
+        highscores.put(GameMode.EVOLUTION_OF_TIME, 0);
+        highscores.put(GameMode.EVOLVED, 0);
+        highscores.put(GameMode.LAST_FISH_STANDING, 0);
     }
 
     public String getUsername()
@@ -47,5 +50,10 @@ public class User
         Integer newScore = highscores.get(mode) + score;
         highscores.put(mode, newScore);
         return newScore;
+    }
+    
+    public void setHighScore(GameMode mode, Integer score)
+    {
+        highscores.put(mode, score);
     }
 }

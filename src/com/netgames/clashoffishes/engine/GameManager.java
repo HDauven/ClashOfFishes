@@ -8,6 +8,7 @@ import com.netgames.clashoffishes.engine.object.events.FishHook;
 import com.netgames.clashoffishes.engine.object.events.Seaweed;
 import java.net.URL;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -34,9 +35,11 @@ public class GameManager extends Application {
     private Player player;
     private int gameScore = 0;
     private GameState gameState;
+    private SimpleStringProperty timeLeft = new SimpleStringProperty();
     //Standaardwaarde is single player = evolution of time
     private final GameMode gameMode = GameMode.EVOLUTION_OF_TIME;
     private Group root;
+    Stage thisStage;
 
     EnergyDrink energy;
 
@@ -81,6 +84,7 @@ public class GameManager extends Application {
     // TODO if this class becomes dynamic we will ascend to god status.
     @Override
     public void start(Stage primaryStage) {
+        thisStage = primaryStage;
         primaryStage.setTitle("Clash of Fishes");
         root = new Group();
         scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
@@ -559,5 +563,25 @@ public class GameManager extends Application {
     GameMode getGameMode()
     {
         return this.gameMode;
+    }
+
+    public void setTimeLeft(String secondsLeft)
+    {
+        this.timeLeft.set(secondsLeft);
+    }
+    
+    public SimpleStringProperty getTimeLeft()
+    {
+        return this.timeLeft;
+    }
+
+    void closeStage()
+    {
+        thisStage.close();
+    }
+    
+    Stage getStage()
+    {
+        return this.thisStage;
     }
 }

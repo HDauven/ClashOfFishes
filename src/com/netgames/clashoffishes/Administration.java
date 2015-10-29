@@ -23,6 +23,8 @@ public class Administration
         currentLobby = null;
         allUserHighscoresForGameMode = null;
         dbStorage = new DatabaseStorage();
+        //Testwaarde
+        user = new User("Stef", "stef@stef.nl");
     }
 
     public static Administration get()

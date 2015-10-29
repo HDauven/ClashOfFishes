@@ -9,7 +9,6 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -17,7 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -41,6 +39,7 @@ public class GameMenu {
     private ImageView playerViewOne, playerViewTwo, playerViewThree, playerViewFour;
     private Image playerIconOne, playerIconTwo, playerIconThree, playerIconFour;
     private URL playerDir;
+    private Text timeText;
     
     public GameMenu(GameManager manager) {
         this.gameManager = manager;
@@ -105,7 +104,20 @@ public class GameMenu {
             gameManager.getGameLoop().stop();
             gameManager.setGameState(GameState.PAUSED);
         });
-        menuBarBox.getChildren().add(pauseGameButton); 
+        menuBarBox.getChildren().add(pauseGameButton);
+        
+        timeText = new Text();
+        timeText.textProperty().bind(gameManager.getTimeLeft());
+        timeText.setStyle("-fx-font: 12 system; -fx-text-fill: black;"
+                + "-fx-font-weight: bold;"
+                + "-fx-padding: 10 20 10 20; "
+                + "-fx-background-color: #000000, "
+                + "linear-gradient(#4f7e86 0%, #608b94 20%, #3f6a70 100%),"
+                + "linear-gradient(#8dd5d4, #4f9094),"
+                + "radial-gradient(center 50% 0%, radius 100%, rgba(205,225,236,0.9), rgba(255,255,255,0));"
+                + "-fx-background-radius: 15,14,13,15;"
+                + "-fx-background-insets: 0,1,2,0;");
+        menuBarBox.getChildren().add(timeText);
         
         continueGameButton = new Button();
         continueGameButton.setText("Continue Game");
@@ -200,6 +212,7 @@ public class GameMenu {
         playerTextTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
         playerTextTwo.setLayoutX(10);
         playerTextTwo.setLayoutY((HEIGHT / 2) - 70);
+        
         scoreMenuGroup.getChildren().add(playerTextTwo);
         
         playerViewTwo = new ImageView();
@@ -324,7 +337,7 @@ public class GameMenu {
      */
     public void updateScoreLabelOne() {
         this.scoreLabelOne.setText(String.valueOf(gameManager.getGameScore()));
-    }   
+    }
 
     public Group getScoreMenuGroup() {
         return scoreMenuGroup;

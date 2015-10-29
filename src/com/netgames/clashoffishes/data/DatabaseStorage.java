@@ -85,7 +85,9 @@ public class DatabaseStorage implements Storage
         }
         if (result > 0)
         {
-            return new User(userIdentifier, email, highscores);
+            //TODO Scores toevoegen aan user
+            User u = new User(userIdentifier, email);
+            return u;
         }
         return null;
     }

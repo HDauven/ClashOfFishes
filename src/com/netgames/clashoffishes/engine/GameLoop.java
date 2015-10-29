@@ -1,5 +1,7 @@
 package com.netgames.clashoffishes.engine;
 
+import com.netgames.clashoffishes.Administration;
+import com.netgames.clashoffishes.util.GuiUtilities;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 import javafx.animation.AnimationTimer;
@@ -61,13 +63,17 @@ public class GameLoop extends AnimationTimer
         {
             long elapsed2 = now - startTime;
             secondsLeft = lengt_of_game - (elapsed2 / NANO_TO_SECOND);
+            gameManager.setTimeLeft(String.valueOf(secondsLeft));
             if (secondsLeft == 0)
             {
                 //Spel voorbij na 2 minuten
                 if (gameManager.getGameState() != GameState.FINISHED)
                 {
                     gameManager.setGameState(GameState.FINISHED);
+                    Administration.get().getLoggedInUser().updateHighScore(gameManager.getGameMode(), gameManager.getGameScore());
                     this.stop();
+                    gameManager.closeStage();
+                    GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
                     System.out.println("Time is up!");
                 }
             }
