@@ -34,6 +34,8 @@ public class GameManager extends Application {
     private Player player;
     private int gameScore = 0;
     private GameState gameState;
+    //Standaardwaarde is single player = evolution of time
+    private final GameMode gameMode = GameMode.EVOLUTION_OF_TIME;
     private Group root;
 
     EnergyDrink energy;
@@ -281,6 +283,7 @@ public class GameManager extends Application {
         gameLoop = new GameLoop(this);
         gameLoop.start();
         gameState = GameState.RUNNING;
+        
     }
 
     public void addRandomObject() {
@@ -551,5 +554,10 @@ public class GameManager extends Application {
      */
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    GameMode getGameMode()
+    {
+        return this.gameMode;
     }
 }
