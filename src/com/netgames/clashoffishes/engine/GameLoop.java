@@ -9,56 +9,87 @@ import javafx.animation.AnimationTimer;
  *
  * @author Hein Dauven
  */
-public class GameLoop extends AnimationTimer {
+public class GameLoop extends AnimationTimer
+{
+
+    private final long NANO_TO_SECOND;
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
     long prev = System.nanoTime();
     Random random = new Random();
-    
+    private long startTime = System.nanoTime();
+    private long secondsLeft;
+    private int lengt_of_game = 20;
+
     /* A reference to the GameManager class. */
     protected GameManager gameManager;
 
     /**
      * Constructor for the GameLoop.
+     *
      * @param manager GameManager class reference.
      */
-    public GameLoop(GameManager manager){
+    public GameLoop(GameManager manager)
+    {
+        this.NANO_TO_SECOND = 1_000_000_000;
         gameManager = manager;
     }
 
     /**
-     * This method is going to be called in every frame while the AnimationTimer is active.
-     * Capped at 60 frames per second by default.
-     * @param now The timestamp of the current frame given in nanoseconds. This value will be the same for all AnimationTimers called during one frame.
+     * This method is going to be called in every frame while the AnimationTimer
+     * is active. Capped at 60 frames per second by default.
+     *
+     * @param now The timestamp of the current frame given in nanoseconds. This
+     * value will be the same for all AnimationTimers called during one frame.
      */
     @Override
-    public void handle(long now) {
+    public void handle(long now)
+    {
         // TODO
         gameManager.getPlayer().update();
-        
+
         long elapsed = now - prev;
         int randInt = (int) (Math.random() * 10000 + 1);
         //System.out.println(elapsed);
-        if ((elapsed / 1000000000) > randInt) {
+        if ((elapsed / NANO_TO_SECOND) > randInt)
+        {
             gameManager.addRandomObject();
             //System.out.println(sdf.format(Calendar.getInstance().getTime()));
             //add object if randInt % 4 == 0 dit object else % 3 == 0 dat object etc
             prev = System.nanoTime();
         }
+        if (gameManager.getGameMode() == GameMode.EVOLUTION_OF_TIME)
+        {
+            long elapsed2 = now - startTime;
+            secondsLeft = lengt_of_game - (elapsed2 / NANO_TO_SECOND);
+            if (secondsLeft == 0)
+            {
+                //Spel voorbij na 2 minuten
+                if (gameManager.getGameState() != GameState.FINISHED)
+                {
+                    gameManager.setGameState(GameState.FINISHED);
+                    this.stop();
+                    System.out.println("Time is up!");
+                }
+            }
+        }
     }
-    
+
     /**
-     * Starts the AnimationTimers. Once it is started, the handle(long) method of this AnimationTimers will be called in every frame.
+     * Starts the AnimationTimers. Once it is started, the handle(long) method
+     * of this AnimationTimers will be called in every frame.
      */
     @Override
-    public void start() {
+    public void start()
+    {
         super.start();
-    } 
-    
+    }
+
     /**
-     * Stops the AnimationTimers. 
+     * Stops the AnimationTimers.
      */
     @Override
-    public void stop() {
+    public void stop()
+    {
         super.stop();
     }
 }
