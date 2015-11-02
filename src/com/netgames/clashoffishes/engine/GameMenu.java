@@ -27,8 +27,8 @@ import javafx.scene.text.Text;
  */
 public class GameMenu {
     private GameManager gameManager;
-    private Group scoreMenuGroup, menuBarGroup, miniMapGroup;
-    private Canvas menuBar, miniMap, scoreWindow;
+    private Group scoreMenuGroup, menuBarGroup, miniMapGroup, victoryScreenGroup, defeatScreenGroup;
+    private Canvas menuBar, miniMap, scoreWindow, victoryScreen, defeatScreen;
     private GraphicsContext gc;
     private Button pauseGameButton, continueGameButton;
     private HBox menuBarBox;
@@ -36,6 +36,7 @@ public class GameMenu {
     private Text playerTextOne, playerTextTwo, playerTextThree, playerTextFour;
     private Text scoreTextOne, scoreTextTwo, scoreTextThree, scoreTextFour;
     private Text scoreLabelOne, scoreLabelTwo, scoreLabelThree, scoreLabelFour;
+    private Text victoryText, defeatText;
     private ImageView playerViewOne, playerViewTwo, playerViewThree, playerViewFour;
     private Image playerIconOne, playerIconTwo, playerIconThree, playerIconFour;
     private URL playerDir;
@@ -48,14 +49,19 @@ public class GameMenu {
     
     // Initializer for the GameMenu
     private void init() {
-        scoreMenuGroup = new Group();
-        menuBarGroup   = new Group();
-        miniMapGroup   = new Group();
+        scoreMenuGroup     = new Group();
+        menuBarGroup       = new Group();
+        miniMapGroup       = new Group();
+        victoryScreenGroup = new Group();
+        defeatScreenGroup  = new Group();
+        
         playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
         
         menuBar();
         scoreMenu();
         miniMap();
+        victoryScreen();
+        defeatScreen();
         
         menuBarGroup.getChildren().add(menuBarBox);
     }
@@ -106,19 +112,6 @@ public class GameMenu {
         });
         menuBarBox.getChildren().add(pauseGameButton);
         
-        timeText = new Text();
-        timeText.textProperty().bind(gameManager.getTimeLeft());
-        timeText.setStyle("-fx-font: 12 system; -fx-text-fill: black;"
-                + "-fx-font-weight: bold;"
-                + "-fx-padding: 10 20 10 20; "
-                + "-fx-background-color: #000000, "
-                + "linear-gradient(#4f7e86 0%, #608b94 20%, #3f6a70 100%),"
-                + "linear-gradient(#8dd5d4, #4f9094),"
-                + "radial-gradient(center 50% 0%, radius 100%, rgba(205,225,236,0.9), rgba(255,255,255,0));"
-                + "-fx-background-radius: 15,14,13,15;"
-                + "-fx-background-insets: 0,1,2,0;");
-        menuBarBox.getChildren().add(timeText);
-        
         continueGameButton = new Button();
         continueGameButton.setText("Continue Game");
         continueGameButton.setStyle("-fx-font: 12 system; -fx-text-fill: black;"
@@ -160,12 +153,6 @@ public class GameMenu {
         scoreWindow.setTranslateX(0);
         scoreWindow.setTranslateY((HEIGHT / 2) - 220);
         scoreMenuGroup.getChildren().add(scoreWindow);
-        
-//        scoreWindow = new Rectangle(100, 440, Color.BLACK);
-//        scoreWindow.setTranslateX(0);
-//        scoreWindow.setTranslateY((HEIGHT / 2) - 220);
-//        scoreWindow.opacityProperty().set(0.5);
-//        scoreMenuGroup.getChildren().add(scoreWindow);
         
         scoreText = new Text();
         scoreText.setText("Scoreboard");
@@ -212,7 +199,6 @@ public class GameMenu {
         playerTextTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
         playerTextTwo.setLayoutX(10);
         playerTextTwo.setLayoutY((HEIGHT / 2) - 70);
-        
         scoreMenuGroup.getChildren().add(playerTextTwo);
         
         playerViewTwo = new ImageView();
@@ -321,6 +307,80 @@ public class GameMenu {
         gc.stroke();
         miniMap.setTranslateX(WIDTH - 200);
         miniMapGroup.getChildren().add(miniMap);
+        
+        timeText = new Text();
+        timeText.textProperty().bind(gameManager.getTimeLeft());
+        timeText.setFill(Color.WHITE);
+        timeText.setFont(Font.font("System", FontWeight.BOLD, 50));
+        timeText.setTranslateX(WIDTH - 75);
+        timeText.setTranslateY(75);
+        miniMapGroup.getChildren().add(timeText);
+    }
+    
+    /**
+     * Method that creates the Victory screen.
+     */
+    private void victoryScreen() {
+        victoryScreen = new Canvas(500, 200);
+        gc = victoryScreen.getGraphicsContext2D();
+        gc.beginPath();
+        gc.moveTo(25, 0);
+        gc.lineTo(475, 0);
+        gc.quadraticCurveTo(500, 100, 475, 200);
+        gc.lineTo(25, 200);
+        gc.quadraticCurveTo(0, 100, 25, 0);
+        gc.closePath();
+        gc.setFill(generateLinearGradient("71cb22", "79da25"));
+        gc.setGlobalAlpha(0.5);
+        gc.fill();
+        gc.setStroke(Color.web("#1c9600"));
+        gc.setLineWidth(2);
+        gc.stroke();
+        victoryScreen.setTranslateX((WIDTH / 2) - (victoryScreen.getWidth() / 2));
+        victoryScreen.setTranslateY((HEIGHT / 2) - (victoryScreen.getHeight() / 2));
+        victoryScreenGroup.getChildren().add(victoryScreen);
+        
+        victoryText = new Text();
+        victoryText.setText("Victory!");
+        victoryText.setFill(Color.WHITE);
+        victoryText.prefWidth(100);
+        victoryText.setFont(Font.font("System", FontWeight.BOLD, 20));
+        victoryText.setLayoutX((WIDTH / 2) - 35);
+        victoryText.setLayoutY((HEIGHT / 2 - 50));
+        victoryScreenGroup.getChildren().add(victoryText);
+    }
+    
+    /**
+     * Method that creates the Defeat screen.
+     */
+    private void defeatScreen() {
+        defeatScreen = new Canvas(500, 200);
+        gc = defeatScreen.getGraphicsContext2D();
+        gc.beginPath();
+        gc.moveTo(25, 0);
+        gc.lineTo(475, 0);
+        gc.quadraticCurveTo(500, 100, 475, 200);
+        gc.lineTo(25, 200);
+        gc.quadraticCurveTo(0, 100, 25, 0);
+        gc.closePath();
+        gc.setFill(generateLinearGradient("ff0303", "ff3e3e"));
+        gc.setGlobalAlpha(0.5);
+        gc.fill();
+        gc.setStroke(Color.web("#D40000"));
+        gc.setLineWidth(2);
+        gc.stroke();
+        defeatScreen.setTranslateX((WIDTH / 2) - (victoryScreen.getWidth() / 2));
+        defeatScreen.setTranslateY((HEIGHT / 2) - (defeatScreen.getHeight() / 2));
+        defeatScreenGroup.getChildren().add(defeatScreen);
+        
+        defeatText = new Text();
+        defeatText.setText("Defeat!");
+        defeatText.setFill(Color.WHITE);
+        defeatText.prefWidth(100);
+        defeatText.setFont(Font.font("System", FontWeight.BOLD, 20));
+        defeatText.setLayoutX((WIDTH / 2) - 35);
+        defeatText.setLayoutY((HEIGHT / 2 - 50));
+        defeatScreenGroup.getChildren().add(defeatText);
     }
 
     private LinearGradient generateLinearGradient(String beginColor, String endColor) {
@@ -349,5 +409,13 @@ public class GameMenu {
 
     public Group getMiniMapGroup() {
         return miniMapGroup;
+    }
+
+    public Group getVictoryScreen() {
+        return victoryScreenGroup;
+    }
+
+    public Group getDefeatScreen() {
+        return defeatScreenGroup;
     }
 }
