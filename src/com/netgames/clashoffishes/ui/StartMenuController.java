@@ -6,6 +6,7 @@
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
+import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.util.GuiUtilities;
 import java.lang.invoke.MethodHandles;
 import java.net.URL;
@@ -14,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -40,10 +42,9 @@ public class StartMenuController implements Initializable
     @FXML
     private void hostGame(ActionEvent event)
     {
-        //TODO Hein code om applicatie op te starten.
-        System.out.println("TODO Hein code om applicatie op te starten.");
-        System.out.println("TODO Hein code om applicatie op te starten.");
-        System.out.println("TODO Hein code om applicatie op te starten.");
+        //xxx Hier zou een gameManager misschien nog toegevoegd worden aan de singleton Administratie?
+        GameManager gameManager = new GameManager();
+        gameManager.start(new Stage());
     }
 
     @FXML
