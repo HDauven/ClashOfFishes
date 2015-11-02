@@ -5,10 +5,8 @@ import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
-import javafx.scene.shape.StrokeType;
 
 /**
  * Class that represents an actual in-game player.

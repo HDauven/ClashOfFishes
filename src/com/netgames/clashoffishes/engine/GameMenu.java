@@ -19,6 +19,7 @@ import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 /**
  * Class that holds the GameMenu data.
@@ -312,8 +313,9 @@ public class GameMenu {
         timeText.textProperty().bind(gameManager.getTimeLeft());
         timeText.setFill(Color.WHITE);
         timeText.setFont(Font.font("System", FontWeight.BOLD, 50));
-        timeText.setTranslateX(WIDTH - 75);
+        timeText.setTranslateX(WIDTH - 100);
         timeText.setTranslateY(75);
+        timeText.setTextAlignment(TextAlignment.RIGHT);
         miniMapGroup.getChildren().add(timeText);
     }
     
