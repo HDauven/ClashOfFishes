@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="164.0" prefWidth="336.0" styleClass="background-gradient" stylesheets="@OceanUI.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.netgames.clashoffishes.ui.CharacterSelectionController">
+   <children>
+      <Label fx:id="lblCharacter" layoutX="191.0" layoutY="21.0" text="Character:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cbCharacters" layoutX="191.0" layoutY="63.0" onAction="#cbCharacters_OnChanged" prefHeight="25.0" prefWidth="131.0" />
+      <ImageView fx:id="pictCharacter" fitHeight="126.0" fitWidth="131.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="btnStartGame" layoutX="191.0" layoutY="102.0" mnemonicParsing="false" onAction="#btnStartGame_OnClick" prefHeight="15.0" prefWidth="131.0" text="Start game!" />
+   </children>
+</AnchorPane>

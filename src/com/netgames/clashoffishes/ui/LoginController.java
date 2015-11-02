@@ -57,7 +57,7 @@ public class LoginController implements Initializable {
             this.userIdentifier = null;
             this.password = null;
         } else {
-            GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", GuiUtilities.getStartMenuTitle());
+            GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", GuiUtilities.getMainMenusTitle());
         }
     }
 

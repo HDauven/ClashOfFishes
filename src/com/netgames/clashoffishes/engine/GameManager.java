@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  */
 public class GameManager extends Application {
 
-    public static final double WIDTH = 1024, HEIGHT = 768;
+    public static final double WIDTH = 1280, HEIGHT = 720;
     private boolean up, down, left, right;
     private boolean wKey, aKey, sKey, dKey;
     private boolean space;
@@ -295,16 +295,16 @@ public class GameManager extends Application {
         //Aanmaken waarden
         Image image;
         GameObject object = null;
-        Stage stage = (Stage) getRoot().getScene().getWindow();
-        double px = stage.getWidth() * Math.random();// + 50;
-        double py = stage.getHeight() * Math.random();// + 50;
+        double px = WIDTH * Math.random() + 1;
+        double py = HEIGHT * Math.random() + 1;
+        
         int range = (3 - 1) + 1; // 3 moet veranderen als er meer objecten bijkomen.
         int randomGetal = (int) (Math.random() * range + 1);
 
         //Random object genereren
         if (randomGetal == 1) {
             image = new Image(eventDir.toString() + "EnergyDrink1.png", 50, 241, true, false, true);
-            object = new EnergyDrink("", px, py, image);
+            object = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", px, py, image);
         }
 
         if (randomGetal == 2) {
