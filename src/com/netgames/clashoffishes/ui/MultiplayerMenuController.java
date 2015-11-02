@@ -14,6 +14,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -27,6 +30,10 @@ public class MultiplayerMenuController implements Initializable
     private Administration administration;
     @FXML
     private AnchorPane paneMainForm;
+    @FXML
+    private Button btnBack;
+    @FXML
+    private ImageView pictCoFLogo;
 
     /**
      * Initializes the controller class.
@@ -35,6 +42,8 @@ public class MultiplayerMenuController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         this.administration = Administration.get();
+        URL logoDir = this.getClass().getResource("/com/netgames/clashoffishes/images/logo.png");
+        this.pictCoFLogo.setImage(new Image(logoDir.toString(), 777, 471, true, false, true));
         System.out.println(this.administration.getLoggedInUser().getUsername());
         System.out.println(this.administration.getLoggedInUser().getEmail());
     }    
