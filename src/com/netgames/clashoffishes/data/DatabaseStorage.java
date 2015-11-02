@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,15 +44,14 @@ public class DatabaseStorage implements Storage
         {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        finally
-        {
-            return userAdded;
-        }
+
+        return userAdded;
     }
 
     public User logIn(String userIdentifier, String password)
     {
-        int result = 0;
+        User u = null;
+        int id = 0;
         String email = null;
         HashMap<GameMode, Integer> highscores = new HashMap<>();
         CallableStatement loginStatement = this.databaseConnector.getStatement(Statement.LOGIN);
@@ -66,36 +64,36 @@ public class DatabaseStorage implements Storage
             loginStatement.registerOutParameter(4, java.sql.Types.VARCHAR);
             loginStatement.registerOutParameter(5, java.sql.Types.VARCHAR);
             ResultSet resultSet = loginStatement.executeQuery();
-            result = loginStatement.getInt(3);
+            id = loginStatement.getInt(3);
             userIdentifier = loginStatement.getString(4);
             email = loginStatement.getString(5);
-
-            while (resultSet.next())
-            {
-                //newscore
-                GameMode mode = GameMode.valueOf(resultSet.getString(1));
-                highscores.put(mode, resultSet.getInt(2));
-            }
-
+            /*
+             while (resultSet.next())
+             {
+             //newscore
+             GameMode mode = GameMode.valueOf(resultSet.getString(1));
+             highscores.put(mode, resultSet.getInt(2));
+             }
+             */
         }
         catch (SQLException ex)
         {
             //TODO Betere exception afhandeling
-            System.out.println("Fout met verbinden database");
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (result > 0)
+        if (id > 0)
         {
             //TODO Scores toevoegen aan user
-            User u = new User(userIdentifier, email);
-            return u;
+            u = new User(id, userIdentifier, email);
+            this.getScores(u);
         }
-        return null;
+        return u;
     }
 
-    public List<Highscore> getAllUserHighscoresForGameMode(GameMode gameMode)
+    public ArrayList<Highscore> getAllUserHighscoresForGameMode(GameMode gameMode)
     {
 
-        List<Highscore> UserHighscores = new ArrayList<>();
+        ArrayList<Highscore> UserHighscores = new ArrayList<>();
         CallableStatement highscoreStatement = this.databaseConnector.getStatement(Statement.GET_ALL_USER_HIGHSCORES);
         try
         {
@@ -111,7 +109,7 @@ public class DatabaseStorage implements Storage
         catch (SQLException ex)
         {
             //TODO Betere exception afhandeling
-            System.out.println("Fout met verbinden database");
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return UserHighscores;
@@ -121,7 +119,26 @@ public class DatabaseStorage implements Storage
     @Override
     public User getUser(String username)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CallableStatement cStmt = this.databaseConnector.getStatement(Statement.GET_USER);
+        int id = 0;
+        String email = "";
+        try
+        {
+            cStmt.setString(1, username);
+            cStmt.registerOutParameter(2, java.sql.Types.INTEGER);
+            cStmt.registerOutParameter(3, java.sql.Types.VARCHAR);
+            cStmt.execute();
+            id = cStmt.getInt(2);
+            email = cStmt.getString(3);
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseStorage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(id == 0){
+            return null;
+        }
+        return new User(id, username, email);
     }
 
     //TO DO Method om highscores op te slaan
@@ -130,4 +147,47 @@ public class DatabaseStorage implements Storage
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public void getScores(User u)
+    {
+        CallableStatement cStmt = this.databaseConnector.getStatement(Statement.GET_SCORES);
+        try
+        {
+            cStmt.setInt(1, u.getId());
+            ResultSet rs = cStmt.executeQuery();
+
+            while (rs.next())
+            {
+                int id = rs.getInt("User_ID");
+                GameMode gameMode = null;
+                int modeInt = rs.getInt("Gamemode_ID");
+                for (GameMode mode : GameMode.values())
+                {
+                    if (mode.getValue() == modeInt)
+                    {
+                        gameMode = mode;
+                    }
+                }
+                int score = rs.getInt("Score");
+                u.setHighScore(gameMode, score);
+            }
+        }
+        catch (SQLException ex)
+        {
+            System.out.println(ex.toString());
+        }
+    }
+
+    public void removeUser(int id)
+    {
+        CallableStatement cStmt = this.databaseConnector.getStatement(Statement.REMOVE_USER);
+        try
+        {
+            cStmt.setInt(1, id);
+            cStmt.executeQuery();
+        }
+        catch(SQLException ex)
+        {
+            System.out.println(ex.toString());
+        }
+    }
 }

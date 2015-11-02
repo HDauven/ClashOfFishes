@@ -2,7 +2,7 @@ package com.netgames.clashoffishes;
 
 import com.netgames.clashoffishes.data.DatabaseStorage;
 import com.netgames.clashoffishes.engine.GameMode;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Christian on 1/10/15.
@@ -13,7 +13,8 @@ public class Administration
     private static Administration instance = null;
     private User user;
     private Lobby currentLobby;
-    private List<Highscore> allUserHighscoresForGameMode;
+    private ArrayList<Highscore> allUserHighscoresForGameMode;
+    EmailValidator validator;
 
     private final DatabaseStorage dbStorage;
 
@@ -24,7 +25,8 @@ public class Administration
         allUserHighscoresForGameMode = null;
         dbStorage = new DatabaseStorage();
         //Testwaarde
-        user = new User("Stef", "stef@stef.nl");
+        user = new User(1, "Stef", "stef@stef.nl");
+        validator = new EmailValidator();
     }
 
     public static Administration get()
@@ -43,6 +45,9 @@ public class Administration
 
     public Boolean addUser(String username, String confirmedPassword, String email)
     {
+        if(username.equals("") || confirmedPassword.equals("") || !validator.validate(email))
+            return false;
+        //TODO Controle op geldig emailadres, minimale lengte wachtwoord etc.
         return dbStorage.addUser(username, confirmedPassword, email);
     }
 
@@ -67,16 +72,19 @@ public class Administration
         this.currentLobby = currentLobby;
     }
 
-    public List<Highscore> getAllUserHighscoresForGameMode(GameMode gameMode)
+    public ArrayList<Highscore> getAllUserHighscoresForGameMode(GameMode gameMode)
     {
         this.allUserHighscoresForGameMode = this.dbStorage.getAllUserHighscoresForGameMode(gameMode);
         return this.allUserHighscoresForGameMode;
     }
 
-    //TODO Nog niet geimplementeerd is deze nog wel nodig????
     public User getUser(String username)
     {
+        if(username.isEmpty())
+            return null;
+        
         return dbStorage.getUser(username);
     }
-
+    
+    
 }

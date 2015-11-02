@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javafx.beans.property.SimpleStringProperty;
 
 /**
  * Created by bram on 1/10/15.
@@ -16,6 +15,7 @@ public class Lobby {
     private List<User> users = new ArrayList<>();
     private Map<User, Boolean> usersReadyMap = new HashMap<>();
     private GameMode gameMode = GameMode.EVOLVED;
+    private GameManager gameManager;
 
     public void addUser(User user) {
         if (!users.contains(user)) {
@@ -53,7 +53,7 @@ public class Lobby {
     }
 
     public GameManager createGame() {
-        return null;
+        return gameManager = new GameManager();
     }
 
     public List<User> getUsers()
