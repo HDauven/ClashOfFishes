@@ -41,7 +41,7 @@ public class GuiUtilities {
             }
     }
     
-    public static String getStartMenuTitle() {
+    public static String getMainMenusTitle() {
         Administration administration = Administration.get();
         String username = "";
         if (administration.getLoggedInUser() != null) {

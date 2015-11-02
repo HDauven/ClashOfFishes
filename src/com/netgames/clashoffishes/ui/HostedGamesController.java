@@ -83,7 +83,7 @@ public class HostedGamesController implements Initializable {
 
     @FXML
     private void btnBack_OnClick(ActionEvent event) {
-        GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "StartMenu", GuiUtilities.getStartMenuTitle());
+        GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
     }
 
 }
