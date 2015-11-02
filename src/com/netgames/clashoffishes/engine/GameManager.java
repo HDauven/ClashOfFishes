@@ -8,6 +8,7 @@ import com.netgames.clashoffishes.engine.object.events.FishHook;
 import com.netgames.clashoffishes.engine.object.events.Seaweed;
 import java.net.URL;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -22,6 +23,7 @@ import javafx.stage.Stage;
  * @author Hein Dauven
  */
 public class GameManager extends Application {
+
     public static final double WIDTH = 1024, HEIGHT = 768;
     private boolean up, down, left, right;
     private boolean wKey, aKey, sKey, dKey;
@@ -34,9 +36,11 @@ public class GameManager extends Application {
     private Player player;
     private int gameScore = 0;
     private GameState gameState;
+    private SimpleStringProperty timeLeft = new SimpleStringProperty();
     //Standaardwaarde is single player = evolution of time
     private final GameMode gameMode = GameMode.EVOLUTION_OF_TIME;
     private Group root;
+    Stage thisStage;
 
     EnergyDrink energy;
 
@@ -81,6 +85,7 @@ public class GameManager extends Application {
     // TODO if this class becomes dynamic we will ascend to god status.
     @Override
     public void start(Stage primaryStage) {
+        thisStage = primaryStage;
         primaryStage.setTitle("Clash of Fishes");
         root = new Group();
         scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
@@ -153,13 +158,13 @@ public class GameManager extends Application {
         // TODO adding image asset format:
         // Image object = new Image("/resource/image.png", width, height, true, false, true);
         // <editor-fold defaultstate="collapsed" desc="Background images instantiation">
-        backgroundDir = this.getClass().getResource("/com/netgames/clashoffishes/images/background/");        
+        backgroundDir = this.getClass().getResource("/com/netgames/clashoffishes/images/background/");
         backgroundLayer1 = new Image(backgroundDir.toString() + "BackgroundLayer1.png", 1024, 768, true, false, true);
         backLayer1 = new Image(backgroundDir.toString() + "BackLayer1.png", 1024, 506, true, false, true);
         middleLayer1 = new Image(backgroundDir.toString() + "MiddleLayer1.png", 1024, 212, true, false, true);
         frontLayer1 = new Image(backgroundDir.toString() + "FrontLayer1.png", 1024, 316, true, false, true);
         // </editor-fold>
-        
+
         playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
         // <editor-fold defaultstate="collapsed" desc="Bubbles image instantiation">
         bubbles1 = new Image(playerDir.toString() + "Bubbles1.png", 103, 66, true, false, true);
@@ -283,7 +288,7 @@ public class GameManager extends Application {
         gameLoop = new GameLoop(this);
         gameLoop.start();
         gameState = GameState.RUNNING;
-        
+
     }
 
     public void addRandomObject() {
@@ -556,12 +561,27 @@ public class GameManager extends Application {
         this.gameState = gameState;
     }
 
-    GameMode getGameMode()
-    {
+    GameMode getGameMode() {
         return this.gameMode;
     }
 
     public GameMenu getGameMenu() {
         return menu;
+    }
+
+    public void setTimeLeft(String secondsLeft) {
+        this.timeLeft.set(secondsLeft);
+    }
+
+    public SimpleStringProperty getTimeLeft() {
+        return this.timeLeft;
+    }
+
+    void closeStage() {
+        thisStage.close();
+    }
+
+    Stage getStage() {
+        return this.thisStage;
     }
 }

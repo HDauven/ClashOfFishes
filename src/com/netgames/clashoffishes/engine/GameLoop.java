@@ -1,5 +1,7 @@
 package com.netgames.clashoffishes.engine;
 
+import com.netgames.clashoffishes.Administration;
+import com.netgames.clashoffishes.util.GuiUtilities;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 import javafx.animation.AnimationTimer;
@@ -10,6 +12,7 @@ import javafx.animation.AnimationTimer;
  * @author Hein Dauven
  */
 public class GameLoop extends AnimationTimer {
+
     private final long NANO_TO_SECOND;
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
     long prev = System.nanoTime();
@@ -17,6 +20,7 @@ public class GameLoop extends AnimationTimer {
     private long startTime = System.nanoTime();
     private long secondsLeft;
     private int lengt_of_game = 5;
+    private boolean winCondition = false;
 
     /* A reference to the GameManager class. */
     protected GameManager gameManager;
@@ -41,8 +45,8 @@ public class GameLoop extends AnimationTimer {
     @Override
     public void handle(long now) {
         // TODO
-        gameManager.getPlayer().update();        
-        
+        gameManager.getPlayer().update();
+
         long elapsed = now - prev;
         int randInt = (int) (Math.random() * 10000 + 1);
         //System.out.println(elapsed);
@@ -55,19 +59,19 @@ public class GameLoop extends AnimationTimer {
         if (gameManager.getGameMode() == GameMode.EVOLUTION_OF_TIME) {
             long elapsed2 = now - startTime;
             secondsLeft = lengt_of_game - (elapsed2 / NANO_TO_SECOND);
+
+            gameManager.setTimeLeft(String.valueOf(secondsLeft));
             if (secondsLeft == 0) {
                 //Spel voorbij na 2 minuten
                 if (gameManager.getGameState() != GameState.FINISHED) {
                     gameManager.setGameState(GameState.FINISHED);
                     this.stop();
+                    hasWon();
+                    Administration.get().getLoggedInUser().updateHighScore(gameManager.getGameMode(), gameManager.getGameScore());
+                    //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
                     System.out.println("Time is up!");
                 }
             }
-        }
-        
-        if (gameManager.getGameState() == GameState.FINISHED) {
-            gameManager.getRoot().getChildren().add(
-                gameManager.getGameMenu().getVictoryScreen());
         }
     }
 
@@ -86,5 +90,17 @@ public class GameLoop extends AnimationTimer {
     @Override
     public void stop() {
         super.stop();
+    }
+    
+    private void hasWon() {
+        if (gameManager.getGameState() == GameState.FINISHED) {
+            if (winCondition == true) {
+                gameManager.getRoot().getChildren().add(
+                    gameManager.getGameMenu().getVictoryScreen());   
+            } else {
+                gameManager.getRoot().getChildren().add(
+                        gameManager.getGameMenu().getDefeatScreen());
+            }
+        }
     }
 }
