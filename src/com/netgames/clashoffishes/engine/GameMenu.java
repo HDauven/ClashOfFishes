@@ -40,6 +40,7 @@ public class GameMenu {
     private ImageView playerViewOne, playerViewTwo, playerViewThree, playerViewFour;
     private Image playerIconOne, playerIconTwo, playerIconThree, playerIconFour;
     private URL playerDir;
+    private Text timeText;
     
     public GameMenu(GameManager manager) {
         this.gameManager = manager;
@@ -109,7 +110,7 @@ public class GameMenu {
             gameManager.getGameLoop().stop();
             gameManager.setGameState(GameState.PAUSED);
         });
-        menuBarBox.getChildren().add(pauseGameButton); 
+        menuBarBox.getChildren().add(pauseGameButton);
         
         continueGameButton = new Button();
         continueGameButton.setText("Continue Game");
@@ -306,6 +307,14 @@ public class GameMenu {
         gc.stroke();
         miniMap.setTranslateX(WIDTH - 200);
         miniMapGroup.getChildren().add(miniMap);
+        
+        timeText = new Text();
+        timeText.textProperty().bind(gameManager.getTimeLeft());
+        timeText.setFill(Color.WHITE);
+        timeText.setFont(Font.font("System", FontWeight.BOLD, 50));
+        timeText.setTranslateX(WIDTH - 75);
+        timeText.setTranslateY(75);
+        miniMapGroup.getChildren().add(timeText);
     }
     
     /**
@@ -388,7 +397,7 @@ public class GameMenu {
      */
     public void updateScoreLabelOne() {
         this.scoreLabelOne.setText(String.valueOf(gameManager.getGameScore()));
-    }   
+    }
 
     public Group getScoreMenuGroup() {
         return scoreMenuGroup;
