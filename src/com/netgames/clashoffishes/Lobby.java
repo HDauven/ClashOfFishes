@@ -18,6 +18,9 @@ public class Lobby {
     private GameManager gameManager;
 
     public void addUser(User user) {
+        if(user == null){
+            return;
+        }
         if (!users.contains(user)) {
             users.add(user);
         }
@@ -33,7 +36,7 @@ public class Lobby {
 
     public boolean isEveryoneReady() {
         for (User user : users) {
-            if (!usersReadyMap.get(user))
+            if (!usersReadyMap.containsKey(user))
                 return false;
         }
 
