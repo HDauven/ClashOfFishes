@@ -341,12 +341,13 @@ public class GameManager extends Application {
         GameObject object = null;
         double px = WIDTH * Math.random() + 1;
         double py = HEIGHT * Math.random() + 1;
+        
         int range = (3 - 1) + 1; // 3 moet veranderen als er meer objecten bijkomen.
         int randomGetal = (int) (Math.random() * range + 1);
 
         //Random object genereren
         if (randomGetal == 1) {
-            image = new Image(eventDir.toString() + "EnergyDrink1.png", 50, 241, true, false, true);
+            image = new Image(eventDir.toString() + "EnergyDrink1.png", 30, 144.6, true, false, true);
             object = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", px, py, image);
         }
 
@@ -357,7 +358,15 @@ public class GameManager extends Application {
 
         if (randomGetal == 3) {
             image = new Image(eventDir.toString() + "Seaweed1.png", 30, 87, true, false, true);
-            object = new Seaweed("", px, py, image);
+            object = new Seaweed("M 66.00,11.00" +
+"           C 66.00,11.00 11.00,192.00 11.00,192.00" +
+"             11.00,192.00 4.00,285.00 4.00,285.00" +
+"             4.00,285.00 12.00,453.00 12.00,453.00" +
+"             12.00,453.00 31.00,545.00 31.00,545.00" +
+"             31.00,545.00 149.00,525.00 149.00,525.00" +
+"             149.00,525.00 193.00,389.00 193.00,389.00" +
+"             193.00,389.00 186.00,148.00 186.00,148.00" +
+"             186.00,148.00 125.00,58.00 125.00,58.00", px, py, image);
         }
         //TODO Diver object aanmaken
 /*

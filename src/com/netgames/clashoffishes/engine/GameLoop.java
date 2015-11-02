@@ -18,7 +18,7 @@ public class GameLoop extends AnimationTimer {
     Random random = new Random();
     private final long startTime = System.nanoTime();
     private long secondsLeft;
-
+    
     private final int length_of_game = 600;
     private final boolean winCondition = false;
 

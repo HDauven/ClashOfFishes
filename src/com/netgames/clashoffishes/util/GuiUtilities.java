@@ -27,6 +27,7 @@ public class GuiUtilities {
     public static final String HOSTED_GAMES_TITLE = "Hosted Games.";
     public static final String LOGIN_TITLE = "Welcome - Please login using your username/email & password.";   
     public static final String REGISTRATION_TITLE = "Register a new account.";
+    public static final String CHARACTER_SELECTION_TITLE = "Select your character!";
     
     public static void buildStage(Object window, String fileName, String title) {
         try {
