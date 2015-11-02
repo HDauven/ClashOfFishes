@@ -329,10 +329,10 @@ public class GameMenu {
         gc.lineTo(25, 200);
         gc.quadraticCurveTo(0, 100, 25, 0);
         gc.closePath();
-        gc.setFill(generateLinearGradient("60979c", "2b4c55"));
+        gc.setFill(generateLinearGradient("71cb22", "79da25"));
         gc.setGlobalAlpha(0.5);
         gc.fill();
-        gc.setStroke(Color.web("#8ed0cf"));
+        gc.setStroke(Color.web("#1c9600"));
         gc.setLineWidth(2);
         gc.stroke();
         victoryScreen.setTranslateX((WIDTH / 2) - (victoryScreen.getWidth() / 2));
@@ -344,8 +344,8 @@ public class GameMenu {
         victoryText.setFill(Color.WHITE);
         victoryText.prefWidth(100);
         victoryText.setFont(Font.font("System", FontWeight.BOLD, 20));
-        victoryText.setLayoutX((WIDTH / 2) - (100 / 2));
-        victoryText.setLayoutY((HEIGHT / 2));
+        victoryText.setLayoutX((WIDTH / 2) - 35);
+        victoryText.setLayoutY((HEIGHT / 2 - 50));
         victoryScreenGroup.getChildren().add(victoryText);
     }
     
@@ -362,10 +362,10 @@ public class GameMenu {
         gc.lineTo(25, 200);
         gc.quadraticCurveTo(0, 100, 25, 0);
         gc.closePath();
-        gc.setFill(generateLinearGradient("60979c", "2b4c55"));
+        gc.setFill(generateLinearGradient("ff0303", "ff3e3e"));
         gc.setGlobalAlpha(0.5);
         gc.fill();
-        gc.setStroke(Color.web("#8ed0cf"));
+        gc.setStroke(Color.web("#D40000"));
         gc.setLineWidth(2);
         gc.stroke();
         defeatScreen.setTranslateX((WIDTH / 2) - (victoryScreen.getWidth() / 2));
@@ -373,12 +373,12 @@ public class GameMenu {
         defeatScreenGroup.getChildren().add(defeatScreen);
         
         defeatText = new Text();
-        defeatText.setText("Victory!");
+        defeatText.setText("Defeat!");
         defeatText.setFill(Color.WHITE);
         defeatText.prefWidth(100);
         defeatText.setFont(Font.font("System", FontWeight.BOLD, 20));
-        defeatText.setLayoutX((WIDTH / 2) - (100 / 2));
-        defeatText.setLayoutY((HEIGHT / 2));
+        defeatText.setLayoutX((WIDTH / 2) - 35);
+        defeatText.setLayoutY((HEIGHT / 2 - 50));
         defeatScreenGroup.getChildren().add(defeatText);
     }
 
