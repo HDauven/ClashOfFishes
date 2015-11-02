@@ -43,7 +43,6 @@ public class CharacterSelectionController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         List<String> characterNames = new ArrayList<>();
-        characterNames.add("None");
         characterNames.add("Bubbles");
         characterNames.add("Cleo");
         characterNames.add("Fred");
@@ -81,7 +80,7 @@ public class CharacterSelectionController implements Initializable {
 
     @FXML
     private void btnStartGame_OnClick(ActionEvent event) {
-        GameManager gameManager = new GameManager();
+        GameManager gameManager = new GameManager(this.cbCharacters.getValue());
         gameManager.start(new Stage());
     }
     
