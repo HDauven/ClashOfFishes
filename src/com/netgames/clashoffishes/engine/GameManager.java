@@ -303,7 +303,7 @@ public class GameManager extends Application {
 
         //Random object genereren
         if (randomGetal == 1) {
-            image = new Image(eventDir.toString() + "EnergyDrink1.png", 50, 241, true, false, true);
+            image = new Image(eventDir.toString() + "EnergyDrink1.png", 30, 144.6, true, false, true);
             object = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", px, py, image);
         }
 
