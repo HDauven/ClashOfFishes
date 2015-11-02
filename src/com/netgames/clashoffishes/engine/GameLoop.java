@@ -56,22 +56,8 @@ public class GameLoop extends AnimationTimer {
             //add object if randInt % 4 == 0 dit object else % 3 == 0 dat object etc
             prev = System.nanoTime();
         }
-        if (gameManager.getGameMode() == GameMode.EVOLUTION_OF_TIME) {
-            long elapsed2 = now - startTime;
-            secondsLeft = length_of_game - (elapsed2 / NANO_TO_SECOND);
-            gameManager.setTimeLeft(String.valueOf(secondsLeft));
-            if (secondsLeft == 0) {
-                //Spel voorbij na 2 minuten
-                if (gameManager.getGameState() != GameState.FINISHED) {
-                    gameManager.setGameState(GameState.FINISHED);
-                    this.stop();
-                    hasWon();
-                    Administration.get().getLoggedInUser().updateHighScore(gameManager.getGameMode(), gameManager.getGameScore());
-                    //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
-                    System.out.println("Time is up!");
-                }
-            }
-        }
+        
+        modeEvolutionOfTime(now);
     }
 
     /**
@@ -91,6 +77,38 @@ public class GameLoop extends AnimationTimer {
         super.stop();
     }
     
+    /**
+     * Method that checks if the GameMode is Evolution of Time. If this is true,
+     * the method goes on to check whether the game time has passed. If this is 
+     * true, it sets the game state to FINISHED, stops the game, shows a win or 
+     * lose screen and updates the score for the player.
+     * @param now 
+     */
+    private void modeEvolutionOfTime(long now) {
+        if (gameManager.getGameMode() == GameMode.EVOLUTION_OF_TIME) {
+            long elapsed2 = now - startTime;
+            secondsLeft = length_of_game - (elapsed2 / NANO_TO_SECOND);
+            gameManager.setTimeLeft(String.valueOf(secondsLeft));
+            if (secondsLeft == 0) {
+                //Spel voorbij na 2 minuten
+                if (gameManager.getGameState() != GameState.FINISHED) {
+                    gameManager.setGameState(GameState.FINISHED);
+                    this.stop();
+                    hasWon();
+                    Administration.get().getLoggedInUser().updateHighScore(gameManager.getGameMode(), gameManager.getGameScore());
+                    //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
+                    System.out.println("Time is up!");
+                }
+            }
+        }
+    }
+    
+    /**
+     * Method that checks whether the game has finished and if the player has 
+     * won.
+     * Based on the win condition (true for win, false for lose), a corresponding
+     * screen is shown.
+     */
     private void hasWon() {
         if (gameManager.getGameState() == GameState.FINISHED) {
             if (winCondition == true) {
