@@ -13,6 +13,6 @@
     <Button layoutX="149.0" layoutY="200.0" mnemonicParsing="false" onAction="#joinGame" prefHeight="40.0" prefWidth="323.0" text="Join game" />
     <Button layoutX="149.0" layoutY="249.0" mnemonicParsing="false" onAction="#highscore" prefHeight="40.0" prefWidth="323.0" text="Highscore" />
     <Button fx:id="btnBack" layoutX="149.0" layoutY="297.0" mnemonicParsing="false" onAction="#btnBack_OnClick" prefHeight="40.0" prefWidth="323.0" text="Back" />
-    <ImageView fx:id="pictCoFLogo" fitHeight="100.25" fitWidth="392.0" layoutX="115.0" layoutY="35.0" pickOnBounds="true" preserveRatio="false" />
+    <ImageView fx:id="pictCoFLogo" fitHeight="127.2" fitWidth="341.6" layoutX="140.0" layoutY="13.0" pickOnBounds="true" preserveRatio="false" />
   </children>
 </AnchorPane>
