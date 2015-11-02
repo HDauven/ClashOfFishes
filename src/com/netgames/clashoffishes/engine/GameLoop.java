@@ -19,7 +19,7 @@ public class GameLoop extends AnimationTimer {
     private final long startTime = System.nanoTime();
     private long secondsLeft;
 
-    private final int length_of_game = 20;
+    private final int length_of_game = 600;
     private final boolean winCondition = false;
 
     /* A reference to the GameManager class. */
