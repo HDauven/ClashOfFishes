@@ -65,7 +65,7 @@ public class HighscoreController implements Initializable
 
     @FXML
     private void btnBack_OnClick(ActionEvent event) {
-        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", GuiUtilities.getStartMenuTitle());
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
     }
     
     @FXML

@@ -55,6 +55,7 @@ public class AdministrationTest
         assertFalse("Username bestaat al", Administration.get().addUser("Stef", "wachtwoord", "user1@gmail.com"));
         assertFalse("Email bestaat al", Administration.get().addUser("User1", "wachtwoord", "StefPhilipsen@gmail.com"));
         assertFalse("Naam mag niet leeg zijn", Administration.get().addUser("", "wachtwoord", "leeg@gmail.com"));
+        assertFalse("Wachtwoord mag niet leeg zijn.", Administration.get().addUser("Piet", "", "Stef@Stef.nl"));
 
         //Geldig email-adres testen
         assertFalse("Geen geldig emailadres ingevoerd, moet null zijn", Administration.get().addUser("Henk", "wachtwoord", "geenApenstaartje"));

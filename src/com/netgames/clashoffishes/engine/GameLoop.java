@@ -1,7 +1,6 @@
 package com.netgames.clashoffishes.engine;
 
 import com.netgames.clashoffishes.Administration;
-import com.netgames.clashoffishes.util.GuiUtilities;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 import javafx.animation.AnimationTimer;
@@ -17,10 +16,11 @@ public class GameLoop extends AnimationTimer {
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
     long prev = System.nanoTime();
     Random random = new Random();
-    private long startTime = System.nanoTime();
+    private final long startTime = System.nanoTime();
     private long secondsLeft;
-    private int lengt_of_game = 5;
-    private boolean winCondition = false;
+
+    private final int length_of_game = 20;
+    private final boolean winCondition = false;
 
     /* A reference to the GameManager class. */
     protected GameManager gameManager;
@@ -58,8 +58,7 @@ public class GameLoop extends AnimationTimer {
         }
         if (gameManager.getGameMode() == GameMode.EVOLUTION_OF_TIME) {
             long elapsed2 = now - startTime;
-            secondsLeft = lengt_of_game - (elapsed2 / NANO_TO_SECOND);
-
+            secondsLeft = length_of_game - (elapsed2 / NANO_TO_SECOND);
             gameManager.setTimeLeft(String.valueOf(secondsLeft));
             if (secondsLeft == 0) {
                 //Spel voorbij na 2 minuten

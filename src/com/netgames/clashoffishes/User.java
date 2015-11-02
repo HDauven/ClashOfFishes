@@ -62,4 +62,10 @@ public class User
     {
         highscores.put(mode, score);
     }
+    
+    @Override
+    public String toString()
+    {
+        return this.id + " " + this.username;
+    }
 }
