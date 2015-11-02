@@ -34,6 +34,7 @@ public class GameManager extends Application {
     private GameMap map;
     private GameMenu menu;
     private Player player;
+    private String character = "Bubbles";
     private int gameScore = 0;
     private GameState gameState;
     private SimpleStringProperty timeLeft = new SimpleStringProperty();
@@ -81,6 +82,28 @@ public class GameManager extends Application {
     private URL eventDir;
     // </editor-fold>
 
+    /**
+     * Default constructor
+     */
+    public GameManager() {
+        // Empty
+    }
+    
+    /**
+     * Constructor where a character number is given.
+     * @param character The chosen character
+     */
+    public GameManager(String character) {
+        if (character.toUpperCase().equals("BUBBLES") ||
+                character.toUpperCase().equals("CLEO") ||
+                character.toUpperCase().equals("FRED") ||
+                character.toUpperCase().equals("GILL")){
+            this.character = character;
+        } else {
+            this.character = "BUBBLES";
+        }
+    }
+    
     // TODO make this class dynamic. 
     // TODO if this class becomes dynamic we will ascend to god status.
     @Override
@@ -231,10 +254,31 @@ public class GameManager extends Application {
         map = new GameMap((int) WIDTH, (int) HEIGHT);
         menu = new GameMenu(this);
 
-        player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
+        createPlayer();
+        
         energy = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z",
                 200, 200, energyDrink1);
+    }
+    
+    private void createPlayer() {
+        switch (this.character.toUpperCase()) {
+            case "BUBBLES": 
+                player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4); 
+                break;
+            case "CLEO": 
+                player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                WIDTH / 2, HEIGHT / 2, cleo1, cleo2, cleo3, cleo4); 
+                break;
+            case "FRED": 
+                player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                WIDTH / 2, HEIGHT / 2, fred1, fred2, fred3, fred4); 
+                break;
+            case "GILL": 
+                player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                WIDTH / 2, HEIGHT / 2, gill1, gill2, gill3, gill4); 
+                break;
+        }
     }
 
     /**
