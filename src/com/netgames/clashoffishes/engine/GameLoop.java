@@ -18,9 +18,9 @@ public class GameLoop extends AnimationTimer
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
     long prev = System.nanoTime();
     Random random = new Random();
-    private long startTime = System.nanoTime();
+    private final long startTime = System.nanoTime();
     private long secondsLeft;
-    private int lengt_of_game = 20;
+    private final int length_of_game = 20;
 
     /* A reference to the GameManager class. */
     protected GameManager gameManager;
@@ -62,7 +62,7 @@ public class GameLoop extends AnimationTimer
         if (gameManager.getGameMode() == GameMode.EVOLUTION_OF_TIME)
         {
             long elapsed2 = now - startTime;
-            secondsLeft = lengt_of_game - (elapsed2 / NANO_TO_SECOND);
+            secondsLeft = length_of_game - (elapsed2 / NANO_TO_SECOND);
             gameManager.setTimeLeft(String.valueOf(secondsLeft));
             if (secondsLeft == 0)
             {
