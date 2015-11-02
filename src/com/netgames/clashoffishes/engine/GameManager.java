@@ -560,4 +560,8 @@ public class GameManager extends Application {
     {
         return this.gameMode;
     }
+
+    public GameMenu getGameMenu() {
+        return menu;
+    }
 }
