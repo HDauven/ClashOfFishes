@@ -9,7 +9,6 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -17,7 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -154,12 +152,6 @@ public class GameMenu {
         scoreWindow.setTranslateX(0);
         scoreWindow.setTranslateY((HEIGHT / 2) - 220);
         scoreMenuGroup.getChildren().add(scoreWindow);
-        
-//        scoreWindow = new Rectangle(100, 440, Color.BLACK);
-//        scoreWindow.setTranslateX(0);
-//        scoreWindow.setTranslateY((HEIGHT / 2) - 220);
-//        scoreWindow.opacityProperty().set(0.5);
-//        scoreMenuGroup.getChildren().add(scoreWindow);
         
         scoreText = new Text();
         scoreText.setText("Scoreboard");
