@@ -7,6 +7,7 @@ import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
 import com.netgames.clashoffishes.engine.object.events.FishHook;
 import com.netgames.clashoffishes.engine.object.events.Seaweed;
 import java.net.URL;
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
@@ -15,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 
 /**
@@ -22,7 +24,8 @@ import javafx.stage.Stage;
  *
  * @author Hein Dauven
  */
-public class GameManager extends Application {
+public class GameManager extends Application
+{
 
     public static final double WIDTH = 1280, HEIGHT = 720;
     private boolean up, down, left, right;
@@ -44,6 +47,7 @@ public class GameManager extends Application {
     Stage thisStage;
 
     EnergyDrink energy;
+    private ArrayList<FishHook> fishHooks;
 
     // <editor-fold defaultstate="collapsed" desc="Audioclips & URL declaration">
     private AudioClip biteSound0;
@@ -85,29 +89,37 @@ public class GameManager extends Application {
     /**
      * Default constructor
      */
-    public GameManager() {
+    public GameManager()
+    {
         // Empty
+        fishHooks = new ArrayList<>();
     }
-    
+
     /**
      * Constructor where a character number is given.
+     *
      * @param character The chosen character
      */
-    public GameManager(String character) {
-        if (character.toUpperCase().equals("BUBBLES") ||
-                character.toUpperCase().equals("CLEO") ||
-                character.toUpperCase().equals("FRED") ||
-                character.toUpperCase().equals("GILL")){
+    public GameManager(String character)
+    {
+        if (character.toUpperCase().equals("BUBBLES")
+                || character.toUpperCase().equals("CLEO")
+                || character.toUpperCase().equals("FRED")
+                || character.toUpperCase().equals("GILL"))
+        {
             this.character = character;
-        } else {
+        }
+        else
+        {
             this.character = "BUBBLES";
         }
     }
-    
+
     // TODO make this class dynamic. 
     // TODO if this class becomes dynamic we will ascend to god status.
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage)
+    {
         thisStage = primaryStage;
         primaryStage.setTitle("Clash of Fishes");
         root = new Group();
@@ -125,7 +137,8 @@ public class GameManager extends Application {
         createStartGameLoop();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch(args);
     }
 
@@ -133,32 +146,73 @@ public class GameManager extends Application {
      * Sets event handling for the scene object. Based on user input, booleans
      * are triggered to decide whether an user is actively using a key or not.
      */
-    private void createSceneEventHandling() {
-        scene.setOnKeyPressed((KeyEvent event) -> {
-            switch (event.getCode()) {
-                case UP:    up    = true; break;
-                case DOWN:  down  = true; break;
-                case LEFT:  left  = true; break;
-                case RIGHT: right = true; break;
-                case W:     wKey  = true; break;
-                case A:     aKey  = true; break;
-                case S:     sKey  = true; break;
-                case D:     dKey  = true; break; 
-                case SPACE: space = true; break;
+    private void createSceneEventHandling()
+    {
+        scene.setOnKeyPressed((KeyEvent event) ->
+        {
+            switch (event.getCode())
+            {
+                case UP:
+                    up = true;
+                    break;
+                case DOWN:
+                    down = true;
+                    break;
+                case LEFT:
+                    left = true;
+                    break;
+                case RIGHT:
+                    right = true;
+                    break;
+                case W:
+                    wKey = true;
+                    break;
+                case A:
+                    aKey = true;
+                    break;
+                case S:
+                    sKey = true;
+                    break;
+                case D:
+                    dKey = true;
+                    break;
+                case SPACE:
+                    space = true;
+                    break;
             }
         });
 
-        scene.setOnKeyReleased((KeyEvent event) -> {
-            switch (event.getCode()) {
-                case UP:    up    = false; break;
-                case DOWN:  down  = false; break;
-                case LEFT:  left  = false; break;
-                case RIGHT: right = false; break;
-                case W:     wKey  = false; break;
-                case A:     aKey  = false; break;
-                case S:     sKey  = false; break;
-                case D:     dKey  = false; break;  
-                case SPACE: space = false; break; 
+        scene.setOnKeyReleased((KeyEvent event) ->
+        {
+            switch (event.getCode())
+            {
+                case UP:
+                    up = false;
+                    break;
+                case DOWN:
+                    down = false;
+                    break;
+                case LEFT:
+                    left = false;
+                    break;
+                case RIGHT:
+                    right = false;
+                    break;
+                case W:
+                    wKey = false;
+                    break;
+                case A:
+                    aKey = false;
+                    break;
+                case S:
+                    sKey = false;
+                    break;
+                case D:
+                    dKey = false;
+                    break;
+                case SPACE:
+                    space = false;
+                    break;
             }
         });
     }
@@ -166,7 +220,8 @@ public class GameManager extends Application {
     /**
      * Loads audio assets into the game.
      */
-    private void loadAudioAssets() {
+    private void loadAudioAssets()
+    {
         // TODO loading audio asset format:
         // URL object = this.getClass().getResource("/resource/sound.wav");
         // AudioClip object = new AudioClip(URL object.toString());
@@ -177,7 +232,8 @@ public class GameManager extends Application {
     /**
      * Loads image assets into the game.
      */
-    private void loadImageAssets() {
+    private void loadImageAssets()
+    {
         // TODO adding image asset format:
         // Image object = new Image("/resource/image.png", width, height, true, false, true);
         // <editor-fold defaultstate="collapsed" desc="Background images instantiation">
@@ -243,7 +299,8 @@ public class GameManager extends Application {
     /**
      * Creates the necessary GameObjects for the game.
      */
-    private void createGameObjects() {
+    private void createGameObjects()
+    {
         // TODO adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
         bgLayer1 = new Prop("", 0, 0, backgroundLayer1);
@@ -255,28 +312,30 @@ public class GameManager extends Application {
         menu = new GameMenu(this);
 
         createPlayer();
-        
+
         energy = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z",
                 200, 200, energyDrink1);
     }
-    
-    private void createPlayer() {
-        switch (this.character.toUpperCase()) {
-            case "BUBBLES": 
+
+    private void createPlayer()
+    {
+        switch (this.character.toUpperCase())
+        {
+            case "BUBBLES":
                 player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4); 
+                        WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
                 break;
-            case "CLEO": 
+            case "CLEO":
                 player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                WIDTH / 2, HEIGHT / 2, cleo1, cleo2, cleo3, cleo4); 
+                        WIDTH / 2, HEIGHT / 2, cleo1, cleo2, cleo3, cleo4);
                 break;
-            case "FRED": 
+            case "FRED":
                 player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                WIDTH / 2, HEIGHT / 2, fred1, fred2, fred3, fred4); 
+                        WIDTH / 2, HEIGHT / 2, fred1, fred2, fred3, fred4);
                 break;
-            case "GILL": 
+            case "GILL":
                 player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                WIDTH / 2, HEIGHT / 2, gill1, gill2, gill3, gill4); 
+                        WIDTH / 2, HEIGHT / 2, gill1, gill2, gill3, gill4);
                 break;
         }
     }
@@ -284,7 +343,8 @@ public class GameManager extends Application {
     /**
      * Adds GameObjects to the root node.
      */
-    private void addGameObjectNodes() {
+    private void addGameObjectNodes()
+    {
         // TODO adding game object nodes
         // root.getChildren().add(gameObject);
         root.getChildren().add(bgLayer1.getSpriteFrame());
@@ -304,7 +364,8 @@ public class GameManager extends Application {
      * Creates the ObjectManager object. This is necessary for the detection of
      * collision and the removal of objects from the game.
      */
-    public void createObjectManager() {
+    public void createObjectManager()
+    {
         objectManager = new ObjectManager();
         // TODO adding an object to the object manager format:
         // objectManager.addCurrentObject(newobject);
@@ -316,7 +377,8 @@ public class GameManager extends Application {
     /**
      * Adds nodes to the root Group object.
      */
-    private void addNodesToGroup() {
+    private void addNodesToGroup()
+    {
         // TODO add nodes to the root Group:
         // root.getChildren().add(container);
         //root.getChildren().add(gameWindow);
@@ -328,45 +390,55 @@ public class GameManager extends Application {
     /**
      * Creates a GameLoop object and runs an instance of this class.
      */
-    private void createStartGameLoop() {
+    private void createStartGameLoop()
+    {
         gameLoop = new GameLoop(this);
         gameLoop.start();
         gameState = GameState.RUNNING;
 
     }
 
-    public void addRandomObject() {
+    public void addRandomObject()
+    {
         //Aanmaken waarden
         Image image;
         GameObject object = null;
         double px = WIDTH * Math.random() + 1;
         double py = HEIGHT * Math.random() + 1;
-        
+
         int range = (3 - 1) + 1; // 3 moet veranderen als er meer objecten bijkomen.
         int randomGetal = (int) (Math.random() * range + 1);
 
         //Random object genereren
-        if (randomGetal == 1) {
+        if (randomGetal == 1)
+        {
             image = new Image(eventDir.toString() + "EnergyDrink1.png", 30, 144.6, true, false, true);
             object = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", px, py, image);
         }
 
-        if (randomGetal == 2) {
-            image = new Image(eventDir.toString() + "FishHook1.png", 89, 905, true, false, true);
-            object = new FishHook("", px, py, image);
+        if (randomGetal == 2)
+        {
+            image = new Image(eventDir.toString() + "FishHook1.png", 40, 406, true, false, true);
+            object = new FishHook("", px, -300, image);
+            fishHooks.add((FishHook)object);
+            Path path = new Path();
+            //path.getElements().add(new MoveTo(20, 20));
+            //path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
+            //path.getElements().add(new CubicCurveTo(0, 120, 0, 240, 380, 240));
         }
 
-        if (randomGetal == 3) {
+        if (randomGetal == 3)
+        {
             image = new Image(eventDir.toString() + "Seaweed1.png", 30, 87, true, false, true);
-            object = new Seaweed("M 66.00,11.00" +
-"           C 66.00,11.00 11.00,192.00 11.00,192.00" +
-"             11.00,192.00 4.00,285.00 4.00,285.00" +
-"             4.00,285.00 12.00,453.00 12.00,453.00" +
-"             12.00,453.00 31.00,545.00 31.00,545.00" +
-"             31.00,545.00 149.00,525.00 149.00,525.00" +
-"             149.00,525.00 193.00,389.00 193.00,389.00" +
-"             193.00,389.00 186.00,148.00 186.00,148.00" +
-"             186.00,148.00 125.00,58.00 125.00,58.00", px, py, image);
+            object = new Seaweed("M 66.00,11.00"
+                    + "           C 66.00,11.00 11.00,192.00 11.00,192.00"
+                    + "             11.00,192.00 4.00,285.00 4.00,285.00"
+                    + "             4.00,285.00 12.00,453.00 12.00,453.00"
+                    + "             12.00,453.00 31.00,545.00 31.00,545.00"
+                    + "             31.00,545.00 149.00,525.00 149.00,525.00"
+                    + "             149.00,525.00 193.00,389.00 193.00,389.00"
+                    + "             193.00,389.00 186.00,148.00 186.00,148.00"
+                    + "             186.00,148.00 125.00,58.00 125.00,58.00", px, py, image);
         }
         //TODO Diver object aanmaken
 /*
@@ -385,7 +457,8 @@ public class GameManager extends Application {
      *
      * @return
      */
-    public boolean isUp() {
+    public boolean isUp()
+    {
         return up;
     }
 
@@ -393,7 +466,8 @@ public class GameManager extends Application {
      *
      * @param up
      */
-    public void setUp(boolean up) {
+    public void setUp(boolean up)
+    {
         this.up = up;
     }
 
@@ -401,7 +475,8 @@ public class GameManager extends Application {
      *
      * @return
      */
-    public boolean isDown() {
+    public boolean isDown()
+    {
         return down;
     }
 
@@ -409,7 +484,8 @@ public class GameManager extends Application {
      *
      * @param down
      */
-    public void setDown(boolean down) {
+    public void setDown(boolean down)
+    {
         this.down = down;
     }
 
@@ -417,7 +493,8 @@ public class GameManager extends Application {
      *
      * @return
      */
-    public boolean isLeft() {
+    public boolean isLeft()
+    {
         return left;
     }
 
@@ -425,7 +502,8 @@ public class GameManager extends Application {
      *
      * @param left
      */
-    public void setLeft(boolean left) {
+    public void setLeft(boolean left)
+    {
         this.left = left;
     }
 
@@ -433,7 +511,8 @@ public class GameManager extends Application {
      *
      * @return
      */
-    public boolean isRight() {
+    public boolean isRight()
+    {
         return right;
     }
 
@@ -441,7 +520,8 @@ public class GameManager extends Application {
      *
      * @param right
      */
-    public void setRight(boolean right) {
+    public void setRight(boolean right)
+    {
         this.right = right;
     }
 
@@ -449,7 +529,8 @@ public class GameManager extends Application {
      *
      * @return
      */
-    public boolean iswKey() {
+    public boolean iswKey()
+    {
         return wKey;
     }
 
@@ -457,7 +538,8 @@ public class GameManager extends Application {
      *
      * @param wKey
      */
-    public void setwKey(boolean wKey) {
+    public void setwKey(boolean wKey)
+    {
         this.wKey = wKey;
     }
 
@@ -465,7 +547,8 @@ public class GameManager extends Application {
      *
      * @return
      */
-    public boolean isaKey() {
+    public boolean isaKey()
+    {
         return aKey;
     }
 
@@ -473,7 +556,8 @@ public class GameManager extends Application {
      *
      * @param aKey
      */
-    public void setaKey(boolean aKey) {
+    public void setaKey(boolean aKey)
+    {
         this.aKey = aKey;
     }
 
@@ -481,7 +565,8 @@ public class GameManager extends Application {
      *
      * @return
      */
-    public boolean issKey() {
+    public boolean issKey()
+    {
         return sKey;
     }
 
@@ -489,7 +574,8 @@ public class GameManager extends Application {
      *
      * @param sKey
      */
-    public void setsKey(boolean sKey) {
+    public void setsKey(boolean sKey)
+    {
         this.sKey = sKey;
     }
 
@@ -497,7 +583,8 @@ public class GameManager extends Application {
      *
      * @return
      */
-    public boolean isdKey() {
+    public boolean isdKey()
+    {
         return dKey;
     }
 
@@ -505,7 +592,8 @@ public class GameManager extends Application {
      *
      * @param dKey
      */
-    public void setdKey(boolean dKey) {
+    public void setdKey(boolean dKey)
+    {
         this.dKey = dKey;
     }
 
@@ -513,7 +601,8 @@ public class GameManager extends Application {
      *
      * @return
      */
-    public boolean isSpace() {
+    public boolean isSpace()
+    {
         return space;
     }
 
@@ -521,14 +610,16 @@ public class GameManager extends Application {
      *
      * @param space
      */
-    public void setSpace(boolean space) {
+    public void setSpace(boolean space)
+    {
         this.space = space;
     }
 
     /**
      * Plays the bite sound of a fish.
      */
-    public void playBiteSound() {
+    public void playBiteSound()
+    {
         this.biteSound0.play();
     }
 
@@ -538,7 +629,8 @@ public class GameManager extends Application {
      *
      * @return the root Group belonging to this game session.
      */
-    public Group getRoot() {
+    public Group getRoot()
+    {
         return root;
     }
 
@@ -547,7 +639,8 @@ public class GameManager extends Application {
      *
      * @return the objectManager belonging to this game session.
      */
-    public ObjectManager getObjectManager() {
+    public ObjectManager getObjectManager()
+    {
         return objectManager;
     }
 
@@ -556,7 +649,8 @@ public class GameManager extends Application {
      *
      * @return The player belonging to this game session.
      */
-    public Player getPlayer() {
+    public Player getPlayer()
+    {
         return player;
     }
 
@@ -565,7 +659,8 @@ public class GameManager extends Application {
      *
      * @return game score
      */
-    public int getGameScore() {
+    public int getGameScore()
+    {
         return gameScore;
     }
 
@@ -574,14 +669,16 @@ public class GameManager extends Application {
      *
      * @param gameScoreAddition added value
      */
-    public void setGameScore(int gameScoreAddition) {
+    public void setGameScore(int gameScoreAddition)
+    {
         this.gameScore = this.gameScore + gameScoreAddition;
     }
 
     /**
      * Updates the score for Player one on screen.
      */
-    public void updateScoreLabelOne() {
+    public void updateScoreLabelOne()
+    {
         //this.scoreLabelOne.setText(String.valueOf(this.gameScore));
         menu.updateScoreLabelOne();
     }
@@ -591,7 +688,8 @@ public class GameManager extends Application {
      *
      * @return GameLoop
      */
-    public GameLoop getGameLoop() {
+    public GameLoop getGameLoop()
+    {
         return gameLoop;
     }
 
@@ -600,7 +698,8 @@ public class GameManager extends Application {
      *
      * @return gameState enum
      */
-    public GameState getGameState() {
+    public GameState getGameState()
+    {
         return gameState;
     }
 
@@ -609,31 +708,43 @@ public class GameManager extends Application {
      *
      * @param gameState GameState enum
      */
-    public void setGameState(GameState gameState) {
+    public void setGameState(GameState gameState)
+    {
         this.gameState = gameState;
     }
 
-    GameMode getGameMode() {
+    GameMode getGameMode()
+    {
         return this.gameMode;
     }
 
-    public GameMenu getGameMenu() {
+    public GameMenu getGameMenu()
+    {
         return menu;
     }
 
-    public void setTimeLeft(String secondsLeft) {
+    public void setTimeLeft(String secondsLeft)
+    {
         this.timeLeft.set(secondsLeft);
     }
 
-    public SimpleStringProperty getTimeLeft() {
+    public SimpleStringProperty getTimeLeft()
+    {
         return this.timeLeft;
     }
 
-    void closeStage() {
+    void closeStage()
+    {
         thisStage.close();
     }
 
-    Stage getStage() {
+    Stage getStage()
+    {
         return this.thisStage;
+    }
+
+    public ArrayList<FishHook> getFishHooks()
+    {
+        return this.fishHooks;
     }
 }
