@@ -85,6 +85,11 @@ public class GameLoop extends AnimationTimer
         for (FishHook h : gameManager.getFishHooks())
         {
             h.update();
+            if(h.getYLocation() < -5)
+            {
+                gameManager.removeFishHook(h);
+                System.out.println(h.getYLocation());
+            }
         }
 
         modeEvolutionOfTime(now);
