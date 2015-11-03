@@ -62,36 +62,7 @@ public class GameLoop extends AnimationTimer
             //add object if randInt % 4 == 0 dit object else % 3 == 0 dat object etc
             prev = System.nanoTime();
         }
-
-        if (gameManager.getGameMode() == GameMode.EVOLUTION_OF_TIME)
-        {
-            long elapsed2 = now - startTime;
-            secondsLeft = length_of_game - (elapsed2 / NANO_TO_SECOND);
-            gameManager.setTimeLeft(String.valueOf(secondsLeft));
-            if (secondsLeft == 0)
-            {
-                //Spel voorbij na 2 minuten
-                if (gameManager.getGameState() != GameState.FINISHED)
-                {
-                    gameManager.setGameState(GameState.FINISHED);
-                    this.stop();
-                    hasWon();
-                    Administration.get().getLoggedInUser().updateHighScore(gameManager.getGameMode(), gameManager.getGameScore());
-                    //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
-                    System.out.println("Time is up!");
-                }
-            }
-        }
-        for (FishHook h : gameManager.getFishHooks())
-        {
-            h.update();
-            if(h.getYLocation() < -5)
-            {
-                gameManager.removeFishHook(h);
-                System.out.println(h.getYLocation());
-            }
-        }
-
+        fishHook();
         modeEvolutionOfTime(now);
     }
 
@@ -163,6 +134,21 @@ public class GameLoop extends AnimationTimer
             {
                 gameManager.getRoot().getChildren().add(
                         gameManager.getGameMenu().getDefeatScreen());
+            }
+        }
+    }
+    
+    /**
+     * 
+     */
+    private void fishHook() {
+        for (FishHook h : gameManager.getFishHooks())
+        {
+            h.update();
+            if(h.getYLocation() < -5)
+            {
+                gameManager.removeFishHook(h);
+                System.out.println(h.getYLocation());
             }
         }
     }
