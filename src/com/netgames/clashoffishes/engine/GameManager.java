@@ -380,8 +380,8 @@ public class GameManager extends Application {
         //Aanmaken waarden
         Image image;
         GameObject object = null;
-        double px = WIDTH * Math.random() + 1;
-        double py = HEIGHT * Math.random() + 1;
+        double px = map.getMap().getWidth() * Math.random() + 1;
+        double py = map.getMap().getHeight() * Math.random() + 1;
 
         int range = (3 - 1) + 1; // 3 moet veranderen als er meer objecten bijkomen.
         int randomGetal = (int) (Math.random() * range + 1);
@@ -389,7 +389,7 @@ public class GameManager extends Application {
         //Random object genereren
         if (randomGetal == 1) {
             image = new Image(eventDir.toString() + "EnergyDrink1.png", 30, 144.6, true, false, true);
-            object = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", px, py, image);
+            object = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", px - 30, py - 144.6, image);
         }
 
         if (randomGetal == 2) {
@@ -423,7 +423,7 @@ public class GameManager extends Application {
                     + "             43.54,903.31 67.54,890.20 74.53,872.00"
                     + "             78.73,861.07 77.89,848.34 76.27,837.00"
                     + "             76.27,837.00 62.00,766.00 62.00,766.00"
-                    + "             66.12,770.53 69.41,778.37 72.58,784.00 Z", px, -300, image);
+                    + "             66.12,770.53 69.41,778.37 72.58,784.00 Z", px - 40, -300, image);
             fishHooks.add((FishHook) object);
             Path path = new Path();
             //path.getElements().add(new MoveTo(20, 20));
@@ -441,7 +441,7 @@ public class GameManager extends Application {
                     + "             31.00,545.00 149.00,525.00 149.00,525.00"
                     + "             149.00,525.00 193.00,389.00 193.00,389.00"
                     + "             193.00,389.00 186.00,148.00 186.00,148.00"
-                    + "             186.00,148.00 125.00,58.00 125.00,58.00", px, py, image);
+                    + "             186.00,148.00 125.00,58.00 125.00,58.00", px - 30, py - 87, image);
         }
         //TODO Diver object aanmaken
 /*
