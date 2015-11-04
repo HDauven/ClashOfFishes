@@ -52,18 +52,6 @@ public class GameManager extends Application {
     private URL biteSoundFile0;
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Background images declaration">
-    private Image backgroundLayer1;
-    Prop bgLayer1;
-    private Image backLayer1;
-    Prop bLayer1;
-    private Image middleLayer1;
-    Prop mLayer1;
-    private Image frontLayer1;
-    Prop fLayer1;
-    private URL backgroundDir;
-    // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Player images declaration">
     private Image bubbles1, bubbles2, bubbles3, bubbles4;
     private Image cleo1, cleo2, cleo3, cleo4;
@@ -219,14 +207,6 @@ public class GameManager extends Application {
     private void loadImageAssets() {
         // TODO adding image asset format:
         // Image object = new Image("/resource/image.png", width, height, true, false, true);
-        // <editor-fold defaultstate="collapsed" desc="Background images instantiation">
-        backgroundDir = this.getClass().getResource("/com/netgames/clashoffishes/images/background/");
-        backgroundLayer1 = new Image(backgroundDir.toString() + "BackgroundLayer1.png", 1024, 768, true, false, true);
-        backLayer1 = new Image(backgroundDir.toString() + "BackLayer1.png", 1024, 506, true, false, true);
-        middleLayer1 = new Image(backgroundDir.toString() + "MiddleLayer1.png", 1024, 212, true, false, true);
-        frontLayer1 = new Image(backgroundDir.toString() + "FrontLayer1.png", 1024, 316, true, false, true);
-        // </editor-fold>
-
         playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
         // <editor-fold defaultstate="collapsed" desc="Bubbles image instantiation">
         bubbles1 = new Image(playerDir.toString() + "Bubbles1.png", 103, 66, true, false, true);
@@ -285,18 +265,10 @@ public class GameManager extends Application {
     private void createGameObjects() {
         // TODO adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
-        bgLayer1 = new Prop("", 0, 0, backgroundLayer1);
-        bLayer1 = new Prop("", 0, (HEIGHT - backLayer1.getRequestedHeight()), backLayer1);
-        mLayer1 = new Prop("", 0, (HEIGHT - middleLayer1.getRequestedHeight()), middleLayer1);
-        fLayer1 = new Prop("", 0, (HEIGHT - frontLayer1.getRequestedHeight()), frontLayer1);
-        // ((HEIGHT / 2) - (frontLayer1.getRequestedHeight() / 2))
         map = new GameMap((int) WIDTH, (int) HEIGHT);
         menu = new GameMenu(this);
 
         createPlayer();
-
-        //energy = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z",
-        //        200, 200, energyDrink1);
     }
 
     private void createPlayer() {
@@ -326,17 +298,11 @@ public class GameManager extends Application {
     private void addGameObjectNodes() {
         // TODO adding game object nodes
         // root.getChildren().add(gameObject);
-        root.getChildren().add(bgLayer1.getSpriteFrame());
-        root.getChildren().add(bLayer1.getSpriteFrame());
-        root.getChildren().add(mLayer1.getSpriteFrame());
-        root.getChildren().add(fLayer1.getSpriteFrame());
 
         // Comment this out to get the regular background
         root.getChildren().add(map.getMap());
 
         root.getChildren().add(player.getSpriteFrame());
-
-        //root.getChildren().add(energy.getSpriteFrame());
     }
 
     /**
@@ -347,9 +313,6 @@ public class GameManager extends Application {
         objectManager = new ObjectManager();
         // TODO adding an object to the object manager format:
         // objectManager.addCurrentObject(newobject);
-
-        //objectManager.addCurrentObject(energy);
-        //objectManager.addCurrentObject(player);
     }
 
     /**
