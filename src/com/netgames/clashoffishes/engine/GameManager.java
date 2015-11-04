@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 
 /**
@@ -389,7 +388,15 @@ public class GameManager extends Application {
         //Random object genereren
         if (randomGetal == 1) {
             image = new Image(eventDir.toString() + "EnergyDrink1.png", 30, 144.6, true, false, true);
-            object = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", px - 30, py - 144.6, image);
+            if(px < 30)
+                px = 30;
+            if(px > map.getMap().getWidth() - 30)
+                px = map.getMap().getWidth() - 30;
+            if(py > map.getMap().getHeight() - 144.6)
+                py = map.getMap().getHeight() - 144.6;
+            if(py < 144.6)
+                py = 144.6;
+            object = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", px, py, image);
         }
 
         if (randomGetal == 2) {
@@ -423,16 +430,20 @@ public class GameManager extends Application {
                     + "             43.54,903.31 67.54,890.20 74.53,872.00"
                     + "             78.73,861.07 77.89,848.34 76.27,837.00"
                     + "             76.27,837.00 62.00,766.00 62.00,766.00"
-                    + "             66.12,770.53 69.41,778.37 72.58,784.00 Z", px, -894, image);
+                    + "             66.12,770.53 69.41,778.37 72.58,784.00 Z", px, -994, image);
             fishHooks.add((FishHook) object);
-            Path path = new Path();
-            //path.getElements().add(new MoveTo(20, 20));
-            //path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
-            //path.getElements().add(new CubicCurveTo(0, 120, 0, 240, 380, 240));
         }
 
         if (randomGetal == 3) {
             image = new Image(eventDir.toString() + "Seaweed1.png", 30, 87, true, false, true);
+            if(px < 30)
+                px = 30;
+            if(px > map.getMap().getWidth() - 30)
+                px = map.getMap().getHeight() - 30;
+            if(py > map.getMap().getHeight() - 87)
+                py = map.getMap().getHeight() - 87;
+            if(py < 87)
+                py = 87;
             object = new Seaweed("M 66.00,11.00"
                     + "           C 66.00,11.00 11.00,192.00 11.00,192.00"
                     + "             11.00,192.00 4.00,285.00 4.00,285.00"
@@ -441,7 +452,7 @@ public class GameManager extends Application {
                     + "             31.00,545.00 149.00,525.00 149.00,525.00"
                     + "             149.00,525.00 193.00,389.00 193.00,389.00"
                     + "             193.00,389.00 186.00,148.00 186.00,148.00"
-                    + "             186.00,148.00 125.00,58.00 125.00,58.00", px - 30, py - 87, image);
+                    + "             186.00,148.00 125.00,58.00 125.00,58.00", px, py, image);
         }
         //TODO Diver object aanmaken
 /*

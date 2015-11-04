@@ -24,7 +24,7 @@ public class GameLoop extends AnimationTimer
     int speedFastTimeCounter;
     int speedSlowTimeCounter;
 
-    private final int length_of_game = 60;
+    private final int length_of_game = 600;
     private boolean winCondition = false;
 
     /* A reference to the GameManager class. */
