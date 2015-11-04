@@ -43,6 +43,7 @@ public class FishHook extends AnimatedObject implements RandomEvent
         if (!lowestEntered)
         {
             spriteFrame.setTranslateY(yLocation = yLocation + vY);
+            spriteBound.setTranslateY(yLocation);
             if(yLocation == 300)
             {
                 lowestEntered = true;

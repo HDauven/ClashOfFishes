@@ -4,6 +4,7 @@ import com.netgames.clashoffishes.engine.GameManager;
 import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
 import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
+import com.netgames.clashoffishes.engine.object.events.Seaweed;
 import javafx.scene.image.Image;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
@@ -328,8 +329,14 @@ public class Player extends AnimatedObject
             {
                 if (object instanceof EnergyDrink)
                 {
-                    this.vX = 2.5;
-                    this.vY = 2.5;
+                    this.vX = 2.8;
+                    this.vY = 2.8;
+                    return true;
+                }
+                if(object instanceof Seaweed)
+                {
+                    this.vX = 1.3;
+                    this.vY = 1.3;
                     return true;
                 }
             }

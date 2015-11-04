@@ -21,7 +21,8 @@ public class GameLoop extends AnimationTimer
     private final long startTime = System.nanoTime();
     private long secondsLeft;
     private long prevSeconds;
-    int speedTimeCounter;
+    int speedFastTimeCounter;
+    int speedSlowTimeCounter;
 
     private final int length_of_game = 600;
     private final boolean winCondition = false;
@@ -37,7 +38,8 @@ public class GameLoop extends AnimationTimer
     public GameLoop(GameManager manager)
     {
         this.NANO_TO_SECOND = 1_000_000_000;
-        speedTimeCounter = 0;
+        speedFastTimeCounter = 0;
+        speedSlowTimeCounter = 0;
         gameManager = manager;
     }
 
@@ -97,8 +99,6 @@ public class GameLoop extends AnimationTimer
      */
     private void modeEvolutionOfTime(long now)
     {
-        System.out.println(gameManager.getPlayer().getvX());
-        System.out.println(gameManager.getPlayer().getvY());
         if (gameManager.getGameMode() == GameMode.EVOLUTION_OF_TIME)
         {
             long elapsed2 = now - startTime;
@@ -118,16 +118,30 @@ public class GameLoop extends AnimationTimer
                 }
             }
         }
-        if(gameManager.getPlayer().getvX() == 2.5 && gameManager.getPlayer().getvY() == 2.5)
+        //Slow 1.3 Fast 2.8
+        if ((gameManager.getPlayer().getvX() == 2.8 && gameManager.getPlayer().getvY() == 2.8))
         {
-            speedTimeCounter++;
-            if(speedTimeCounter == 240)
+            speedSlowTimeCounter = 0;
+            speedFastTimeCounter++;
+            if (speedFastTimeCounter == 240)
             {
                 gameManager.getPlayer().setvX(2);
                 gameManager.getPlayer().setvY(2);
-                speedTimeCounter = 0;
+                speedFastTimeCounter = 0;
             }
         }
+        if (gameManager.getPlayer().getvX() == 1.3 && gameManager.getPlayer().getvY() == 1.3)
+        {
+            speedFastTimeCounter = 0;
+            speedSlowTimeCounter++;
+            if (speedSlowTimeCounter == 240)
+            {
+                gameManager.getPlayer().setvX(2);
+                gameManager.getPlayer().setvY(2);
+                speedSlowTimeCounter = 0;
+            }
+        }
+
     }
 
     /**
@@ -151,18 +165,18 @@ public class GameLoop extends AnimationTimer
             }
         }
     }
-    
+
     /**
-     * 
+     *
      */
-    private void fishHook() {
+    private void fishHook()
+    {
         for (FishHook h : gameManager.getFishHooks())
         {
             h.update();
-            if(h.getYLocation() < -5)
+            if (h.getYLocation() < -5)
             {
                 gameManager.removeFishHook(h);
-                System.out.println(h.getYLocation());
             }
         }
     }
