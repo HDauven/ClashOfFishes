@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 
 /**
@@ -380,8 +379,8 @@ public class GameManager extends Application {
         //Aanmaken waarden
         Image image;
         GameObject object = null;
-        double px = WIDTH * Math.random() + 1;
-        double py = HEIGHT * Math.random() + 1;
+        double px = map.getMap().getWidth() * Math.random() + 1;
+        double py = map.getMap().getHeight() * Math.random() + 1;
 
         int range = (3 - 1) + 1; // 3 moet veranderen als er meer objecten bijkomen.
         int randomGetal = (int) (Math.random() * range + 1);
@@ -389,6 +388,14 @@ public class GameManager extends Application {
         //Random object genereren
         if (randomGetal == 1) {
             image = new Image(eventDir.toString() + "EnergyDrink1.png", 30, 144.6, true, false, true);
+            if(px < 30)
+                px = 30;
+            if(px > map.getMap().getWidth() - 30)
+                px = map.getMap().getWidth() - 30;
+            if(py > map.getMap().getHeight() - 144.6)
+                py = map.getMap().getHeight() - 144.6;
+            if(py < 144.6)
+                py = 144.6;
             object = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", px, py, image);
         }
 
@@ -400,14 +407,18 @@ public class GameManager extends Application {
                     + "             0.00,997.50 37.50,997.50 37.50,997.50"
                     + "             37.50,997.50 39.50,919.50 39.50,919.50 Z", px, -894, image);
             fishHooks.add((FishHook) object);
-            Path path = new Path();
-            //path.getElements().add(new MoveTo(20, 20));
-            //path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
-            //path.getElements().add(new CubicCurveTo(0, 120, 0, 240, 380, 240));
         }
 
         if (randomGetal == 3) {
             image = new Image(eventDir.toString() + "Seaweed1.png", 30, 87, true, false, true);
+            if(px < 30)
+                px = 30;
+            if(px > map.getMap().getWidth() - 30)
+                px = map.getMap().getHeight() - 30;
+            if(py > map.getMap().getHeight() - 87)
+                py = map.getMap().getHeight() - 87;
+            if(py < 87)
+                py = 87;
             object = new Seaweed("M 66.00,11.00"
                     + "           C 66.00,11.00 11.00,192.00 11.00,192.00"
                     + "             11.00,192.00 4.00,285.00 4.00,285.00"
