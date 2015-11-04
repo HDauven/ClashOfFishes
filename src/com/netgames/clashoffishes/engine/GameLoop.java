@@ -24,8 +24,8 @@ public class GameLoop extends AnimationTimer
     int speedFastTimeCounter;
     int speedSlowTimeCounter;
 
-    private final int length_of_game = 600;
-    private final boolean winCondition = false;
+    private final int length_of_game = 60;
+    private boolean winCondition = false;
 
     /* A reference to the GameManager class. */
     protected GameManager gameManager;
@@ -115,6 +115,19 @@ public class GameLoop extends AnimationTimer
                     Administration.get().getLoggedInUser().updateHighScore(gameManager.getGameMode(), gameManager.getGameScore());
                     //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
                     System.out.println("Time is up!");
+                }
+            }
+            
+            if (gameManager.getGameScore() > 50) {
+                if (gameManager.getGameState() != GameState.FINISHED)
+                {
+                    gameManager.setGameState(GameState.FINISHED);
+                    this.stop();
+                    winCondition = true;
+                    hasWon();
+                    Administration.get().getLoggedInUser().updateHighScore(gameManager.getGameMode(), gameManager.getGameScore());
+                    //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
+                    System.out.println("You are a winner!");
                 }
             }
         }

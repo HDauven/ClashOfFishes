@@ -50,9 +50,9 @@ public class GameMap {
         proceduralBoatPlacement(gc, backMarker); // The boat will always be placed on the back layer 
         
         // Meant for debugging purpose, comment out to get rid of the black dots in the actual game
-        proceduralMarkerPlacementAlgorithm(gc, backMarker);
-        proceduralMarkerPlacementAlgorithm(gc, middleMarker);
-        proceduralMarkerPlacementAlgorithm(gc, frontMarker);
+        //proceduralMarkerPlacementAlgorithm(gc, backMarker);
+        //proceduralMarkerPlacementAlgorithm(gc, middleMarker);
+        //proceduralMarkerPlacementAlgorithm(gc, frontMarker);
     }
     
     /**

@@ -4,6 +4,7 @@ import com.netgames.clashoffishes.engine.GameManager;
 import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
 import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
+import com.netgames.clashoffishes.engine.object.events.FishHook;
 import com.netgames.clashoffishes.engine.object.events.Seaweed;
 import javafx.scene.image.Image;
 import javafx.scene.shape.SVGPath;
@@ -351,13 +352,13 @@ public class Player extends AnimatedObject
      */
     private void scoringEngine(GameObject object)
     {
-        if (object instanceof Prop)
+        if (object instanceof Seaweed)
         {
             gameManager.setGameScore(-5);
         }
-        else if (object instanceof PropV)
+        else if (object instanceof FishHook)
         {
-            gameManager.setGameScore(-4);
+            gameManager.setGameScore(-10);
         }
         else if (object instanceof PropH)
         {
@@ -369,7 +370,7 @@ public class Player extends AnimatedObject
         }
         else if (object instanceof EnergyDrink)
         {
-            gameManager.setGameScore(10);
+            gameManager.setGameScore(40);
         }
         gameManager.updateScoreLabelOne();
     }
