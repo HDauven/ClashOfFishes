@@ -423,7 +423,7 @@ public class GameManager extends Application {
                     + "             43.54,903.31 67.54,890.20 74.53,872.00"
                     + "             78.73,861.07 77.89,848.34 76.27,837.00"
                     + "             76.27,837.00 62.00,766.00 62.00,766.00"
-                    + "             66.12,770.53 69.41,778.37 72.58,784.00 Z", px, -300, image);
+                    + "             66.12,770.53 69.41,778.37 72.58,784.00 Z", px, -894, image);
             fishHooks.add((FishHook) object);
             Path path = new Path();
             //path.getElements().add(new MoveTo(20, 20));
