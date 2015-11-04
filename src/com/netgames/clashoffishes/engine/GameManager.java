@@ -296,8 +296,8 @@ public class GameManager extends Application {
 
         createPlayer();
 
-        energy = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z",
-                200, 200, energyDrink1);
+        //energy = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z",
+        //        200, 200, energyDrink1);
     }
 
     private void createPlayer() {
@@ -337,7 +337,7 @@ public class GameManager extends Application {
 
         root.getChildren().add(player.getSpriteFrame());
 
-        root.getChildren().add(energy.getSpriteFrame());
+        //root.getChildren().add(energy.getSpriteFrame());
     }
 
     /**
@@ -349,7 +349,7 @@ public class GameManager extends Application {
         // TODO adding an object to the object manager format:
         // objectManager.addCurrentObject(newobject);
 
-        objectManager.addCurrentObject(energy);
+        //objectManager.addCurrentObject(energy);
         //objectManager.addCurrentObject(player);
     }
 
@@ -393,7 +393,7 @@ public class GameManager extends Application {
         }
 
         if (randomGetal == 2) {
-            image = new Image(eventDir.toString() + "FishHook1.png", 40, 406, true, false, true);
+            image = new Image(eventDir.toString() + "FishHook1.png", 40, 1000, true, false, true);
             object = new FishHook("M 56.04,734.14"
                     + "           C 56.04,734.14 63.00,733.00 63.00,733.00"
                     + "             63.00,733.00 63.00,739.00 63.00,739.00"
