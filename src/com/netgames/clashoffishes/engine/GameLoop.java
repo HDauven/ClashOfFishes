@@ -21,6 +21,7 @@ public class GameLoop extends AnimationTimer
     private final long startTime = System.nanoTime();
     private long secondsLeft;
     private long prevSeconds;
+    int speedTimeCounter;
 
     private final int length_of_game = 600;
     private final boolean winCondition = false;
@@ -36,6 +37,7 @@ public class GameLoop extends AnimationTimer
     public GameLoop(GameManager manager)
     {
         this.NANO_TO_SECOND = 1_000_000_000;
+        speedTimeCounter = 0;
         gameManager = manager;
     }
 
@@ -95,6 +97,8 @@ public class GameLoop extends AnimationTimer
      */
     private void modeEvolutionOfTime(long now)
     {
+        System.out.println(gameManager.getPlayer().getvX());
+        System.out.println(gameManager.getPlayer().getvY());
         if (gameManager.getGameMode() == GameMode.EVOLUTION_OF_TIME)
         {
             long elapsed2 = now - startTime;
@@ -112,6 +116,16 @@ public class GameLoop extends AnimationTimer
                     //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
                     System.out.println("Time is up!");
                 }
+            }
+        }
+        if(gameManager.getPlayer().getvX() == 2.5 && gameManager.getPlayer().getvY() == 2.5)
+        {
+            speedTimeCounter++;
+            if(speedTimeCounter == 240)
+            {
+                gameManager.getPlayer().setvX(2);
+                gameManager.getPlayer().setvY(2);
+                speedTimeCounter = 0;
             }
         }
     }
