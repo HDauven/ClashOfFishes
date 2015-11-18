@@ -55,12 +55,6 @@ public class LoginController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         lbl_error.setVisible(false);
-        if (!Administration.get().hasConnection())
-        {
-            lbl_error.setText("No database-connection.");
-            lbl_error.setTextFill(Color.RED);
-            lbl_error.setVisible(true);
-        }
     }
 
     @FXML
@@ -142,5 +136,15 @@ public class LoginController implements Initializable
     void setUsername(String username)
     {
         txtUsername.setText(username);
+    }
+
+    public void openDatabase()
+    {
+        if (!Administration.get().hasConnection())
+        {
+            lbl_error.setText("No database-connection.");
+            lbl_error.setTextFill(Color.RED);
+            lbl_error.setVisible(true);
+        }
     }
 }
