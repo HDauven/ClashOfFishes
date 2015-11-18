@@ -29,6 +29,7 @@ public class GuiUtilities {
     public static final String REGISTRATION_TITLE = "Register a new account.";
     public static final String CHARACTER_SELECTION_TITLE = "Select your character!";
     
+    //Object window = controller of sender
     public static void buildStage(Object window, String fileName, String title) {
         try {
                 Stage stage = (Stage) window;

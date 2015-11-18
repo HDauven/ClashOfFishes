@@ -45,7 +45,6 @@ public class LoginController implements Initializable
     // Datafields
     private String userIdentifier, password, email;
 
-    private Administration administration;
     @FXML
     private Label lbl_error;
 
@@ -55,8 +54,13 @@ public class LoginController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        this.administration = Administration.get();
         lbl_error.setVisible(false);
+        if (!Administration.get().hasConnection())
+        {
+            lbl_error.setText("No database-connection.");
+            lbl_error.setTextFill(Color.RED);
+            lbl_error.setVisible(true);
+        }
     }
 
     @FXML
@@ -64,19 +68,28 @@ public class LoginController implements Initializable
     {
         this.userIdentifier = this.txtUsername.getText();
         this.password = this.txtPassword.getText();
-
-        if (this.administration.logIn(userIdentifier, password) == null)
+        if (!Administration.get().hasConnection())
         {
-            lbl_error.setText("Login failed");
+            lbl_error.setText("No database-connection.");
             lbl_error.setTextFill(Color.RED);
             lbl_error.setVisible(true);
-            this.connectLabel();
-            this.userIdentifier = null;
-            this.password = null;
+            return;
         }
         else
         {
-            GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", GuiUtilities.getMainMenusTitle());
+            if (Administration.get().logIn(userIdentifier, password) == null)
+            {
+                lbl_error.setText("Login failed");
+                lbl_error.setTextFill(Color.RED);
+                lbl_error.setVisible(true);
+                this.connectLabel();
+                this.userIdentifier = null;
+                this.password = null;
+            }
+            else
+            {
+                GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", GuiUtilities.getMainMenusTitle());
+            }
         }
     }
 
@@ -120,7 +133,8 @@ public class LoginController implements Initializable
     @FXML
     private void txt_onKeyPressed(KeyEvent event)
     {
-        if(event.getCode() == KeyCode.ENTER){
+        if (event.getCode() == KeyCode.ENTER)
+        {
             this.login_OnClick(null);
         }
     }

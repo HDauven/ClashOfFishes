@@ -16,7 +16,7 @@ public class Administration
     private ArrayList<Highscore> allUserHighscoresForGameMode;
     EmailValidator validator;
 
-    private final DatabaseStorage dbStorage;
+    private static DatabaseStorage dbStorage;
 
     protected Administration()
     {
@@ -35,6 +35,10 @@ public class Administration
         {
             instance = new Administration();
         }
+        if(!dbStorage.hasConnection()){
+            dbStorage = new DatabaseStorage();
+        }
+        
         return instance;
     }
 
@@ -83,6 +87,11 @@ public class Administration
             return null;
         
         return dbStorage.getUser(username);
+    }
+    
+    public boolean hasConnection()
+    {
+        return dbStorage.hasConnection();
     }
     
     
