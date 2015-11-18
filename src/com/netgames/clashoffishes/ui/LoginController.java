@@ -138,4 +138,9 @@ public class LoginController implements Initializable
             this.login_OnClick(null);
         }
     }
+
+    void setUsername(String username)
+    {
+        txtUsername.setText(username);
+    }
 }

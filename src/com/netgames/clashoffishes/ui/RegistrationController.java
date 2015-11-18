@@ -7,6 +7,7 @@ package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.util.GuiUtilities;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -14,12 +15,16 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -81,7 +86,22 @@ public class RegistrationController implements Initializable
                 //Gebruiker is toegevoegd
                 System.out.println("Gebruiker is toegevoegd");
 
-                GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "Login", "Login");
+                Stage stage = (Stage) paneMainForm.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(GuiUtilities.class.getResource("/com/netgames/clashoffishes/ui/" + "Login" + ".fxml"));
+                Parent root;
+                try
+                {
+                    root = (Parent) loader.load();
+                    stage.setTitle("Login");
+                    stage.setScene(new Scene(root));
+                    LoginController loginController = (LoginController) loader.getController();
+                    loginController.setUsername(username);
+                    stage.show();
+                }
+                catch (IOException ex)
+                {
+                    Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 ClearTextFields();
             }
             else
