@@ -1,4 +1,4 @@
-package clash.of.fishes.server;
+package com.netgames.clashoffishes.server;
 
 import java.net.InetAddress;
 import java.net.MalformedURLException;
@@ -87,7 +87,7 @@ public class ClashOfFishesServer extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root;
         try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/clash/of/fishes/server/ui/LobbyServerGUI.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/netgames/clashoffishes/server/ui/LobbyServerGUI.fxml"));
         root = (Parent) loader.load();
         primaryStage.setTitle("Admin lobby control center");
         primaryStage.setScene(new Scene(root));

@@ -1,4 +1,4 @@
-package clash.of.fishes.server;
+package com.netgames.clashoffishes.server;
 
 import clash.of.fishes.server.remote.ILobby;
 import clash.of.fishes.server.remote.IServer;

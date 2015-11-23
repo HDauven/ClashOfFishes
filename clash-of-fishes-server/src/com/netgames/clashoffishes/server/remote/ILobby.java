@@ -1,4 +1,4 @@
-package clash.of.fishes.server.remote;
+package com.netgames.clashoffishes.server.remote;
 
 import java.rmi.RemoteException;
 import java.util.List;
