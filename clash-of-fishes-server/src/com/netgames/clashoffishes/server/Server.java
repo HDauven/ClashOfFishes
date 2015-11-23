@@ -1,7 +1,7 @@
 package com.netgames.clashoffishes.server;
 
-import clash.of.fishes.server.remote.ILobby;
-import clash.of.fishes.server.remote.IServer;
+import com.netgames.clashoffishes.server.remote.ILobby;
+import com.netgames.clashoffishes.server.remote.IServer;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
