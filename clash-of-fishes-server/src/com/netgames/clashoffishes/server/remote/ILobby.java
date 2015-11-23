@@ -22,7 +22,7 @@ public interface ILobby {
      * @param client The IClient that is going to be added to the ILobby.
      * @throws RemoteException 
      */
-    void registerChatClient(IClient client) 
+    void registerClient(IClient client) 
             throws RemoteException;
     
     /**

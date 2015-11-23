@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Class that keeps track of all the lobbies that exist of this game.
+ * Implementation of an IServer.
  * @author Hein Dauven
  */
 public class Server extends UnicastRemoteObject implements IServer {
