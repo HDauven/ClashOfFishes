@@ -63,9 +63,4 @@ public class FishHook extends AnimatedObject implements RandomEvent
             }
         }
     }
-
-    public double getYLocation()
-    {
-        return this.yLocation;
-    }
 }

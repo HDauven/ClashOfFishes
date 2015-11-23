@@ -47,6 +47,7 @@ public class Administration
     {
         if(username.equals("") || confirmedPassword.equals("") || !validator.validate(email))
             return false;
+        //TODO Controle op geldig emailadres, minimale lengte wachtwoord etc.
         return dbStorage.addUser(username, confirmedPassword, email);
     }
 

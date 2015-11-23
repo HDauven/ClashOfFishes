@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 
 /**
@@ -51,18 +50,6 @@ public class GameManager extends Application {
     // <editor-fold defaultstate="collapsed" desc="Audioclips & URL declaration">
     private AudioClip biteSound0;
     private URL biteSoundFile0;
-    // </editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc="Background images declaration">
-    private Image backgroundLayer1;
-    Prop bgLayer1;
-    private Image backLayer1;
-    Prop bLayer1;
-    private Image middleLayer1;
-    Prop mLayer1;
-    private Image frontLayer1;
-    Prop fLayer1;
-    private URL backgroundDir;
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Player images declaration">
@@ -220,14 +207,6 @@ public class GameManager extends Application {
     private void loadImageAssets() {
         // TODO adding image asset format:
         // Image object = new Image("/resource/image.png", width, height, true, false, true);
-        // <editor-fold defaultstate="collapsed" desc="Background images instantiation">
-        backgroundDir = this.getClass().getResource("/com/netgames/clashoffishes/images/background/");
-        backgroundLayer1 = new Image(backgroundDir.toString() + "BackgroundLayer1.png", 1024, 768, true, false, true);
-        backLayer1 = new Image(backgroundDir.toString() + "BackLayer1.png", 1024, 506, true, false, true);
-        middleLayer1 = new Image(backgroundDir.toString() + "MiddleLayer1.png", 1024, 212, true, false, true);
-        frontLayer1 = new Image(backgroundDir.toString() + "FrontLayer1.png", 1024, 316, true, false, true);
-        // </editor-fold>
-
         playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
         // <editor-fold defaultstate="collapsed" desc="Bubbles image instantiation">
         bubbles1 = new Image(playerDir.toString() + "Bubbles1.png", 103, 66, true, false, true);
@@ -286,18 +265,10 @@ public class GameManager extends Application {
     private void createGameObjects() {
         // TODO adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
-        bgLayer1 = new Prop("", 0, 0, backgroundLayer1);
-        bLayer1 = new Prop("", 0, (HEIGHT - backLayer1.getRequestedHeight()), backLayer1);
-        mLayer1 = new Prop("", 0, (HEIGHT - middleLayer1.getRequestedHeight()), middleLayer1);
-        fLayer1 = new Prop("", 0, (HEIGHT - frontLayer1.getRequestedHeight()), frontLayer1);
-        // ((HEIGHT / 2) - (frontLayer1.getRequestedHeight() / 2))
         map = new GameMap((int) WIDTH, (int) HEIGHT);
         menu = new GameMenu(this);
 
         createPlayer();
-
-        energy = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z",
-                200, 200, energyDrink1);
     }
 
     private void createPlayer() {
@@ -327,17 +298,11 @@ public class GameManager extends Application {
     private void addGameObjectNodes() {
         // TODO adding game object nodes
         // root.getChildren().add(gameObject);
-        root.getChildren().add(bgLayer1.getSpriteFrame());
-        root.getChildren().add(bLayer1.getSpriteFrame());
-        root.getChildren().add(mLayer1.getSpriteFrame());
-        root.getChildren().add(fLayer1.getSpriteFrame());
 
         // Comment this out to get the regular background
         root.getChildren().add(map.getMap());
 
         root.getChildren().add(player.getSpriteFrame());
-
-        root.getChildren().add(energy.getSpriteFrame());
     }
 
     /**
@@ -348,9 +313,6 @@ public class GameManager extends Application {
         objectManager = new ObjectManager();
         // TODO adding an object to the object manager format:
         // objectManager.addCurrentObject(newobject);
-
-        objectManager.addCurrentObject(energy);
-        //objectManager.addCurrentObject(player);
     }
 
     /**
@@ -373,6 +335,7 @@ public class GameManager extends Application {
         gameLoop = new GameLoop(this);
         gameLoop.start();
         gameState = GameState.RUNNING;
+        fishHooks = new ArrayList<>();
 
     }
 
@@ -380,8 +343,8 @@ public class GameManager extends Application {
         //Aanmaken waarden
         Image image;
         GameObject object = null;
-        double px = WIDTH * Math.random() + 1;
-        double py = HEIGHT * Math.random() + 1;
+        double px = map.getMap().getWidth() * Math.random() + 1;
+        double py = map.getMap().getHeight() * Math.random() + 1;
 
         int range = (3 - 1) + 1; // 3 moet veranderen als er meer objecten bijkomen.
         int randomGetal = (int) (Math.random() * range + 1);
@@ -389,50 +352,37 @@ public class GameManager extends Application {
         //Random object genereren
         if (randomGetal == 1) {
             image = new Image(eventDir.toString() + "EnergyDrink1.png", 30, 144.6, true, false, true);
+            if(px < 30)
+                px = 30;
+            if(px > map.getMap().getWidth() - 30)
+                px = map.getMap().getWidth() - 30;
+            if(py > map.getMap().getHeight() - 144.6)
+                py = map.getMap().getHeight() - 144.6;
+            if(py < 144.6)
+                py = 144.6;
             object = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", px, py, image);
         }
 
         if (randomGetal == 2) {
-            image = new Image(eventDir.toString() + "FishHook1.png", 40, 406, true, false, true);
-            object = new FishHook("M 56.04,734.14\n"
-                    + "           C 56.04,734.14 63.00,733.00 63.00,733.00\n"
-                    + "             63.00,733.00 63.00,739.00 63.00,739.00\n"
-                    + "             62.13,739.28 61.30,739.28 60.37,740.00\n"
-                    + "             56.21,743.21 63.96,747.58 64.95,741.93\n"
-                    + "             64.95,741.93 64.00,734.00 64.00,734.00\n"
-                    + "             67.88,734.74 71.40,735.72 72.57,740.04\n"
-                    + "             74.31,746.51 68.53,748.27 68.81,754.00\n"
-                    + "             69.21,762.06 76.40,779.30 75.00,786.00\n"
-                    + "             71.45,779.28 64.86,764.86 60.00,760.00\n"
-                    + "             59.03,753.47 43.38,737.51 56.04,734.14 Z\n"
-                    + "           M 62.00,764.00\n"
-                    + "           C 62.00,764.00 61.00,765.00 61.00,765.00"
-                    + "             61.00,765.00 61.00,764.00 61.00,764.00"
-                    + "             61.00,764.00 62.00,764.00 62.00,764.00 Z"
-                    + "           M 72.58,784.00\n"
-                    + "           C 74.14,786.77 74.88,789.96 78.00,791.00"
-                    + "             78.00,791.00 82.79,813.00 82.79,813.00"
-                    + "             86.77,831.70 89.03,841.65 89.00,861.00"
-                    + "             88.98,876.03 80.38,893.21 67.00,900.65"
-                    + "             52.59,908.66 29.93,905.94 17.00,896.10"
-                    + "             -1.61,881.94 -0.24,858.83 0.00,838.00"
-                    + "             0.08,831.76 2.56,812.30 5.00,807.00"
-                    + "             5.00,807.00 19.00,851.00 19.00,851.00"
-                    + "             19.00,851.00 12.00,848.00 12.00,848.00"
-                    + "             12.12,861.42 16.76,879.49 27.09,888.67"
-                    + "             43.54,903.31 67.54,890.20 74.53,872.00"
-                    + "             78.73,861.07 77.89,848.34 76.27,837.00"
-                    + "             76.27,837.00 62.00,766.00 62.00,766.00"
-                    + "             66.12,770.53 69.41,778.37 72.58,784.00 Z", px, -300, image);
+            image = new Image(eventDir.toString() + "FishHook1.png", 40, 1000, true, false, true);
+            object = new FishHook("M 27.00,919.50"
+                    + "           C 27.00,919.50 0.00,956.50 0.00,956.50"
+                    + "             0.00,956.50 0.00,997.50 0.00,997.50"
+                    + "             0.00,997.50 37.50,997.50 37.50,997.50"
+                    + "             37.50,997.50 39.50,919.50 39.50,919.50 Z", px, -894, image);
             fishHooks.add((FishHook) object);
-            Path path = new Path();
-            //path.getElements().add(new MoveTo(20, 20));
-            //path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
-            //path.getElements().add(new CubicCurveTo(0, 120, 0, 240, 380, 240));
         }
 
         if (randomGetal == 3) {
             image = new Image(eventDir.toString() + "Seaweed1.png", 30, 87, true, false, true);
+            if(px < 30)
+                px = 30;
+            if(px > map.getMap().getWidth() - 30)
+                px = map.getMap().getHeight() - 30;
+            if(py > map.getMap().getHeight() - 87)
+                py = map.getMap().getHeight() - 87;
+            if(py < 87)
+                py = 87;
             object = new Seaweed("M 66.00,11.00"
                     + "           C 66.00,11.00 11.00,192.00 11.00,192.00"
                     + "             11.00,192.00 4.00,285.00 4.00,285.00"
