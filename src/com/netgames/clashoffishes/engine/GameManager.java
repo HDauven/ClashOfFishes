@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 
 /**
@@ -24,8 +23,7 @@ import javafx.stage.Stage;
  *
  * @author Hein Dauven
  */
-public class GameManager extends Application
-{
+public class GameManager extends Application {
 
     public static final double WIDTH = 1280, HEIGHT = 720;
     private boolean up, down, left, right;
@@ -54,18 +52,6 @@ public class GameManager extends Application
     private URL biteSoundFile0;
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Background images declaration">
-    private Image backgroundLayer1;
-    Prop bgLayer1;
-    private Image backLayer1;
-    Prop bLayer1;
-    private Image middleLayer1;
-    Prop mLayer1;
-    private Image frontLayer1;
-    Prop fLayer1;
-    private URL backgroundDir;
-    // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Player images declaration">
     private Image bubbles1, bubbles2, bubbles3, bubbles4;
     private Image cleo1, cleo2, cleo3, cleo4;
@@ -89,10 +75,12 @@ public class GameManager extends Application
     /**
      * Default constructor
      */
-    public GameManager()
-    {
+    public GameManager() {
         // Empty
+<<<<<<< HEAD
         
+=======
+>>>>>>> origin/master
     }
 
     /**
@@ -100,17 +88,13 @@ public class GameManager extends Application
      *
      * @param character The chosen character
      */
-    public GameManager(String character)
-    {
+    public GameManager(String character) {
         if (character.toUpperCase().equals("BUBBLES")
                 || character.toUpperCase().equals("CLEO")
                 || character.toUpperCase().equals("FRED")
-                || character.toUpperCase().equals("GILL"))
-        {
+                || character.toUpperCase().equals("GILL")) {
             this.character = character;
-        }
-        else
-        {
+        } else {
             this.character = "BUBBLES";
         }
     }
@@ -118,8 +102,7 @@ public class GameManager extends Application
     // TODO make this class dynamic. 
     // TODO if this class becomes dynamic we will ascend to god status.
     @Override
-    public void start(Stage primaryStage)
-    {
+    public void start(Stage primaryStage) {
         thisStage = primaryStage;
         primaryStage.setTitle("Clash of Fishes");
         root = new Group();
@@ -137,8 +120,7 @@ public class GameManager extends Application
         createStartGameLoop();
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         launch(args);
     }
 
@@ -146,12 +128,9 @@ public class GameManager extends Application
      * Sets event handling for the scene object. Based on user input, booleans
      * are triggered to decide whether an user is actively using a key or not.
      */
-    private void createSceneEventHandling()
-    {
-        scene.setOnKeyPressed((KeyEvent event) ->
-        {
-            switch (event.getCode())
-            {
+    private void createSceneEventHandling() {
+        scene.setOnKeyPressed((KeyEvent event) -> {
+            switch (event.getCode()) {
                 case UP:
                     up = true;
                     break;
@@ -182,10 +161,8 @@ public class GameManager extends Application
             }
         });
 
-        scene.setOnKeyReleased((KeyEvent event) ->
-        {
-            switch (event.getCode())
-            {
+        scene.setOnKeyReleased((KeyEvent event) -> {
+            switch (event.getCode()) {
                 case UP:
                     up = false;
                     break;
@@ -220,8 +197,7 @@ public class GameManager extends Application
     /**
      * Loads audio assets into the game.
      */
-    private void loadAudioAssets()
-    {
+    private void loadAudioAssets() {
         // TODO loading audio asset format:
         // URL object = this.getClass().getResource("/resource/sound.wav");
         // AudioClip object = new AudioClip(URL object.toString());
@@ -232,18 +208,9 @@ public class GameManager extends Application
     /**
      * Loads image assets into the game.
      */
-    private void loadImageAssets()
-    {
+    private void loadImageAssets() {
         // TODO adding image asset format:
         // Image object = new Image("/resource/image.png", width, height, true, false, true);
-        // <editor-fold defaultstate="collapsed" desc="Background images instantiation">
-        backgroundDir = this.getClass().getResource("/com/netgames/clashoffishes/images/background/");
-        backgroundLayer1 = new Image(backgroundDir.toString() + "BackgroundLayer1.png", 1024, 768, true, false, true);
-        backLayer1 = new Image(backgroundDir.toString() + "BackLayer1.png", 1024, 506, true, false, true);
-        middleLayer1 = new Image(backgroundDir.toString() + "MiddleLayer1.png", 1024, 212, true, false, true);
-        frontLayer1 = new Image(backgroundDir.toString() + "FrontLayer1.png", 1024, 316, true, false, true);
-        // </editor-fold>
-
         playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
         // <editor-fold defaultstate="collapsed" desc="Bubbles image instantiation">
         bubbles1 = new Image(playerDir.toString() + "Bubbles1.png", 103, 66, true, false, true);
@@ -299,28 +266,17 @@ public class GameManager extends Application
     /**
      * Creates the necessary GameObjects for the game.
      */
-    private void createGameObjects()
-    {
+    private void createGameObjects() {
         // TODO adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
-        bgLayer1 = new Prop("", 0, 0, backgroundLayer1);
-        bLayer1 = new Prop("", 0, (HEIGHT - backLayer1.getRequestedHeight()), backLayer1);
-        mLayer1 = new Prop("", 0, (HEIGHT - middleLayer1.getRequestedHeight()), middleLayer1);
-        fLayer1 = new Prop("", 0, (HEIGHT - frontLayer1.getRequestedHeight()), frontLayer1);
-        // ((HEIGHT / 2) - (frontLayer1.getRequestedHeight() / 2))
         map = new GameMap((int) WIDTH, (int) HEIGHT);
         menu = new GameMenu(this);
 
         createPlayer();
-
-        energy = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z",
-                200, 200, energyDrink1);
     }
 
-    private void createPlayer()
-    {
-        switch (this.character.toUpperCase())
-        {
+    private void createPlayer() {
+        switch (this.character.toUpperCase()) {
             case "BUBBLES":
                 player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
                         WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
@@ -343,42 +299,30 @@ public class GameManager extends Application
     /**
      * Adds GameObjects to the root node.
      */
-    private void addGameObjectNodes()
-    {
+    private void addGameObjectNodes() {
         // TODO adding game object nodes
         // root.getChildren().add(gameObject);
-        root.getChildren().add(bgLayer1.getSpriteFrame());
-        root.getChildren().add(bLayer1.getSpriteFrame());
-        root.getChildren().add(mLayer1.getSpriteFrame());
-        root.getChildren().add(fLayer1.getSpriteFrame());
 
         // Comment this out to get the regular background
         root.getChildren().add(map.getMap());
 
         root.getChildren().add(player.getSpriteFrame());
-
-        root.getChildren().add(energy.getSpriteFrame());
     }
 
     /**
      * Creates the ObjectManager object. This is necessary for the detection of
      * collision and the removal of objects from the game.
      */
-    public void createObjectManager()
-    {
+    public void createObjectManager() {
         objectManager = new ObjectManager();
         // TODO adding an object to the object manager format:
         // objectManager.addCurrentObject(newobject);
-
-        objectManager.addCurrentObject(energy);
-        //objectManager.addCurrentObject(player);
     }
 
     /**
      * Adds nodes to the root Group object.
      */
-    private void addNodesToGroup()
-    {
+    private void addNodesToGroup() {
         // TODO add nodes to the root Group:
         // root.getChildren().add(container);
         //root.getChildren().add(gameWindow);
@@ -390,8 +334,8 @@ public class GameManager extends Application
     /**
      * Creates a GameLoop object and runs an instance of this class.
      */
-    private void createStartGameLoop()
-    {
+    private void createStartGameLoop() {
+        fishHooks = new ArrayList<>();
         gameLoop = new GameLoop(this);
         gameLoop.start();
         gameState = GameState.RUNNING;
@@ -399,38 +343,50 @@ public class GameManager extends Application
 
     }
 
-    public void addRandomObject()
-    {
+    public void addRandomObject() {
         //Aanmaken waarden
         Image image;
         GameObject object = null;
-        double px = WIDTH * Math.random() + 1;
-        double py = HEIGHT * Math.random() + 1;
+        double px = map.getMap().getWidth() * Math.random() + 1;
+        double py = map.getMap().getHeight() * Math.random() + 1;
 
         int range = (3 - 1) + 1; // 3 moet veranderen als er meer objecten bijkomen.
         int randomGetal = (int) (Math.random() * range + 1);
 
         //Random object genereren
-        if (randomGetal == 1)
-        {
+        if (randomGetal == 1) {
             image = new Image(eventDir.toString() + "EnergyDrink1.png", 30, 144.6, true, false, true);
+            if(px < 30)
+                px = 30;
+            if(px > map.getMap().getWidth() - 30)
+                px = map.getMap().getWidth() - 30;
+            if(py > map.getMap().getHeight() - 144.6)
+                py = map.getMap().getHeight() - 144.6;
+            if(py < 144.6)
+                py = 144.6;
             object = new EnergyDrink("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", px, py, image);
         }
 
-        if (randomGetal == 2)
-        {
-            image = new Image(eventDir.toString() + "FishHook1.png", 40, 406, true, false, true);
-            object = new FishHook("", px, -300, image);
-            fishHooks.add((FishHook)object);
-            Path path = new Path();
-            //path.getElements().add(new MoveTo(20, 20));
-            //path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
-            //path.getElements().add(new CubicCurveTo(0, 120, 0, 240, 380, 240));
+        if (randomGetal == 2) {
+            image = new Image(eventDir.toString() + "FishHook1.png", 40, 1000, true, false, true);
+            object = new FishHook("M 27.00,919.50"
+                    + "           C 27.00,919.50 0.00,956.50 0.00,956.50"
+                    + "             0.00,956.50 0.00,997.50 0.00,997.50"
+                    + "             0.00,997.50 37.50,997.50 37.50,997.50"
+                    + "             37.50,997.50 39.50,919.50 39.50,919.50 Z", px, -894, image);
+            fishHooks.add((FishHook) object);
         }
 
-        if (randomGetal == 3)
-        {
+        if (randomGetal == 3) {
             image = new Image(eventDir.toString() + "Seaweed1.png", 30, 87, true, false, true);
+            if(px < 30)
+                px = 30;
+            if(px > map.getMap().getWidth() - 30)
+                px = map.getMap().getHeight() - 30;
+            if(py > map.getMap().getHeight() - 87)
+                py = map.getMap().getHeight() - 87;
+            if(py < 87)
+                py = 87;
             object = new Seaweed("M 66.00,11.00"
                     + "           C 66.00,11.00 11.00,192.00 11.00,192.00"
                     + "             11.00,192.00 4.00,285.00 4.00,285.00"
@@ -458,8 +414,7 @@ public class GameManager extends Application
      *
      * @return
      */
-    public boolean isUp()
-    {
+    public boolean isUp() {
         return up;
     }
 
@@ -467,8 +422,7 @@ public class GameManager extends Application
      *
      * @param up
      */
-    public void setUp(boolean up)
-    {
+    public void setUp(boolean up) {
         this.up = up;
     }
 
@@ -476,8 +430,7 @@ public class GameManager extends Application
      *
      * @return
      */
-    public boolean isDown()
-    {
+    public boolean isDown() {
         return down;
     }
 
@@ -485,8 +438,7 @@ public class GameManager extends Application
      *
      * @param down
      */
-    public void setDown(boolean down)
-    {
+    public void setDown(boolean down) {
         this.down = down;
     }
 
@@ -494,8 +446,7 @@ public class GameManager extends Application
      *
      * @return
      */
-    public boolean isLeft()
-    {
+    public boolean isLeft() {
         return left;
     }
 
@@ -503,8 +454,7 @@ public class GameManager extends Application
      *
      * @param left
      */
-    public void setLeft(boolean left)
-    {
+    public void setLeft(boolean left) {
         this.left = left;
     }
 
@@ -512,8 +462,7 @@ public class GameManager extends Application
      *
      * @return
      */
-    public boolean isRight()
-    {
+    public boolean isRight() {
         return right;
     }
 
@@ -521,8 +470,7 @@ public class GameManager extends Application
      *
      * @param right
      */
-    public void setRight(boolean right)
-    {
+    public void setRight(boolean right) {
         this.right = right;
     }
 
@@ -530,8 +478,7 @@ public class GameManager extends Application
      *
      * @return
      */
-    public boolean iswKey()
-    {
+    public boolean iswKey() {
         return wKey;
     }
 
@@ -539,8 +486,7 @@ public class GameManager extends Application
      *
      * @param wKey
      */
-    public void setwKey(boolean wKey)
-    {
+    public void setwKey(boolean wKey) {
         this.wKey = wKey;
     }
 
@@ -548,8 +494,7 @@ public class GameManager extends Application
      *
      * @return
      */
-    public boolean isaKey()
-    {
+    public boolean isaKey() {
         return aKey;
     }
 
@@ -557,8 +502,7 @@ public class GameManager extends Application
      *
      * @param aKey
      */
-    public void setaKey(boolean aKey)
-    {
+    public void setaKey(boolean aKey) {
         this.aKey = aKey;
     }
 
@@ -566,8 +510,7 @@ public class GameManager extends Application
      *
      * @return
      */
-    public boolean issKey()
-    {
+    public boolean issKey() {
         return sKey;
     }
 
@@ -575,8 +518,7 @@ public class GameManager extends Application
      *
      * @param sKey
      */
-    public void setsKey(boolean sKey)
-    {
+    public void setsKey(boolean sKey) {
         this.sKey = sKey;
     }
 
@@ -584,8 +526,7 @@ public class GameManager extends Application
      *
      * @return
      */
-    public boolean isdKey()
-    {
+    public boolean isdKey() {
         return dKey;
     }
 
@@ -593,8 +534,7 @@ public class GameManager extends Application
      *
      * @param dKey
      */
-    public void setdKey(boolean dKey)
-    {
+    public void setdKey(boolean dKey) {
         this.dKey = dKey;
     }
 
@@ -602,8 +542,7 @@ public class GameManager extends Application
      *
      * @return
      */
-    public boolean isSpace()
-    {
+    public boolean isSpace() {
         return space;
     }
 
@@ -611,16 +550,14 @@ public class GameManager extends Application
      *
      * @param space
      */
-    public void setSpace(boolean space)
-    {
+    public void setSpace(boolean space) {
         this.space = space;
     }
 
     /**
      * Plays the bite sound of a fish.
      */
-    public void playBiteSound()
-    {
+    public void playBiteSound() {
         this.biteSound0.play();
     }
 
@@ -630,8 +567,7 @@ public class GameManager extends Application
      *
      * @return the root Group belonging to this game session.
      */
-    public Group getRoot()
-    {
+    public Group getRoot() {
         return root;
     }
 
@@ -640,8 +576,7 @@ public class GameManager extends Application
      *
      * @return the objectManager belonging to this game session.
      */
-    public ObjectManager getObjectManager()
-    {
+    public ObjectManager getObjectManager() {
         return objectManager;
     }
 
@@ -650,8 +585,7 @@ public class GameManager extends Application
      *
      * @return The player belonging to this game session.
      */
-    public Player getPlayer()
-    {
+    public Player getPlayer() {
         return player;
     }
 
@@ -660,8 +594,7 @@ public class GameManager extends Application
      *
      * @return game score
      */
-    public int getGameScore()
-    {
+    public int getGameScore() {
         return gameScore;
     }
 
@@ -670,16 +603,14 @@ public class GameManager extends Application
      *
      * @param gameScoreAddition added value
      */
-    public void setGameScore(int gameScoreAddition)
-    {
+    public void setGameScore(int gameScoreAddition) {
         this.gameScore = this.gameScore + gameScoreAddition;
     }
 
     /**
      * Updates the score for Player one on screen.
      */
-    public void updateScoreLabelOne()
-    {
+    public void updateScoreLabelOne() {
         //this.scoreLabelOne.setText(String.valueOf(this.gameScore));
         menu.updateScoreLabelOne();
     }
@@ -689,8 +620,7 @@ public class GameManager extends Application
      *
      * @return GameLoop
      */
-    public GameLoop getGameLoop()
-    {
+    public GameLoop getGameLoop() {
         return gameLoop;
     }
 
@@ -699,8 +629,7 @@ public class GameManager extends Application
      *
      * @return gameState enum
      */
-    public GameState getGameState()
-    {
+    public GameState getGameState() {
         return gameState;
     }
 
@@ -709,43 +638,39 @@ public class GameManager extends Application
      *
      * @param gameState GameState enum
      */
-    public void setGameState(GameState gameState)
-    {
+    public void setGameState(GameState gameState) {
         this.gameState = gameState;
     }
 
-    GameMode getGameMode()
-    {
+    GameMode getGameMode() {
         return this.gameMode;
     }
 
-    public GameMenu getGameMenu()
-    {
+    public GameMenu getGameMenu() {
         return menu;
     }
 
-    public void setTimeLeft(String secondsLeft)
-    {
+    public void setTimeLeft(String secondsLeft) {
         this.timeLeft.set(secondsLeft);
     }
 
-    public SimpleStringProperty getTimeLeft()
-    {
+    public SimpleStringProperty getTimeLeft() {
         return this.timeLeft;
     }
 
-    void closeStage()
-    {
+    void closeStage() {
         thisStage.close();
     }
 
-    Stage getStage()
-    {
+    Stage getStage() {
         return this.thisStage;
     }
 
-    public ArrayList<FishHook> getFishHooks()
-    {
+    public ArrayList<FishHook> getFishHooks() {
         return this.fishHooks;
+    }
+
+    void removeFishHook(FishHook h) {
+        getObjectManager().removeCurrentObject(h);
     }
 }
