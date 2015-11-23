@@ -9,7 +9,7 @@ import java.rmi.registry.LocateRegistry;
 
 /**
  * Server that keeps track of all the existing Game Lobbies for the Clash of Fishes game.
- * @author Hein
+ * @author Hein Dauven
  */
 public class ClashOfFishesServer {
     // Set port number

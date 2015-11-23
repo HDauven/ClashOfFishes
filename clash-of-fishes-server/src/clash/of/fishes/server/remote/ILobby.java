@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Interface that makes the defined methods available for users of the ILobby.
- * @author Hein
+ * @author Hein Dauven
  */
 public interface ILobby {
     /**

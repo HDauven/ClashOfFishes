@@ -5,7 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 /**
  *
- * @author Hein
+ * @author Hein Dauven
  */
 public class Server extends UnicastRemoteObject {
     /**
