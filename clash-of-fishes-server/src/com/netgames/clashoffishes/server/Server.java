@@ -14,6 +14,7 @@ import java.util.List;
  * @author Hein Dauven
  */
 public class Server extends UnicastRemoteObject implements IServer {
+    // TODO recode for practical purposes, instead of system.out.println
     private static final long serialVersionUID = 1L;
     
     private List<ILobby> lobbies;

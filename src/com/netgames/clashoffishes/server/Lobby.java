@@ -15,7 +15,7 @@ import java.util.List;
  * @author Hein Dauven
  */
 public class Lobby extends UnicastRemoteObject implements ILobby {
-
+    // TODO add more game/lobby info
     private static final long serialVersionUID = 1L;
     
     private List<IClient> clients;

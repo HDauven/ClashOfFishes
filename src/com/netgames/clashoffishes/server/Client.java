@@ -40,6 +40,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
 
     @Override
     public void run() {
+        // TODO recode this for practical purposes, with a string instead of a System.out.println
         List<IMessage> messages;
         try {
             messages = lobby.getMessages();
