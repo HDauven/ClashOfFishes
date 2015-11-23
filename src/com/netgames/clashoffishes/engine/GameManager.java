@@ -92,7 +92,7 @@ public class GameManager extends Application
     public GameManager()
     {
         // Empty
-        fishHooks = new ArrayList<>();
+        
     }
 
     /**
@@ -395,6 +395,7 @@ public class GameManager extends Application
         gameLoop = new GameLoop(this);
         gameLoop.start();
         gameState = GameState.RUNNING;
+        fishHooks = new ArrayList<>();
 
     }
 
