@@ -77,10 +77,6 @@ public class GameManager extends Application {
      */
     public GameManager() {
         // Empty
-<<<<<<< HEAD
-        
-=======
->>>>>>> origin/master
     }
 
     /**
