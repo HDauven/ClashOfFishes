@@ -6,17 +6,22 @@ import java.net.UnknownHostException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  * Server that keeps track of all the existing Game Lobbies for the Clash of Fishes game.
  * @author Hein Dauven
  */
-public class ClashOfFishesServer {
+public class ClashOfFishesServer extends Application {
     // Set port number
     private static final int portNumber = 1100;
     
     // Set binding name for the server
-    private static final String bindingName = "Lobby Server";
+    private static final String bindingName = "Server";
     
     // Reference to server
     private Server server = null;
@@ -76,15 +81,29 @@ public class ClashOfFishesServer {
     /**
      * @param args the command line arguments
      */
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root;
+        try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/clash/of/fishes/server/ui/LobbyServerGUI.fxml"));
+        root = (Parent) loader.load();
+        primaryStage.setTitle("Admin lobby control center");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+        } catch(Exception e) {
+            System.out.println(e.toString());
+        }
+    }  
+    
     public static void main(String[] args) {
+        launch(args);
         // Welcome message
-        System.out.println("Welcome to the Clash of Fishes server!");
+        //System.out.println("Welcome to the Clash of Fishes server!");
 
         // Print IP addresses and network interfaces
-        printIPAddresses();
+        //printIPAddresses();
 
         // Create Clash Of Fishes server
-        ClashOfFishesServer cofServer = new ClashOfFishesServer();        
+        //ClashOfFishesServer cofServer = new ClashOfFishesServer();
     }
-    
 }
