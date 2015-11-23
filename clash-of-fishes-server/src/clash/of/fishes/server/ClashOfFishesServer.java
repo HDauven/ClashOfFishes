@@ -7,10 +7,12 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * Server that keeps track of all the existing Game Lobbies for the Clash of Fishes game.
@@ -90,6 +92,11 @@ public class ClashOfFishesServer extends Application {
         primaryStage.setTitle("Admin lobby control center");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        //printIPAddresses();
+        primaryStage.setOnCloseRequest((WindowEvent event) -> {
+            Platform.exit();
+            System.exit(0);
+        });
         } catch(Exception e) {
             System.out.println(e.toString());
         }
