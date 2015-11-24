@@ -93,6 +93,4 @@ public class Administration
         
         return dbStorage.getUser(username);
     }
-    
-    
 }
