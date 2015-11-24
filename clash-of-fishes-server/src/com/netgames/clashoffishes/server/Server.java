@@ -32,9 +32,14 @@ public class Server extends UnicastRemoteObject implements IServer {
     public void registerLobby(ILobby lobby) throws RemoteException {
         lobbies.add(lobby);
     }
+    
+    @Override
+    public void removeLobby(ILobby lobby) throws RemoteException {
+        lobbies.remove(lobby);
+    }
 
     @Override
-    public List<ILobby> listChatServers() throws RemoteException {
+    public List<ILobby> listLobbies() throws RemoteException {
         return Collections.unmodifiableList(lobbies);
     }
 }
