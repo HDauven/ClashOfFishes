@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="paneMainForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="438.0" prefWidth="624.0" styleClass="background-gradient" stylesheets="@OceanUI.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.netgames.clashoffishes.ui.FishPoolController">
+<AnchorPane fx:id="paneMainForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="438.0" prefWidth="967.0" styleClass="background-gradient" stylesheets="@OceanUI.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.netgames.clashoffishes.ui.FishPoolController">
    <children>
       <Label fx:id="lblLobbyName" layoutX="56.0" layoutY="32.0" text="\$Username's game">
          <font>
@@ -41,5 +41,12 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
+      <Pane layoutX="607.0" prefHeight="438.0" prefWidth="366.0">
+         <children>
+            <ListView fx:id="lstViewMessages" layoutX="14.0" layoutY="25.0" prefHeight="337.0" prefWidth="336.0" />
+            <Button fx:id="btnSendMessage" layoutX="243.0" layoutY="370.0" mnemonicParsing="false" onAction="#btnSendMessage_OnClick" prefHeight="41.0" prefWidth="107.0" text="Send" />
+            <TextField fx:id="tfMessage" layoutX="14.0" layoutY="378.0" prefHeight="25.0" prefWidth="223.0" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
