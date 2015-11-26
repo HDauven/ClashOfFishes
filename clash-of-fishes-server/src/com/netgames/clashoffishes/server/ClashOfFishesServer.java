@@ -9,14 +9,11 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 /**
- * Server that keeps track of all the existing Game Lobbies for the Clash of Fishes game.
+ * GUI version of the Clash of Fishes Lobby Server.
  * @author Hein Dauven
  */
 public class ClashOfFishesServer extends Application {
         
-    /**
-     * @param args the command line arguments
-     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root;
@@ -35,6 +32,9 @@ public class ClashOfFishesServer extends Application {
         }
     }  
     
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
