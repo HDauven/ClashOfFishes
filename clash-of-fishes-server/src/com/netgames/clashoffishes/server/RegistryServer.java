@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -48,6 +49,7 @@ public class RegistryServer extends Observable {
         if (server != null) {
             try {
                 LocateRegistry.createRegistry(portNumber);
+                UnicastRemoteObject.exportObject(server, portNumber);
                 Naming.rebind("//localhost:" + portNumber + "/" + bindingName, server);
             } catch (MalformedURLException ex) {
                 logMessage("Server: Cannot bind server");
@@ -108,5 +110,8 @@ public class RegistryServer extends Observable {
         setChanged();
         notifyObservers();
     }   
-    
+
+    public Server getServer() {
+        return server;
+    }
 }
