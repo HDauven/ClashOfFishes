@@ -1,5 +1,6 @@
-package clash.of.fishes.server.remote;
+package com.netgames.clashoffishes.server.remote;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Interface that makes the defined methods available for users of the ILobby.
  * @author Hein Dauven
  */
-public interface ILobby {
+public interface ILobby extends Remote {
     /**
      * Method that checks whether an username is available or not.
      * @param username the username to check
@@ -22,7 +23,7 @@ public interface ILobby {
      * @param client The IClient that is going to be added to the ILobby.
      * @throws RemoteException 
      */
-    void registerChatClient(IClient client) 
+    void registerClient(IClient client) 
             throws RemoteException;
     
     /**
