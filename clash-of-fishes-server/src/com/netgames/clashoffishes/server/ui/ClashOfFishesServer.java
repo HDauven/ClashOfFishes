@@ -1,4 +1,4 @@
-package com.netgames.clashoffishes.server;
+package com.netgames.clashoffishes.server.ui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
