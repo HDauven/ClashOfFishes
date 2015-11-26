@@ -5,6 +5,8 @@
  */
 package com.netgames.clashoffishes.ui;
 
+import com.netgames.clashoffishes.TableUser;
+import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.engine.GameManager;
 import java.net.URL;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -36,12 +39,13 @@ import javafx.stage.Stage;
  */
 public class FishPoolController implements Initializable
 {
+
     @FXML
     private AnchorPane paneMainForm;
     @FXML
     private Label lblLobbyName;
     @FXML
-    private TableView<?> tbvPlayers;
+    private TableView tbvPlayers;
     @FXML
     private RadioButton rbLastFishSwimming;
     @FXML
@@ -71,6 +75,8 @@ public class FishPoolController implements Initializable
     @FXML
     private TextField tfMessage;
 
+    ObservableList<TableUser> tableUsers;
+
     /**
      * Initializes the controller class.
      */
@@ -85,13 +91,31 @@ public class FishPoolController implements Initializable
         characterNames.add("Fred");
         characterNames.add("Gill");
         this.cbCharacters.setItems(FXCollections.observableArrayList(characterNames));
-    }    
-    
+
+        clmPlayers = new TableColumn("Players");
+        clmReady = new TableColumn("Ready");
+
+        clmPlayers.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.70));
+        clmReady.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.25));
+
+        tbvPlayers.getColumns().addAll(clmPlayers, clmReady);
+        tableUsers = FXCollections.observableArrayList();
+        tableUsers.add(new TableUser(new User(20, "Henk", "Henk@asdf.nl")));
+        System.out.println(tableUsers.get(0).toString());
+        this.clmPlayers.setCellValueFactory(new PropertyValueFactory<>("Username"));
+        this.clmReady.setCellValueFactory(new PropertyValueFactory<>("Ready"));
+
+        this.tbvPlayers.setItems(tableUsers);
+        this.addTableRow(new User(11, "Stef", "Stef@stef.nl"));
+    }
+
     @FXML
-    private void cbCharacters_OnChanged(ActionEvent event) {
+    private void cbCharacters_OnChanged(ActionEvent event)
+    {
         String selectedCharacter = this.cbCharacters.getValue();
         URL playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
-        switch (selectedCharacter) {
+        switch (selectedCharacter)
+        {
             case "Bubbles":
                 System.out.println("Bubbles has been selected");
                 this.pictCharacter.setImage(new Image(playerDir.toString() + "BubblesIcon.png", 80, 51, true, false, true));
@@ -108,7 +132,7 @@ public class FishPoolController implements Initializable
                 System.out.println("Gill has been selected");
                 this.pictCharacter.setImage(new Image(playerDir.toString() + "GillIcon.png", 80, 47, true, false, true));
                 break;
-            default: 
+            default:
                 System.out.println("No character selected");
                 this.pictCharacter.setImage(null);
                 break;
@@ -116,19 +140,32 @@ public class FishPoolController implements Initializable
     }
 
     @FXML
-    private void btnReady_OnClick(ActionEvent event) {
+    private void btnReady_OnClick(ActionEvent event)
+    {
         
     }
 
     @FXML
-    private void btnStartGame_OnClick(ActionEvent event) {
+    private void btnStartGame_OnClick(ActionEvent event)
+    {
         //xxx Hier zou een gameManager misschien nog toegevoegd worden aan de singleton Administratie?
         GameManager gameManager = new GameManager();
         gameManager.start(new Stage());
     }
 
     @FXML
-    private void btnSendMessage_OnClick(ActionEvent event) {
+    private void btnSendMessage_OnClick(ActionEvent event)
+    {
     }
-    
+
+    /**
+     * Add a user which is not ready yet with the username to the player-table
+     * @param user user which is added to the game
+     */
+    private void addTableRow(User user)
+    {
+        tableUsers.add(new TableUser(user));
+        tbvPlayers.setItems(tableUsers);
+    }
+
 }

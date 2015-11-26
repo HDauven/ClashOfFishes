@@ -15,12 +15,7 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <TableView fx:id="tbvPlayers" layoutX="56.0" layoutY="100.0" prefHeight="195.0" prefWidth="238.0">
-        <columns>
-          <TableColumn fx:id="clmPlayers" prefWidth="117.0" text="Players" />
-          <TableColumn fx:id="clmReady" prefWidth="120.0" text="Ready" />
-        </columns>
-      </TableView>
+      <TableView fx:id="tbvPlayers" layoutX="56.0" layoutY="100.0" prefHeight="195.0" prefWidth="238.0" />
       <Label layoutX="467.0" layoutY="96.0" text="Game mode:">
          <font>
             <Font name="System Bold" size="18.0" />

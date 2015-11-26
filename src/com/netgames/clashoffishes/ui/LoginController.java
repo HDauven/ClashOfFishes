@@ -57,6 +57,10 @@ public class LoginController implements Initializable
     {
         this.administration = Administration.get();
         lbl_error.setVisible(false);
+        
+        //For testing   -   should be removed after
+        txtUsername.setText("Admin");
+        txtPassword.setText("admin");
     }
 
     @FXML
