@@ -190,4 +190,9 @@ public class DatabaseStorage implements Storage
             System.out.println(ex.toString());
         }
     }
+
+    public boolean hasConnection()
+    {
+        return databaseConnector.hasConnection();
+    }
 }

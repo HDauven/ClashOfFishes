@@ -15,40 +15,54 @@ public class DatabaseConnector
 {
 
     private SortedMap<Statement, CallableStatement> statements = new TreeMap<>();
+    private boolean hasConnection;
 
-    public DatabaseConnector() {
+    public DatabaseConnector()
+    {
+        hasConnection = false;
         this.createStatements();
     }
-    
+
     public Connection getConnection()
-            throws ClassNotFoundException, SQLException {
+            throws ClassNotFoundException, SQLException
+    {
         Connection connection = null;
-        try {
+        try
+        {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://stefp.nl/philips1_db?noAccessToProcedureBodies=true", "philips1_user", "Hallo123");
-        } catch (ClassNotFoundException | SQLException ex) {
+        }
+        catch (ClassNotFoundException | SQLException ex)
+        {
             System.out.println(ex.toString());
         }
         return connection;
     }
 
-    public SortedMap<Statement, CallableStatement> getStatements() {
+    public SortedMap<Statement, CallableStatement> getStatements()
+    {
         return statements;
     }
 
     public void createStatements()
     {
-        try {
+        try
+        {
             Connection connection = this.getConnection();
-            
-            statements.put(Statement.LOGIN, connection.prepareCall("{call spLogin(?, ?, ?, ?, ?)}"));
-            statements.put(Statement.REGISTER_USER, connection.prepareCall("{call spRegister_User(?, ?, ?, ?)}"));
-            statements.put(Statement.GET_ALL_USER_HIGHSCORES, connection.prepareCall("{call spGetAllUserHighscores(?)}"));
-            statements.put(Statement.GET_SCORES, connection.prepareCall("call getScores(?)"));
-            statements.put(Statement.GET_USER, connection.prepareCall("call getUser(?,?,?)"));
-            statements.put(Statement.REMOVE_USER, connection.prepareCall("call removeUser(?)"));
-            
-        } catch (ClassNotFoundException | SQLException ex) {
+            if (connection != null)
+            {
+                hasConnection = true;
+                statements.put(Statement.LOGIN, connection.prepareCall("{call spLogin(?, ?, ?, ?, ?)}"));
+                statements.put(Statement.REGISTER_USER, connection.prepareCall("{call spRegister_User(?, ?, ?, ?)}"));
+                statements.put(Statement.GET_ALL_USER_HIGHSCORES, connection.prepareCall("{call spGetAllUserHighscores(?)}"));
+                statements.put(Statement.GET_SCORES, connection.prepareCall("call getScores(?)"));
+                statements.put(Statement.GET_USER, connection.prepareCall("call getUser(?,?,?)"));
+                statements.put(Statement.REMOVE_USER, connection.prepareCall("call removeUser(?)"));
+            }
+
+        }
+        catch (ClassNotFoundException | SQLException ex)
+        {
             System.out.println(ex.toString());
         }
     }
@@ -56,5 +70,10 @@ public class DatabaseConnector
     public CallableStatement getStatement(Statement statement)
     {
         return statements.get(statement);
+    }
+
+    public boolean hasConnection()
+    {
+        return this.hasConnection;
     }
 }
