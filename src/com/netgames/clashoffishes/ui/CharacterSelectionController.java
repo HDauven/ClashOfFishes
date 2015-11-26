@@ -48,6 +48,8 @@ public class CharacterSelectionController implements Initializable {
         characterNames.add("Fred");
         characterNames.add("Gill");
         this.cbCharacters.setItems(FXCollections.observableArrayList(characterNames));
+        this.cbCharacters.getSelectionModel().select(0);
+        this.pictCharacter.setImage(new Image("/com/netgames/clashoffishes/images/player/" + "BubblesIcon.png", 80, 51, true, false, true));
     }    
 
     @FXML
