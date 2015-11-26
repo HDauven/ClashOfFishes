@@ -17,25 +17,31 @@ public class Server extends UnicastRemoteObject implements IServer {
     // TODO recode for practical purposes, instead of system.out.println
     private static final long serialVersionUID = 1L;
     
+    private final RegistryServer registryServer;
+    
     private List<ILobby> lobbies;
     
     /**
      * Constructor for the server
+     * @param registry
      * @throws RemoteException 
      */
-    public Server() throws RemoteException {
+    public Server(RegistryServer registry) throws RemoteException {
         super();
+        registryServer = registry;
         lobbies = new ArrayList<>();
     }
 
     @Override
     public void registerLobby(ILobby lobby) throws RemoteException {
         lobbies.add(lobby);
+        registryServer.logMessage("Registered lobby: " + lobby.toString());
     }
     
     @Override
     public void removeLobby(ILobby lobby) throws RemoteException {
         lobbies.remove(lobby);
+        registryServer.logMessage("Removed lobby: " + lobby.toString());
     }
 
     @Override

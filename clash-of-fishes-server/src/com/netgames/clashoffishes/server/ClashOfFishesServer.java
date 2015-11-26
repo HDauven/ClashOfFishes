@@ -1,11 +1,5 @@
 package com.netgames.clashoffishes.server;
 
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.UnknownHostException;
-import java.rmi.Naming;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -19,10 +13,7 @@ import javafx.stage.WindowEvent;
  * @author Hein Dauven
  */
 public class ClashOfFishesServer extends Application {
-    
-
-
-    
+        
     /**
      * @param args the command line arguments
      */
@@ -35,7 +26,6 @@ public class ClashOfFishesServer extends Application {
         primaryStage.setTitle("Admin lobby control center");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        //printIPAddresses();
         primaryStage.setOnCloseRequest((WindowEvent event) -> {
             Platform.exit();
             System.exit(0);
@@ -47,13 +37,5 @@ public class ClashOfFishesServer extends Application {
     
     public static void main(String[] args) {
         launch(args);
-        // Welcome message
-        //System.out.println("Welcome to the Clash of Fishes server!");
-
-        // Print IP addresses and network interfaces
-        //printIPAddresses();
-
-        // Create Clash Of Fishes server
-        //ClashOfFishesServer cofServer = new ClashOfFishesServer();
     }
 }
