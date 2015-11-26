@@ -47,10 +47,19 @@ public class Administration
         instance = new Administration();
     }
 
+    /**
+     * Add a new user to the database.
+     * Make sure all fields are not empty, 
+     * @param username
+     * @param confirmedPassword
+     * @param email
+     * @return 
+     */
     public Boolean addUser(String username, String confirmedPassword, String email)
     {
         if(username.equals("") || confirmedPassword.equals("") || !validator.validate(email))
             return false;
+        //TODO Controle op geldig emailadres, minimale lengte wachtwoord etc.
         return dbStorage.addUser(username, confirmedPassword, email);
     }
 
@@ -93,6 +102,4 @@ public class Administration
     {
         return dbStorage.hasConnection();
     }
-    
-    
 }

@@ -78,10 +78,12 @@ public class DatabaseStorage implements Storage
         }
         catch (SQLException ex)
         {
+            //TODO Betere exception afhandeling
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (id > 0)
         {
+            //TODO Scores toevoegen aan user
             u = new User(id, userIdentifier, email);
             this.getScores(u);
         }
@@ -100,17 +102,20 @@ public class DatabaseStorage implements Storage
             while (resultSet.next())
             {
                 Highscore newHighscore = new Highscore(GameMode.valueOf(resultSet.getString(2)), resultSet.getString(1), resultSet.getInt(3));
+                System.out.println(newHighscore.toString());
                 UserHighscores.add(newHighscore);
             }
         }
         catch (SQLException ex)
         {
+            //TODO Betere exception afhandeling
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return UserHighscores;
     }
 
+    //TODO Nog niet geimplementeerd is deze nog wel nodig????
     @Override
     public User getUser(String username)
     {

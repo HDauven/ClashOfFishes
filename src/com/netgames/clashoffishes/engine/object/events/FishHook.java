@@ -43,7 +43,7 @@ public class FishHook extends AnimatedObject implements RandomEvent
         if (!lowestEntered)
         {
             spriteFrame.setTranslateY(yLocation = yLocation + vY);
-            if(yLocation == -300)
+            if(yLocation == 300)
             {
                 lowestEntered = true;
             }
@@ -56,16 +56,11 @@ public class FishHook extends AnimatedObject implements RandomEvent
         if (i > 240)
         {
             //Is sowieso 300 volgens mij
-            if (yLocation == -300)
+            if (yLocation == 300)
             {
                 vY = -1;
                 lowestEntered = false;
             }
         }
-    }
-
-    public double getYLocation()
-    {
-        return this.yLocation;
     }
 }

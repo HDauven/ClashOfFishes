@@ -21,11 +21,9 @@ public class GameLoop extends AnimationTimer
     private final long startTime = System.nanoTime();
     private long secondsLeft;
     private long prevSeconds;
-    int speedFastTimeCounter;
-    int speedSlowTimeCounter;
 
     private final int length_of_game = 600;
-    private boolean winCondition = false;
+    private final boolean winCondition = false;
 
     /* A reference to the GameManager class. */
     protected GameManager gameManager;
@@ -38,8 +36,6 @@ public class GameLoop extends AnimationTimer
     public GameLoop(GameManager manager)
     {
         this.NANO_TO_SECOND = 1_000_000_000;
-        speedFastTimeCounter = 0;
-        speedSlowTimeCounter = 0;
         gameManager = manager;
     }
 
@@ -66,7 +62,31 @@ public class GameLoop extends AnimationTimer
             //add object if randInt % 4 == 0 dit object else % 3 == 0 dat object etc
             prev = System.nanoTime();
         }
-        fishHook();
+
+        if (gameManager.getGameMode() == GameMode.EVOLUTION_OF_TIME)
+        {
+            long elapsed2 = now - startTime;
+            secondsLeft = length_of_game - (elapsed2 / NANO_TO_SECOND);
+            gameManager.setTimeLeft(String.valueOf(secondsLeft));
+            if (secondsLeft == 0)
+            {
+                //Spel voorbij na 2 minuten
+                if (gameManager.getGameState() != GameState.FINISHED)
+                {
+                    gameManager.setGameState(GameState.FINISHED);
+                    this.stop();
+                    hasWon();
+                    Administration.get().getLoggedInUser().updateHighScore(gameManager.getGameMode(), gameManager.getGameScore());
+                    //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
+                    System.out.println("Time is up!");
+                }
+            }
+        }
+        for (FishHook h : gameManager.getFishHooks())
+        {
+            h.update();
+        }
+
         modeEvolutionOfTime(now);
     }
 
@@ -117,44 +137,7 @@ public class GameLoop extends AnimationTimer
                     System.out.println("Time is up!");
                 }
             }
-            
-            if (gameManager.getGameScore() > 50) {
-                if (gameManager.getGameState() != GameState.FINISHED)
-                {
-                    gameManager.setGameState(GameState.FINISHED);
-                    this.stop();
-                    winCondition = true;
-                    hasWon();
-                    Administration.get().getLoggedInUser().updateHighScore(gameManager.getGameMode(), gameManager.getGameScore());
-                    //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
-                    System.out.println("You are a winner!");
-                }
-            }
         }
-        //Slow 1.3 Fast 2.8
-        if ((gameManager.getPlayer().getvX() == 2.8 && gameManager.getPlayer().getvY() == 2.8))
-        {
-            speedSlowTimeCounter = 0;
-            speedFastTimeCounter++;
-            if (speedFastTimeCounter == 240)
-            {
-                gameManager.getPlayer().setvX(2);
-                gameManager.getPlayer().setvY(2);
-                speedFastTimeCounter = 0;
-            }
-        }
-        if (gameManager.getPlayer().getvX() == 1.3 && gameManager.getPlayer().getvY() == 1.3)
-        {
-            speedFastTimeCounter = 0;
-            speedSlowTimeCounter++;
-            if (speedSlowTimeCounter == 240)
-            {
-                gameManager.getPlayer().setvX(2);
-                gameManager.getPlayer().setvY(2);
-                speedSlowTimeCounter = 0;
-            }
-        }
-
     }
 
     /**
@@ -175,21 +158,6 @@ public class GameLoop extends AnimationTimer
             {
                 gameManager.getRoot().getChildren().add(
                         gameManager.getGameMenu().getDefeatScreen());
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    private void fishHook()
-    {
-        for (FishHook h : gameManager.getFishHooks())
-        {
-            h.update();
-            if (h.getYLocation() < -5)
-            {
-                gameManager.removeFishHook(h);
             }
         }
     }

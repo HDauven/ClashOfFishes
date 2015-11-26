@@ -30,5 +30,6 @@ public class EnergyDrink extends GameObject implements RandomEvent {
      */
     @Override
     protected void update() {
+        // empty
     }
 }

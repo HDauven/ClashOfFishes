@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane fx:id="paneMainForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.netgames.clashoffishes.server.ui.LobbyServerGUIController">
+   <children>
+      <ListView fx:id="lstViewServers" layoutX="14.0" layoutY="38.0" prefHeight="348.0" prefWidth="352.0" />
+      <Label fx:id="lblServers" layoutX="14.0" layoutY="14.0" text="Servers:" />
+      <Separator layoutX="379.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="4.0" />
+      <Label fx:id="lblAdminControls" layoutX="394.0" layoutY="14.0" text="Administrator Controls:" />
+      <Button fx:id="btnCloseLobby" layoutX="394.0" layoutY="38.0" mnemonicParsing="false" onAction="#btnCloseLobby_OnClick" prefHeight="25.0" prefWidth="90.0" text="Close lobby" />
+      <ListView fx:id="lstViewSystemLog" layoutX="394.0" layoutY="95.0" prefHeight="291.0" prefWidth="375.0" />
+      <Label fx:id="lblSystemLog" layoutX="394.0" layoutY="72.0" text="System log:" />
+   </children>
+</AnchorPane>

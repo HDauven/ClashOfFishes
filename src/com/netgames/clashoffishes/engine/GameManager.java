@@ -335,6 +335,7 @@ public class GameManager extends Application {
         gameLoop = new GameLoop(this);
         gameLoop.start();
         gameState = GameState.RUNNING;
+        fishHooks = new ArrayList<>();
 
     }
 

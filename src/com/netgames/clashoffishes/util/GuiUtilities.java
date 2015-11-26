@@ -10,10 +10,13 @@ import com.netgames.clashoffishes.ui.LoginController;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -40,7 +43,33 @@ public class GuiUtilities
             Parent root = (Parent) loader.load();
             stage.setTitle(title);
             stage.setScene(new Scene(root));
-                        
+
+            if (fileName.equals("StartMenu"))
+            {
+                //Platform.setImplicitExit(false);
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>()
+                {
+                    @Override
+                    public void handle(WindowEvent event)
+                    {
+                        event.consume();
+                        GuiUtilities.logOut(stage);
+                    }
+                });
+            }
+            else
+            {
+                //Platform.setImplicitExit(true);
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>()
+                {
+                    @Override
+                    public void handle(WindowEvent event)
+                    {
+                        //event.consume();
+                        GuiUtilities.closeApplication(stage);
+                    }
+                });
+            }
             stage.show();
         }
         catch (IOException ex)
@@ -76,7 +105,7 @@ public class GuiUtilities
         try
         {
             root = (Parent) loader.load();
-            stage.setTitle("Login");
+            stage.setTitle(GuiUtilities.LOGIN_TITLE);
             stage.setScene(new Scene(root));
             stage.show();
         }
@@ -85,8 +114,11 @@ public class GuiUtilities
             Logger.getLogger(GuiUtilities.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public static void closeApplication(Stage stage){
+
+    public static void closeApplication(Stage stage)
+    {
         stage.close();
+        Platform.exit();
+        System.exit(0);
     }
 }
