@@ -8,8 +8,15 @@ package com.netgames.clashoffishes.ui;
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.Lobby;
 import com.netgames.clashoffishes.engine.GameMode;
+import com.netgames.clashoffishes.server.remote.ILobby;
+import com.netgames.clashoffishes.server.remote.IServer;
 import com.netgames.clashoffishes.util.GuiUtilities;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,6 +55,9 @@ public class HostedGamesController implements Initializable {
 
     private Administration administration;
     
+    private static IServer cofServer;
+    private static final String cofServerURL = "rmi://localhost:1100/Server";;
+    
     /**
      * Initializes the controller class.
      */
@@ -72,6 +82,7 @@ public class HostedGamesController implements Initializable {
         tbvHostedGames.setItems(lobbies);
         //tbvHostedGames.getColumns().addAll(clmPoolName, clmPlayers, clmGameMode);
         //TODO Aan lobby werken
+        clashOfFishesServerLookup();
     }
 
     @FXML
@@ -85,5 +96,28 @@ public class HostedGamesController implements Initializable {
     private void btnBack_OnClick(ActionEvent event) {
         GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
     }
-
+    
+    /**
+     * Method that looks up the Clash of Fishes Server in the name registry, 
+     * based on a given RMI URL.
+     */
+    private static void clashOfFishesServerLookup() {
+        try {
+            cofServer = (IServer) Naming.lookup(cofServerURL);
+            System.out.println(cofServer.listLobbies().toString());
+        } catch (NotBoundException ex) {
+            System.out.println("NotBoundException: " + ex.getMessage());
+        } catch (MalformedURLException ex) {
+            System.out.println("MalformedURLException: " + ex.getMessage());
+        } catch (RemoteException ex) {
+            System.out.println("RemoteException: " + ex.getMessage());
+        }
+    }
+    
+    private void refreshServerList() {
+        ArrayList<ILobby> temp = new ArrayList<>();
+        for (ILobby l : temp) {
+            //tbvHostedGames.getItems().add(l);
+        }
+    }
 }

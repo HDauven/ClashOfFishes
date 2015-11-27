@@ -1,6 +1,8 @@
 package com.netgames.clashoffishes.server.ui;
 
 import com.netgames.clashoffishes.server.RegistryServer;
+import com.netgames.clashoffishes.server.Server;
+import com.netgames.clashoffishes.server.remote.ILobby;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -24,7 +26,7 @@ public class LobbyServerGUIController implements Initializable, Observer {
     @FXML
     private AnchorPane paneMainForm;
     @FXML
-    private ListView<?> lstViewServers;
+    private ListView<ILobby> lstViewServers;
     @FXML
     private Label lblServers;
     @FXML
@@ -38,6 +40,7 @@ public class LobbyServerGUIController implements Initializable, Observer {
 
     // Reference to server
     private RegistryServer registry;
+    private Server server;
 
     /**
      * Initializes the controller class.
@@ -47,6 +50,7 @@ public class LobbyServerGUIController implements Initializable, Observer {
         registry = new RegistryServer();
         getRegistryLogMessages(registry);
         registry.addObserver(this);
+        registry.getServer().addObserver(this);
     }
 
     @FXML
@@ -69,8 +73,15 @@ public class LobbyServerGUIController implements Initializable, Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        registry = (RegistryServer) o;
-        this.lstViewSystemLog.getItems().add(registry.getLastOutput());
+        if (o instanceof RegistryServer) {
+            registry = (RegistryServer) o;
+            this.lstViewSystemLog.getItems().add(registry.getLastOutput());
+        } else if (o instanceof Server) {
+            server = (Server) o;
+            this.lstViewServers.getItems().add(server.getLastLobby());
+        } else { 
+            registry.logMessage("Something went really wrong..."); 
+        }
     }
 
 }

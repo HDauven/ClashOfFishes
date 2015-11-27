@@ -1,31 +1,35 @@
 package com.netgames.clashoffishes.server;
 
+import com.netgames.clashoffishes.server.remote.IServer;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
 import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Observable;
 
 /**
- * Class that creates the RMI registry for the Clash Of Fishes Lobby Server.
+ * Class that creates the RMI registry for a Clash Of Fishes Lobby.
  * @author Hein Dauven
  */
 public class RegistryServer extends Observable {
     // Set port number
-    private static final int portNumber = 1100;
+    private static final int portNumber = 1099;
     
-    // Set binding name for the server
-    private static final String bindingName = "Server";
+    // Set binding name for the lobby
+    private static final String bindingName = "Test";
     
     // List of the output of the Registry Server
     private ArrayList<String> output = new ArrayList<>();
     
-    // Reference to server
-    private Server server = null;
+    // Reference to lobby
+    private static Lobby lobby = null;
+    
+    private static IServer cofServer;
+    private static String cofServerURL;
     
     // Constructor
     public RegistryServer() {
@@ -35,32 +39,52 @@ public class RegistryServer extends Observable {
         // Print port number for registry
         logMessage("Server: Port number " + portNumber);
         
-        // Create server
+        // Create lobby
         try {
-            server = new Server(this);
-            logMessage("Server: server created");
+            lobby = new Lobby();
+            logMessage("Server: lobby created");
         } catch (RemoteException ex) {
-            logMessage("Server: Cannot create server");
+            logMessage("Server: Cannot create lobby");
             logMessage("Server: RemoteException: " + ex.getMessage());
-            server = null;
+            lobby = null;
         }
         
-        // Bind server using Naming
-        if (server != null) {
+        // Bind lobby using Naming
+        if (lobby != null) {
             try {
                 LocateRegistry.createRegistry(portNumber);
-                UnicastRemoteObject.exportObject(server, portNumber);
-                Naming.rebind("//localhost:" + portNumber + "/" + bindingName, server);
+                Naming.rebind("//localhost:" + portNumber + "/" + bindingName, lobby);
             } catch (MalformedURLException ex) {
-                logMessage("Server: Cannot bind server");
+                logMessage("Server: Cannot bind lobby");
                 logMessage("Server: MalformedURLException: " + ex.getMessage());
             } catch (RemoteException ex) {
-                logMessage("Server: Cannot bind server");
+                logMessage("Server: Cannot bind lobby");
                 logMessage("Server: RemoteException: " + ex.getMessage());
             }
-            logMessage("Server: server bound to " + bindingName);
+            logMessage("Server: lobby bound to " + bindingName);
         } else {
-            logMessage("Server: server not bound");
+            logMessage("Server: lobby not bound");
+        }
+    }
+    
+    /**
+     * Method that looks up the Clash of Fishes Lobby Server in the name registry, 
+     * based on a given RMI URL.
+     */
+    private static void clashOfFishesServerLookup() {
+        cofServerURL = "rmi://localhost:1100/Server";
+        try {
+            cofServer = (IServer) Naming.lookup(cofServerURL);
+            cofServer.registerLobby(lobby);
+        } catch (NotBoundException ex) {
+            System.out.println("Server: Cannot bind Clash of Fishes server");
+            System.out.println("NotBoundException: " + ex.getMessage());
+        } catch (MalformedURLException ex) {
+            System.out.println("Server: Cannot bind Clash of Fishes server");
+            System.out.println("MalformedURLException: " + ex.getMessage());
+        } catch (RemoteException ex) {
+            System.out.println("Server: Cannot bind Clash of Fishes server");
+            System.out.println("RemoteException: " + ex.getMessage());
         }
     }
     
@@ -110,8 +134,20 @@ public class RegistryServer extends Observable {
         setChanged();
         notifyObservers();
     }   
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // Welcome message
+        System.out.println("Welcome to a Clash of Fishes lobby!");
 
-    public Server getServer() {
-        return server;
+        // Print IP addresses and network interfaces
+        //printIPAddresses();
+
+        // Create server
+        RegistryServer server = new RegistryServer();
+        clashOfFishesServerLookup();
     }
+    
 }

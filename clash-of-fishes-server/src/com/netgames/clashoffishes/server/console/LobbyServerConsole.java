@@ -1,6 +1,7 @@
 package com.netgames.clashoffishes.server.console;
 
 import com.netgames.clashoffishes.server.RegistryServer;
+import com.netgames.clashoffishes.server.Server;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -12,7 +13,8 @@ import java.util.Observer;
 public class LobbyServerConsole implements Observer {
 
     // Reference to server
-    private static RegistryServer registry;
+    private static RegistryServer registry;    
+    private static Server server;
 
     /**
      * Method that processes the server output by calling the output ArrayList,
@@ -30,8 +32,15 @@ public class LobbyServerConsole implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        registry = (RegistryServer) o;
-        System.out.println(registry.getLastOutput());
+        if (o instanceof RegistryServer) {
+            registry = (RegistryServer) o;
+            System.out.println(registry.getLastOutput());
+        } else if (o instanceof Server) {
+            server = (Server) o;
+            System.out.println(server.getLastLobby());
+        } else { 
+            registry.logMessage("Something went really wrong..."); 
+        }
     }
     
     /**
@@ -43,5 +52,6 @@ public class LobbyServerConsole implements Observer {
         LobbyServerConsole console = new LobbyServerConsole();
         getRegistryLogMessages(registryServer);
         registryServer.addObserver(console);
+        registryServer.getServer().addObserver(console);
     }
 }

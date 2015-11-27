@@ -58,8 +58,5 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     @Override
     public List<IMessage> getMessages() throws RemoteException {
         return Collections.unmodifiableList(messages);
-    }
-
-    
-    
+    }   
 }

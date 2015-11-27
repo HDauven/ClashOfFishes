@@ -3,18 +3,18 @@ package com.netgames.clashoffishes.server;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.server.remote.IServer;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Class that keeps track of all the lobbies that exist of this game.
  * Implementation of an IServer.
  * @author Hein Dauven
  */
-public class Server extends UnicastRemoteObject implements IServer {
-    // TODO recode for practical purposes, instead of system.out.println
+public class Server extends Observable implements IServer {
+    // Version ID of the server
     private static final long serialVersionUID = 1L;
     
     private final RegistryServer registryServer;
@@ -35,17 +35,31 @@ public class Server extends UnicastRemoteObject implements IServer {
     @Override
     public void registerLobby(ILobby lobby) throws RemoteException {
         lobbies.add(lobby);
+        setChanged();
+        notifyObservers();
         registryServer.logMessage("Registered lobby: " + lobby.toString());
     }
     
     @Override
     public void removeLobby(ILobby lobby) throws RemoteException {
         lobbies.remove(lobby);
+        setChanged();
+        notifyObservers();
         registryServer.logMessage("Removed lobby: " + lobby.toString());
     }
 
     @Override
     public List<ILobby> listLobbies() throws RemoteException {
         return Collections.unmodifiableList(lobbies);
+    }
+    
+    /**
+     * Method that gets the last ILobby that was added.
+     * @return The last ILobby the server added
+     */
+    public ILobby getLastLobby() {
+        int lastIndex = lobbies.size();
+        ILobby last = lobbies.get(lastIndex - 1);
+        return last;
     }
 }
