@@ -5,6 +5,7 @@
  */
 package com.netgames.clashoffishes.ui;
 
+import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.TableUser;
 import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.engine.GameManager;
@@ -76,6 +77,8 @@ public class FishPoolController implements Initializable
     private TextField tfMessage;
 
     ObservableList<TableUser> tableUsers;
+    //This object exists so the changeEvent gets triggered on tableUsers.removeAll()
+    ObservableList<TableUser> tableUsers2;
 
     /**
      * Initializes the controller class.
@@ -106,7 +109,8 @@ public class FishPoolController implements Initializable
         this.clmReady.setCellValueFactory(new PropertyValueFactory<>("Ready"));
 
         this.tbvPlayers.setItems(tableUsers);
-        this.addTableRow(new User(11, "Stef", "Stef@stef.nl"));
+        //this.addUser(new User(11, "Stef", "Stef@stef.nl"));
+        tableUsers2 = FXCollections.observableArrayList();
     }
 
     @FXML
@@ -142,7 +146,34 @@ public class FishPoolController implements Initializable
     @FXML
     private void btnReady_OnClick(ActionEvent event)
     {
+        TableUser tuUpdated = null;
+        for (TableUser tu : this.tableUsers)
+        {
+            if (tu.getUsername().equals(Administration.get().getLoggedInUser().getUsername()))
+            {
+                tuUpdated = tu;
+            }
+        }
+        //RemoveAll for updateEvent
+        tableUsers2.clear();
+        tableUsers2.addAll(tableUsers);
+        tableUsers.removeAll(tableUsers2);
         
+        tableUsers2.remove(tuUpdated);
+        if(tuUpdated != null){
+            if(tuUpdated.getReady() == false){
+                tuUpdated.setReady(true);
+                btnReady.setText("I'm not ready!");
+            }
+            else{
+                tuUpdated.setReady(false);
+                btnReady.setText("I'm ready!");
+            }
+        }
+        tableUsers2.add(tuUpdated);
+        tbvPlayers.getItems().clear();
+        tableUsers.addAll(tableUsers2);
+        tbvPlayers.setItems(tableUsers);
     }
 
     @FXML
@@ -156,16 +187,17 @@ public class FishPoolController implements Initializable
     @FXML
     private void btnSendMessage_OnClick(ActionEvent event)
     {
+
     }
 
     /**
      * Add a user which is not ready yet with the username to the player-table
+     *
      * @param user user which is added to the game
      */
-    private void addTableRow(User user)
+    public void addUser(User user)
     {
         tableUsers.add(new TableUser(user));
         tbvPlayers.setItems(tableUsers);
     }
-
 }

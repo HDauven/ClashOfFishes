@@ -10,8 +10,6 @@ import com.netgames.clashoffishes.Lobby;
 import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.util.GuiUtilities;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -78,7 +76,9 @@ public class HostedGamesController implements Initializable {
 
     @FXML
     private void btnJoinGame_OnClick(ActionEvent event) {
-        GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "FishPool", GuiUtilities.getFishPoolTitle());
+        Object controllerObject = GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "FishPool", GuiUtilities.getFishPoolTitle());
+        FishPoolController controller = (FishPoolController) controllerObject;
+        controller.addUser(Administration.get().getLoggedInUser());
     }
 
     @FXML

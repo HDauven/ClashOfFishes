@@ -34,7 +34,7 @@ public class GuiUtilities
     public static final String CHARACTER_SELECTION_TITLE = "Select your character!";
 
     //Object window = controller of sender
-    public static void buildStage(Object window, String fileName, String title)
+    public static Object buildStage(Object window, String fileName, String title)
     {
         try
         {
@@ -71,11 +71,13 @@ public class GuiUtilities
                 });
             }
             stage.show();
+            return loader.getController();
         }
         catch (IOException ex)
         {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
     public static String getMainMenusTitle()

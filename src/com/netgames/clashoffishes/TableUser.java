@@ -9,29 +9,41 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- *  Class for adding a user to a table.
- * Has Simple..Properties for easy adding and removing users from a table.
+ * Class for adding a user to a table. Has Simple..Properties for easy adding
+ * and removing users from a table.
+ *
  * @author Stef
  */
 public class TableUser
 {
+
     private SimpleStringProperty username;
     private SimpleBooleanProperty ready;
-    
+
     public TableUser(User u)
     {
         username = new SimpleStringProperty(u.getUsername());
         ready = new SimpleBooleanProperty(false);
     }
-    
+
     public String getUsername()
     {
         return this.username.get();
     }
-    
+
     public Boolean getReady()
     {
         return this.ready.get();
     }
-}
 
+    public void setReady(boolean b)
+    {
+        this.ready = new SimpleBooleanProperty(b);
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.username + "Ready = " + ready;
+    }
+}
