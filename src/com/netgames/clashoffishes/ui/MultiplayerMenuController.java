@@ -6,9 +6,7 @@
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
-import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.util.GuiUtilities;
-import java.lang.invoke.MethodHandles;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -18,7 +16,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -58,13 +55,13 @@ public class MultiplayerMenuController implements Initializable
     @FXML
     private void joinGame(ActionEvent event)
     {
-        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "HostedGames", GuiUtilities.HOSTED_GAMES_TITLE);
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "HostedGames", GuiUtilities.TITLE_HOSTED_GAMES);
     }
 
     @FXML
     private void highscore(ActionEvent event)
     {
-        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Highscore", GuiUtilities.HIGHSCORE_TITLE);
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Highscore", GuiUtilities.TITLE_HIGHSCORE);
     }
 
     @FXML

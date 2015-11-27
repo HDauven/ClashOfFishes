@@ -94,7 +94,7 @@ public class LoginController implements Initializable
     @FXML
     private void register_OnClick(ActionEvent event)
     {
-        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Registration", GuiUtilities.REGISTRATION_TITLE);
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Registration", GuiUtilities.TITLE_REGISTRATION);
     }
 
     private void connectLabel()

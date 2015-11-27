@@ -123,7 +123,7 @@ public class RegistrationController implements Initializable
     @FXML
     private void btnCancel_OnClick(ActionEvent event)
     {
-        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Login", GuiUtilities.LOGIN_TITLE);
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Login", GuiUtilities.TITLE_LOGIN);
     }
 
     private void ClearTextFields()

@@ -79,16 +79,19 @@ public class FishPoolController implements Initializable
     ObservableList<TableUser> tableUsers;
     //This object exists so the changeEvent gets triggered on tableUsers.removeAll()
     ObservableList<TableUser> tableUsers2;
+    URL playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO initialize components for controller
         List<String> characterNames = new ArrayList<>();
-        characterNames.add("None");
+        //characterNames.add("None");
         characterNames.add("Bubbles");
         characterNames.add("Cleo");
         characterNames.add("Fred");
@@ -111,6 +114,9 @@ public class FishPoolController implements Initializable
         this.tbvPlayers.setItems(tableUsers);
         //this.addUser(new User(11, "Stef", "Stef@stef.nl"));
         tableUsers2 = FXCollections.observableArrayList();
+        rbLastFishSwimming.selectedProperty().set(true);
+        cbCharacters.getSelectionModel().select(0);
+        this.pictCharacter.setImage(new Image(playerDir.toString() + "BubblesIcon.png", 80, 51, true, false, true));
     }
 
     @FXML
@@ -158,14 +164,17 @@ public class FishPoolController implements Initializable
         tableUsers2.clear();
         tableUsers2.addAll(tableUsers);
         tableUsers.removeAll(tableUsers2);
-        
+
         tableUsers2.remove(tuUpdated);
-        if(tuUpdated != null){
-            if(tuUpdated.getReady() == false){
+        if (tuUpdated != null)
+        {
+            if (tuUpdated.getReady() == false)
+            {
                 tuUpdated.setReady(true);
                 btnReady.setText("I'm not ready!");
             }
-            else{
+            else
+            {
                 tuUpdated.setReady(false);
                 btnReady.setText("I'm ready!");
             }

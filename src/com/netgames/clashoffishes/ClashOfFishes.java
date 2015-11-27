@@ -29,9 +29,10 @@ public class ClashOfFishes extends Application
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/netgames/clashoffishes/ui/Login.fxml"));
             root = (Parent) loader.load();
             LoginController loginController = (LoginController) loader.getController();
-            stage.setTitle(GuiUtilities.LOGIN_TITLE);
+            stage.setTitle(GuiUtilities.TITLE_LOGIN);
             stage.setScene(new Scene(root));
-            stage.show();
+            //stage.show();
+            GuiUtilities.buildStage(stage.getScene().getWindow(), "Login", GuiUtilities.TITLE_LOGIN);
         }
         catch (Exception e)
         {
