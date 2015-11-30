@@ -1,5 +1,7 @@
 package com.netgames.clashoffishes.server;
 
+import com.netgames.clashoffishes.Administration;
+import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.server.remote.IMessage;
@@ -20,6 +22,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     
     private List<IClient> clients;
     private List<IMessage> messages;
+    private User host;
 
     /**
      * 
@@ -29,6 +32,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         super();
         clients  = new ArrayList<>();
         messages = new ArrayList<>();
+        host = Administration.get().getLoggedInUser();
     }
     
     @Override
@@ -59,4 +63,9 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     public List<IMessage> getMessages() throws RemoteException {
         return Collections.unmodifiableList(messages);
     }   
+    
+    @Override
+    public String toString() {
+        return this.ref.remoteToString();
+    }
 }

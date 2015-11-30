@@ -55,8 +55,9 @@ public class HostedGamesController implements Initializable {
 
     private Administration administration;
     
-    private static IServer cofServer;
-    private static final String cofServerURL = "rmi://localhost:1100/Server";;
+    private IServer cofServer;
+    private final String cofServerURL = "rmi://localhost:1100/Server";
+    private ArrayList<ILobby> lobbyList = new ArrayList<>();
     
     /**
      * Initializes the controller class.
@@ -101,10 +102,11 @@ public class HostedGamesController implements Initializable {
      * Method that looks up the Clash of Fishes Server in the name registry, 
      * based on a given RMI URL.
      */
-    private static void clashOfFishesServerLookup() {
+    private void clashOfFishesServerLookup() {
         try {
             cofServer = (IServer) Naming.lookup(cofServerURL);
             System.out.println(cofServer.listLobbies().toString());
+            lobbyList = (ArrayList) cofServer.listLobbies();
         } catch (NotBoundException ex) {
             System.out.println("NotBoundException: " + ex.getMessage());
         } catch (MalformedURLException ex) {
