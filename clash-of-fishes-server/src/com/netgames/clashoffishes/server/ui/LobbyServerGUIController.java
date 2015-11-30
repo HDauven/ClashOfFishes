@@ -72,10 +72,13 @@ public class LobbyServerGUIController implements Initializable, Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public synchronized void update(Observable o, Object arg) {
         if (o instanceof RegistryServer) {
+            System.out.println(arg);
             registry = (RegistryServer) o;
-            this.lstViewSystemLog.getItems().add(registry.getLastOutput());
+            ArrayList<String> temp = registry.getOutput();
+            this.lstViewSystemLog.getItems().clear();
+            this.lstViewSystemLog.getItems().addAll(temp);
         } else if (o instanceof Server) {
             server = (Server) o;
             this.lstViewServers.getItems().add(server.getLastLobby());

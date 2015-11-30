@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
+import javafx.application.Platform;
 
 /**
  * Class that keeps track of all the lobbies that exist of this game.
@@ -36,7 +37,7 @@ public class Server extends Observable implements IServer {
     public void registerLobby(ILobby lobby) throws RemoteException {
         lobbies.add(lobby);
         setChanged();
-        notifyObservers();
+        Platform.runLater(() -> { notifyObservers(); });
         registryServer.logMessage("Registered lobby: " + lobby.toString());
     }
     
@@ -44,7 +45,7 @@ public class Server extends Observable implements IServer {
     public void removeLobby(ILobby lobby) throws RemoteException {
         lobbies.remove(lobby);
         setChanged();
-        notifyObservers();
+        Platform.runLater(() -> { notifyObservers(); });
         registryServer.logMessage("Removed lobby: " + lobby.toString());
     }
 

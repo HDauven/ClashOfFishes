@@ -9,6 +9,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Observable;
+import javafx.application.Platform;
 
 /**
  * Class that creates the RMI registry for the Clash Of Fishes Lobby Server.
@@ -103,12 +104,12 @@ public class RegistryServer extends Observable {
 
     /**
      * Method that writes server output to an ArrayList.
-     * @param output The message the server reports
+     * @param message The message the server reports
      */
-    public void logMessage(String output) {
-        this.output.add(output);
+    public void logMessage(String message) {
+        this.output.add(message);
         setChanged();
-        notifyObservers();
+        Platform.runLater(() -> { notifyObservers(); });
     }   
 
     public Server getServer() {
