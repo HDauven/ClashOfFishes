@@ -253,7 +253,7 @@ public class GameManager extends Application {
         jeffrey2 = new Image(eventDir.toString() + "Jeffrey2.png", 110, 105, true, false, true);
         jeffrey3 = new Image(eventDir.toString() + "Jeffrey3.png", 110, 105, true, false, true);
         // </editor-fold>        
-        energyDrink1 = new Image(eventDir.toString() + "EnergyDrink1.png", 50, 241, true, false, true);
+        energyDrink1 = new Image(eventDir.toString() + "EnergyDrink1.png", 50, 95, true, false, true);
         //fishHook1    = new Image(eventDir.toString() + "FishHook1.png", 89, 905, true, false, true);
         seaweed1 = new Image(eventDir.toString() + "Seaweed1.png", 193, 558, true, false, true);
         //diver1       = new Image(eventDir.toString() + "Diver1.png", 243, 184, true, false, true);
@@ -351,7 +351,7 @@ public class GameManager extends Application {
 
         //Random object genereren
         if (randomGetal == 1) {
-            image = new Image(eventDir.toString() + "EnergyDrink1.png", 30, 144.6, true, false, true);
+            image = new Image(eventDir.toString() + "EnergyDrink1.png", 40, 76, true, false, true);
             if(px < 30)
                 px = 30;
             if(px > map.getMap().getWidth() - 30)
