@@ -40,7 +40,11 @@ import javafx.stage.Stage;
  */
 public class FishPoolController implements Initializable
 {
-
+    // TODO can't set 'ready' when character 'None' selected.
+    // TODO can't select the same character as another player.
+    // TODO update GUI when a different character is selected.
+    // TODO enable/disable character when a different character is selected.
+    // TODO allow for multiple players to select character 'None'.
     @FXML
     private AnchorPane paneMainForm;
     @FXML
@@ -57,6 +61,8 @@ public class FishPoolController implements Initializable
     private TableColumn<?, ?> clmPlayers;
     @FXML
     private TableColumn<?, ?> clmReady;
+    @FXML
+    private TableColumn<?, ?> clmCharacter;
     @FXML
     private Button btnReady;
     @FXML
@@ -91,7 +97,7 @@ public class FishPoolController implements Initializable
     {
         // TODO initialize components for controller
         List<String> characterNames = new ArrayList<>();
-        //characterNames.add("None");
+        characterNames.add("None");
         characterNames.add("Bubbles");
         characterNames.add("Cleo");
         characterNames.add("Fred");
@@ -99,16 +105,19 @@ public class FishPoolController implements Initializable
         this.cbCharacters.setItems(FXCollections.observableArrayList(characterNames));
 
         clmPlayers = new TableColumn("Players");
+        clmCharacter = new TableColumn("Character");
         clmReady = new TableColumn("Ready");
 
-        clmPlayers.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.70));
-        clmReady.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.25));
+        clmPlayers.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.50));
+        clmCharacter.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.22));
+        clmReady.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.22));
 
-        tbvPlayers.getColumns().addAll(clmPlayers, clmReady);
+        tbvPlayers.getColumns().addAll(clmPlayers, clmCharacter, clmReady);
         tableUsers = FXCollections.observableArrayList();
         tableUsers.add(new TableUser(new User(20, "Henk", "Henk@asdf.nl")));
         System.out.println(tableUsers.get(0).toString());
         this.clmPlayers.setCellValueFactory(new PropertyValueFactory<>("Username"));
+        this.clmCharacter.setCellValueFactory(new PropertyValueFactory<>("Character"));
         this.clmReady.setCellValueFactory(new PropertyValueFactory<>("Ready"));
 
         this.tbvPlayers.setItems(tableUsers);
@@ -116,7 +125,6 @@ public class FishPoolController implements Initializable
         tableUsers2 = FXCollections.observableArrayList();
         rbLastFishSwimming.selectedProperty().set(true);
         cbCharacters.getSelectionModel().select(0);
-        this.pictCharacter.setImage(new Image(playerDir.toString() + "BubblesIcon.png", 80, 51, true, false, true));
     }
 
     @FXML

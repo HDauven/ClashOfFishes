@@ -18,17 +18,30 @@ public class TableUser
 {
 
     private SimpleStringProperty username;
+    private SimpleStringProperty character;
     private SimpleBooleanProperty ready;
 
     public TableUser(User u)
     {
         username = new SimpleStringProperty(u.getUsername());
+        character = new SimpleStringProperty("None");
         ready = new SimpleBooleanProperty(false);
     }
 
     public String getUsername()
     {
         return this.username.get();
+    }
+    
+    public String getCharacter()
+    {
+        // TODO Add selected player to user class
+        return "None";
+    }
+    
+     public void setCharacter()
+    {
+        // TODO Change selected player
     }
 
     public Boolean getReady()
