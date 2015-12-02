@@ -40,7 +40,30 @@ public class GameMap {
         this.backgroundDir = this.getClass().getResource("/com/netgames/clashoffishes/images/background/");
         this.rand = new Random();
         
-        // Method calls that generate the GameMap
+        generateMap();
+        generateMarkers();
+    }
+    
+    // Map constructor that allows for a seed to be used.
+    public GameMap(int WIDTH, int HEIGHT, int seed) {
+        this.WIDTH = WIDTH;
+        this.HEIGHT = HEIGHT;
+        this.map = new Canvas(WIDTH, HEIGHT);
+        this.gc = map.getGraphicsContext2D();
+        this.backMarker = new ArrayList<>();
+        this.middleMarker = new ArrayList<>();
+        this.frontMarker = new ArrayList<>();
+        this.backgroundDir = this.getClass().getResource("/com/netgames/clashoffishes/images/background/");
+        this.rand = new Random(seed);
+        
+        generateMap();
+        generateMarkers();
+    }
+    
+    /**
+     * Method calls that generate the GameMap
+     */
+    private void generateMap() {
         generateBackground(gc, "#1cc3dd", "#117d97");
         
         proceduralLayerAlgorithm(gc, backMarker,   HEIGHT - 350, -1, "#24617c", "#24617c");
@@ -48,8 +71,12 @@ public class GameMap {
         proceduralLayerAlgorithm(gc, frontMarker,  HEIGHT - 100,  1, "#151424", "#0f1f2c");
         
         proceduralBoatPlacement(gc, backMarker); // The boat will always be placed on the back layer 
-        
-        // Meant for debugging purpose, comment out to get rid of the black dots in the actual game
+    }
+    
+    /**
+     * Meant for debugging purpose, comment out to get rid of the black dots in the actual game
+     */
+    private void generateMarkers() {
         proceduralMarkerPlacementAlgorithm(gc, backMarker);
         proceduralMarkerPlacementAlgorithm(gc, middleMarker);
         proceduralMarkerPlacementAlgorithm(gc, frontMarker);
