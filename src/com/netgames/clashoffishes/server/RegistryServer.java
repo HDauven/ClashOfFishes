@@ -1,5 +1,7 @@
 package com.netgames.clashoffishes.server;
 
+import com.netgames.clashoffishes.Administration;
+import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.server.remote.IServer;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
@@ -19,8 +21,11 @@ public class RegistryServer extends Observable {
     // Set port number
     private static final int portNumber = 1099;
     
+    private static final Administration administration = Administration.get();
+    private static final User user = administration.getLoggedInUser();
+    
     // Set binding name for the lobby
-    private static final String bindingName = "Test";
+    public static final String bindingName = user.getUsername();
     
     // List of the output of the Registry Server
     private ArrayList<String> output = new ArrayList<>();
@@ -71,7 +76,7 @@ public class RegistryServer extends Observable {
      * Method that looks up the Clash of Fishes Lobby Server in the name registry, 
      * based on a given RMI URL.
      */
-    private static void clashOfFishesServerLookup() {
+    public void clashOfFishesServerLookup() {
         cofServerURL = "rmi://localhost:1100/Server";
         try {
             cofServer = (IServer) Naming.lookup(cofServerURL);
@@ -147,7 +152,7 @@ public class RegistryServer extends Observable {
 
         // Create server
         RegistryServer server = new RegistryServer();
-        clashOfFishesServerLookup();
+        server.clashOfFishesServerLookup();
     }
     
 }
