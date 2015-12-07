@@ -49,16 +49,22 @@ public class GameLoop extends AnimationTimer
     @Override
     public void handle(long now)
     {
+        // TODO
         gameManager.getPlayer().update();
 
         long elapsed = now - prev;
         int randInt = (int) (Math.random() * 1_000 + 1); // moet 10_000 zijn, 1_000 is om te testen
+        //System.out.println(elapsed);
         if ((elapsed / NANO_TO_SECOND) > randInt)
         {
             gameManager.addRandomObject();
+            //System.out.println(sdf.format(Calendar.getInstance().getTime()));
+            //add object if randInt % 4 == 0 dit object else % 3 == 0 dat object etc
             prev = System.nanoTime();
         }
+
         modeEvolutionOfTime(now);
+        
         for (FishHook h : gameManager.getFishHooks())
         {
             h.update();

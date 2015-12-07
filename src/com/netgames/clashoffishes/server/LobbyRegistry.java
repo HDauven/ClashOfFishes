@@ -17,7 +17,7 @@ import java.util.Observable;
  * Class that creates the RMI registry for a Clash Of Fishes Lobby.
  * @author Hein Dauven
  */
-public class RegistryServer extends Observable {
+public class LobbyRegistry extends Observable {
     // Set port number
     private static final int portNumber = 1099;
     
@@ -34,10 +34,10 @@ public class RegistryServer extends Observable {
     private static Lobby lobby = null;
     
     private static IServer cofServer;
-    private static String cofServerURL;
+    private final String cofServerURL = "rmi://145.93.173.168:1100/Server";
     
     // Constructor
-    public RegistryServer() {
+    public LobbyRegistry() {
         // Print the IP addresses of the host device
         printIPAddresses();
         
@@ -77,7 +77,6 @@ public class RegistryServer extends Observable {
      * based on a given RMI URL.
      */
     public void clashOfFishesServerLookup() {
-        cofServerURL = "rmi://145.93.173.168:1100/Server";
         try {
             cofServer = (IServer) Naming.lookup(cofServerURL);
             cofServer.registerLobby(lobby);
@@ -139,6 +138,16 @@ public class RegistryServer extends Observable {
         setChanged();
         notifyObservers();
     }   
+
+    public Lobby getLobby() {
+        return lobby;
+    }
+
+    public void setLobby(Lobby lobby) {
+        LobbyRegistry.lobby = lobby;
+    }
+    
+    
     
     /**
      * @param args the command line arguments
@@ -151,7 +160,7 @@ public class RegistryServer extends Observable {
         //printIPAddresses();
 
         // Create server
-        RegistryServer server = new RegistryServer();
+        LobbyRegistry server = new LobbyRegistry();
         server.clashOfFishesServerLookup();
     }
     

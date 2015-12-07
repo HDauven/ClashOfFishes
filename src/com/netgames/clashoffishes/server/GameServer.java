@@ -24,7 +24,7 @@ public class GameServer extends Observable implements IGameServer
     // Version ID of the server
     private static final long serialVersionUID = 1L;
     
-    private final RegistryServer registryServer;
+    private final LobbyRegistry registryServer;
     
     private List<IPlayer> players;
     
@@ -33,7 +33,7 @@ public class GameServer extends Observable implements IGameServer
      * @param registry
      * @throws RemoteException 
      */
-    public GameServer(RegistryServer registry) throws RemoteException {
+    public GameServer(LobbyRegistry registry) throws RemoteException {
         super();
         registryServer = registry;
         players = new ArrayList<>();

@@ -6,6 +6,7 @@
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
+import com.netgames.clashoffishes.server.Lobby;
 import com.netgames.clashoffishes.TableUser;
 import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.engine.GameManager;
@@ -82,6 +83,8 @@ public class FishPoolController implements Initializable
     @FXML
     private TextField tfMessage;
 
+    private Lobby lobby;
+    
     ObservableList<TableUser> tableUsers;
     //This object exists so the changeEvent gets triggered on tableUsers.removeAll()
     ObservableList<TableUser> tableUsers2;
@@ -95,7 +98,10 @@ public class FishPoolController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO initialize components for controller
+        // Haal de current lobby op.
+        this.lobby = Administration.get().getLobbyRegistry().getLobby();
+        
+        // Voeg alle characterNamen toe aan de listbox.
         List<String> characterNames = new ArrayList<>();
         characterNames.add("None");
         characterNames.add("Bubbles");
@@ -104,24 +110,7 @@ public class FishPoolController implements Initializable
         characterNames.add("Gill");
         this.cbCharacters.setItems(FXCollections.observableArrayList(characterNames));
 
-        clmPlayers = new TableColumn("Players");
-        clmCharacter = new TableColumn("Character");
-        clmReady = new TableColumn("Ready");
-
-        clmPlayers.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.50));
-        clmCharacter.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.22));
-        clmReady.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.22));
-
-        tbvPlayers.getColumns().addAll(clmPlayers, clmCharacter, clmReady);
-        tableUsers = FXCollections.observableArrayList();
-        this.clmPlayers.setCellValueFactory(new PropertyValueFactory<>("Username"));
-        this.clmCharacter.setCellValueFactory(new PropertyValueFactory<>("Character"));
-        this.clmReady.setCellValueFactory(new PropertyValueFactory<>("Ready"));
-
-        this.tbvPlayers.setItems(tableUsers);
-        tableUsers2 = FXCollections.observableArrayList();
-        rbLastFishSwimming.selectedProperty().set(true);
-        cbCharacters.getSelectionModel().select(0);
+        setupGui();
     }
 
     @FXML
@@ -165,6 +154,16 @@ public class FishPoolController implements Initializable
                 tableuserUpdated = tableuser;
             }
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         //RemoveAll for updateEvent
         tableUsers2.clear();
         tableUsers2.addAll(tableUsers);
@@ -204,14 +203,42 @@ public class FishPoolController implements Initializable
 
     }
 
-    /**
-     * Add a user which is not ready yet with the username to the player-table
-     *
-     * @param user user which is added to the game
-     */
-    public void addUser(User user)
-    {
-        tableUsers.add(new TableUser(user));
-        tbvPlayers.setItems(tableUsers);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    private void setupGui() {
+        clmPlayers = new TableColumn("Players");
+        clmCharacter = new TableColumn("Character");
+        clmReady = new TableColumn("Ready");
+        
+        clmPlayers.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.50));
+        clmCharacter.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.22));
+        clmReady.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.22));
+
+        tbvPlayers.getColumns().addAll(clmPlayers, clmCharacter, clmReady);
+        tableUsers = FXCollections.observableArrayList();
+
+        tableUsers.add(new TableUser(new User(20, "Henk", "Henk@asdf.nl")));
+        
+        
+        
+        System.out.println(tableUsers.get(0).toString());
+        
+
+        this.clmPlayers.setCellValueFactory(new PropertyValueFactory<>("Username"));
+        this.clmCharacter.setCellValueFactory(new PropertyValueFactory<>("Character"));
+        this.clmReady.setCellValueFactory(new PropertyValueFactory<>("Ready"));
+
+        this.tbvPlayers.setItems(tableUsers);
+        tableUsers2 = FXCollections.observableArrayList();
+        rbLastFishSwimming.selectedProperty().set(true);
+        cbCharacters.getSelectionModel().select(0);
     }
 }

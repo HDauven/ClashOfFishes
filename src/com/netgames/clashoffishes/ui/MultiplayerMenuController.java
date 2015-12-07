@@ -6,7 +6,7 @@
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
-import com.netgames.clashoffishes.server.RegistryServer;
+import com.netgames.clashoffishes.server.LobbyRegistry;
 import com.netgames.clashoffishes.util.GuiUtilities;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -50,9 +50,10 @@ public class MultiplayerMenuController implements Initializable
     private void hostGame(ActionEvent event)
     {
         //TODO werkend krijgen voor multiplayer
+        LobbyRegistry lobbyRegistry = new LobbyRegistry();
+        lobbyRegistry.clashOfFishesServerLookup();
+        Administration.get().setLobbyRegistry(lobbyRegistry);
         GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "FishPool", "Fishpool: " + Administration.get().getLoggedInUser().getUsername() + "'s lobby");
-        RegistryServer server = new RegistryServer();
-        server.clashOfFishesServerLookup();
     }
 
     @FXML

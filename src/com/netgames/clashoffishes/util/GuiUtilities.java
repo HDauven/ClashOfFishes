@@ -129,7 +129,7 @@ public class GuiUtilities
     public static String getFishPoolTitle()
     {
         Administration administration = Administration.get();
-        String username = administration.getCurrentLobby().getUsers().get(0).getUsername() + "'s Lobby";
+        String username = administration.getLobbyRegistry().getLobby().getLobbyTitle();
         return username;
     }
 
