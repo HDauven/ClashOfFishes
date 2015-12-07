@@ -2,7 +2,7 @@ package com.netgames.clashoffishes.server;
 
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.User;
-import com.netgames.clashoffishes.server.remote.IServer;
+import com.netgames.clashoffishes.server.remote.ILobbyRegistry;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
@@ -17,7 +17,7 @@ import java.util.Observable;
  * Class that creates the RMI registry for a Clash Of Fishes Lobby.
  * @author Hein Dauven
  */
-public class RegistryServer extends Observable {
+public class LobbyRegistry extends Observable {
     // Set port number
     private static final int portNumber = 1099;
     
@@ -33,11 +33,11 @@ public class RegistryServer extends Observable {
     // Reference to lobby
     private static Lobby lobby = null;
     
-    private static IServer cofServer;
+    private static ILobbyRegistry cofServer;
     private static String cofServerURL;
     
     // Constructor
-    public RegistryServer() {
+    public LobbyRegistry() {
         // Print the IP addresses of the host device
         printIPAddresses();
         
@@ -79,7 +79,7 @@ public class RegistryServer extends Observable {
     public void clashOfFishesServerLookup() {
         cofServerURL = "rmi://145.93.173.168:1100/Server";
         try {
-            cofServer = (IServer) Naming.lookup(cofServerURL);
+            cofServer = (ILobbyRegistry) Naming.lookup(cofServerURL);
             cofServer.registerLobby(lobby);
         } catch (NotBoundException ex) {
             System.out.println("Server: Cannot bind Clash of Fishes server");
@@ -151,7 +151,7 @@ public class RegistryServer extends Observable {
         //printIPAddresses();
 
         // Create server
-        RegistryServer server = new RegistryServer();
+        LobbyRegistry server = new LobbyRegistry();
         server.clashOfFishesServerLookup();
     }
     
