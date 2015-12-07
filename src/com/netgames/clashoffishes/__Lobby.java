@@ -39,7 +39,6 @@ public class __Lobby {
             if (!usersReadyMap.containsKey(user))
                 return false;
         }
-
         return true;
     }
 
