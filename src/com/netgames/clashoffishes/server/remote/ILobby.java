@@ -42,4 +42,6 @@ public interface ILobby extends Remote {
      */
     List<IMessage> getMessages()
             throws RemoteException;
+    
+   
 }    
