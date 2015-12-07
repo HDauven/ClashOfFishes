@@ -77,7 +77,7 @@ public class RegistryServer extends Observable {
      * based on a given RMI URL.
      */
     public void clashOfFishesServerLookup() {
-        cofServerURL = "rmi://localhost:1100/Server";
+        cofServerURL = "rmi://145.93.173.168:1100/Server";
         try {
             cofServer = (IServer) Naming.lookup(cofServerURL);
             cofServer.registerLobby(lobby);
