@@ -18,6 +18,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -45,13 +47,13 @@ public class HostedGamesController implements Initializable {
     private Button btnBack;
 
     @FXML
-    private TableView<Lobby> tbvHostedGames;
+    private TableView<ILobby> tbvHostedGames;
     @FXML
-    private TableColumn<Lobby, String> clmPoolName;
+    private TableColumn<ILobby, String> clmPoolName;
     @FXML
-    private TableColumn<Lobby, String> clmPlayers;
+    private TableColumn<ILobby, String> clmPlayers;
     @FXML
-    private TableColumn<Lobby, String> clmGameMode;
+    private TableColumn<ILobby, String> clmGameMode;
 
     private Administration administration;
 
@@ -67,16 +69,21 @@ public class HostedGamesController implements Initializable {
         //TODO initialize components for controller
         this.administration = Administration.get();
 
-        clmPoolName.setCellValueFactory(new PropertyValueFactory<Lobby, String>("PoolNameProperty"));
-        clmPlayers.setCellValueFactory(new PropertyValueFactory<Lobby, String>("PlayersProperty"));
-        clmGameMode.setCellValueFactory(new PropertyValueFactory<Lobby, String>("GameModeProperty"));
+        clmPoolName.setCellValueFactory(new PropertyValueFactory<ILobby, String>("PoolNameProperty"));
+        clmPlayers.setCellValueFactory(new PropertyValueFactory<ILobby, String>("PlayersProperty"));
+        clmGameMode.setCellValueFactory(new PropertyValueFactory<ILobby, String>("GameModeProperty"));
 
         clashOfFishesServerLookup();
         
-        ObservableList<Lobby> lobbies = null;
+        ObservableList<ILobby> lobbies = null;
         for (ILobby lobby : this.lobbyList) {
             System.out.println(lobby.toString());
-            lobbies = FXCollections.observableArrayList((Lobby)lobby);  
+            try {
+                System.out.println(lobby.getClients().get(0).getUsername());
+                lobbies = FXCollections.observableArrayList(lobby);  
+            } catch (RemoteException ex) {
+                Logger.getLogger(HostedGamesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 //        try {
 //            for (ILobby lobby : this.cofServer.listLobbies()) {

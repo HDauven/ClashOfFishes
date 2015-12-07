@@ -93,14 +93,17 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     
     //TODO Beter formuleren comment 
     //GetStringProperties voor het inzetten van de lobby in de tableView 
+    @Override
     public String getPoolNameProperty() {
             return this.getLobbyTitle();
         }
     
+    @Override
     public String getPlayersProperty() {
         return this.getUsersString();
     }
 
+    @Override
     public String getGameModeProperty() {
         return this.gameMode.toString().toLowerCase();
     }
