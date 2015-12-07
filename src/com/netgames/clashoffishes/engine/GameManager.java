@@ -26,9 +26,6 @@ import javafx.stage.Stage;
 public class GameManager extends Application {
 
     public static final double WIDTH = 1280, HEIGHT = 720;
-    private boolean up, down, left, right;
-    private boolean wKey, aKey, sKey, dKey;
-    private boolean space;
     private Scene scene;
     private GameLoop gameLoop;
     private ObjectManager objectManager;
@@ -128,31 +125,31 @@ public class GameManager extends Application {
         scene.setOnKeyPressed((KeyEvent event) -> {
             switch (event.getCode()) {
                 case UP:
-                    up = true;
+                    player.setUp(true);
                     break;
                 case DOWN:
-                    down = true;
+                    player.setDown(true);
                     break;
                 case LEFT:
-                    left = true;
+                    player.setLeft(true);
                     break;
                 case RIGHT:
-                    right = true;
+                    player.setRight(true);
                     break;
                 case W:
-                    wKey = true;
+                    player.setUp(true);
                     break;
                 case A:
-                    aKey = true;
+                    player.setLeft(true);
                     break;
                 case S:
-                    sKey = true;
+                    player.setDown(true);
                     break;
                 case D:
-                    dKey = true;
+                    player.setRight(true);
                     break;
                 case SPACE:
-                    space = true;
+                    player.setSpace(true);
                     break;
             }
         });
@@ -160,31 +157,31 @@ public class GameManager extends Application {
         scene.setOnKeyReleased((KeyEvent event) -> {
             switch (event.getCode()) {
                 case UP:
-                    up = false;
+                    player.setUp(false);
                     break;
                 case DOWN:
-                    down = false;
+                    player.setDown(false);
                     break;
                 case LEFT:
-                    left = false;
+                    player.setLeft(false);
                     break;
                 case RIGHT:
-                    right = false;
+                    player.setRight(false);
                     break;
                 case W:
-                    wKey = false;
+                    player.setUp(false);
                     break;
                 case A:
-                    aKey = false;
+                    player.setLeft(false);
                     break;
                 case S:
-                    sKey = false;
+                    player.setDown(false);
                     break;
                 case D:
-                    dKey = false;
+                    player.setRight(false);
                     break;
                 case SPACE:
-                    space = false;
+                    player.setSpace(false);
                     break;
             }
         });
@@ -404,150 +401,6 @@ public class GameManager extends Application {
         //Moet altijd uitgevoerd worden
         root.getChildren().add(object.getSpriteFrame());
         objectManager.addCurrentObject(object);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isUp() {
-        return up;
-    }
-
-    /**
-     *
-     * @param up
-     */
-    public void setUp(boolean up) {
-        this.up = up;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isDown() {
-        return down;
-    }
-
-    /**
-     *
-     * @param down
-     */
-    public void setDown(boolean down) {
-        this.down = down;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isLeft() {
-        return left;
-    }
-
-    /**
-     *
-     * @param left
-     */
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isRight() {
-        return right;
-    }
-
-    /**
-     *
-     * @param right
-     */
-    public void setRight(boolean right) {
-        this.right = right;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean iswKey() {
-        return wKey;
-    }
-
-    /**
-     *
-     * @param wKey
-     */
-    public void setwKey(boolean wKey) {
-        this.wKey = wKey;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isaKey() {
-        return aKey;
-    }
-
-    /**
-     *
-     * @param aKey
-     */
-    public void setaKey(boolean aKey) {
-        this.aKey = aKey;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean issKey() {
-        return sKey;
-    }
-
-    /**
-     *
-     * @param sKey
-     */
-    public void setsKey(boolean sKey) {
-        this.sKey = sKey;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isdKey() {
-        return dKey;
-    }
-
-    /**
-     *
-     * @param dKey
-     */
-    public void setdKey(boolean dKey) {
-        this.dKey = dKey;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isSpace() {
-        return space;
-    }
-
-    /**
-     *
-     * @param space
-     */
-    public void setSpace(boolean space) {
-        this.space = space;
     }
 
     /**

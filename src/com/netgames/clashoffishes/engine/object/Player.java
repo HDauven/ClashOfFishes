@@ -4,6 +4,9 @@ import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
 import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
+import com.netgames.clashoffishes.engine.object.events.FishHook;
+import com.netgames.clashoffishes.engine.object.events.ObjectType;
+import com.netgames.clashoffishes.engine.object.events.Seaweed;
 import javafx.scene.image.Image;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
@@ -15,6 +18,8 @@ import javafx.scene.shape.Shape;
  */
 public class Player extends AnimatedObject {
     protected GameManager gameManager;
+    private boolean up, down, left, right;
+    private boolean space;
     // TODO make the sprite size dynamic
     protected static final double SPRITE_PIXELS_X = 81;
     protected static final double SPRITE_PIXELS_Y = 81;
@@ -59,10 +64,10 @@ public class Player extends AnimatedObject {
      * Changes the X and Y location of the Player object, based on given user inputs.
      */
     private void setXYLocation() {
-        if (gameManager.isRight()) { iX += vX; }
-        if (gameManager.isLeft())  { iX -= vX; }
-        if (gameManager.isDown())  { iY += vY; }
-        if (gameManager.isUp())    { iY -= vY; }
+        if (isRight()) { iX += vX; }
+        if (isLeft())  { iX -= vX; }
+        if (isDown())  { iY += vY; }
+        if (isUp())    { iY -= vY; }
     }
     
     /**
@@ -82,10 +87,10 @@ public class Player extends AnimatedObject {
      */
     private void setImageState() {
         /* check whether the character stands still */
-        if (!gameManager.isRight() &&
-            !gameManager.isLeft()  &&
-            !gameManager.isDown()  &&
-            !gameManager.isUp()) {
+        if (!isRight() &&
+            !isLeft()  &&
+            !isDown()  &&
+            !isUp()) {
             spriteFrame.setImage(imageStates.get(0));
             animator = false;
             framecounter = 0;
@@ -93,11 +98,11 @@ public class Player extends AnimatedObject {
             spriteBound.setRotate(0);
         }  
         
-        if (gameManager.isRight()) {
+        if (isRight()) {
             spriteFrame.setScaleX(1);
             spriteBound.setScaleX(1);
             this.setIsFlipH(false);
-            if (!animator && (!gameManager.isDown() && !gameManager.isUp())) {
+            if (!animator && (!isDown() && !isUp())) {
                 spriteFrame.setImage(imageStates.get(1));
                 if (framecounter >= runningspeed) {
                     animator = true;
@@ -120,11 +125,11 @@ public class Player extends AnimatedObject {
             }            
         }
         
-        if (gameManager.isLeft()) {
+        if (isLeft()) {
             spriteFrame.setScaleX(-1);
             spriteBound.setScaleX(-1);
             this.setIsFlipH(true);
-            if (!animator && (!gameManager.isDown() && !gameManager.isUp())) {
+            if (!animator && (!isDown() && !isUp())) {
                 spriteFrame.setImage(imageStates.get(1));
                 if (framecounter >= runningspeed) {
                     animator = true;
@@ -147,23 +152,23 @@ public class Player extends AnimatedObject {
             }            
         }
         
-        if (gameManager.isDown()) {
+        if (isDown()) {
             spriteFrame.setImage(imageStates.get(1));
-            if (gameManager.isLeft()) {
+            if (isLeft()) {
                 spriteFrame.setRotate(-45);
                 spriteBound.setRotate(-45);
-            } else if (gameManager.isRight()) {
+            } else if (isRight()) {
                 spriteFrame.setRotate(45);
                 spriteBound.setRotate(45);
             }
         }
         
-        if (gameManager.isUp()) {
+        if (isUp()) {
             spriteFrame.setImage(imageStates.get(1));
-            if (gameManager.isLeft()) {
+            if (isLeft()) {
                 spriteFrame.setRotate(45);
                 spriteBound.setRotate(45);
-            } else if (gameManager.isRight()) {
+            } else if (isRight()) {
                 spriteFrame.setRotate(-45);
                 spriteBound.setRotate(-45);
             }
@@ -184,7 +189,7 @@ public class Player extends AnimatedObject {
      * Controls the playing of an AudioClip based on certain conditions.
      */
     private void playAudioClip() {
-        if (gameManager.isSpace()) { gameManager.playBiteSound(); }
+        if (isSpace()) { gameManager.playBiteSound(); }
     }
     
     /**
@@ -260,17 +265,93 @@ public class Player extends AnimatedObject {
      * @param object that the Player object has collision with.
      */
     private void scoringEngine(GameObject object) {
-        if (object instanceof Prop) { 
+        if (object instanceof Seaweed) { 
             gameManager.setGameScore(-5); 
-        } else if (object instanceof PropV) { 
-            gameManager.setGameScore(-4); 
-        } else if (object instanceof PropH) { 
-            gameManager.setGameScore(-3); 
-        } else if (object instanceof PropB) { 
+        } else if (object instanceof FishHook) { 
             gameManager.setGameScore(-2); 
         } else if (object instanceof EnergyDrink) { 
             gameManager.setGameScore(10); 
         }       
         gameManager.updateScoreLabelOne();
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public boolean isUp() {
+        return up;
+    }
+
+    /**
+     *
+     * @param up
+     */
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isDown() {
+        return down;
+    }
+
+    /**
+     *
+     * @param down
+     */
+    public void setDown(boolean down) {
+        this.down = down;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isLeft() {
+        return left;
+    }
+
+    /**
+     *
+     * @param left
+     */
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isRight() {
+        return right;
+    }
+
+    /**
+     *
+     * @param right
+     */
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isSpace() {
+        return space;
+    }
+
+    /**
+     *
+     * @param space
+     */
+    public void setSpace(boolean space) {
+        this.space = space;
     }
 }
