@@ -73,9 +73,10 @@ public class HostedGamesController implements Initializable {
 
         clashOfFishesServerLookup();
         
+        ObservableList<Lobby> lobbies = null;
         for (ILobby lobby : this.lobbyList) {
             System.out.println(lobby.toString());
-            lobby.
+            lobbies = FXCollections.observableArrayList((Lobby)lobby);  
         }
 //        try {
 //            for (ILobby lobby : this.cofServer.listLobbies()) {
@@ -86,8 +87,8 @@ public class HostedGamesController implements Initializable {
 //        }
 
         //ObservableList<Lobby> lobbies = FXCollections.observableArrayList(lobby, lobby, lobby, lobby);
-        //tbvHostedGames.setItems(lobbies);
-        //tbvHostedGames.getColumns().addAll(clmPoolName, clmPlayers, clmGameMode);
+        tbvHostedGames.setItems(lobbies);
+        tbvHostedGames.getColumns().addAll(clmPoolName, clmPlayers, clmGameMode);
         //TODO Aan lobby werken
     }
 
