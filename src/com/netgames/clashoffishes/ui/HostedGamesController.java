@@ -75,12 +75,12 @@ public class HostedGamesController implements Initializable {
 
         clashOfFishesServerLookup();
         
-        ObservableList<ILobby> lobbies = null;
+        ObservableList<ILobby> lobbies = FXCollections.observableArrayList();
         for (ILobby lobby : this.lobbyList) {
             System.out.println(lobby.toString());
             try {
                 System.out.println(lobby.getClients().get(0).getUsername());
-                lobbies = FXCollections.observableArrayList(lobby);  
+                lobbies.addAll(FXCollections.observableArrayList(lobby));  
             } catch (RemoteException ex) {
                 Logger.getLogger(HostedGamesController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -95,7 +95,7 @@ public class HostedGamesController implements Initializable {
 
         //ObservableList<Lobby> lobbies = FXCollections.observableArrayList(lobby, lobby, lobby, lobby);
         tbvHostedGames.setItems(lobbies);
-        tbvHostedGames.getColumns().addAll(clmPoolName, clmPlayers, clmGameMode);
+        //tbvHostedGames.getColumns().addAll(clmPoolName, clmPlayers, clmGameMode);
         //TODO Aan lobby werken
     }
 
