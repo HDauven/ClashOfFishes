@@ -17,7 +17,7 @@ import javafx.application.Platform;
  */
 public class RegistryServer extends Observable {
     // Set port number
-    private static final int portNumber = 1098;
+    private static final int portNumber = 1100;
     
     // Set binding name for the server
     private static final String bindingName = "Server";
