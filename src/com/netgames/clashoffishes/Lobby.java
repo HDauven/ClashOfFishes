@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by bram on 1/10/15.
  */
-public class __Lobby {
+public class Lobby {
     private List<User> users = new ArrayList<>();
     private Map<User, Boolean> usersReadyMap = new HashMap<>();
     private GameMode gameMode = GameMode.EVOLVED;

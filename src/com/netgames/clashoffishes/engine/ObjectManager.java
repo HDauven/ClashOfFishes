@@ -100,4 +100,14 @@ public class ObjectManager {
         currentObjects.removeAll(removedObjects);
         removedObjects.clear();
     }
+
+    public GameObject getObject(int objectId)
+    {
+        for(GameObject go : this.currentObjects){
+            if(go.getID() == objectId){
+                return go;
+            }
+        }
+        return null;
+    }
 }

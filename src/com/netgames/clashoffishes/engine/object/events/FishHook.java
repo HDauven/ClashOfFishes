@@ -17,14 +17,17 @@ public class FishHook extends AnimatedObject implements RandomEvent
 
     /**
      *
-     * @param SVGData
      * @param xLocation
      * @param yLocation
      * @param spriteCels
      */
-    public FishHook(String SVGData, double xLocation, double yLocation, Image... spriteCels)
+    public FishHook(double xLocation, double yLocation, Image... spriteCels)
     {
-        super(SVGData, xLocation, yLocation, spriteCels);
+        super("M 27.00,919.50"
+                    + "           C 27.00,919.50 0.00,956.50 0.00,956.50"
+                    + "             0.00,956.50 0.00,997.50 0.00,997.50"
+                    + "             0.00,997.50 37.50,997.50 37.50,997.50"
+                    + "             37.50,997.50 39.50,919.50 39.50,919.50 Z", xLocation, yLocation, spriteCels);
         this.xLocation = xLocation;
         this.yLocation = yLocation;
         spriteFrame.setTranslateX(xLocation);
@@ -43,7 +46,7 @@ public class FishHook extends AnimatedObject implements RandomEvent
         if (!lowestEntered)
         {
             spriteFrame.setTranslateY(yLocation = yLocation + vY);
-            if(yLocation == 300)
+            if(yLocation == -300)
             {
                 lowestEntered = true;
             }
@@ -56,7 +59,7 @@ public class FishHook extends AnimatedObject implements RandomEvent
         if (i > 240)
         {
             //Is sowieso 300 volgens mij
-            if (yLocation == 300)
+            if (yLocation == -300)
             {
                 vY = -1;
                 lowestEntered = false;

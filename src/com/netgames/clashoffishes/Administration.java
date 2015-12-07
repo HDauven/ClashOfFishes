@@ -18,6 +18,8 @@ public class Administration {
 
     private LobbyRegistry lobbyRegistry;
     private static DatabaseStorage dbStorage;
+    
+    private int objectNr;
 
     protected Administration() {
         this.user = null;
@@ -92,5 +94,10 @@ public class Administration {
 
     public boolean hasConnection() {
         return dbStorage.hasConnection();
+    }
+
+    public int nextObjectNr()
+    {
+        return objectNr++;
     }
 }

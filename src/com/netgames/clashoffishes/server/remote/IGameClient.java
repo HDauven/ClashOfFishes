@@ -5,6 +5,7 @@
  */
 package com.netgames.clashoffishes.server.remote;
 
+import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -30,7 +31,7 @@ public interface IGameClient extends Remote
      * @param richting de nieuwe richting van het object
      * @throws java.rmi.RemoteException Als er iets fout gaat met RMI wordt deze exceptie opgegooid.
      */
-    public void update(int id, int positie, int snelheid, int richting) throws  RemoteException;
+    public void updateMove(double speed, String key, boolean pressed, double x, double y, int playerID);
     
     /**
      * Deze methode wordt aangeroepen als er op een andere client een collision heeft plaatsgevonden.
@@ -49,5 +50,5 @@ public interface IGameClient extends Remote
      * @param objectType Het object-type dat aangemaakt wordt.
      * @throws java.rmi.RemoteException Als er iets fout gaat met RMI wordt deze exceptie opgegooid.
      */
-    public void objectCreation(int x, int y , int objectType) throws  RemoteException;
+    public void objectCreation(int x, int y , ObjectType objectType) throws  RemoteException;
 }

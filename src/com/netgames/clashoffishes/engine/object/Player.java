@@ -5,7 +5,6 @@ import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
 import com.netgames.clashoffishes.engine.object.events.FishHook;
-import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import com.netgames.clashoffishes.engine.object.events.Seaweed;
 import javafx.scene.image.Image;
 import javafx.scene.shape.SVGPath;
@@ -17,6 +16,7 @@ import javafx.scene.shape.Shape;
  * @author Hein Dauven
  */
 public class Player extends AnimatedObject {
+    private int id;
     protected GameManager gameManager;
     private boolean up, down, left, right;
     private boolean space;
@@ -353,5 +353,9 @@ public class Player extends AnimatedObject {
      */
     public void setSpace(boolean space) {
         this.space = space;
+    }
+    
+    public int getID(){
+        return this.id;
     }
 }

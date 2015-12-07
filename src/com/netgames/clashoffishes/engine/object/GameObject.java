@@ -1,5 +1,6 @@
 package com.netgames.clashoffishes.engine.object;
 
+import com.netgames.clashoffishes.Administration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +18,7 @@ import javafx.scene.shape.SVGPath;
  * @version %I%, %G%
  */
 public abstract class GameObject {
+    private int id;
     protected List<Image> imageStates = new ArrayList<>();
     protected ImageView spriteFrame;
     protected SVGPath spriteBound;
@@ -54,6 +56,7 @@ public abstract class GameObject {
         this.hasValue = false;
         this.isFlipV = false;
         this.isFlipH = false;
+        this.id = Administration.get().nextObjectNr();
     }
     
     /**
@@ -268,4 +271,8 @@ public abstract class GameObject {
      * The update method updates the position of the GameObject.
      */
     protected abstract void update();
+    
+    public int getID(){
+        return this.id;
+    }
 }

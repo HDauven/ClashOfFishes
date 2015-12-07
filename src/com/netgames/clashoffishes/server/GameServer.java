@@ -5,6 +5,7 @@
  */
 package com.netgames.clashoffishes.server;
 
+import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.engine.GameState;
 import com.netgames.clashoffishes.server.remote.IGameClient;
 import com.netgames.clashoffishes.server.remote.IGameServer;
@@ -28,6 +29,10 @@ public class GameServer extends Observable implements IGameServer
     
     private List<IPlayer> players;
     
+    private List<IGameClient> clients;
+    
+    GameManager gameManager = new GameManager();
+    
     /**
      * Constructor for the server
      * @param registry
@@ -37,6 +42,7 @@ public class GameServer extends Observable implements IGameServer
         super();
         registryServer = registry;
         players = new ArrayList<>();
+        clients = new ArrayList<>();
     }
 
     @Override
@@ -57,7 +63,6 @@ public class GameServer extends Observable implements IGameServer
 
     @Override
     public List<IPlayer> listUsers() throws RemoteException {
-        
         return Collections.unmodifiableList(players);
     }
     
@@ -74,24 +79,27 @@ public class GameServer extends Observable implements IGameServer
     @Override
     public void registerClient(IGameClient client) throws RemoteException
     {
+        clients.add(client);
+        setChanged();
+        Platform.runLater(() -> { notifyObservers(); });
     }
 
     @Override
     public void updateMove(double speed, String key, boolean isPressed, double x, double y, int playerID) throws RemoteException
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        gameManager.updateMove(speed, key, isPressed, x, y, playerID);
     }
 
     @Override
     public void collision(int playerID, int objectID) throws RemoteException
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        gameManager.collisionUpdate(playerID, objectID);
     }
 
     @Override
     public void stateChanged(GameState newState) throws RemoteException
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        gameManager.setGameState(newState);
     }
 
     @Override

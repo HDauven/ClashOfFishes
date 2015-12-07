@@ -13,6 +13,7 @@ import com.netgames.clashoffishes.engine.object.GameObject;
  */
 public interface IPlayer
 {
+    int getID();
 
     void update();
 
