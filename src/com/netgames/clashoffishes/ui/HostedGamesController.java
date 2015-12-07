@@ -85,7 +85,18 @@ public class HostedGamesController implements Initializable {
                 Logger.getLogger(HostedGamesController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+//        try {
+//            for (ILobby lobby : this.cofServer.listLobbies()) {
+//
+//            }
+//        } catch (RemoteException remoteException) {
+//            System.out.println(remoteException.getMessage());
+//        }
+
+        //ObservableList<Lobby> lobbies = FXCollections.observableArrayList(lobby, lobby, lobby, lobby);
         tbvHostedGames.setItems(lobbies);
+        //tbvHostedGames.getColumns().addAll(clmPoolName, clmPlayers, clmGameMode);
+        //TODO Aan lobby werken
     }
 
     @FXML
