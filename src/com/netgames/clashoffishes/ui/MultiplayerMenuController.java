@@ -50,10 +50,10 @@ public class MultiplayerMenuController implements Initializable
     private void hostGame(ActionEvent event)
     {
         //TODO werkend krijgen voor multiplayer
-        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "FishPool", "Fishpool: " + Administration.get().getLoggedInUser().getUsername() + "'s lobby");
         LobbyRegistry lobbyRegistry = new LobbyRegistry();
         lobbyRegistry.clashOfFishesServerLookup();
         Administration.get().setLobbyRegistry(lobbyRegistry);
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "FishPool", "Fishpool: " + Administration.get().getLoggedInUser().getUsername() + "'s lobby");
     }
 
     @FXML

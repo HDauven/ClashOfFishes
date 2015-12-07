@@ -8,7 +8,7 @@ import java.util.List;
  * Interface that makes the defined methods available for users of the IServer.
  * @author Hein Dauven
  */
-public interface ILobbyRegistry extends Remote {
+public interface IServer extends Remote {
     /**
      * Method that registers an ILobby to the IServer.
      * @param lobby The ILobby that is going to be added to the IServer.

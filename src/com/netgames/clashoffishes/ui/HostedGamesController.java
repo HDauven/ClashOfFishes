@@ -6,11 +6,9 @@
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
-import com.netgames.clashoffishes.__Lobby;
-import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.server.Lobby;
 import com.netgames.clashoffishes.server.remote.ILobby;
-import com.netgames.clashoffishes.server.remote.ILobbyRegistry;
+import com.netgames.clashoffishes.server.remote.IServer;
 import com.netgames.clashoffishes.util.GuiUtilities;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -56,8 +54,8 @@ public class HostedGamesController implements Initializable {
 
     private Administration administration;
     
-    private ILobbyRegistry cofServer;
-    private final String cofServerURL = "rmi://localhost:1100/Server";
+    private IServer cofServer;
+    private final String cofServerURL = "rmi://145.93.173.168:1100/Server";
     private ArrayList<ILobby> lobbyList = new ArrayList<>();
     
     /**
@@ -107,7 +105,7 @@ public class HostedGamesController implements Initializable {
      */
     private void clashOfFishesServerLookup() {
         try {
-            cofServer = (ILobbyRegistry) Naming.lookup(cofServerURL);
+            cofServer = (IServer) Naming.lookup(cofServerURL);
             System.out.println(cofServer.listLobbies().toString());
             lobbyList = (ArrayList) cofServer.listLobbies();
         } catch (NotBoundException ex) {
