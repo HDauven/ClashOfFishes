@@ -27,7 +27,7 @@
          </toggleGroup></RadioButton>
       <RadioButton fx:id="rbEvolutionOfTime" layoutX="466.0" layoutY="100.0" mnemonicParsing="false" text="Evolution of Time" toggleGroup="$gameMode" />
       <RadioButton fx:id="rbEvolved" layoutX="466.0" layoutY="122.0" mnemonicParsing="false" text="Evolved" toggleGroup="$gameMode" />
-      <Button fx:id="btnReady" layoutX="314.0" layoutY="370.0" mnemonicParsing="false" onAction="#btnReady_OnClick" prefHeight="41.0" prefWidth="126.0" text="I'm ready!" />
+      <Button fx:id="btnReady" layoutX="253.0" layoutY="370.0" mnemonicParsing="false" onAction="#btnReady_OnClick" prefHeight="41.0" prefWidth="187.0" text="I'm ready!" />
       <Button fx:id="btnStartGame" layoutX="470.0" layoutY="370.0" mnemonicParsing="false" onAction="#btnStartGame_OnClick" prefHeight="41.0" prefWidth="126.0" text="Start game!" />
       <ImageView fx:id="pictCharacter" fitHeight="126.0" fitWidth="131.0" layoutX="470.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true" />
       <ComboBox fx:id="cbCharacters" layoutX="467.0" layoutY="184.0" onAction="#cbCharacters_OnChanged" prefHeight="25.0" prefWidth="131.0" />

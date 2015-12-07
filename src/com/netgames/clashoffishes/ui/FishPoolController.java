@@ -157,12 +157,12 @@ public class FishPoolController implements Initializable
     @FXML
     private void btnReady_OnClick(ActionEvent event)
     {
-        TableUser tuUpdated = null;
-        for (TableUser tu : this.tableUsers)
+        TableUser tableuserUpdated = null;
+        for (TableUser tableuser : this.tableUsers)
         {
-            if (tu.getUsername().equals(Administration.get().getLoggedInUser().getUsername()))
+            if (tableuser.getUsername().equals(Administration.get().getLoggedInUser().getUsername()) && !this.cbCharacters.getValue().equals("None"))
             {
-                tuUpdated = tu;
+                tableuserUpdated = tableuser;
             }
         }
         //RemoveAll for updateEvent
@@ -170,21 +170,21 @@ public class FishPoolController implements Initializable
         tableUsers2.addAll(tableUsers);
         tableUsers.removeAll(tableUsers2);
 
-        tableUsers2.remove(tuUpdated);
-        if (tuUpdated != null)
+        tableUsers2.remove(tableuserUpdated);
+        if (tableuserUpdated != null)
         {
-            if (tuUpdated.getReady() == false)
+            if (tableuserUpdated.getReady() == false)
             {
-                tuUpdated.setReady(true);
+                tableuserUpdated.setReady(true);
                 btnReady.setText("I'm not ready!");
             }
             else
             {
-                tuUpdated.setReady(false);
+                tableuserUpdated.setReady(false);
                 btnReady.setText("I'm ready!");
             }
         }
-        tableUsers2.add(tuUpdated);
+        tableUsers2.add(tableuserUpdated);
         tbvPlayers.getItems().clear();
         tableUsers.addAll(tableUsers2);
         tbvPlayers.setItems(tableUsers);
