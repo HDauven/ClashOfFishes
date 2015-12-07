@@ -2,11 +2,12 @@ package com.netgames.clashoffishes.engine;
 
 import com.netgames.clashoffishes.engine.object.GameObject;
 import com.netgames.clashoffishes.engine.object.Player;
-import com.netgames.clashoffishes.engine.object.Prop;
 import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
 import com.netgames.clashoffishes.engine.object.events.FishHook;
 import com.netgames.clashoffishes.engine.object.events.Seaweed;
+import com.netgames.clashoffishes.server.remote.IGameClient;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,7 +24,7 @@ import javafx.stage.Stage;
  *
  * @author Hein Dauven
  */
-public class GameManager extends Application {
+public class GameManager extends Application implements IGameClient{
 
     public static final double WIDTH = 1280, HEIGHT = 720;
     private boolean up, down, left, right;
@@ -668,5 +669,29 @@ public class GameManager extends Application {
 
     void removeFishHook(FishHook h) {
         getObjectManager().removeCurrentObject(h);
+    }
+
+    @Override
+    public void startGame(Integer mapSeed) throws RemoteException
+    {
+        
+    }
+
+    @Override
+    public void update(int id, int positie, int snelheid, int richting) throws RemoteException
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void collisionUpdate(int id, int objectId) throws RemoteException
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void objectCreation(int x, int y, int objectType) throws RemoteException
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

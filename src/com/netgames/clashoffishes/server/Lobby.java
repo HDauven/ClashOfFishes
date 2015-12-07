@@ -23,6 +23,9 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     private List<IClient> clients;
     private List<IMessage> messages;
     private User host;
+    
+    RegistryServer registryServer;
+    GameServer gameServer;
 
     /**
      * 
@@ -33,6 +36,8 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         clients  = new ArrayList<>();
         messages = new ArrayList<>();
         host = Administration.get().getLoggedInUser();
+        registryServer = new RegistryServer();
+        gameServer = new GameServer(registryServer);
     }
     
     @Override

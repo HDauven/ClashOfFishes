@@ -63,8 +63,6 @@ public class GameLoop extends AnimationTimer
         {
             h.update();
         }
-
-        
     }
 
     /**
