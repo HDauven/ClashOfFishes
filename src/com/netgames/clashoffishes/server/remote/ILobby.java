@@ -42,4 +42,21 @@ public interface ILobby extends Remote {
      */
     List<IMessage> getMessages()
             throws RemoteException;
+    
+    /**
+     * Method that gets the list of available clients in the corresponding lobby.
+     * @return returns a list of IClients
+     * @throws RemoteException 
+     */
+    List<IClient> getClients()
+            throws RemoteException;
+    
+    String getPoolNameProperty()
+            throws RemoteException;
+    
+    String getPlayersProperty()
+            throws RemoteException;
+
+    String getGameModeProperty()
+            throws RemoteException;
 }    

@@ -16,7 +16,10 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -44,20 +47,20 @@ public class HostedGamesController implements Initializable {
     private Button btnBack;
 
     @FXML
-    private TableView<Lobby> tbvHostedGames;
+    private TableView<ILobby> tbvHostedGames;
     @FXML
-    private TableColumn<Lobby, String> clmPoolName;
+    private TableColumn<ILobby, String> clmPoolName;
     @FXML
-    private TableColumn<Lobby, String> clmPlayers;
+    private TableColumn<ILobby, String> clmPlayers;
     @FXML
-    private TableColumn<Lobby, String> clmGameMode;
+    private TableColumn<ILobby, String> clmGameMode;
 
     private Administration administration;
-    
+
     private IServer cofServer;
     private final String cofServerURL = "rmi://145.93.173.168:1100/Server";
-    private ArrayList<ILobby> lobbyList = new ArrayList<>();
-    
+    private List<ILobby> lobbyList = new ArrayList<>();
+
     /**
      * Initializes the controller class.
      */
@@ -65,26 +68,35 @@ public class HostedGamesController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //TODO initialize components for controller
         this.administration = Administration.get();
-        
-        clmPoolName.setCellValueFactory(new PropertyValueFactory<Lobby, String>("PoolNameProperty"));
-        clmPlayers.setCellValueFactory(new PropertyValueFactory<Lobby, String>("PlayersProperty"));
-        clmGameMode.setCellValueFactory(new PropertyValueFactory<Lobby, String>("GameModeProperty"));
-        
-        Lobby lobby;
-        try {
-            lobby = new Lobby();
-        } catch (Exception e) {
-            lobby = null;
-        }
-        
 
-        ObservableList<Lobby> lobbies = FXCollections.observableArrayList(lobby, lobby, lobby, lobby);
+        clmPoolName.setCellValueFactory(new PropertyValueFactory<ILobby, String>("PoolNameProperty"));
+        clmPlayers.setCellValueFactory(new PropertyValueFactory<ILobby, String>("PlayersProperty"));
+        clmGameMode.setCellValueFactory(new PropertyValueFactory<ILobby, String>("GameModeProperty"));
 
-        
-        tbvHostedGames.setItems(lobbies);
-        //tbvHostedGames.getColumns().addAll(clmPoolName, clmPlayers, clmGameMode);
-        //TODO Aan lobby werken
         clashOfFishesServerLookup();
+        
+        ObservableList<ILobby> lobbies = null;
+        for (ILobby lobby : this.lobbyList) {
+            System.out.println(lobby.toString());
+            try {
+                System.out.println(lobby.getClients().get(0).getUsername());
+                lobbies = FXCollections.observableArrayList(lobby);  
+            } catch (RemoteException ex) {
+                Logger.getLogger(HostedGamesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+//        try {
+//            for (ILobby lobby : this.cofServer.listLobbies()) {
+//
+//            }
+//        } catch (RemoteException remoteException) {
+//            System.out.println(remoteException.getMessage());
+//        }
+
+        //ObservableList<Lobby> lobbies = FXCollections.observableArrayList(lobby, lobby, lobby, lobby);
+        tbvHostedGames.setItems(lobbies);
+        tbvHostedGames.getColumns().addAll(clmPoolName, clmPlayers, clmGameMode);
+        //TODO Aan lobby werken
     }
 
     @FXML
@@ -98,16 +110,16 @@ public class HostedGamesController implements Initializable {
     private void btnBack_OnClick(ActionEvent event) {
         GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
     }
-    
+
     /**
-     * Method that looks up the Clash of Fishes Server in the name registry, 
+     * Method that looks up the Clash of Fishes Server in the name registry,
      * based on a given RMI URL.
      */
     private void clashOfFishesServerLookup() {
         try {
             cofServer = (IServer) Naming.lookup(cofServerURL);
-            System.out.println(cofServer.listLobbies().toString());
-            lobbyList = (ArrayList) cofServer.listLobbies();
+            //System.out.println(cofServer.listLobbies().toString());
+            lobbyList = (List<ILobby>) cofServer.listLobbies();
         } catch (NotBoundException ex) {
             System.out.println("NotBoundException: " + ex.getMessage());
         } catch (MalformedURLException ex) {
@@ -116,7 +128,7 @@ public class HostedGamesController implements Initializable {
             System.out.println("RemoteException: " + ex.getMessage());
         }
     }
-    
+
     private void refreshServerList() {
         ArrayList<ILobby> temp = new ArrayList<>();
         for (ILobby l : temp) {

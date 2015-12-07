@@ -53,7 +53,11 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
 
     @Override
     public void registerClient(IClient client) throws RemoteException {
-        clients.add(client);
+        if (this.clients.size() >= 4){ 
+            System.out.println("Lobby is full mate.");
+        } else {
+            clients.add(client);
+        }
     }
 
     @Override
@@ -86,29 +90,32 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         }
         return usersString;
     }
-
+    
     //TODO Beter formuleren comment 
     //GetStringProperties voor het inzetten van de lobby in de tableView 
+    @Override
     public String getPoolNameProperty() {
             return this.getLobbyTitle();
         }
     
+    @Override
     public String getPlayersProperty() {
         return this.getUsersString();
     }
 
+    @Override
     public String getGameModeProperty() {
         return this.gameMode.toString().toLowerCase();
     }
 
-    public List<IClient> getClients() {
+    @Override
+    public List<IClient> getClients() throws RemoteException {
         return clients;
     }
 
     public void setClients(List<IClient> clients) {
         this.clients = clients;
     }
-
     
     
     @Override
