@@ -98,7 +98,10 @@ public class FishPoolController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO initialize components for controller
+        // Haal de current lobby op.
+        this.lobby = Administration.get().getLobbyRegistry().getLobby();
+        
+        // Voeg alle characterNamen toe aan de listbox.
         List<String> characterNames = new ArrayList<>();
         characterNames.add("None");
         characterNames.add("Bubbles");
@@ -107,33 +110,7 @@ public class FishPoolController implements Initializable
         characterNames.add("Gill");
         this.cbCharacters.setItems(FXCollections.observableArrayList(characterNames));
 
-        clmPlayers = new TableColumn("Players");
-        clmCharacter = new TableColumn("Character");
-        clmReady = new TableColumn("Ready");
-
-        clmPlayers.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.50));
-        clmCharacter.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.22));
-        clmReady.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.22));
-
-        tbvPlayers.getColumns().addAll(clmPlayers, clmCharacter, clmReady);
-        tableUsers = FXCollections.observableArrayList();
-<<<<<<< HEAD
-        tableUsers.add(new TableUser(new User(20, "Henk", "Henk@asdf.nl")));
-        
-        
-        
-        System.out.println(tableUsers.get(0).toString());
-        
-=======
->>>>>>> origin/master
-        this.clmPlayers.setCellValueFactory(new PropertyValueFactory<>("Username"));
-        this.clmCharacter.setCellValueFactory(new PropertyValueFactory<>("Character"));
-        this.clmReady.setCellValueFactory(new PropertyValueFactory<>("Ready"));
-
-        this.tbvPlayers.setItems(tableUsers);
-        tableUsers2 = FXCollections.observableArrayList();
-        rbLastFishSwimming.selectedProperty().set(true);
-        cbCharacters.getSelectionModel().select(0);
+        setupGui();
     }
 
     @FXML
@@ -226,4 +203,42 @@ public class FishPoolController implements Initializable
 
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    private void setupGui() {
+        clmPlayers = new TableColumn("Players");
+        clmCharacter = new TableColumn("Character");
+        clmReady = new TableColumn("Ready");
+        
+        clmPlayers.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.50));
+        clmCharacter.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.22));
+        clmReady.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.22));
+
+        tbvPlayers.getColumns().addAll(clmPlayers, clmCharacter, clmReady);
+        tableUsers = FXCollections.observableArrayList();
+
+        tableUsers.add(new TableUser(new User(20, "Henk", "Henk@asdf.nl")));
+        
+        
+        
+        System.out.println(tableUsers.get(0).toString());
+        
+
+        this.clmPlayers.setCellValueFactory(new PropertyValueFactory<>("Username"));
+        this.clmCharacter.setCellValueFactory(new PropertyValueFactory<>("Character"));
+        this.clmReady.setCellValueFactory(new PropertyValueFactory<>("Ready"));
+
+        this.tbvPlayers.setItems(tableUsers);
+        tableUsers2 = FXCollections.observableArrayList();
+        rbLastFishSwimming.selectedProperty().set(true);
+        cbCharacters.getSelectionModel().select(0);
+    }
 }

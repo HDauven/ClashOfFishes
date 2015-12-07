@@ -12,7 +12,7 @@ public class Administration {
 
     private static Administration instance = null;
     private User user;
-    private Lobby currentLobby;
+    
     private ArrayList<Highscore> allUserHighscoresForGameMode;
     private EmailValidator validator;
 
@@ -21,11 +21,12 @@ public class Administration {
 
     protected Administration() {
         this.user = null;
-        this.currentLobby = null;
+        
         this.allUserHighscoresForGameMode = null;
-        this.lobbyRegistry = null;
-        this.dbStorage = new DatabaseStorage();
         this.validator = new EmailValidator();
+        
+        this.lobbyRegistry = null;
+        this.dbStorage = new DatabaseStorage();       
     }
 
     public static Administration get() {
@@ -66,14 +67,6 @@ public class Administration {
 
     public User getLoggedInUser() {
         return this.user;
-    }
-
-    public Lobby getCurrentLobby() {
-        return this.currentLobby;
-    }
-
-    public void setCurrentLobby(Lobby currentLobby) {
-        this.currentLobby = currentLobby;
     }
 
     public LobbyRegistry getLobbyRegistry() {

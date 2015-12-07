@@ -139,6 +139,16 @@ public class LobbyRegistry extends Observable {
         setChanged();
         notifyObservers();
     }   
+
+    public Lobby getLobby() {
+        return lobby;
+    }
+
+    public void setLobby(Lobby lobby) {
+        LobbyRegistry.lobby = lobby;
+    }
+    
+    
     
     /**
      * @param args the command line arguments

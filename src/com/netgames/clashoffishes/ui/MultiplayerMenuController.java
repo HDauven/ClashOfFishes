@@ -51,8 +51,9 @@ public class MultiplayerMenuController implements Initializable
     {
         //TODO werkend krijgen voor multiplayer
         GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "FishPool", "Fishpool: " + Administration.get().getLoggedInUser().getUsername() + "'s lobby");
-        LobbyRegistry server = new LobbyRegistry();
-        server.clashOfFishesServerLookup();
+        LobbyRegistry lobbyRegistry = new LobbyRegistry();
+        lobbyRegistry.clashOfFishesServerLookup();
+        Administration.get().setLobbyRegistry(lobbyRegistry);
     }
 
     @FXML

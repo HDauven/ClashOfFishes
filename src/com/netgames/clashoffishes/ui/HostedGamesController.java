@@ -6,8 +6,9 @@
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
-import com.netgames.clashoffishes.Lobby;
+import com.netgames.clashoffishes.__Lobby;
 import com.netgames.clashoffishes.engine.GameMode;
+import com.netgames.clashoffishes.server.Lobby;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.server.remote.ILobbyRegistry;
 import com.netgames.clashoffishes.util.GuiUtilities;
@@ -71,12 +72,14 @@ public class HostedGamesController implements Initializable {
         clmPlayers.setCellValueFactory(new PropertyValueFactory<Lobby, String>("PlayersProperty"));
         clmGameMode.setCellValueFactory(new PropertyValueFactory<Lobby, String>("GameModeProperty"));
         
-        Lobby lobby = new Lobby();
-        lobby.addUser(Administration.get().getLoggedInUser());
-        lobby.setGameMode(GameMode.EVOLVED);
+        Lobby lobby;
+        try {
+            lobby = new Lobby();
+        } catch (Exception e) {
+            lobby = null;
+        }
         
-        administration.setCurrentLobby(lobby);
-        
+
         ObservableList<Lobby> lobbies = FXCollections.observableArrayList(lobby, lobby, lobby, lobby);
 
         
@@ -90,7 +93,7 @@ public class HostedGamesController implements Initializable {
     private void btnJoinGame_OnClick(ActionEvent event) {
         Object controllerObject = GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "FishPool", GuiUtilities.getFishPoolTitle());
         FishPoolController controller = (FishPoolController) controllerObject;
-        controller.addUser(Administration.get().getLoggedInUser());
+        //controller.addUser(Administration.get().getLoggedInUser());
     }
 
     @FXML

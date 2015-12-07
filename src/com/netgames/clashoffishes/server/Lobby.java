@@ -2,6 +2,7 @@ package com.netgames.clashoffishes.server;
 
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.User;
+import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.server.remote.IMessage;
@@ -14,27 +15,31 @@ import java.util.List;
 /**
  * Class that keeps track of all the clients that exist of for this game.
  * Implementation of an ILobby.
+ *
  * @author Hein Dauven
  */
 public class Lobby extends UnicastRemoteObject implements ILobby {
+
     // TODO add more game/lobby info
     private static final long serialVersionUID = 1L;
-    
+
     private List<IClient> clients;
     private List<IMessage> messages;
     private User host;
 
+    private GameMode gameMode = GameMode.EVOLVED;
+
     /**
-     * 
-     * @throws RemoteException 
+     *
+     * @throws RemoteException
      */
     public Lobby() throws RemoteException {
         super();
-        clients  = new ArrayList<>();
+        clients = new ArrayList<>();
         messages = new ArrayList<>();
         host = Administration.get().getLoggedInUser();
     }
-    
+
     @Override
     public boolean clientNameFree(String username) throws RemoteException {
         for (IClient c : clients) {
@@ -59,11 +64,47 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         }
     }
 
+    public String getLobbyTitle() {
+        try {
+            return this.clients.get(0).getUsername() + "'s lobby";
+        } catch (RemoteException remoteException) {
+            System.out.println("ERROR GETTING CLIENT USERNAME");
+            return "ERROR GETTING CLIENT USERNAME";
+        }
+    }
+
+    public String getUsersString() {
+        String usersString = "";
+        try {
+            for (IClient client : this.clients) {
+                usersString += client.getUsername() + " - ";
+            }
+        } catch (RemoteException remoteException) {
+            System.out.println("ERROR GETTING CLIENT USERNAMES");
+            return "ERROR GETTING CLIENT USERNAMES";
+        }
+        return usersString;
+    }
+
+    //TODO Beter formuleren comment 
+    //GetStringProperties voor het inzetten van de lobby in de tableView 
+    public String getPoolNameProperty() {
+            return this.getLobbyTitle();
+        }
+    
+    public String getPlayersProperty() {
+        return this.getUsersString();
+    }
+
+    public String getGameModeProperty() {
+        return this.gameMode.toString().toLowerCase();
+    }
+
     @Override
     public List<IMessage> getMessages() throws RemoteException {
         return Collections.unmodifiableList(messages);
-    }   
-    
+    }
+
     @Override
     public String toString() {
         return this.ref.remoteToString();
