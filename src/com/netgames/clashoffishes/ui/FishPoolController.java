@@ -117,18 +117,20 @@ public class FishPoolController implements Initializable
 
         tbvPlayers.getColumns().addAll(clmPlayers, clmCharacter, clmReady);
         tableUsers = FXCollections.observableArrayList();
+<<<<<<< HEAD
         tableUsers.add(new TableUser(new User(20, "Henk", "Henk@asdf.nl")));
         
         
         
         System.out.println(tableUsers.get(0).toString());
         
+=======
+>>>>>>> origin/master
         this.clmPlayers.setCellValueFactory(new PropertyValueFactory<>("Username"));
         this.clmCharacter.setCellValueFactory(new PropertyValueFactory<>("Character"));
         this.clmReady.setCellValueFactory(new PropertyValueFactory<>("Ready"));
 
         this.tbvPlayers.setItems(tableUsers);
-        //this.addUser(new User(11, "Stef", "Stef@stef.nl"));
         tableUsers2 = FXCollections.observableArrayList();
         rbLastFishSwimming.selectedProperty().set(true);
         cbCharacters.getSelectionModel().select(0);
