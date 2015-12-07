@@ -53,7 +53,7 @@ public class MultiplayerMenuController implements Initializable
         LobbyRegistry lobbyRegistry = new LobbyRegistry();
         lobbyRegistry.clashOfFishesServerLookup();
         Administration.get().setLobbyRegistry(lobbyRegistry);
-        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "FishPool", "Fishpool: " + Administration.get().getLoggedInUser().getUsername() + "'s lobby");
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "FishPool", "Fishpool: " + GuiUtilities.getFishPoolTitle());
     }
 
     @FXML

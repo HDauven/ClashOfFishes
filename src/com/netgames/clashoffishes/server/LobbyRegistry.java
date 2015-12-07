@@ -31,7 +31,7 @@ public class LobbyRegistry extends Observable {
     private ArrayList<String> output = new ArrayList<>();
     
     // Reference to lobby
-    private static Lobby lobby = null;
+    private Lobby lobby = null;
     
     private static IServer cofServer;
     private final String cofServerURL = "rmi://145.93.173.168:1100/Server";
@@ -144,7 +144,7 @@ public class LobbyRegistry extends Observable {
     }
 
     public void setLobby(Lobby lobby) {
-        LobbyRegistry.lobby = lobby;
+        this.lobby = lobby;
     }
     
     

@@ -10,6 +10,7 @@ import com.netgames.clashoffishes.server.Lobby;
 import com.netgames.clashoffishes.TableUser;
 import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.engine.GameManager;
+import com.netgames.clashoffishes.server.remote.IClient;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +40,14 @@ import javafx.stage.Stage;
  *
  * @author Stef
  */
-public class FishPoolController implements Initializable
-{
+public class FishPoolController implements Initializable {
+
     // TODO can't set 'ready' when character 'None' selected.
     // TODO can't select the same character as another player.
     // TODO update GUI when a different character is selected.
     // TODO enable/disable character when a different character is selected.
     // TODO allow for multiple players to select character 'None'.
+
     @FXML
     private AnchorPane paneMainForm;
     @FXML
@@ -84,7 +86,7 @@ public class FishPoolController implements Initializable
     private TextField tfMessage;
 
     private Lobby lobby;
-    
+
     ObservableList<TableUser> tableUsers;
     //This object exists so the changeEvent gets triggered on tableUsers.removeAll()
     ObservableList<TableUser> tableUsers2;
@@ -92,15 +94,15 @@ public class FishPoolController implements Initializable
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         // Haal de current lobby op.
         this.lobby = Administration.get().getLobbyRegistry().getLobby();
-        
+
         // Voeg alle characterNamen toe aan de listbox.
         List<String> characterNames = new ArrayList<>();
         characterNames.add("None");
@@ -111,15 +113,25 @@ public class FishPoolController implements Initializable
         this.cbCharacters.setItems(FXCollections.observableArrayList(characterNames));
 
         setupGui();
+        
+        try {
+            System.out.println(this.lobby.getLobbyTitle());
+            for (IClient client : this.lobby.getClients()) {
+                this.tableUsers.add(new TableUser(client.getUsername(), "test", false));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            tbvPlayers.setItems(tableUsers);
+        }
+
     }
 
     @FXML
-    private void cbCharacters_OnChanged(ActionEvent event)
-    {
+    private void cbCharacters_OnChanged(ActionEvent event) {
         String selectedCharacter = this.cbCharacters.getValue();
         URL playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
-        switch (selectedCharacter)
-        {
+        switch (selectedCharacter) {
             case "Bubbles":
                 System.out.println("Bubbles has been selected");
                 this.pictCharacter.setImage(new Image(playerDir.toString() + "BubblesIcon.png", 80, 51, true, false, true));
@@ -144,41 +156,25 @@ public class FishPoolController implements Initializable
     }
 
     @FXML
-    private void btnReady_OnClick(ActionEvent event)
-    {
+    private void btnReady_OnClick(ActionEvent event) {
         TableUser tableuserUpdated = null;
-        for (TableUser tableuser : this.tableUsers)
-        {
-            if (tableuser.getUsername().equals(Administration.get().getLoggedInUser().getUsername()) && !this.cbCharacters.getValue().equals("None"))
-            {
+        for (TableUser tableuser : this.tableUsers) {
+            if (tableuser.getUsername().equals(Administration.get().getLoggedInUser().getUsername()) && !this.cbCharacters.getValue().equals("None")) {
                 tableuserUpdated = tableuser;
             }
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         //RemoveAll for updateEvent
         tableUsers2.clear();
         tableUsers2.addAll(tableUsers);
         tableUsers.removeAll(tableUsers2);
 
         tableUsers2.remove(tableuserUpdated);
-        if (tableuserUpdated != null)
-        {
-            if (tableuserUpdated.getReady() == false)
-            {
+        if (tableuserUpdated != null) {
+            if (tableuserUpdated.getReady() == false) {
                 tableuserUpdated.setReady(true);
                 btnReady.setText("I'm not ready!");
-            }
-            else
-            {
+            } else {
                 tableuserUpdated.setReady(false);
                 btnReady.setText("I'm ready!");
             }
@@ -190,47 +186,38 @@ public class FishPoolController implements Initializable
     }
 
     @FXML
-    private void btnStartGame_OnClick(ActionEvent event)
-    {
+    private void btnStartGame_OnClick(ActionEvent event) {
         //xxx Hier zou een gameManager misschien nog toegevoegd worden aan de singleton Administratie?
         GameManager gameManager = new GameManager();
         gameManager.start(new Stage());
     }
 
     @FXML
-    private void btnSendMessage_OnClick(ActionEvent event)
-    {
+    private void btnSendMessage_OnClick(ActionEvent event) {
 
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    /**
+     * Add a user which is not ready yet with the username to the player-table
+     *
+     * @param user user which is added to the game
+     */
+    public void addUser(User user) {
+        tableUsers.add(new TableUser(user));
+        tbvPlayers.setItems(tableUsers);
+    }
+
     private void setupGui() {
         clmPlayers = new TableColumn("Players");
         clmCharacter = new TableColumn("Character");
         clmReady = new TableColumn("Ready");
-        
+
         clmPlayers.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.50));
         clmCharacter.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.22));
         clmReady.prefWidthProperty().bind(tbvPlayers.widthProperty().multiply(0.22));
 
         tbvPlayers.getColumns().addAll(clmPlayers, clmCharacter, clmReady);
         tableUsers = FXCollections.observableArrayList();
-
-        tableUsers.add(new TableUser(new User(20, "Henk", "Henk@asdf.nl")));
-        
-        
-        
-        System.out.println(tableUsers.get(0).toString());
-        
 
         this.clmPlayers.setCellValueFactory(new PropertyValueFactory<>("Username"));
         this.clmCharacter.setCellValueFactory(new PropertyValueFactory<>("Character"));
@@ -239,6 +226,7 @@ public class FishPoolController implements Initializable
         this.tbvPlayers.setItems(tableUsers);
         tableUsers2 = FXCollections.observableArrayList();
         rbLastFishSwimming.selectedProperty().set(true);
+
         cbCharacters.getSelectionModel().select(0);
     }
 }

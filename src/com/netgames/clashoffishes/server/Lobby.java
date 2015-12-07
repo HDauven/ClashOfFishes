@@ -38,6 +38,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         clients = new ArrayList<>();
         messages = new ArrayList<>();
         host = Administration.get().getLoggedInUser();
+        Client client = new Client(host.getUsername(), this);     
     }
 
     @Override
@@ -100,6 +101,16 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         return this.gameMode.toString().toLowerCase();
     }
 
+    public List<IClient> getClients() {
+        return clients;
+    }
+
+    public void setClients(List<IClient> clients) {
+        this.clients = clients;
+    }
+
+    
+    
     @Override
     public List<IMessage> getMessages() throws RemoteException {
         return Collections.unmodifiableList(messages);

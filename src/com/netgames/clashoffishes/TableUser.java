@@ -23,9 +23,16 @@ public class TableUser
 
     public TableUser(User u)
     {
-        username = new SimpleStringProperty(u.getUsername());
-        character = new SimpleStringProperty("None");
-        ready = new SimpleBooleanProperty(false);
+        this.username = new SimpleStringProperty(u.getUsername());
+        this.character = new SimpleStringProperty("None");
+        this.ready = new SimpleBooleanProperty(false);
+    }
+    
+    public TableUser(String username, String character, boolean ready)
+    {
+        this.username = new SimpleStringProperty(username);
+        this.character = new SimpleStringProperty(character);
+        this.ready = new SimpleBooleanProperty(ready);
     }
 
     public String getUsername()
