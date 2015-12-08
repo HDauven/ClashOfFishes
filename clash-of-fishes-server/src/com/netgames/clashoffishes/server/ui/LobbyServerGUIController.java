@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -77,18 +78,39 @@ public class LobbyServerGUIController implements Initializable {
         }
     }
 
+    /**
+     * Executes each time a change takes place on the registry server log output.
+     * @param o
+     * @param arg 
+     */
     public void updateRegistryServer(Observable o, Object arg) {
-            System.out.println(arg);
-            System.out.println(o);
-            registry = (RegistryServer) o;
-            ArrayList<String> temp = registry.getOutput();
-            this.lstViewSystemLog.getItems().clear();
-            this.lstViewSystemLog.getItems().addAll(temp);
+        Task task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                registry = (RegistryServer) o;
+                ArrayList<String> temp = registry.getOutput();
+                lstViewSystemLog.getItems().clear();
+                lstViewSystemLog.getItems().addAll(temp);
+                return null;
+            }
+        };
+        task.run();
     }
     
+    /**
+     * Executes each time a change takes place on the server.
+     * @param o
+     * @param arg 
+     */
     public void updateServer(Observable o,Object arg) {
-            server = (Server) o;
-            this.lstViewServers.getItems().add(server.getLastLobby());    
+        Task task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                server = (Server) o;
+                lstViewServers.getItems().add(server.getLastLobby());  
+                return null;
+            }
+        };
+        task.run();
     }
-
 }
