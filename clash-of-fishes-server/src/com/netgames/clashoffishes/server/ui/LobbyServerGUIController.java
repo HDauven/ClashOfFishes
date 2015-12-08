@@ -21,7 +21,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author MuK
  */
-public class LobbyServerGUIController implements Initializable, Observer {
+public class LobbyServerGUIController implements Initializable {
 
     @FXML
     private AnchorPane paneMainForm;
@@ -49,8 +49,14 @@ public class LobbyServerGUIController implements Initializable, Observer {
     public void initialize(URL url, ResourceBundle rb) {
         registry = new RegistryServer();
         getRegistryLogMessages(registry);
-        registry.addObserver(this);
-        registry.getServer().addObserver(this);
+        
+        registry.addObserver((Observable o, Object arg) -> {
+            updateRegistryServer(o,arg);
+        });
+        
+        registry.getServer().addObserver((Observable o, Object arg) -> {
+            updateServer(o,arg);            
+        });
     }
 
     @FXML
@@ -71,20 +77,18 @@ public class LobbyServerGUIController implements Initializable, Observer {
         }
     }
 
-    @Override
-    public synchronized void update(Observable o, Object arg) {
-        if (o instanceof RegistryServer) {
+    public void updateRegistryServer(Observable o, Object arg) {
             System.out.println(arg);
+            System.out.println(o);
             registry = (RegistryServer) o;
             ArrayList<String> temp = registry.getOutput();
             this.lstViewSystemLog.getItems().clear();
             this.lstViewSystemLog.getItems().addAll(temp);
-        } else if (o instanceof Server) {
+    }
+    
+    public void updateServer(Observable o,Object arg) {
             server = (Server) o;
-            this.lstViewServers.getItems().add(server.getLastLobby());
-        } else { 
-            registry.logMessage("Something went really wrong..."); 
-        }
+            this.lstViewServers.getItems().add(server.getLastLobby());    
     }
 
 }
