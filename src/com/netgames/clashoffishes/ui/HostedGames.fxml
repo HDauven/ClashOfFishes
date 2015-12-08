@@ -21,5 +21,6 @@
       </Label>
       <Button fx:id="btnJoinGame" layoutX="407.0" layoutY="409.0" mnemonicParsing="false" onAction="#btnJoinGame_OnClick" prefHeight="41.0" prefWidth="90.0" text="Join" />
       <Button fx:id="btnBack" layoutX="406.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnBack_OnClick" prefHeight="41.0" prefWidth="90.0" text="Back" />
+      <Button fx:id="btnRefreshLobbyList" layoutX="285.0" layoutY="409.0" mnemonicParsing="false" onAction="#btnRefreshLobbyList_OnClick" text="Refresh" />
    </children>
 </AnchorPane>

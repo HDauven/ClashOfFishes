@@ -46,6 +46,8 @@ public class HostedGamesController implements Initializable {
     private Button btnJoinGame;
     @FXML
     private Button btnBack;
+    @FXML
+    private Button btnRefreshLobbyList;
 
     @FXML
     private TableView<ILobby> tbvHostedGames;
@@ -89,6 +91,11 @@ public class HostedGamesController implements Initializable {
     @FXML
     private void btnBack_OnClick(ActionEvent event) {
         GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
+    }
+    
+    @FXML
+    private void btnRefreshLobbyList_OnClick(ActionEvent event) {
+        getNewLobbies();
     }
     
     /**
