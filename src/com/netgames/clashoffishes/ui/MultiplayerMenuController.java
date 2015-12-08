@@ -10,6 +10,8 @@ import com.netgames.clashoffishes.server.LobbyRegistry;
 import com.netgames.clashoffishes.util.GuiUtilities;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -47,13 +49,23 @@ public class MultiplayerMenuController implements Initializable
     }    
 
     @FXML
-    private void hostGame(ActionEvent event)
-    {
-        //TODO werkend krijgen voor multiplayer
-        LobbyRegistry lobbyRegistry = new LobbyRegistry();
-        lobbyRegistry.clashOfFishesServerLookup();
-        Administration.get().setLobbyRegistry(lobbyRegistry);
-        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "FishPool", "Fishpool: " + GuiUtilities.getFishPoolTitle());
+    private void hostGame(ActionEvent event) {
+        // Executes the creation of a LobbyRegistry and its lookup on a seperate thread.
+        // Once this is done, the 'task' tells the JAT to build the new, corresponding stage.
+        Task task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                //TODO werkend krijgen voor multiplayer
+                LobbyRegistry lobbyRegistry = new LobbyRegistry();
+                lobbyRegistry.clashOfFishesServerLookup();
+                Administration.get().setLobbyRegistry(lobbyRegistry);
+                Platform.runLater(() -> {
+                    GuiUtilities.buildStage(MultiplayerMenuController.this.paneMainForm.getScene().getWindow(), "FishPool", "Fishpool: " + GuiUtilities.getFishPoolTitle());
+                });
+                return null;
+            }
+        };
+        (new Thread(task)).start();
     }
 
     @FXML
