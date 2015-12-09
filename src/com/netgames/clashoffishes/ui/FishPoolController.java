@@ -11,6 +11,7 @@ import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.server.Lobby;
 import com.netgames.clashoffishes.server.LobbyRegistry;
+import com.netgames.clashoffishes.server.Message;
 import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.util.GuiUtilities;
@@ -210,7 +211,11 @@ public class FishPoolController implements Initializable {
 
     @FXML
     private void btnSendMessage_OnClick(ActionEvent event) {
-
+        try {
+            lobby.broadcastMessage(new Message(Administration.get().getLoggedInUser().getUsername(),tfMessage.getText()));
+        } catch (RemoteException ex) {
+            Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
