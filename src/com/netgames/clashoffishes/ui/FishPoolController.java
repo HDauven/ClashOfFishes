@@ -8,7 +8,6 @@ package com.netgames.clashoffishes.ui;
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.TableUser;
 import com.netgames.clashoffishes.User;
-import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.server.Lobby;
 import com.netgames.clashoffishes.server.remote.IClient;
 import java.net.URL;
@@ -33,7 +32,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -189,8 +187,9 @@ public class FishPoolController implements Initializable {
     private void btnStartGame_OnClick(ActionEvent event) {
         //xxx Hier zou een gameManager misschien nog toegevoegd worden aan de singleton Administratie?
         //LobbyRegistry lobbyRegistry = new LobbyRegistry();
-        GameManager gameManager = new GameManager();
-        gameManager.start(new Stage());
+        lobby.startGame();
+        //GameManager gameManager = new GameManager();
+        //gameManager.start(new Stage());
     }
 
     @FXML

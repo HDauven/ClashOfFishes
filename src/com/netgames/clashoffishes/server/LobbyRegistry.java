@@ -12,6 +12,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class that creates the RMI registry for a Clash Of Fishes Lobby.
@@ -33,8 +35,11 @@ public class LobbyRegistry extends Observable {
     // Reference to lobby
     private Lobby lobby = null;
     
+    // Reference to GameServer
+    GameServer gameServer = null;
+    
     private static IServer cofServer;
-    private final String cofServerURL = "rmi://145.93.173.168:1100/Server";
+    private final String cofServerURL = "rmi://145.93.173.122:1100/Server";
     
     // Constructor
     public LobbyRegistry() {
@@ -145,6 +150,22 @@ public class LobbyRegistry extends Observable {
 
     public void setLobby(Lobby lobby) {
         this.lobby = lobby;
+    }
+    
+    public void startGameServer(){
+        try {
+            LocateRegistry.getRegistry().unbind(bindingName);
+                LocateRegistry.createRegistry(portNumber);
+                Naming.rebind("//localhost:" + portNumber + "/" + bindingName, gameServer);
+        }
+        catch (RemoteException | MalformedURLException ex)
+        {
+            Logger.getLogger(LobbyRegistry.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (NotBoundException ex)
+        {
+            Logger.getLogger(LobbyRegistry.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
