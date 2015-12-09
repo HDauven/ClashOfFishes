@@ -7,6 +7,7 @@ package com.netgames.clashoffishes.util;
 
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.server.LobbyRegistry;
+import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.ui.LoginController;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -90,6 +91,7 @@ public class GuiUtilities
                                 LobbyRegistry.getCofServer().removeLobby(Administration.get().getLobbyRegistry().getLobby());
                             } else {
                                 // Remove client from the lobby he is registered to
+                                // Administration.get().getLobby().removeClient();
                             }
                         } catch (RemoteException ex) {
                             Logger.getLogger(GuiUtilities.class.getName()).log(Level.SEVERE, null, ex);
