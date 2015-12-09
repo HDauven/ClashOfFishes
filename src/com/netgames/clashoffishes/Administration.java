@@ -2,7 +2,9 @@ package com.netgames.clashoffishes;
 
 import com.netgames.clashoffishes.data.DatabaseStorage;
 import com.netgames.clashoffishes.engine.GameMode;
+import com.netgames.clashoffishes.server.Lobby;
 import com.netgames.clashoffishes.server.LobbyRegistry;
+import com.netgames.clashoffishes.server.remote.ILobby;
 import java.util.ArrayList;
 
 /**
@@ -12,23 +14,25 @@ public class Administration {
 
     private static Administration instance = null;
     private User user;
-    
+
     private ArrayList<Highscore> allUserHighscoresForGameMode;
     private EmailValidator validator;
 
     private LobbyRegistry lobbyRegistry;
     private static DatabaseStorage dbStorage;
-    
+
     private int objectNr;
+    
+    private ILobby lobby;
 
     protected Administration() {
         this.user = null;
-        
+
+        this.lobby = null;
         this.allUserHighscoresForGameMode = null;
         this.validator = new EmailValidator();
-        
         this.lobbyRegistry = null;
-        this.dbStorage = new DatabaseStorage();       
+        this.dbStorage = new DatabaseStorage();
     }
 
     public static Administration get() {
@@ -63,6 +67,7 @@ public class Administration {
     }
 
     public User logIn(String userIdentifier, String password) {
+        dbStorage = new DatabaseStorage();
         this.user = dbStorage.logIn(userIdentifier, password);
         return this.user;
     }
@@ -78,6 +83,16 @@ public class Administration {
     public void setLobbyRegistry(LobbyRegistry lobbyRegistry) {
         this.lobbyRegistry = lobbyRegistry;
     }
+
+    public ILobby getLobby() {
+        return lobby;
+    }
+
+    public void setLobby(ILobby lobby) {
+        this.lobby = lobby;
+    }
+    
+    
 
     public ArrayList<Highscore> getAllUserHighscoresForGameMode(GameMode gameMode) {
         this.allUserHighscoresForGameMode = this.dbStorage.getAllUserHighscoresForGameMode(gameMode);
@@ -96,8 +111,7 @@ public class Administration {
         return dbStorage.hasConnection();
     }
 
-    public int nextObjectNr()
-    {
+    public int nextObjectNr() {
         return objectNr++;
     }
 }

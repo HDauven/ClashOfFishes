@@ -46,7 +46,7 @@ public class LobbyRegistry extends Observable
 
     private static IServer cofServer;
     private final String cofServerURL = "rmi://145.93.173.122:1100/Server";
-
+    
     // Constructor
     public LobbyRegistry()
     {

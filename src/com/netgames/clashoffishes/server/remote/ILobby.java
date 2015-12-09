@@ -59,4 +59,6 @@ public interface ILobby extends Remote {
 
     String getGameModeProperty()
             throws RemoteException;
+
+    public void startGame();
 }    
