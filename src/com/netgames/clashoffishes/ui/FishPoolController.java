@@ -10,14 +10,21 @@ import com.netgames.clashoffishes.TableUser;
 import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.server.Lobby;
+import com.netgames.clashoffishes.server.LobbyRegistry;
 import com.netgames.clashoffishes.server.remote.IClient;
+import com.netgames.clashoffishes.util.GuiUtilities;
+import static com.netgames.clashoffishes.util.GuiUtilities.TITLE_HOSTED_GAMES;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -34,6 +41,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
@@ -102,7 +110,7 @@ public class FishPoolController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // Haal de current lobby op.
         this.lobby = Administration.get().getLobbyRegistry().getLobby();
-
+        
         // Voeg alle characterNamen toe aan de listbox.
         List<String> characterNames = new ArrayList<>();
         characterNames.add("None");
@@ -229,5 +237,9 @@ public class FishPoolController implements Initializable {
         rbLastFishSwimming.selectedProperty().set(true);
 
         cbCharacters.getSelectionModel().select(0);
+    }
+
+    public Lobby getLobby() {
+        return lobby;
     }
 }

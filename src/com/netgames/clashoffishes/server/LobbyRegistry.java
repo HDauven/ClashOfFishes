@@ -146,8 +146,10 @@ public class LobbyRegistry extends Observable {
     public void setLobby(Lobby lobby) {
         this.lobby = lobby;
     }
-    
-    
+
+    public static IServer getCofServer() {
+        return cofServer;
+    }
     
     /**
      * @param args the command line arguments

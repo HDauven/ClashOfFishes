@@ -63,4 +63,12 @@ public class Server extends Observable implements IServer {
         ILobby last = lobbies.get(lastIndex - 1);
         return last;
     }
+
+    /**
+     * Method that gets the list of ILobby's.
+     * @return The ILobby list belonging to this server
+     */
+    public List<ILobby> getLobbies() {
+        return lobbies;
+    }
 }

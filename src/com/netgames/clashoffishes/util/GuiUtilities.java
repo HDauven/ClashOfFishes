@@ -6,8 +6,10 @@
 package com.netgames.clashoffishes.util;
 
 import com.netgames.clashoffishes.Administration;
+import com.netgames.clashoffishes.server.LobbyRegistry;
 import com.netgames.clashoffishes.ui.LoginController;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -81,6 +83,12 @@ public class GuiUtilities
                     if (fileName.equals("FishPool"))
                     {
                         event.consume();
+                        try {
+                            // TODO URGENT:check whether the host of the lobby closes the screen
+                            LobbyRegistry.getCofServer().removeLobby(Administration.get().getLobbyRegistry().getLobby());
+                        } catch (RemoteException ex) {
+                            Logger.getLogger(GuiUtilities.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         GuiUtilities.buildStage(stage.getScene().getWindow(), "HostedGames", TITLE_HOSTED_GAMES);
                         return;
                     }

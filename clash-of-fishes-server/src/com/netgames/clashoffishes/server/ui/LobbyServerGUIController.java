@@ -107,7 +107,9 @@ public class LobbyServerGUIController implements Initializable {
             @Override
             protected Void call() throws Exception {
                 server = (Server) o;
-                lstViewServers.getItems().add(server.getLastLobby());  
+                ArrayList<ILobby> temp = (ArrayList<ILobby>) server.getLobbies();
+                lstViewServers.getItems().clear();
+                lstViewServers.getItems().addAll(temp);
                 return null;
             }
         };
