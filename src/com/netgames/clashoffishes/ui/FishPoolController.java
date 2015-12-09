@@ -111,6 +111,8 @@ public class FishPoolController implements Initializable {
         // Haal de current lobby op.
         this.lobby = Administration.get().getLobbyRegistry().getLobby();
         
+        lblLobbyName.setText(lobby.getLobbyTitle());
+        
         // Voeg alle characterNamen toe aan de listbox.
         List<String> characterNames = new ArrayList<>();
         characterNames.add("None");
