@@ -91,7 +91,7 @@ public class GuiUtilities
                                 LobbyRegistry.getCofServer().removeLobby(Administration.get().getLobbyRegistry().getLobby());
                             } else {
                                 // Remove client from the lobby he is registered to
-                                // Administration.get().getLobby().removeClient();
+                                Administration.get().getLobby().removeClient(Administration.get().getClient());
                             }
                         } catch (RemoteException ex) {
                             Logger.getLogger(GuiUtilities.class.getName()).log(Level.SEVERE, null, ex);
