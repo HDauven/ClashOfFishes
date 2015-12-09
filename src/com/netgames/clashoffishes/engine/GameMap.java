@@ -57,7 +57,7 @@ public class GameMap {
         this.rand = new Random(seed);
         
         generateMap();
-        generateMarkers();
+        //generateMarkers();
     }
     
     /**

@@ -7,6 +7,7 @@ package com.netgames.clashoffishes.util;
 
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.server.LobbyRegistry;
+import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.ui.LoginController;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -85,11 +86,12 @@ public class GuiUtilities
                         event.consume();
                         try {
                             // TODO URGENT:check whether the host of the lobby closes the screen
-                            if (Administration.get().getLobbyRegistry().getLobby().getClients().get(0).getUsername()
+                            if (Administration.get().getLobby().getClients().get(0).getUsername()
                                     .equals(Administration.get().getLoggedInUser().getUsername())) {
                                 LobbyRegistry.getCofServer().removeLobby(Administration.get().getLobbyRegistry().getLobby());
                             } else {
-                                // Remove client from the lobby he is registered to
+                                // TODO Remove client from the lobby he is registered to
+                                Administration.get().getLobby().removeClient(Administration.get().getClient());
                             }
                         } catch (RemoteException ex) {
                             Logger.getLogger(GuiUtilities.class.getName()).log(Level.SEVERE, null, ex);

@@ -4,6 +4,7 @@ import com.netgames.clashoffishes.data.DatabaseStorage;
 import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.server.Lobby;
 import com.netgames.clashoffishes.server.LobbyRegistry;
+import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ public class Administration {
     private int objectNr;
     
     private ILobby lobby;
+    private IClient client;
 
     protected Administration() {
         this.user = null;
@@ -91,8 +93,14 @@ public class Administration {
     public void setLobby(ILobby lobby) {
         this.lobby = lobby;
     }
-    
-    
+
+    public IClient getClient() {
+        return client;
+    }
+
+    public void setClient(IClient client) {
+        this.client = client;
+    }
 
     public ArrayList<Highscore> getAllUserHighscoresForGameMode(GameMode gameMode) {
         this.allUserHighscoresForGameMode = this.dbStorage.getAllUserHighscoresForGameMode(gameMode);

@@ -51,7 +51,7 @@ public class RegistryServer extends Observable {
             try {
                 LocateRegistry.createRegistry(portNumber);
                 UnicastRemoteObject.exportObject(server, portNumber);
-                Naming.rebind("//localhost:" + portNumber + "/" + bindingName, server);
+                Naming.rebind("//145.93.173.122:" + portNumber + "/" + bindingName, server);
             } catch (MalformedURLException ex) {
                 logMessage("Server: Cannot bind server");
                 logMessage("Server: MalformedURLException: " + ex.getMessage());

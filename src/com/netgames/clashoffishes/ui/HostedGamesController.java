@@ -96,7 +96,7 @@ public class HostedGamesController implements Initializable {
                     if (temp.equals(lobby)) {
                         System.out.println("Diz niggah enterz dem if");
                         Administration.get().setLobby(lobby);
-                        Client client = new Client(Administration.get().getLoggedInUser().getUsername(), lobby);
+                        Administration.get().setClient(new Client(Administration.get().getLoggedInUser().getUsername(), lobby));
                         System.out.println("Diz niggah enterz dem if");
                     }
                 }

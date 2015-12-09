@@ -39,6 +39,9 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         messages = new ArrayList<>();
         host = Administration.get().getLoggedInUser();
         Client client = new Client(host.getUsername(), this);
+
+        Administration.get().setClient(new Client(host.getUsername(), this));
+
     }
 
     @Override
@@ -57,6 +60,15 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
             System.out.println("Lobby is full mate.");
         } else {
             clients.add(client);
+        }
+    }
+    
+    @Override
+    public void removeClient(IClient client) throws RemoteException {
+        if (this.clients.size() <= 0) {
+            System.out.println("fuck");
+        } else {
+            clients.remove(client);
         }
     }
 
