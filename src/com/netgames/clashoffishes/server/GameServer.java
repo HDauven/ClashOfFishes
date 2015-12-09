@@ -9,6 +9,7 @@ import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.engine.GameState;
 import com.netgames.clashoffishes.server.remote.IGameClient;
 import com.netgames.clashoffishes.server.remote.IGameServer;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,12 +21,12 @@ import javafx.application.Platform;
  *
  * @author Stef
  */
-public class GameServer extends Observable implements IGameServer
+public class GameServer extends Observable implements IGameServer, Serializable
 {
     // Version ID of the server
     private static final long serialVersionUID = 1L;
     
-    private final LobbyRegistry registryServer;
+    private transient final LobbyRegistry registryServer;
     
     private List<IPlayer> players;
     
