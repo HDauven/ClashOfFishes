@@ -167,8 +167,10 @@ public class LobbyRegistry extends Observable {
             Logger.getLogger(LobbyRegistry.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
+    public static IServer getCofServer() {
+        return cofServer;
+    }
     
     /**
      * @param args the command line arguments

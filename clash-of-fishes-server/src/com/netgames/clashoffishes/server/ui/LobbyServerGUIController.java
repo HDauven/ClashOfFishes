@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,7 +22,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author MuK
  */
-public class LobbyServerGUIController implements Initializable, Observer {
+public class LobbyServerGUIController implements Initializable {
 
     @FXML
     private AnchorPane paneMainForm;
@@ -49,8 +50,14 @@ public class LobbyServerGUIController implements Initializable, Observer {
     public void initialize(URL url, ResourceBundle rb) {
         registry = new RegistryServer();
         getRegistryLogMessages(registry);
-        registry.addObserver(this);
-        registry.getServer().addObserver(this);
+        
+        registry.addObserver((Observable o, Object arg) -> {
+            updateRegistryServer(o,arg);
+        });
+        
+        registry.getServer().addObserver((Observable o, Object arg) -> {
+            updateServer(o,arg);            
+        });
     }
 
     @FXML
@@ -71,20 +78,41 @@ public class LobbyServerGUIController implements Initializable, Observer {
         }
     }
 
-    @Override
-    public synchronized void update(Observable o, Object arg) {
-        if (o instanceof RegistryServer) {
-            System.out.println(arg);
-            registry = (RegistryServer) o;
-            ArrayList<String> temp = registry.getOutput();
-            this.lstViewSystemLog.getItems().clear();
-            this.lstViewSystemLog.getItems().addAll(temp);
-        } else if (o instanceof Server) {
-            server = (Server) o;
-            this.lstViewServers.getItems().add(server.getLastLobby());
-        } else { 
-            registry.logMessage("Something went really wrong..."); 
-        }
+    /**
+     * Executes each time a change takes place on the registry server log output.
+     * @param o
+     * @param arg 
+     */
+    public void updateRegistryServer(Observable o, Object arg) {
+        Task task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                registry = (RegistryServer) o;
+                ArrayList<String> temp = registry.getOutput();
+                lstViewSystemLog.getItems().clear();
+                lstViewSystemLog.getItems().addAll(temp);
+                return null;
+            }
+        };
+        task.run();
     }
-
+    
+    /**
+     * Executes each time a change takes place on the server.
+     * @param o
+     * @param arg 
+     */
+    public void updateServer(Observable o,Object arg) {
+        Task task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                server = (Server) o;
+                ArrayList<ILobby> temp = (ArrayList<ILobby>) server.getLobbies();
+                lstViewServers.getItems().clear();
+                lstViewServers.getItems().addAll(temp);
+                return null;
+            }
+        };
+        task.run();
+    }
 }

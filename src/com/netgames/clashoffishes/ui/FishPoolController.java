@@ -100,7 +100,7 @@ public class FishPoolController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // Haal de current lobby op.
         this.lobby = Administration.get().getLobbyRegistry().getLobby();
-
+        
         // Voeg alle characterNamen toe aan de listbox.
         List<String> characterNames = new ArrayList<>();
         characterNames.add("None");
@@ -228,5 +228,9 @@ public class FishPoolController implements Initializable {
         rbLastFishSwimming.selectedProperty().set(true);
 
         cbCharacters.getSelectionModel().select(0);
+    }
+
+    public Lobby getLobby() {
+        return lobby;
     }
 }

@@ -50,4 +50,13 @@ public interface ILobby extends Remote {
      */
     List<IClient> getClients()
             throws RemoteException;
-}    
+    
+    String getPoolNameProperty()
+            throws RemoteException;
+    
+    String getPlayersProperty()
+            throws RemoteException;
+
+    String getGameModeProperty()
+            throws RemoteException;
+}     

@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,6 +46,8 @@ public class HostedGamesController implements Initializable {
     private Button btnJoinGame;
     @FXML
     private Button btnBack;
+    @FXML
+    private Button btnRefreshLobbyList;
 
     @FXML
     private TableView<ILobby> tbvHostedGames;
@@ -58,45 +61,24 @@ public class HostedGamesController implements Initializable {
     private Administration administration;
 
     private IServer cofServer;
-    private final String cofServerURL = "rmi://145.93.173.168:1100/Server";
+    private final String cofServerURL = "rmi://localhost:1100/Server";
     private List<ILobby> lobbyList = new ArrayList<>();
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //TODO initialize components for controller
         this.administration = Administration.get();
 
-        clmPoolName.setCellValueFactory(new PropertyValueFactory<ILobby, String>("PoolNameProperty"));
-        clmPlayers.setCellValueFactory(new PropertyValueFactory<ILobby, String>("PlayersProperty"));
-        clmGameMode.setCellValueFactory(new PropertyValueFactory<ILobby, String>("GameModeProperty"));
-
-        clashOfFishesServerLookup();
+        clmPoolName.setCellValueFactory(new PropertyValueFactory<>("PoolNameProperty"));
+        clmPlayers.setCellValueFactory(new PropertyValueFactory<>("PlayersProperty"));
+        clmGameMode.setCellValueFactory(new PropertyValueFactory<>("GameModeProperty"));
         
-        ObservableList<ILobby> lobbies = null;
-        for (ILobby lobby : this.lobbyList) {
-            System.out.println(lobby.toString());
-            try {
-                System.out.println(lobby.getClients().get(0).getUsername());
-                lobbies = FXCollections.observableArrayList(lobby);  
-            } catch (RemoteException ex) {
-                Logger.getLogger(HostedGamesController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-//        try {
-//            for (ILobby lobby : this.cofServer.listLobbies()) {
-//
-//            }
-//        } catch (RemoteException remoteException) {
-//            System.out.println(remoteException.getMessage());
-//        }
-
-        //ObservableList<Lobby> lobbies = FXCollections.observableArrayList(lobby, lobby, lobby, lobby);
-        tbvHostedGames.setItems(lobbies);
-        tbvHostedGames.getColumns().addAll(clmPoolName, clmPlayers, clmGameMode);
-        //TODO Aan lobby werken
+        getNewLobbies();
     }
 
     @FXML
@@ -109,6 +91,27 @@ public class HostedGamesController implements Initializable {
     @FXML
     private void btnBack_OnClick(ActionEvent event) {
         GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
+    }
+    
+    @FXML
+    private void btnRefreshLobbyList_OnClick(ActionEvent event) {
+        getNewLobbies();
+    }
+    
+    /**
+     * Executes the Clash of Fishes server lookup and Lobby list refresh on a 
+     * different thread to offload the JAT.
+     */
+    private void getNewLobbies() {
+        Task task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                clashOfFishesServerLookup();
+                refreshServerList();
+                return null;
+            }
+        };
+        (new Thread(task)).start();
     }
 
     /**
@@ -129,10 +132,15 @@ public class HostedGamesController implements Initializable {
         }
     }
 
+    /**
+     * Method that refreshes the GUI with the latest available list of lobbies.
+     */
     private void refreshServerList() {
-        ArrayList<ILobby> temp = new ArrayList<>();
-        for (ILobby l : temp) {
-            //tbvHostedGames.getItems().add(l);
-        }
+        ObservableList<ILobby> lobbies = FXCollections.observableArrayList();
+        // Does the same as for (ILobby lobby : this.lobbyList) { lobbies.addAll(lobby); }
+        this.lobbyList.stream().forEach((lobby) -> {
+            lobbies.addAll(FXCollections.observableArrayList(lobby));
+        });
+        tbvHostedGames.setItems(lobbies);
     }
 }
