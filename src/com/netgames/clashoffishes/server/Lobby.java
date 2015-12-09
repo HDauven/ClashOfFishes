@@ -3,6 +3,7 @@ package com.netgames.clashoffishes.server;
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.engine.GameMode;
+import com.netgames.clashoffishes.interfaces.IChangeGui;
 import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.server.remote.IMessage;
@@ -28,6 +29,8 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     private User host;
 
     private GameMode gameMode = GameMode.EVOLVED;
+    
+    private List<IChangeGui> GUIs;
 
     /**
      *
@@ -38,8 +41,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         clients = new ArrayList<>();
         messages = new ArrayList<>();
         host = Administration.get().getLoggedInUser();
-        Client client = new Client(host.getUsername(), this);
-
+        GUIs = new ArrayList();
         Administration.get().setClient(new Client(host.getUsername(), this));
     }
 
@@ -128,6 +130,13 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         this.clients = clients;
     }
     
+    public void addGUIListener (IChangeGui guiListener) {
+        this.GUIs.add(guiListener);
+    }
+    
+    public void removeGUIListener (IChangeGui guiListener) {
+        this.GUIs.remove(guiListener);
+    }
     
     @Override
     public List<IMessage> getMessages() throws RemoteException {

@@ -8,9 +8,16 @@ package com.netgames.clashoffishes.ui;
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.TableUser;
 import com.netgames.clashoffishes.User;
+import com.netgames.clashoffishes.engine.GameManager;
+import com.netgames.clashoffishes.engine.GameMode;
+import com.netgames.clashoffishes.interfaces.IChangeGui;
+import com.netgames.clashoffishes.server.Lobby;
+import com.netgames.clashoffishes.server.LobbyRegistry;
 import com.netgames.clashoffishes.server.Message;
 import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.ILobby;
+import com.netgames.clashoffishes.util.GuiUtilities;
+import static com.netgames.clashoffishes.util.GuiUtilities.TITLE_HOSTED_GAMES;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -21,6 +28,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -36,13 +44,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
  *
  * @author Stef
  */
-public class FishPoolController implements Initializable {
+public class FishPoolController implements Initializable, IChangeGui {
 
     // TODO can't set 'ready' when character 'None' selected.
     // TODO can't select the same character as another player.
@@ -104,6 +114,7 @@ public class FishPoolController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // Haal de current lobby op.
         this.lobby = Administration.get().getLobby();
+        
         
         try {
             lblLobbyName.setText(lobby.getPoolNameProperty());
@@ -197,6 +208,7 @@ public class FishPoolController implements Initializable {
     private void btnStartGame_OnClick(ActionEvent event) {
         //xxx Hier zou een gameManager misschien nog toegevoegd worden aan de singleton Administratie?
         //LobbyRegistry lobbyRegistry = new LobbyRegistry();
+<<<<<<< HEAD
         try{
         lobby.startGame();
         }
@@ -206,6 +218,10 @@ public class FishPoolController implements Initializable {
         }
         //GameManager gameManager = new GameManager();
         //gameManager.start(new Stage());
+=======
+        GameManager gameManager = new GameManager();
+        gameManager.start(new Stage());
+>>>>>>> e07f9da0e94e959bd7867a5df11723db708e3c44
     }
 
     @FXML
@@ -252,5 +268,25 @@ public class FishPoolController implements Initializable {
 
     public ILobby getLobby() {
         return lobby;
+    }
+
+    @Override
+    public void displayMessage(String message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void displaySelectedCharacter(String characterName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void displayReady(boolean isReady) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void displayGameMode(GameMode gameMode) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
