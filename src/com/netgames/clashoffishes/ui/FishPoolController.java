@@ -9,6 +9,8 @@ import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.TableUser;
 import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.engine.GameManager;
+import com.netgames.clashoffishes.engine.GameMode;
+import com.netgames.clashoffishes.interfaces.IChangeGui;
 import com.netgames.clashoffishes.server.Lobby;
 import com.netgames.clashoffishes.server.LobbyRegistry;
 import com.netgames.clashoffishes.server.Message;
@@ -50,7 +52,7 @@ import javafx.stage.WindowEvent;
  *
  * @author Stef
  */
-public class FishPoolController implements Initializable {
+public class FishPoolController implements Initializable, IChangeGui {
 
     // TODO can't set 'ready' when character 'None' selected.
     // TODO can't select the same character as another player.
@@ -112,6 +114,7 @@ public class FishPoolController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // Haal de current lobby op.
         this.lobby = Administration.get().getLobby();
+        
         
         try {
             lblLobbyName.setText(lobby.getPoolNameProperty());
@@ -253,5 +256,25 @@ public class FishPoolController implements Initializable {
 
     public ILobby getLobby() {
         return lobby;
+    }
+
+    @Override
+    public void displayMessage(String message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void displaySelectedCharacter(String characterName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void displayReady(boolean isReady) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void displayGameMode(GameMode gameMode) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

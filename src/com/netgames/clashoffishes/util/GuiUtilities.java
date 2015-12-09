@@ -86,7 +86,7 @@ public class GuiUtilities
                         event.consume();
                         try {
                             // TODO URGENT:check whether the host of the lobby closes the screen
-                            if (Administration.get().getLobbyRegistry().getLobby().getClients().get(0).getUsername()
+                            if (Administration.get().getLobby().getClients().get(0).getUsername()
                                     .equals(Administration.get().getLoggedInUser().getUsername())) {
                                 LobbyRegistry.getCofServer().removeLobby(Administration.get().getLobbyRegistry().getLobby());
                             } else {
