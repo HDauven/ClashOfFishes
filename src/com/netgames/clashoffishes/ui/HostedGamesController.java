@@ -6,7 +6,9 @@
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
+import com.netgames.clashoffishes.server.Client;
 import com.netgames.clashoffishes.server.Lobby;
+import com.netgames.clashoffishes.server.LobbyRegistry;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.server.remote.IServer;
 import com.netgames.clashoffishes.util.GuiUtilities;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -83,9 +86,25 @@ public class HostedGamesController implements Initializable {
 
     @FXML
     private void btnJoinGame_OnClick(ActionEvent event) {
-        Object controllerObject = GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "FishPool", GuiUtilities.getFishPoolTitle());
-        FishPoolController controller = (FishPoolController) controllerObject;
-        //controller.addUser(Administration.get().getLoggedInUser());
+        Task task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                // TODO get lobby, create client, register client.
+                for (ILobby lobby : cofServer.listLobbies()) {
+                    ILobby temp = tbvHostedGames.getSelectionModel().getSelectedItem();
+                    if (temp.equals(lobby)) {
+                        System.out.println("Diz niggah enterz dem if");
+                        // Administration.get().setLobby(lobby);
+                        Client client = new Client(Administration.get().getLoggedInUser().getUsername(), lobby);
+                    }
+                }
+                Platform.runLater(() -> {
+                    GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "FishPool", GuiUtilities.getFishPoolTitle());
+                });
+                return null;
+            }
+        };
+        (new Thread(task)).start();
     }
 
     @FXML
