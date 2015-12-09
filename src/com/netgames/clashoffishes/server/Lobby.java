@@ -59,6 +59,15 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
             clients.add(client);
         }
     }
+    
+    @Override
+    public void removeClient(IClient client) throws RemoteException {
+        if (this.clients.size() <= 0) {
+            System.out.println("fuck");
+        } else {
+            clients.remove(client);
+        }
+    }
 
     @Override
     public void broadcastMessage(IMessage message) throws RemoteException {

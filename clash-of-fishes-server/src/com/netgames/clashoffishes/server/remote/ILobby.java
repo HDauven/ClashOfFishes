@@ -27,6 +27,14 @@ public interface ILobby extends Remote {
             throws RemoteException;
     
     /**
+     * Method that removes an IClient to the ILobby.
+     * @param client The IClient that is going to be removed from the ILobby.
+     * @throws RemoteException 
+     */
+    void removeClient(IClient client) 
+            throws RemoteException;
+    
+    /**
      * Method that broadcasts a message to all the IClients.
      * @param message The message that is meant for all the IClients.
      * @throws RemoteException 
