@@ -12,6 +12,7 @@ import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.server.Lobby;
 import com.netgames.clashoffishes.server.LobbyRegistry;
 import com.netgames.clashoffishes.server.remote.IClient;
+import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.util.GuiUtilities;
 import static com.netgames.clashoffishes.util.GuiUtilities.TITLE_HOSTED_GAMES;
 import java.net.URL;
@@ -93,7 +94,7 @@ public class FishPoolController implements Initializable {
     @FXML
     private TextField tfMessage;
 
-    private Lobby lobby;
+    private ILobby lobby;
 
     ObservableList<TableUser> tableUsers;
     //This object exists so the changeEvent gets triggered on tableUsers.removeAll()
@@ -109,9 +110,13 @@ public class FishPoolController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Haal de current lobby op.
-        this.lobby = Administration.get().getLobbyRegistry().getLobby();
+        this.lobby = Administration.get().getLobby();
         
-        lblLobbyName.setText(lobby.getLobbyTitle());
+        try {
+            lblLobbyName.setText(lobby.getPoolNameProperty());
+        } catch (RemoteException ex) {
+            Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         // Voeg alle characterNamen toe aan de listbox.
         List<String> characterNames = new ArrayList<>();
@@ -125,7 +130,7 @@ public class FishPoolController implements Initializable {
         setupGui();
         
         try {
-            System.out.println(this.lobby.getLobbyTitle());
+            System.out.println(this.lobby.getPoolNameProperty());
             for (IClient client : this.lobby.getClients()) {
                 this.tableUsers.add(new TableUser(client.getUsername(), "test", false));
             }
@@ -241,7 +246,7 @@ public class FishPoolController implements Initializable {
         cbCharacters.getSelectionModel().select(0);
     }
 
-    public Lobby getLobby() {
+    public ILobby getLobby() {
         return lobby;
     }
 }

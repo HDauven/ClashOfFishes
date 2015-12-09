@@ -86,25 +86,31 @@ public class HostedGamesController implements Initializable {
 
     @FXML
     private void btnJoinGame_OnClick(ActionEvent event) {
-        Task task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                // TODO get lobby, create client, register client.
+//        Task task = new Task<Void>() {
+//            @Override
+//            protected Void call() throws Exception {
+//                // TODO get lobby, create client, register client.
+        try {
                 for (ILobby lobby : cofServer.listLobbies()) {
                     ILobby temp = tbvHostedGames.getSelectionModel().getSelectedItem();
                     if (temp.equals(lobby)) {
                         System.out.println("Diz niggah enterz dem if");
-                        // Administration.get().setLobby(lobby);
+                        Administration.get().setLobby(lobby);
                         Client client = new Client(Administration.get().getLoggedInUser().getUsername(), lobby);
+                        System.out.println("Diz niggah enterz dem if");
                     }
                 }
                 Platform.runLater(() -> {
                     GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "FishPool", GuiUtilities.getFishPoolTitle());
                 });
-                return null;
-            }
-        };
-        (new Thread(task)).start();
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+//                return null;
+//            }
+//        };
+//        (new Thread(task)).start();
     }
 
     @FXML

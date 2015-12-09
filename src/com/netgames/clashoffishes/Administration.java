@@ -2,7 +2,9 @@ package com.netgames.clashoffishes;
 
 import com.netgames.clashoffishes.data.DatabaseStorage;
 import com.netgames.clashoffishes.engine.GameMode;
+import com.netgames.clashoffishes.server.Lobby;
 import com.netgames.clashoffishes.server.LobbyRegistry;
+import com.netgames.clashoffishes.server.remote.ILobby;
 import java.util.ArrayList;
 
 /**
@@ -20,10 +22,13 @@ public class Administration {
     private static DatabaseStorage dbStorage;
 
     private int objectNr;
+    
+    private ILobby lobby;
 
     protected Administration() {
         this.user = null;
 
+        this.lobby = null;
         this.allUserHighscoresForGameMode = null;
         this.validator = new EmailValidator();
         this.lobbyRegistry = null;
@@ -78,6 +83,16 @@ public class Administration {
     public void setLobbyRegistry(LobbyRegistry lobbyRegistry) {
         this.lobbyRegistry = lobbyRegistry;
     }
+
+    public ILobby getLobby() {
+        return lobby;
+    }
+
+    public void setLobby(ILobby lobby) {
+        this.lobby = lobby;
+    }
+    
+    
 
     public ArrayList<Highscore> getAllUserHighscoresForGameMode(GameMode gameMode) {
         this.allUserHighscoresForGameMode = this.dbStorage.getAllUserHighscoresForGameMode(gameMode);

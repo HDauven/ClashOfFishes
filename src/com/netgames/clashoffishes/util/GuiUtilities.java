@@ -141,9 +141,15 @@ public class GuiUtilities
 
     public static String getFishPoolTitle()
     {
-        Administration administration = Administration.get();
-        String username = administration.getLobbyRegistry().getLobby().getLobbyTitle();
-        return username;
+        String username = "";
+        try {
+            Administration administration = Administration.get();
+            username = administration.getLobby().getPoolNameProperty();
+        } catch (RemoteException ex) {
+            Logger.getLogger(GuiUtilities.class.getName()).log(Level.SEVERE, null, ex);
+        } finally { 
+            return username;
+        }
     }
 
     public static void logOut(Stage stage)
