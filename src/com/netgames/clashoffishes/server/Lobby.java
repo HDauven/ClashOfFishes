@@ -41,7 +41,6 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         Client client = new Client(host.getUsername(), this);
 
         Administration.get().setClient(new Client(host.getUsername(), this));
-
     }
 
     @Override
@@ -140,6 +139,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         return this.ref.remoteToString();
     }
     
+    @Override
     public void startGame(){
         Administration.get().getLobbyRegistry().startGameServer();
     }

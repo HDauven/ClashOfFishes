@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
+import java.util.Random;
 import javafx.application.Platform;
 
 /**
@@ -33,6 +34,8 @@ public class GameServer extends Observable implements IGameServer, Serializable
     private List<IGameClient> clients;
     
     GameManager gameManager = new GameManager();
+    
+    Random random;
     
     /**
      * Constructor for the server
@@ -107,5 +110,12 @@ public class GameServer extends Observable implements IGameServer, Serializable
     public void update(Observable o, Object o1)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void start() throws RemoteException
+    {
+        random = new Random();
+        this.gameManager.startGame((int)System.currentTimeMillis());
     }
 }

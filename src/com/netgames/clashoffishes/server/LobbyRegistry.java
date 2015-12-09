@@ -45,7 +45,7 @@ public class LobbyRegistry extends Observable
     GameServer gameServer = null;
 
     private static IServer cofServer;
-    private final String cofServerURL = "rmi://145.93.173.122:1100/Server";
+    private final String cofServerURL = "rmi://localhost:1100/Server";
     
     // Constructor
     public LobbyRegistry()
@@ -60,12 +60,13 @@ public class LobbyRegistry extends Observable
         try
         {
             lobby = new Lobby();
-            logMessage("Server: lobby created");
+            logMessage("Server: lobby created");   
         }
         catch (RemoteException ex)
         {
             logMessage("Server: Cannot create lobby");
             logMessage("Server: RemoteException: " + ex.getMessage());
+            System.out.println(getLastOutput());
             lobby = null;
         }
 
@@ -204,6 +205,7 @@ public class LobbyRegistry extends Observable
             LocateRegistry.getRegistry().unbind(bindingName);
             LocateRegistry.createRegistry(portNumber2);
             Naming.rebind("//localhost:" + portNumber2 + "/" + bindingName, gameServer);
+            gameServer.start();
         }
         catch (RemoteException | MalformedURLException | NotBoundException ex)
         {

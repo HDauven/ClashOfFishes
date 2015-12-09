@@ -197,7 +197,13 @@ public class FishPoolController implements Initializable {
     private void btnStartGame_OnClick(ActionEvent event) {
         //xxx Hier zou een gameManager misschien nog toegevoegd worden aan de singleton Administratie?
         //LobbyRegistry lobbyRegistry = new LobbyRegistry();
+        try{
         lobby.startGame();
+        }
+        catch (RemoteException ex)
+        {
+            Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //GameManager gameManager = new GameManager();
         //gameManager.start(new Stage());
     }
