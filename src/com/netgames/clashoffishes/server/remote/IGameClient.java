@@ -6,6 +6,7 @@
 package com.netgames.clashoffishes.server.remote;
 
 import com.netgames.clashoffishes.engine.object.events.ObjectType;
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -13,7 +14,7 @@ import java.rmi.RemoteException;
  *
  * @author Stef
  */
-public interface IGameClient extends Remote
+public interface IGameClient extends Remote, Serializable
 {
     /**
      * Deze methode wordt aangeroepen als alle spelers klaar zijn en de game gestart kan worden.

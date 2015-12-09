@@ -7,6 +7,7 @@ import com.netgames.clashoffishes.engine.object.events.FishHook;
 import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import com.netgames.clashoffishes.engine.object.events.Seaweed;
 import com.netgames.clashoffishes.server.remote.IGameClient;
+import java.io.Serializable;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import javafx.stage.Stage;
  *
  * @author Hein Dauven
  */
-public class GameManager extends Application implements IGameClient
+public class GameManager extends Application implements IGameClient, Serializable
 {
 
     public static final double WIDTH = 1280, HEIGHT = 720;
@@ -40,7 +41,7 @@ public class GameManager extends Application implements IGameClient
     private String character = "Bubbles";
     private int gameScore = 0;
     private GameState gameState;
-    private SimpleStringProperty timeLeft = new SimpleStringProperty();
+    private transient SimpleStringProperty timeLeft = new SimpleStringProperty();
     //Standaardwaarde is single player = evolution of time
     private final GameMode gameMode = GameMode.EVOLUTION_OF_TIME;
     private Group root;
