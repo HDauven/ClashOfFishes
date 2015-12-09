@@ -12,23 +12,22 @@ public class Administration {
 
     private static Administration instance = null;
     private User user;
-    
+
     private ArrayList<Highscore> allUserHighscoresForGameMode;
     private EmailValidator validator;
 
     private LobbyRegistry lobbyRegistry;
     private static DatabaseStorage dbStorage;
-    
+
     private int objectNr;
 
     protected Administration() {
         this.user = null;
-        
+
         this.allUserHighscoresForGameMode = null;
         this.validator = new EmailValidator();
-        
         this.lobbyRegistry = null;
-        this.dbStorage = new DatabaseStorage();       
+        this.dbStorage = new DatabaseStorage();
     }
 
     public static Administration get() {
@@ -63,6 +62,7 @@ public class Administration {
     }
 
     public User logIn(String userIdentifier, String password) {
+        dbStorage = new DatabaseStorage();
         this.user = dbStorage.logIn(userIdentifier, password);
         return this.user;
     }
@@ -96,8 +96,7 @@ public class Administration {
         return dbStorage.hasConnection();
     }
 
-    public int nextObjectNr()
-    {
+    public int nextObjectNr() {
         return objectNr++;
     }
 }
