@@ -30,7 +30,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
 
     private GameMode gameMode = GameMode.EVOLVED;
     
-    private List<IChangeGui> GUIs;
+    
 
     /**
      *
@@ -41,7 +41,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         clients = new ArrayList<>();
         messages = new ArrayList<>();
         host = Administration.get().getLoggedInUser();
-        GUIs = new ArrayList();
+        
         Administration.get().setClient(new Client(host.getUsername(), this));
     }
 
@@ -130,13 +130,6 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         this.clients = clients;
     }
     
-    public void addGUIListener (IChangeGui guiListener) {
-        this.GUIs.add(guiListener);
-    }
-    
-    public void removeGUIListener (IChangeGui guiListener) {
-        this.GUIs.remove(guiListener);
-    }
     
     @Override
     public List<IMessage> getMessages() throws RemoteException {
@@ -146,5 +139,10 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     @Override
     public String toString() {
         return this.ref.remoteToString();
+    }
+
+    @Override
+    public void startGame() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

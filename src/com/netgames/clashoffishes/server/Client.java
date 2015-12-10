@@ -1,10 +1,12 @@
 package com.netgames.clashoffishes.server;
 
+import com.netgames.clashoffishes.interfaces.IChangeGui;
 import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.server.remote.IMessage;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,12 +22,15 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     private ILobby lobby;
     private String username = null;
     
+    private List<IChangeGui> GUIs;
+    
     public Client(String username, ILobby lobby) throws RemoteException {
         super();
         this.username = username;
         this.lobby = lobby;
         // TODO add fontys listener? 
         lobby.registerClient(this);
+        GUIs = new ArrayList();
     }    
     
     @Override
@@ -36,6 +41,14 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     @Override
     public String getUsername() throws RemoteException {
         return this.username;
+    }
+    
+    public void addGUIListener (IChangeGui guiListener) {
+        this.GUIs.add(guiListener);
+    }
+    
+    public void removeGUIListener (IChangeGui guiListener) {
+        this.GUIs.remove(guiListener);
     }
 
     @Override
