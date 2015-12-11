@@ -109,13 +109,13 @@ public class AdministrationTest
         assertNotNull("Opgehaalde user 'Stef' mag niet null zijn.", u);
     }
 
-    @Test
-    public void testSet_GetCurrentLobby()
-    {
-        Lobby lobby = new Lobby();
-        Administration.get().setCurrentLobby(lobby);
-        assertNotNull("Lobby kan geen null zijn", Administration.get().getCurrentLobby());
-    }
+//    @Test
+//    public void testSet_GetCurrentLobby()
+//    {
+//        __Lobby lobby = new __Lobby();
+//        Administration.get().setCurrentLobby(lobby);
+//        assertNotNull("Lobby kan geen null zijn", Administration.get().getCurrentLobby());
+//    }
 
     @Test
     public void testGetLoggedInUser()

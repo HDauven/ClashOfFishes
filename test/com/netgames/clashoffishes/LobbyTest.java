@@ -54,7 +54,7 @@ public class LobbyTest
     @Test
     public void testAddUser()
     {
-        Lobby lobby = new Lobby();
+        __Lobby lobby = new __Lobby();
         lobby.addUser(u);
         assertEquals("Eerste persoon is toegevoegd, dus size moet 1 zijn", 1, lobby.getUsers().size());
         lobby.addUser(null);
@@ -71,7 +71,7 @@ public class LobbyTest
     @Test
     public void testRemoveUser()
     {
-        Lobby lobby = new Lobby();
+        __Lobby lobby = new __Lobby();
         lobby.addUser(u);
         lobby.removeUser(u2);
         assertEquals("De toegevoegde user mag niet verwijderd zijn.", 1, lobby.getUsers().size());
@@ -87,7 +87,7 @@ public class LobbyTest
     @Test
     public void testUserIsReady_testIsUserReady()
     {
-        Lobby lobby = new Lobby();
+        __Lobby lobby = new __Lobby();
         lobby.addUser(u);
         lobby.addUser(u2);
         lobby.userIsReady(u, true);
@@ -102,7 +102,7 @@ public class LobbyTest
     @Test
     public void testIsEveryoneReady()
     {
-        Lobby lobby = new Lobby();
+        __Lobby lobby = new __Lobby();
         lobby.addUser(u);
         lobby.addUser(u2);
         lobby.userIsReady(u, true);
@@ -117,7 +117,7 @@ public class LobbyTest
     @Test
     public void testGetSelectedGameMode_testSetSelectedGameMode()
     {
-        Lobby lobby = new Lobby();
+        __Lobby lobby = new __Lobby();
         lobby.setGameMode(GameMode.EVOLVED);
         assertEquals("GameMode", GameMode.EVOLVED, lobby.getGameMode());
     }
@@ -128,7 +128,7 @@ public class LobbyTest
     @Test
     public void testCreateGame()
     {
-        Lobby lobby = new Lobby();
+        __Lobby lobby = new __Lobby();
         GameManager gm = lobby.createGame();
         assertNotNull("Lobby moet aangemaakt zijn.", gm);
     }

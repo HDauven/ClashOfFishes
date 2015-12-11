@@ -3,7 +3,6 @@ package com.netgames.clashoffishes.server;
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.engine.GameMode;
-import com.netgames.clashoffishes.interfaces.IChangeGui;
 import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.server.remote.IMessage;
@@ -177,6 +176,9 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     public String toString() {
         return this.ref.remoteToString();
     }
-
     
+    @Override
+    public void startGame(){
+        Administration.get().getLobbyRegistry().startGameServer();
+    }
 }

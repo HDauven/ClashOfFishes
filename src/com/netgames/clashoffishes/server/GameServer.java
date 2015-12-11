@@ -108,4 +108,13 @@ public class GameServer extends Observable implements IGameServer, Serializable
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void start() throws RemoteException
+    {
+        for(IGameClient gc : this.clients){
+            gc.startGame((int)System.currentTimeMillis());
+            this.gameManager.startGame((int)System.currentTimeMillis());
+        }
+    }
 }

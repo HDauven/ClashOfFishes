@@ -5,6 +5,7 @@
  */
 package com.netgames.clashoffishes.server;
 
+import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import com.netgames.clashoffishes.server.remote.IGameClient;
 import java.rmi.RemoteException;
@@ -28,7 +29,8 @@ public class GameClient implements IGameClient
     @Override
     public void startGame(Integer mapSeed) throws RemoteException
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //Niet zeker of dit klopt
+        Administration.get().getLobbyRegistry().startGameServer();
     }
 
     @Override
