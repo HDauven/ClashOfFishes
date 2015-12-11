@@ -60,7 +60,9 @@ public class HostedGamesController implements Initializable {
     private Administration administration;
 
     private IServer cofServer;
+
     private final String cofServerURL = "rmi://localhost:1100/Server";
+
     private List<ILobby> lobbyList = new ArrayList<>();
 
     /**

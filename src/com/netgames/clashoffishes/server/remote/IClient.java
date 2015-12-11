@@ -16,6 +16,18 @@ public interface IClient extends Remote {
     void retrieveMessage(IMessage message) 
             throws RemoteException;
     
+    void retrievePlayer(String player) 
+            throws RemoteException;
+    
+    void retrieveCharacter(String character) 
+            throws RemoteException;
+    
+    void retrieveReady(boolean isReady) 
+            throws RemoteException;
+    
+    void retrieveGameMode(String gameMode)
+            throws RemoteException;
+    
     /**
      * Method that gets the Username of an IClient.
      * @return The IClient Username

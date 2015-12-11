@@ -3,7 +3,6 @@ package com.netgames.clashoffishes.server;
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.engine.GameMode;
-import com.netgames.clashoffishes.interfaces.IChangeGui;
 import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.server.remote.IMessage;
@@ -30,7 +29,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
 
     private GameMode gameMode = GameMode.EVOLVED;
     
-    private List<IChangeGui> GUIs;
+    
 
     /**
      *
@@ -41,7 +40,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         clients = new ArrayList<>();
         messages = new ArrayList<>();
         host = Administration.get().getLoggedInUser();
-        GUIs = new ArrayList();
+        
         Administration.get().setClient(new Client(host.getUsername(), this));
     }
 
@@ -79,6 +78,38 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         int i = 0;
         while (i < clients.size()) {
             clients.get(i++).retrieveMessage(message);
+        }
+    }
+    
+    @Override
+    public void broadcastPlayer(String player) throws RemoteException {
+        int i = 0;
+        while (i < clients.size()) {
+            clients.get(i++).retrievePlayer(player);
+        }
+    }
+
+    @Override
+    public void broadcastCharacter(String character) throws RemoteException {
+        int i = 0;
+        while (i < clients.size()) {
+            clients.get(i++).retrieveCharacter(character);
+        }
+    }
+
+    @Override
+    public void broadcastReady(boolean isReady) throws RemoteException {
+        int i = 0;
+        while (i < clients.size()) {
+            clients.get(i++).retrieveReady(isReady);
+        }
+    }
+
+    @Override
+    public void broadcastGameMode(String gameMode) throws RemoteException {
+        int i = 0;
+        while (i < clients.size()) {
+            clients.get(i++).retrieveGameMode(gameMode);
         }
     }
 
@@ -130,13 +161,6 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         this.clients = clients;
     }
     
-    public void addGUIListener (IChangeGui guiListener) {
-        this.GUIs.add(guiListener);
-    }
-    
-    public void removeGUIListener (IChangeGui guiListener) {
-        this.GUIs.remove(guiListener);
-    }
     
     @Override
     public List<IMessage> getMessages() throws RemoteException {
