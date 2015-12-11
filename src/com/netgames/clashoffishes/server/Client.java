@@ -1,5 +1,6 @@
 package com.netgames.clashoffishes.server;
 
+import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.interfaces.IChangeGui;
 import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.ILobby;
@@ -39,6 +40,38 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
         System.out.println(message.toString());
         for (IChangeGui guis : this.GUIs) {
             guis.displayMessage(message.toString());
+        }
+    }
+    
+    @Override
+    public void retrievePlayer(String player) throws RemoteException {
+        for (IChangeGui guis : this.GUIs) {
+            guis.displayPlayer(player);
+        }
+    }
+
+    @Override
+    public void retrieveCharacter(String character) throws RemoteException {
+        for (IChangeGui guis : this.GUIs) {
+            guis.displaySelectedCharacter(character);
+        }
+    }
+
+    @Override
+    public void retrieveReady(boolean isReady) throws RemoteException {
+        for (IChangeGui guis : this.GUIs) {
+            guis.displayReady(isReady);
+        }
+    }
+
+    @Override
+    public void retrieveGameMode(String gameMode) throws RemoteException {
+        for (IChangeGui guis : this.GUIs) {
+            for (GameMode gm : GameMode.values()) {
+                if (gm.toString() == gameMode) {
+                    guis.displayGameMode(gm);
+                }
+            }
         }
     }
 
@@ -82,5 +115,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
             }
         }
     }
+
+    
 
 }

@@ -34,6 +34,12 @@ public interface ILobby extends Remote {
     void removeClient(IClient client) 
             throws RemoteException;
     
+    
+    
+    
+    
+    
+    
     /**
      * Method that broadcasts a message to all the IClients.
      * @param message The message that is meant for all the IClients.
@@ -41,6 +47,34 @@ public interface ILobby extends Remote {
      */
     void broadcastMessage(IMessage message) 
             throws RemoteException;
+    
+    
+    //TODO JAVADOC
+    void broadcastPlayer(String player) 
+            throws RemoteException;
+    
+    void broadcastCharacter(String character) 
+            throws RemoteException;
+    
+    void broadcastReady(boolean isReady) 
+            throws RemoteException;
+    
+    void broadcastGameMode(String gameMode) 
+            throws RemoteException;
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     /**
      * Method that gets all the messages from the IServer that were sent prior
@@ -67,4 +101,4 @@ public interface ILobby extends Remote {
 
     String getGameModeProperty()
             throws RemoteException;
-}    
+}     

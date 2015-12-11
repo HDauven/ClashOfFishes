@@ -81,6 +81,38 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
             clients.get(i++).retrieveMessage(message);
         }
     }
+    
+    @Override
+    public void broadcastPlayer(String player) throws RemoteException {
+        int i = 0;
+        while (i < clients.size()) {
+            clients.get(i++).retrievePlayer(player);
+        }
+    }
+
+    @Override
+    public void broadcastCharacter(String character) throws RemoteException {
+        int i = 0;
+        while (i < clients.size()) {
+            clients.get(i++).retrieveCharacter(character);
+        }
+    }
+
+    @Override
+    public void broadcastReady(boolean isReady) throws RemoteException {
+        int i = 0;
+        while (i < clients.size()) {
+            clients.get(i++).retrieveReady(isReady);
+        }
+    }
+
+    @Override
+    public void broadcastGameMode(String gameMode) throws RemoteException {
+        int i = 0;
+        while (i < clients.size()) {
+            clients.get(i++).retrieveGameMode(gameMode);
+        }
+    }
 
     public String getLobbyTitle() {
         try {
@@ -140,4 +172,6 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     public String toString() {
         return this.ref.remoteToString();
     }
+
+    
 }
