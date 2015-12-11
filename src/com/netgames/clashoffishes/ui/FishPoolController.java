@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,6 +39,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -66,11 +69,8 @@ public class FishPoolController implements Initializable, IChangeGui {
     private RadioButton rbEvolutionOfTime;
     @FXML
     private RadioButton rbEvolved;
-    @FXML
     private TableColumn<?, ?> clmPlayers;
-    @FXML
     private TableColumn<?, ?> clmReady;
-    @FXML
     private TableColumn<?, ?> clmCharacter;
     @FXML
     private Button btnReady;
@@ -208,13 +208,25 @@ public class FishPoolController implements Initializable, IChangeGui {
 
     @FXML
     private void btnSendMessage_OnClick(ActionEvent event) {
+        this.SendMessage();
+    }
+    
+    private void SendMessage() {
         try {
             lobby.broadcastMessage(new Message(Administration.get().getLoggedInUser().getUsername(),tfMessage.getText()));
         } catch (RemoteException ex) {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.tfMessage.clear();
     }
 
+    @FXML
+    private void OnEnterClick(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            this.SendMessage();
+        }
+    }
+    
     /**
      * Add a user which is not ready yet with the username to the player-table
      *
@@ -254,7 +266,12 @@ public class FishPoolController implements Initializable, IChangeGui {
 
     @Override
     public void displayMessage(String message) {
-        this.lstViewMessages.getItems().add(message);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                lstViewMessages.getItems().add(message);
+            }
+        });    
     }
 
     @Override
@@ -271,4 +288,6 @@ public class FishPoolController implements Initializable, IChangeGui {
     public void displayGameMode(GameMode gameMode) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
 }
