@@ -59,6 +59,9 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
             messages = lobby.getMessages();
             for (IMessage m : messages) {
                 System.out.println(m.toString());
+                for (IChangeGui guis : this.GUIs) {
+                    guis.displayMessage(m.toString());
+                }
             }
         } catch (RemoteException ex) {
             System.out.println("RemoteException: " + ex.getMessage());

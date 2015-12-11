@@ -11,13 +11,9 @@ import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.interfaces.IChangeGui;
-import com.netgames.clashoffishes.server.Lobby;
-import com.netgames.clashoffishes.server.LobbyRegistry;
 import com.netgames.clashoffishes.server.Message;
 import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.ILobby;
-import com.netgames.clashoffishes.util.GuiUtilities;
-import static com.netgames.clashoffishes.util.GuiUtilities.TITLE_HOSTED_GAMES;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -28,7 +24,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -45,7 +40,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
@@ -91,7 +85,7 @@ public class FishPoolController implements Initializable, IChangeGui {
     @FXML
     private Label lblCharacter;
     @FXML
-    private ListView<?> lstViewMessages;
+    private ListView<String> lstViewMessages;
     @FXML
     private Button btnSendMessage;
     @FXML
@@ -114,7 +108,7 @@ public class FishPoolController implements Initializable, IChangeGui {
     public void initialize(URL url, ResourceBundle rb) {
         // Haal de current lobby op.
         this.lobby = Administration.get().getLobby();
-        
+        Administration.get().getClient().addGUIListener(this);
         
         try {
             lblLobbyName.setText(lobby.getPoolNameProperty());
@@ -260,7 +254,7 @@ public class FishPoolController implements Initializable, IChangeGui {
 
     @Override
     public void displayMessage(String message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.lstViewMessages.getItems().add(message);
     }
 
     @Override

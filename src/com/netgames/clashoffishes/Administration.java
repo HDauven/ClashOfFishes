@@ -2,6 +2,7 @@ package com.netgames.clashoffishes;
 
 import com.netgames.clashoffishes.data.DatabaseStorage;
 import com.netgames.clashoffishes.engine.GameMode;
+import com.netgames.clashoffishes.server.Client;
 import com.netgames.clashoffishes.server.Lobby;
 import com.netgames.clashoffishes.server.LobbyRegistry;
 import com.netgames.clashoffishes.server.remote.IClient;
@@ -25,7 +26,7 @@ public class Administration {
     private int objectNr;
     
     private ILobby lobby;
-    private IClient client;
+    private Client client;
 
     protected Administration() {
         this.user = null;
@@ -94,11 +95,11 @@ public class Administration {
         this.lobby = lobby;
     }
 
-    public IClient getClient() {
+    public Client getClient() {
         return client;
     }
 
-    public void setClient(IClient client) {
+    public void setClient(Client client) {
         this.client = client;
     }
 
