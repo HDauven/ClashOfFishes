@@ -207,6 +207,7 @@ public class LobbyRegistry extends Observable
             LocateRegistry.getRegistry().unbind(bindingName);
             LocateRegistry.createRegistry(portNumber2);
             Naming.rebind("//localhost:" + portNumber2 + "/" + bindingName, gameServer);
+            
             for(IClient c : lobby.getClients()){
                 GameClient gc = new GameClient(c.getUsername());
                 gc.startGame(seed);

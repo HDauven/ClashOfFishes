@@ -17,7 +17,8 @@ import java.util.Scanner;
  *
  * @author Hein Dauven
  */
-public class Client extends UnicastRemoteObject implements IClient, Runnable {
+public class Client extends UnicastRemoteObject implements IClient, Runnable
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -26,7 +27,8 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
 
     private List<IChangeGui> GUIs;
 
-    public Client(String username, ILobby lobby) throws RemoteException {
+    public Client(String username, ILobby lobby) throws RemoteException
+    {
         super();
         this.username = username;
         this.lobby = lobby;
@@ -36,39 +38,51 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     }
 
     @Override
-    public void retrieveMessage(IMessage message) throws RemoteException {
+    public void retrieveMessage(IMessage message) throws RemoteException
+    {
         System.out.println(message.toString());
-        for (IChangeGui guis : this.GUIs) {
+        for (IChangeGui guis : this.GUIs)
+        {
             guis.displayMessage(message.toString());
         }
     }
-    
+
     @Override
-    public void retrievePlayer(String player) throws RemoteException {
-        for (IChangeGui guis : this.GUIs) {
+    public void retrievePlayer(String player) throws RemoteException
+    {
+        for (IChangeGui guis : this.GUIs)
+        {
             guis.displayPlayer(player);
         }
     }
 
     @Override
-    public void retrieveCharacter(String character) throws RemoteException {
-        for (IChangeGui guis : this.GUIs) {
+    public void retrieveCharacter(String character) throws RemoteException
+    {
+        for (IChangeGui guis : this.GUIs)
+        {
             guis.displaySelectedCharacter(character);
         }
     }
 
     @Override
-    public void retrieveReady(boolean isReady) throws RemoteException {
-        for (IChangeGui guis : this.GUIs) {
+    public void retrieveReady(boolean isReady) throws RemoteException
+    {
+        for (IChangeGui guis : this.GUIs)
+        {
             guis.displayReady(isReady);
         }
     }
 
     @Override
-    public void retrieveGameMode(String gameMode) throws RemoteException {
-        for (IChangeGui guis : this.GUIs) {
-            for (GameMode gm : GameMode.values()) {
-                if (gm.toString() == gameMode) {
+    public void retrieveGameMode(String gameMode) throws RemoteException
+    {
+        for (IChangeGui guis : this.GUIs)
+        {
+            for (GameMode gm : GameMode.values())
+            {
+                if (gm.toString() == gameMode)
+                {
                     guis.displayGameMode(gm);
                 }
             }
@@ -76,46 +90,58 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     }
 
     @Override
-    public String getUsername() throws RemoteException {
+    public String getUsername() throws RemoteException
+    {
+        System.out.println("getUsername in client-class");
         return this.username;
     }
 
-    public void addGUIListener(IChangeGui guiListener) {
+    public void addGUIListener(IChangeGui guiListener)
+    {
         this.GUIs.add(guiListener);
     }
 
-    public void removeGUIListener(IChangeGui guiListener) {
+    public void removeGUIListener(IChangeGui guiListener)
+    {
         this.GUIs.remove(guiListener);
     }
 
     @Override
-    public void run() {
+    public void run()
+    {
         // TODO recode this for practical purposes, with a string instead of a System.out.println
         List<IMessage> messages;
-        try {
+        try
+        {
             messages = lobby.getMessages();
-            for (IMessage m : messages) {
+            for (IMessage m : messages)
+            {
                 System.out.println(m.toString());
-                for (IChangeGui guis : this.GUIs) {
+                for (IChangeGui guis : this.GUIs)
+                {
                     guis.displayMessage(m.toString());
                 }
             }
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             System.out.println("RemoteException: " + ex.getMessage());
         }
 
         Scanner scanner = new Scanner(System.in);
         String message;
-        while (true) {
+        while (true)
+        {
             message = scanner.nextLine();
-            try {
+            try
+            {
                 lobby.broadcastMessage(new Message(this.username, message));
-            } catch (RemoteException e) {
+            }
+            catch (RemoteException e)
+            {
                 System.out.println("RemoteException: " + e.getMessage());
             }
         }
     }
-
-    
 
 }
