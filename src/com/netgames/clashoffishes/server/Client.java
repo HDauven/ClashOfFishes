@@ -11,19 +11,20 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Client class that holds a link to a lobby it registers to.
- * Implementation of an IClient.
+ * Client class that holds a link to a lobby it registers to. Implementation of
+ * an IClient.
+ *
  * @author Hein Dauven
  */
 public class Client extends UnicastRemoteObject implements IClient, Runnable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private ILobby lobby;
     private String username = null;
-    
+
     private List<IChangeGui> GUIs;
-    
+
     public Client(String username, ILobby lobby) throws RemoteException {
         super();
         this.username = username;
@@ -31,23 +32,26 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
         // TODO add fontys listener? 
         lobby.registerClient(this);
         GUIs = new ArrayList();
-    }    
-    
+    }
+
     @Override
     public void retrieveMessage(IMessage message) throws RemoteException {
         System.out.println(message.toString());
+        for (IChangeGui guis : this.GUIs) {
+            guis.displayMessage(message.toString());
+        }
     }
 
     @Override
     public String getUsername() throws RemoteException {
         return this.username;
     }
-    
-    public void addGUIListener (IChangeGui guiListener) {
+
+    public void addGUIListener(IChangeGui guiListener) {
         this.GUIs.add(guiListener);
     }
-    
-    public void removeGUIListener (IChangeGui guiListener) {
+
+    public void removeGUIListener(IChangeGui guiListener) {
         this.GUIs.remove(guiListener);
     }
 
@@ -66,7 +70,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
         } catch (RemoteException ex) {
             System.out.println("RemoteException: " + ex.getMessage());
         }
-        
+
         Scanner scanner = new Scanner(System.in);
         String message;
         while (true) {
@@ -78,5 +82,5 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
             }
         }
     }
-    
+
 }

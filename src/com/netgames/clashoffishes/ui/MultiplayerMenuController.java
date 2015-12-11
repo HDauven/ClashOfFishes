@@ -52,9 +52,9 @@ public class MultiplayerMenuController implements Initializable
     private void hostGame(ActionEvent event) {
         // Executes the creation of a LobbyRegistry and its lookup on a seperate thread.
         // Once this is done, the 'task' tells the JAT to build the new, corresponding stage.
-        Task task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
+//        Task task = new Task<Void>() {
+//            @Override
+//            protected Void call() throws Exception {
                 //TODO werkend krijgen voor multiplayer
                 LobbyRegistry lobbyRegistry = new LobbyRegistry();
                 lobbyRegistry.clashOfFishesServerLookup();
@@ -63,10 +63,10 @@ public class MultiplayerMenuController implements Initializable
                 Platform.runLater(() -> {
                     GuiUtilities.buildStage(MultiplayerMenuController.this.paneMainForm.getScene().getWindow(), "FishPool", "Fishpool: " + GuiUtilities.getFishPoolTitle());
                 });
-                return null;
-            }
-        };
-        (new Thread(task)).start();
+//                return null;
+//            }
+//        };
+//        (new Thread(task)).start();
     }
 
     @FXML
