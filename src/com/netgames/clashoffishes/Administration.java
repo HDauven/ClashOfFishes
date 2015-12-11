@@ -7,7 +7,15 @@ import com.netgames.clashoffishes.server.Lobby;
 import com.netgames.clashoffishes.server.LobbyRegistry;
 import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.ILobby;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Christian on 1/10/15.
@@ -24,9 +32,13 @@ public class Administration {
     private static DatabaseStorage dbStorage;
 
     private int objectNr;
-    
+
     private ILobby lobby;
     private Client client;
+
+    File f = new File("props.txt");
+    PrintWriter out;
+    private String ipAddress;
 
     protected Administration() {
         this.user = null;
@@ -36,6 +48,7 @@ public class Administration {
         this.validator = new EmailValidator();
         this.lobbyRegistry = null;
         this.dbStorage = new DatabaseStorage();
+        this.readProps();
     }
 
     public static Administration get() {
@@ -122,5 +135,41 @@ public class Administration {
 
     public int nextObjectNr() {
         return objectNr++;
+    }
+
+    private void readProps() {
+        try {
+            if(!f.exists()){
+                f.createNewFile();
+                out = new PrintWriter("props.txt");
+                out.println("localhost");
+                out.close();
+            }
+            Scanner sc = new Scanner(f);
+            this.ipAddress = sc.next();
+            System.out.println("IP-address server: " + ipAddress);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Administration.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Administration.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(NoSuchElementException ex){
+            System.out.println("Zet een geldig ip-adres of localhost in props.txt");
+        }
+        finally{
+            if(out != null){
+                out.close();
+            }
+        }
+
+    }
+
+    public String getIpAddress() {
+        return this.ipAddress;
+    }
+
+    private static class InputStream {
+
+        public InputStream() {
+        }
     }
 }
