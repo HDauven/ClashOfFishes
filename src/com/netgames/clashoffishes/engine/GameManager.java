@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -115,6 +116,11 @@ public class GameManager extends Application implements IGameClient, Serializabl
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        this.startGame();
+    }
+
+    private void startGame()
+    {
         createSceneEventHandling();
         loadAudioAssets();
         loadImageAssets();
@@ -284,6 +290,19 @@ public class GameManager extends Application implements IGameClient, Serializabl
         // TODO adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
         map = new GameMap((int) WIDTH, (int) HEIGHT);
+        menu = new GameMenu(this);
+
+        createPlayer();
+    }
+
+    /**
+     * Creates the necessary GameObjects for the game.
+     */
+    private void createGameObjects(int seed)
+    {
+        // TODO adding game objects format:
+        // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
+        map = new GameMap((int) WIDTH, (int) HEIGHT, seed);
         menu = new GameMenu(this);
 
         createPlayer();
@@ -579,6 +598,33 @@ public class GameManager extends Application implements IGameClient, Serializabl
     @Override
     public void startGame(Integer mapSeed) throws RemoteException
     {
+        System.out.println("GameServer started");
+        System.out.println("Start game on client");
+        Runnable run = new Runnable()
+        {
+
+            @Override
+            public void run()
+            {
+                thisStage = new Stage();
+                thisStage.setTitle("Clash of Fishes");
+                root = new Group();
+                scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
+                thisStage.setScene(scene);
+                thisStage.show();
+                createSceneEventHandling();
+                loadAudioAssets();
+                loadImageAssets();
+                createGameObjects(mapSeed);
+                addGameObjectNodes();
+                createObjectManager();
+                addNodesToGroup();
+                createStartGameLoop();
+            }
+        };
+
+        //Thread t = new Thread(run);
+        Platform.runLater(run);
 
     }
 
@@ -593,7 +639,8 @@ public class GameManager extends Application implements IGameClient, Serializabl
     public void objectCreation(int x, int y, ObjectType objectType) throws RemoteException
     {
         GameObject object;
-        switch(objectType){
+        switch (objectType)
+        {
             case ENERGYDRINK:
                 object = new EnergyDrink(x, y, energyDrink1);
                 break;
@@ -603,15 +650,16 @@ public class GameManager extends Application implements IGameClient, Serializabl
             case SEAWEED:
                 object = new Seaweed(x, y, seaweed1);
         }
-         
+
     }
 
     public Player getPlayer(int playerID)
     {
-        if(this.player.getID() == playerID){
+        if (this.player.getID() == playerID)
+        {
             return player;
         }
-        
+
         for (Player p : this.opponents)
         {
             if (p.getID() == playerID)
