@@ -45,7 +45,7 @@ public class LobbyRegistry extends Observable
     GameServer gameServer = null;
 
     private static IServer cofServer;
-    private final String cofServerURL = "rmi://145.93.173.5:1100/Server";
+    private final String cofServerURL = "rmi://192.168.200.38:1100/Server";
     
     // Constructor
     public LobbyRegistry()
