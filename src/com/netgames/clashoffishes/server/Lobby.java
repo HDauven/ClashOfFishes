@@ -74,43 +74,48 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     }
 
     @Override
-    public void broadcastMessage(IMessage message) throws RemoteException {
+    public void broadcastMessage(IMessage message, IClient sender)  throws RemoteException {
         messages.add(message);
         int i = 0;
         while (i < clients.size()) {
-            clients.get(i++).retrieveMessage(message);
+            clients.get(i).retrieveMessage(message, clients.get(i));
+            i++;
         }
     }
     
     @Override
-    public void broadcastPlayer(String player) throws RemoteException {
+    public void broadcastPlayer(String player, IClient sender)  throws RemoteException {
         int i = 0;
         while (i < clients.size()) {
-            clients.get(i++).retrievePlayer(player);
+            clients.get(i).retrievePlayer(player, clients.get(i));
+            i++;
         }
     }
 
     @Override
-    public void broadcastCharacter(String character) throws RemoteException {
+    public void broadcastCharacter(String character, IClient sender)  throws RemoteException {
         int i = 0;
         while (i < clients.size()) {
-            clients.get(i++).retrieveCharacter(character);
+            clients.get(i).retrieveCharacter(character, clients.get(i));
+            i++;
         }
     }
 
     @Override
-    public void broadcastReady(boolean isReady) throws RemoteException {
+    public void broadcastReady(boolean isReady, IClient sender)  throws RemoteException {
         int i = 0;
         while (i < clients.size()) {
-            clients.get(i++).retrieveReady(isReady);
+            clients.get(i).retrieveReady(isReady, clients.get(i));
+            i++;
         }
     }
 
     @Override
-    public void broadcastGameMode(String gameMode) throws RemoteException {
+    public void broadcastGameMode(String gameMode, IClient sender)  throws RemoteException {
         int i = 0;
         while (i < clients.size()) {
-            clients.get(i++).retrieveGameMode(gameMode);
+            clients.get(i).retrieveGameMode(gameMode, clients.get(i));
+            i++;
         }
     }
 

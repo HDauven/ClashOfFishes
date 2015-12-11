@@ -213,7 +213,7 @@ public class FishPoolController implements Initializable, IChangeGui {
     
     private void SendMessage() {
         try {
-            lobby.broadcastMessage(new Message(Administration.get().getLoggedInUser().getUsername(),tfMessage.getText()));
+            lobby.broadcastMessage(new Message(Administration.get().getLoggedInUser().getUsername(),tfMessage.getText()), Administration.get().getClient());
         } catch (RemoteException ex) {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }

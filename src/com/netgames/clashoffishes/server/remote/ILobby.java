@@ -45,21 +45,21 @@ public interface ILobby extends Remote {
      * @param message The message that is meant for all the IClients.
      * @throws RemoteException 
      */
-    void broadcastMessage(IMessage message) 
+    void broadcastMessage(IMessage message, IClient sender) 
             throws RemoteException;
     
     
     //TODO JAVADOC
-    void broadcastPlayer(String player) 
+    void broadcastPlayer(String player, IClient sender) 
             throws RemoteException;
     
-    void broadcastCharacter(String character) 
+    void broadcastCharacter(String character, IClient sender) 
             throws RemoteException;
     
-    void broadcastReady(boolean isReady) 
+    void broadcastReady(boolean isReady, IClient sender) 
             throws RemoteException;
     
-    void broadcastGameMode(String gameMode) 
+    void broadcastGameMode(String gameMode, IClient sender) 
             throws RemoteException;
   
     

@@ -13,19 +13,19 @@ public interface IClient extends Remote {
      * @param message The IMessage as is being received from the IServer
      * @throws RemoteException 
      */
-    void retrieveMessage(IMessage message) 
+    void retrieveMessage(IMessage message, IClient sender) 
             throws RemoteException;
     
-    void retrievePlayer(String player) 
+    void retrievePlayer(String player, IClient sender) 
             throws RemoteException;
     
-    void retrieveCharacter(String character) 
+    void retrieveCharacter(String character, IClient sender) 
             throws RemoteException;
     
-    void retrieveReady(boolean isReady) 
+    void retrieveReady(boolean isReady, IClient sender) 
             throws RemoteException;
     
-    void retrieveGameMode(String gameMode)
+    void retrieveGameMode(String gameMode, IClient sender) 
             throws RemoteException;
     
     /**

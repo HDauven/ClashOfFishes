@@ -36,7 +36,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     }
 
     @Override
-    public void retrieveMessage(IMessage message) throws RemoteException {
+    public void retrieveMessage(IMessage message, IClient sender)  throws RemoteException {
         System.out.println(message.toString());
         for (IChangeGui guis : this.GUIs) {
             guis.displayMessage(message.toString());
@@ -44,28 +44,28 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     }
     
     @Override
-    public void retrievePlayer(String player) throws RemoteException {
+    public void retrievePlayer(String player, IClient sender)  throws RemoteException {
         for (IChangeGui guis : this.GUIs) {
             guis.displayPlayer(player);
         }
     }
 
     @Override
-    public void retrieveCharacter(String character) throws RemoteException {
+    public void retrieveCharacter(String character, IClient sender)  throws RemoteException {
         for (IChangeGui guis : this.GUIs) {
             guis.displaySelectedCharacter(character);
         }
     }
 
     @Override
-    public void retrieveReady(boolean isReady) throws RemoteException {
+    public void retrieveReady(boolean isReady, IClient sender)  throws RemoteException {
         for (IChangeGui guis : this.GUIs) {
             guis.displayReady(isReady);
         }
     }
 
     @Override
-    public void retrieveGameMode(String gameMode) throws RemoteException {
+    public void retrieveGameMode(String gameMode, IClient sender)  throws RemoteException {
         for (IChangeGui guis : this.GUIs) {
             for (GameMode gm : GameMode.values()) {
                 if (gm.toString() == gameMode) {
@@ -109,7 +109,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
         while (true) {
             message = scanner.nextLine();
             try {
-                lobby.broadcastMessage(new Message(this.username, message));
+                lobby.broadcastMessage(new Message(this.username, message),(IClient)this);
             } catch (RemoteException e) {
                 System.out.println("RemoteException: " + e.getMessage());
             }
