@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -597,22 +598,34 @@ public class GameManager extends Application implements IGameClient, Serializabl
     @Override
     public void startGame(Integer mapSeed) throws RemoteException
     {
+        System.out.println("GameServer started");
         System.out.println("Start game on client");
-        thisStage = new Stage();
-        thisStage.setTitle("Clash of Fishes");
-        root = new Group();
-        scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
-        thisStage.setScene(scene);
-        thisStage.show();
-        
-        createSceneEventHandling();
-        loadAudioAssets();
-        loadImageAssets();
-        createGameObjects(mapSeed);
-        addGameObjectNodes();
-        createObjectManager();
-        addNodesToGroup();
-        createStartGameLoop();
+        Runnable run = new Runnable()
+        {
+
+            @Override
+            public void run()
+            {
+                thisStage = new Stage();
+                thisStage.setTitle("Clash of Fishes");
+                root = new Group();
+                scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
+                thisStage.setScene(scene);
+                thisStage.show();
+                createSceneEventHandling();
+                loadAudioAssets();
+                loadImageAssets();
+                createGameObjects(mapSeed);
+                addGameObjectNodes();
+                createObjectManager();
+                addNodesToGroup();
+                createStartGameLoop();
+            }
+        };
+
+        //Thread t = new Thread(run);
+        Platform.runLater(run);
+
     }
 
     @Override

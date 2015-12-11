@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
-import java.util.Random;
 import javafx.application.Platform;
 
 /**
@@ -34,8 +33,6 @@ public class GameServer extends Observable implements IGameServer, Serializable
     private List<IGameClient> clients;
     
     GameManager gameManager = new GameManager();
-    
-    Random random;
     
     /**
      * Constructor for the server
@@ -115,7 +112,9 @@ public class GameServer extends Observable implements IGameServer, Serializable
     @Override
     public void start() throws RemoteException
     {
-        random = new Random();
-        this.gameManager.startGame((int)System.currentTimeMillis());
+        for(IGameClient gc : this.clients){
+            gc.startGame((int)System.currentTimeMillis());
+            this.gameManager.startGame((int)System.currentTimeMillis());
+        }
     }
 }

@@ -195,8 +195,10 @@ public class LobbyRegistry extends Observable
 
     public void startGameServer()
     {
+        System.out.println("Start game-server in LobbyRegistry");
         try
         {
+            int seed = (int)System.currentTimeMillis();
             gameServer = new GameServer(this);
             for(IClient c : lobby.getClients()){
                 GameClient gc = new GameClient(c.getUsername());
@@ -205,6 +207,11 @@ public class LobbyRegistry extends Observable
             LocateRegistry.getRegistry().unbind(bindingName);
             LocateRegistry.createRegistry(portNumber2);
             Naming.rebind("//localhost:" + portNumber2 + "/" + bindingName, gameServer);
+            for(IClient c : lobby.getClients()){
+                GameClient gc = new GameClient(c.getUsername());
+                gc.startGame(seed);
+            }
+            System.out.println("GameServer bound");
             gameServer.start();
         }
         catch (RemoteException | MalformedURLException | NotBoundException ex)

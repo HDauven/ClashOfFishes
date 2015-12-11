@@ -65,13 +65,12 @@ public class LobbyServerConsole extends Application implements Observer
         //Application.launch(args);
         // TODO code application logic here
 
-
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-                RegistryServer registryServer = new RegistryServer();
+        RegistryServer registryServer = new RegistryServer();
         LobbyServerConsole console = new LobbyServerConsole();
         getRegistryLogMessages(registryServer);
         registryServer.addObserver(console);

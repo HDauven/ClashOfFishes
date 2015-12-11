@@ -7,8 +7,6 @@ package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.server.Client;
-import com.netgames.clashoffishes.server.Lobby;
-import com.netgames.clashoffishes.server.LobbyRegistry;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.server.remote.IServer;
 import com.netgames.clashoffishes.util.GuiUtilities;
@@ -20,8 +18,6 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -64,7 +60,7 @@ public class HostedGamesController implements Initializable {
     private Administration administration;
 
     private IServer cofServer;
-    private final String cofServerURL = "rmi://145.93.173.122:1100/Server";
+    private final String cofServerURL = "rmi://localhost:1100/Server";
     private List<ILobby> lobbyList = new ArrayList<>();
 
     /**

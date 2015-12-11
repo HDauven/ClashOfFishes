@@ -8,17 +8,16 @@ package com.netgames.clashoffishes.ui;
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.TableUser;
 import com.netgames.clashoffishes.User;
-import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.interfaces.IChangeGui;
-import com.netgames.clashoffishes.server.Lobby;
-import com.netgames.clashoffishes.server.LobbyRegistry;
 import com.netgames.clashoffishes.server.Message;
 import com.netgames.clashoffishes.server.remote.IClient;
+import com.netgames.clashoffishes.server.remote.IGameServer;
 import com.netgames.clashoffishes.server.remote.ILobby;
-import com.netgames.clashoffishes.util.GuiUtilities;
-import static com.netgames.clashoffishes.util.GuiUtilities.TITLE_HOSTED_GAMES;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -44,22 +42,20 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
  *
  * @author Stef
  */
-public class FishPoolController implements Initializable, IChangeGui {
+public class FishPoolController implements Initializable, IChangeGui
+{
 
     // TODO can't set 'ready' when character 'None' selected.
     // TODO can't select the same character as another player.
     // TODO update GUI when a different character is selected.
     // TODO enable/disable character when a different character is selected.
     // TODO allow for multiple players to select character 'None'.
-
     @FXML
     private AnchorPane paneMainForm;
     @FXML
@@ -98,6 +94,9 @@ public class FishPoolController implements Initializable, IChangeGui {
     private TextField tfMessage;
 
     private ILobby lobby;
+    
+    private final String gameServerURL = "rmi://localhost:1100/Server";
+    IGameServer gameServer = null;
 
     ObservableList<TableUser> tableUsers;
     //This object exists so the changeEvent gets triggered on tableUsers.removeAll()
@@ -111,17 +110,20 @@ public class FishPoolController implements Initializable, IChangeGui {
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         // Haal de current lobby op.
         this.lobby = Administration.get().getLobby();
-        
-        
-        try {
+
+        try
+        {
             lblLobbyName.setText(lobby.getPoolNameProperty());
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         // Voeg alle characterNamen toe aan de listbox.
         List<String> characterNames = new ArrayList<>();
         characterNames.add("None");
@@ -132,25 +134,33 @@ public class FishPoolController implements Initializable, IChangeGui {
         this.cbCharacters.setItems(FXCollections.observableArrayList(characterNames));
 
         setupGui();
-        
-        try {
+
+        try
+        {
             System.out.println(this.lobby.getPoolNameProperty());
-            for (IClient client : this.lobby.getClients()) {
+            for (IClient client : this.lobby.getClients())
+            {
                 this.tableUsers.add(new TableUser(client.getUsername(), "test", false));
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             System.out.println(e.getMessage());
-        } finally {
+        }
+        finally
+        {
             tbvPlayers.setItems(tableUsers);
         }
 
     }
 
     @FXML
-    private void cbCharacters_OnChanged(ActionEvent event) {
+    private void cbCharacters_OnChanged(ActionEvent event)
+    {
         String selectedCharacter = this.cbCharacters.getValue();
         URL playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
-        switch (selectedCharacter) {
+        switch (selectedCharacter)
+        {
             case "Bubbles":
                 System.out.println("Bubbles has been selected");
                 this.pictCharacter.setImage(new Image(playerDir.toString() + "BubblesIcon.png", 80, 51, true, false, true));
@@ -175,10 +185,13 @@ public class FishPoolController implements Initializable, IChangeGui {
     }
 
     @FXML
-    private void btnReady_OnClick(ActionEvent event) {
+    private void btnReady_OnClick(ActionEvent event)
+    {
         TableUser tableuserUpdated = null;
-        for (TableUser tableuser : this.tableUsers) {
-            if (tableuser.getUsername().equals(Administration.get().getLoggedInUser().getUsername()) && !this.cbCharacters.getValue().equals("None")) {
+        for (TableUser tableuser : this.tableUsers)
+        {
+            if (tableuser.getUsername().equals(Administration.get().getLoggedInUser().getUsername()) && !this.cbCharacters.getValue().equals("None"))
+            {
                 tableuserUpdated = tableuser;
             }
         }
@@ -189,11 +202,15 @@ public class FishPoolController implements Initializable, IChangeGui {
         tableUsers.removeAll(tableUsers2);
 
         tableUsers2.remove(tableuserUpdated);
-        if (tableuserUpdated != null) {
-            if (tableuserUpdated.getReady() == false) {
+        if (tableuserUpdated != null)
+        {
+            if (tableuserUpdated.getReady() == false)
+            {
                 tableuserUpdated.setReady(true);
                 btnReady.setText("I'm not ready!");
-            } else {
+            }
+            else
+            {
                 tableuserUpdated.setReady(false);
                 btnReady.setText("I'm ready!");
             }
@@ -205,12 +222,18 @@ public class FishPoolController implements Initializable, IChangeGui {
     }
 
     @FXML
-    private void btnStartGame_OnClick(ActionEvent event) {
+    private void btnStartGame_OnClick(ActionEvent event)
+    {
         //xxx Hier zou een gameManager misschien nog toegevoegd worden aan de singleton Administratie?
         //LobbyRegistry lobbyRegistry = new LobbyRegistry();
-<<<<<<< HEAD
-        try{
-        lobby.startGame();
+        
+        //Signal to gameserver
+        //Gameserver will send start method to all clients
+        //Start local gameserver
+        try
+        {
+            System.out.println("Start game button pressed");
+            lobby.startGame();
         }
         catch (RemoteException ex)
         {
@@ -218,17 +241,17 @@ public class FishPoolController implements Initializable, IChangeGui {
         }
         //GameManager gameManager = new GameManager();
         //gameManager.start(new Stage());
-=======
-        GameManager gameManager = new GameManager();
-        gameManager.start(new Stage());
->>>>>>> e07f9da0e94e959bd7867a5df11723db708e3c44
     }
 
     @FXML
-    private void btnSendMessage_OnClick(ActionEvent event) {
-        try {
-            lobby.broadcastMessage(new Message(Administration.get().getLoggedInUser().getUsername(),tfMessage.getText()));
-        } catch (RemoteException ex) {
+    private void btnSendMessage_OnClick(ActionEvent event)
+    {
+        try
+        {
+            lobby.broadcastMessage(new Message(Administration.get().getLoggedInUser().getUsername(), tfMessage.getText()));
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -238,12 +261,14 @@ public class FishPoolController implements Initializable, IChangeGui {
      *
      * @param user user which is added to the game
      */
-    public void addUser(User user) {
+    public void addUser(User user)
+    {
         tableUsers.add(new TableUser(user));
         tbvPlayers.setItems(tableUsers);
     }
 
-    private void setupGui() {
+    private void setupGui()
+    {
         clmPlayers = new TableColumn("Players");
         clmCharacter = new TableColumn("Character");
         clmReady = new TableColumn("Ready");
@@ -266,27 +291,61 @@ public class FishPoolController implements Initializable, IChangeGui {
         cbCharacters.getSelectionModel().select(0);
     }
 
-    public ILobby getLobby() {
+    public ILobby getLobby()
+    {
         return lobby;
     }
+    
+    /**
+     * Method that looks up the Clash of Fishes Lobby Server in the name
+     * registry, based on a given RMI URL.
+     */
+    public void gameServerLookup()
+    {
+        try
+        {
+            //gameServerURL controleren
+            gameServer = (IGameServer) Naming.lookup(gameServerURL);
+            gameServer.start();
+        }
+        catch (NotBoundException ex)
+        {
+            System.out.println("Server: Cannot bind Clash of Fishes server");
+            System.out.println("NotBoundException: " + ex.getMessage());
+        }
+        catch (MalformedURLException ex)
+        {
+            System.out.println("Server: Cannot bind Clash of Fishes server");
+            System.out.println("MalformedURLException: " + ex.getMessage());
+        }
+        catch (RemoteException ex)
+        {
+            System.out.println("Server: Cannot bind Clash of Fishes server");
+            System.out.println("RemoteException: " + ex.getMessage());
+        }
+    }
 
     @Override
-    public void displayMessage(String message) {
+    public void displayMessage(String message)
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void displaySelectedCharacter(String characterName) {
+    public void displaySelectedCharacter(String characterName)
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void displayReady(boolean isReady) {
+    public void displayReady(boolean isReady)
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void displayGameMode(GameMode gameMode) {
+    public void displayGameMode(GameMode gameMode)
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
