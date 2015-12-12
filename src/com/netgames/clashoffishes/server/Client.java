@@ -66,9 +66,10 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
 
     @Override
     public void retrieveGameMode(String gameMode, IClient sender)  throws RemoteException {
+        System.out.println(gameMode);
         for (IChangeGui guis : this.GUIs) {
             for (GameMode gm : GameMode.values()) {
-                if (gm.toString() == gameMode) {
+                if (gm.toString().equalsIgnoreCase(gameMode)) {
                     guis.displayGameMode(gm);
                 }
             }

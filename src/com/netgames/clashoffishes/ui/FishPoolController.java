@@ -28,6 +28,8 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -298,6 +300,30 @@ public class FishPoolController implements Initializable, IChangeGui
         rbLastFishSwimming.selectedProperty().set(true);
 
         cbCharacters.getSelectionModel().select(0);
+        
+        this.rbEvolved.setOnAction((ActionEvent event) -> {
+            sendGameMode(GameMode.EVOLVED.name());
+        });
+        
+        this.rbEvolutionOfTime.setOnAction((ActionEvent event) -> {
+            sendGameMode(GameMode.EVOLUTION_OF_TIME.name());
+        });
+        
+        this.rbLastFishSwimming.setOnAction((ActionEvent event) -> {
+            sendGameMode(GameMode.LAST_FISH_STANDING.name());
+        });
+    }
+    
+    /**
+     * Sends the newly chosen GameMode to the currently active lobby.
+     * @param gameMode One of the chosen GameModes
+     */
+    private void sendGameMode(String gameMode) {
+        try {
+            lobby.broadcastGameMode(gameMode, Administration.get().getClient());
+        } catch (RemoteException ex) {
+            Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public ILobby getLobby()
@@ -359,7 +385,13 @@ public class FishPoolController implements Initializable, IChangeGui
     @Override
     public void displayGameMode(GameMode gameMode)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (gameMode.equals(GameMode.EVOLUTION_OF_TIME)) {
+            this.gameMode.selectToggle(rbEvolutionOfTime);
+        } else if (gameMode.equals(GameMode.EVOLVED)) {
+            this.gameMode.selectToggle(rbEvolved);
+        } else if (gameMode.equals(GameMode.LAST_FISH_STANDING)) {
+            this.gameMode.selectToggle(rbLastFishSwimming);
+        }
     }
 
     @Override
