@@ -159,10 +159,11 @@ public class HostedGamesController implements Initializable {
      */
     private void refreshServerList() {
         ObservableList<ILobby> lobbies = FXCollections.observableArrayList();
-        // Does the same as for (ILobby lobby : this.lobbyList) { lobbies.addAll(lobby); }
         this.lobbyList.stream().forEach((lobby) -> {
             lobbies.addAll(FXCollections.observableArrayList(lobby));
         });
-        tbvHostedGames.setItems(lobbies);
+        Platform.runLater(() -> {
+            tbvHostedGames.setItems(lobbies);
+        });
     }
 }
