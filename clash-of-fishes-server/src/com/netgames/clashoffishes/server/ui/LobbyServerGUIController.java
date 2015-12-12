@@ -2,12 +2,12 @@ package com.netgames.clashoffishes.server.ui;
 
 import com.netgames.clashoffishes.server.RegistryServer;
 import com.netgames.clashoffishes.server.Server;
+import com.netgames.clashoffishes.server.interfaces.ILobbyServerObserver;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +22,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author MuK
  */
-public class LobbyServerGUIController implements Initializable {
+public class LobbyServerGUIController implements Initializable, ILobbyServerObserver {
 
     @FXML
     private AnchorPane paneMainForm;
@@ -45,19 +45,16 @@ public class LobbyServerGUIController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         registry = new RegistryServer();
+        registry.addGUIListener(this);
+        server = registry.getServer();
+        
         getRegistryLogMessages(registry);
-        
-        registry.addObserver((Observable o, Object arg) -> {
-            updateRegistryServer(o,arg);
-        });
-        
-        registry.getServer().addObserver((Observable o, Object arg) -> {
-            updateServer(o,arg);            
-        });
     }
 
     @FXML
@@ -80,39 +77,35 @@ public class LobbyServerGUIController implements Initializable {
 
     /**
      * Executes each time a change takes place on the registry server log output.
-     * @param o
-     * @param arg 
+     * @param message
      */
-    public void updateRegistryServer(Observable o, Object arg) {
-        Task task = new Task<Void>() {
+    @Override
+    public void updateMessage(String message) {
+        Platform.runLater(new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                registry = (RegistryServer) o;
                 ArrayList<String> temp = registry.getOutput();
                 lstViewSystemLog.getItems().clear();
                 lstViewSystemLog.getItems().addAll(temp);
                 return null;
             }
-        };
-        task.run();
+        });
     }
-    
+
     /**
      * Executes each time a change takes place on the server.
-     * @param o
-     * @param arg 
+     * @param lobby 
      */
-    public void updateServer(Observable o,Object arg) {
-        Task task = new Task<Void>() {
+    @Override
+    public void updateLobby(ILobby lobby) {
+        Platform.runLater(new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                server = (Server) o;
                 ArrayList<ILobby> temp = (ArrayList<ILobby>) server.getLobbies();
                 lstViewServers.getItems().clear();
                 lstViewServers.getItems().addAll(temp);
                 return null;
             }
-        };
-        task.run();
+        });
     }
 }

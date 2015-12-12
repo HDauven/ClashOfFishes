@@ -2,23 +2,32 @@ package com.netgames.clashoffishes.server.console;
 
 import com.netgames.clashoffishes.server.RegistryServer;
 import com.netgames.clashoffishes.server.Server;
+import com.netgames.clashoffishes.server.interfaces.ILobbyServerObserver;
+import com.netgames.clashoffishes.server.remote.ILobby;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-import javafx.application.Application;
-import javafx.stage.Stage;
 
 /**
  * Console version of the Clash of Fishes Lobby Server.
  *
  * @author Hein Dauven
  */
-public class LobbyServerConsole extends Application implements Observer
-{
-
+public class LobbyServerConsole implements ILobbyServerObserver { 
+    
     // Reference to server
     private static RegistryServer registry;
     private static Server server;
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args)
+    {
+        // TODO code application logic here
+        RegistryServer registry = new RegistryServer();
+        LobbyServerConsole console = new LobbyServerConsole();
+        registry.addGUIListener(console);
+        getRegistryLogMessages(registry);
+    }
 
     /**
      * Method that processes the server output by calling the output ArrayList,
@@ -38,42 +47,12 @@ public class LobbyServerConsole extends Application implements Observer
     }
 
     @Override
-    public void update(Observable o, Object arg)
-    {
-        if (o instanceof RegistryServer)
-        {
-            registry = (RegistryServer) o;
-            System.out.println(registry.getLastOutput());
-        }
-        else if (o instanceof Server)
-        {
-            server = (Server) o;
-            System.out.println(server.getLastLobby());
-        }
-        else
-        {
-            registry.logMessage("Something went really wrong...");
-        }
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args)
-    {
-        launch(args);
-        //Application.launch(args);
-        // TODO code application logic here
-
+    public void updateMessage(String message) {
+        System.out.println(message);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception
-    {
-        RegistryServer registryServer = new RegistryServer();
-        LobbyServerConsole console = new LobbyServerConsole();
-        getRegistryLogMessages(registryServer);
-        registryServer.addObserver(console);
-        registryServer.getServer().addObserver(console);
+    public void updateLobby(ILobby lobby) {
+        System.out.println(lobby.toString());
     }
 }

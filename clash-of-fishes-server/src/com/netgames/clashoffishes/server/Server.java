@@ -1,5 +1,6 @@
 package com.netgames.clashoffishes.server;
 
+import com.netgames.clashoffishes.server.interfaces.ILobbyServerObserver;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.server.remote.IServer;
 import java.rmi.RemoteException;
@@ -14,11 +15,11 @@ import javafx.application.Platform;
  * Implementation of an IServer.
  * @author Hein Dauven
  */
-public class Server extends Observable implements IServer {
+public class Server implements IServer {
     // Version ID of the server
     private static final long serialVersionUID = 1L;
     
-    private final RegistryServer registryServer;
+    private final RegistryServer registry;
     
     private List<ILobby> lobbies;
     
@@ -29,24 +30,26 @@ public class Server extends Observable implements IServer {
      */
     public Server(RegistryServer registry) throws RemoteException {
         super();
-        registryServer = registry;
+        this.registry = registry;
         lobbies = new ArrayList<>();
     }
 
     @Override
     public void registerLobby(ILobby lobby) throws RemoteException {
         lobbies.add(lobby);
-        setChanged();
-        Platform.runLater(() -> { notifyObservers(); });
-        registryServer.logMessage("Registered lobby: " + lobby.toString());
+        for (ILobbyServerObserver guis : registry.getGUIs()) {
+            guis.updateLobby(lobby);
+        }
+        registry.logMessage("Registered lobby: " + lobby.toString());
     }
     
     @Override
     public void removeLobby(ILobby lobby) throws RemoteException {
         lobbies.remove(lobby);
-        setChanged();
-        Platform.runLater(() -> { notifyObservers(); });
-        registryServer.logMessage("Removed lobby: " + lobby.toString());
+        for (ILobbyServerObserver guis : registry.getGUIs()) {
+            guis.updateLobby(lobby);
+        }
+        registry.logMessage("Removed lobby: " + lobby.toString());
     }
 
     @Override

@@ -23,9 +23,7 @@ import java.util.logging.Logger;
  */
 public class LobbyRegistry extends Observable
 {
-
     // Set port number
-
     private static final int portNumber = 1099;
     private static final int portNumber2 = 1097;
 

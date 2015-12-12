@@ -1,5 +1,6 @@
 package com.netgames.clashoffishes.server;
 
+import com.netgames.clashoffishes.server.interfaces.ILobbyServerObserver;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
@@ -8,14 +9,13 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Observable;
-import javafx.application.Platform;
+import java.util.List;
 
 /**
  * Class that creates the RMI registry for the Clash Of Fishes Lobby Server.
  * @author Hein Dauven
  */
-public class RegistryServer extends Observable {
+public class RegistryServer {
     // Set port number
     private static final int portNumber = 1100;
     
@@ -28,8 +28,14 @@ public class RegistryServer extends Observable {
     // Reference to server
     private Server server = null;
     
+    // List of all the GUIs that are tracking changes in the RegistryServer and Server class
+    private List<ILobbyServerObserver> GUIs;
+    
     // Constructor
     public RegistryServer() {
+        // Initialize the GUIs list
+        GUIs = new ArrayList();
+        
         // Print the IP addresses of the host device
         printIPAddresses();
         
@@ -108,11 +114,24 @@ public class RegistryServer extends Observable {
      */
     public void logMessage(String message) {
         this.output.add(message);
-        setChanged();
-        Platform.runLater(() -> { notifyObservers(); });
+        for (ILobbyServerObserver guis : this.GUIs) {
+            guis.updateMessage(message);
+        }
     }   
 
     public Server getServer() {
         return server;
+    }
+
+    public List<ILobbyServerObserver> getGUIs() {
+        return GUIs;
+    }
+    
+    public void addGUIListener(ILobbyServerObserver guiListener) {
+        this.GUIs.add(guiListener);
+    }
+
+    public void removeGUIListener(ILobbyServerObserver guiListener) {
+        this.GUIs.remove(guiListener);
     }
 }
