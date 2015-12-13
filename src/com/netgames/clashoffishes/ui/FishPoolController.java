@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -362,12 +363,7 @@ public class FishPoolController implements Initializable, IChangeGui
 
     @Override
     public void displayMessage(String message) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                lstViewMessages.getItems().add(message);
-            }
-        });    
+        Platform.runLater(() -> { lstViewMessages.getItems().add(message); });
     }
 
     @Override
@@ -383,21 +379,18 @@ public class FishPoolController implements Initializable, IChangeGui
     }
 
     @Override
-    public void displayGameMode(GameMode gameMode)
-    {
+    public void displayGameMode(GameMode gameMode) {
         if (gameMode.equals(GameMode.EVOLUTION_OF_TIME)) {
-            this.gameMode.selectToggle(rbEvolutionOfTime);
+            Platform.runLater(() -> { this.gameMode.selectToggle(rbEvolutionOfTime); });
         } else if (gameMode.equals(GameMode.EVOLVED)) {
-            this.gameMode.selectToggle(rbEvolved);
+            Platform.runLater(() -> { this.gameMode.selectToggle(rbEvolved); });
         } else if (gameMode.equals(GameMode.LAST_FISH_STANDING)) {
-            this.gameMode.selectToggle(rbLastFishSwimming);
+            Platform.runLater(() -> { this.gameMode.selectToggle(rbLastFishSwimming); });
         }
     }
 
     @Override
     public void displayPlayer(String player) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
+    }    
 }
