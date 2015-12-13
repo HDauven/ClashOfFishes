@@ -48,7 +48,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     @Override
     public void retrievePlayer(String player, IClient sender)  throws RemoteException {
         for (IChangeGui guis : this.GUIs) {
-            guis.displayPlayer(player);
+            guis.displayPlayer(player, sender);
         }
     }
 

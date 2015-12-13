@@ -141,9 +141,10 @@ public class FishPoolController implements Initializable, IChangeGui
         try
         {
             System.out.println(this.lobby.getPoolNameProperty());
+            lobby.broadcastPlayer(Administration.get().getClient().getUsername(), Administration.get().getClient());
             for (IClient client : this.lobby.getClients())
             {
-                this.tableUsers.add(new TableUser(client.getUsername(), "test", false));
+                this.tableUsers.add(new TableUser(client.getUsername(), "None", false));
             }
         }
         catch (Exception e)
@@ -233,7 +234,8 @@ public class FishPoolController implements Initializable, IChangeGui
     }
     
     /**
-     * Sends the newly chosen isReady boolean to the currently active lobby.
+     * Sends the newly chosen isReady boolean to the currently active lobby to
+     * indicate whether a player is ready or not.
      * @param isReady One of the chosen isReady options
      */
     private void sendReady(boolean isReady) {
@@ -429,7 +431,20 @@ public class FishPoolController implements Initializable, IChangeGui
     }
 
     @Override
-    public void displayPlayer(String player) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void displayPlayer(String player, IClient sender) {
+        Platform.runLater(new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                tableUsers.clear();
+                for (IClient client : lobby.getClients())
+                {
+                    tableUsers.add(new TableUser(client.getUsername(), "None", client.getIsReady()));
+                }
+                //tableUsers.add(new TableUser(player, "None", false));
+                tbvPlayers.setItems(tableUsers);
+                tbvPlayers.refresh();
+                return null;
+            }
+        });
     }    
 }

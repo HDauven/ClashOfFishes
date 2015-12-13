@@ -86,7 +86,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     public void broadcastPlayer(String player, IClient sender)  throws RemoteException {
         int i = 0;
         while (i < clients.size()) {
-            clients.get(i).retrievePlayer(player, clients.get(i));
+            clients.get(i).retrievePlayer(player, sender);
             i++;
         }
     }
