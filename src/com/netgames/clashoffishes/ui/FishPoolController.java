@@ -407,6 +407,7 @@ public class FishPoolController implements Initializable, IChangeGui
                     if (user.getUsername().equalsIgnoreCase(sender.getUsername())) {
                         user.setReady(isReady);
                         tbvPlayers.setItems(tableUsers);
+                        tbvPlayers.refresh();
                         System.out.println(user.getUsername());
                         System.out.println(sender.getUsername() + " " + isReady);
                     }
