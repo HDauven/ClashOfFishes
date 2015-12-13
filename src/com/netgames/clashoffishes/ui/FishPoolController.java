@@ -278,6 +278,11 @@ public class FishPoolController implements Initializable, IChangeGui
         tableUsers.add(new TableUser(user));
         tbvPlayers.setItems(tableUsers);
     }
+    
+    public void removeUser(User user) {
+        tableUsers.remove(new TableUser(user));
+        tbvPlayers.setItems(tableUsers);
+    }
 
     private void setupGui()
     {

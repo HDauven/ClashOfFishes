@@ -116,7 +116,4 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
             }
         }
     }
-
-    
-
 }
