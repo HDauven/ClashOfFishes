@@ -23,6 +23,8 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
 
     private ILobby lobby;
     private String username = null;
+    private Boolean isReady = false;
+    private String character = "None";
 
     private List<IChangeGui> GUIs;
 
@@ -115,5 +117,15 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
                 System.out.println("RemoteException: " + e.getMessage());
             }
         }
+    }
+
+    @Override
+    public void setIsReady(boolean ready) {
+        this.isReady = ready;
+    }
+    
+    @Override
+    public boolean getIsReady() {
+        return this.isReady;
     }
 }

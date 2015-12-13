@@ -35,4 +35,15 @@ public interface IClient extends Remote {
      */
     String getUsername()
             throws RemoteException;
+
+    public void setIsReady(boolean ready)
+            throws RemoteException;
+    
+    /**
+     * Method that gets the isReady of an IClient.
+     * @return The IClient isReady
+     * @throws RemoteException 
+     */
+    boolean getIsReady()
+            throws RemoteException;
 }

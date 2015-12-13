@@ -23,6 +23,9 @@ public class ClashOfFishes extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
+        // Stops my PC from crashing:
+        System.setProperty("glass.accessible.force", "false");
+        
         Parent root;
         try
         {

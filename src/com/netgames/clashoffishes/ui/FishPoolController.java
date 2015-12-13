@@ -380,7 +380,20 @@ public class FishPoolController implements Initializable, IChangeGui
     @Override
     public void displayReady(boolean isReady)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Platform.runLater(new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                ArrayList<IClient> temp = (ArrayList<IClient>) lobby.getClients();
+                for (TableUser user : tableUsers) {
+                    for (IClient client : temp) {
+                        if (user.getUsername().equals(client.getUsername())) {
+                            user.setReady(client.getIsReady());
+                        }
+                    }
+                }
+                return null;
+            }
+        });
     }
 
     @Override
