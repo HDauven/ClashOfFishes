@@ -58,10 +58,16 @@ public class FishPoolController implements Initializable, IChangeGui
 {
 
     // TODO can't set 'ready' when character 'None' selected.
+    // BUG  If characer 'None' is selected, a player pushes the 'ready' button and switches to a 
+    //      different character, the player can't change its status to 'ready' anymore.
     // TODO can't select the same character as another player.
     // TODO update GUI when a different character is selected.
     // TODO enable/disable character when a different character is selected.
     // TODO allow for multiple players to select character 'None'.
+    // BUG  When a player pushes the 'ready' button, they are re-ordered. This shouldn't happen!
+    // TODO The 'start' button should be disabled for everyone except the host and should only
+    //      be enabled when everyone is ready! (Unless another decision is made on this)
+    // TODO If the host leaves, everyone should be kicked out of the lobby!
     @FXML
     private AnchorPane paneMainForm;
     @FXML
