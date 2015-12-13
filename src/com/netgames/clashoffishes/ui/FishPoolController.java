@@ -190,38 +190,58 @@ public class FishPoolController implements Initializable, IChangeGui
     @FXML
     private void btnReady_OnClick(ActionEvent event)
     {
-        TableUser tableuserUpdated = null;
-        for (TableUser tableuser : this.tableUsers)
-        {
-            if (tableuser.getUsername().equals(Administration.get().getLoggedInUser().getUsername()) && !this.cbCharacters.getValue().equals("None"))
-            {
-                tableuserUpdated = tableuser;
-            }
-        }
+        Platform.runLater(new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                TableUser tableuserUpdated = null;
+                for (TableUser tableuser : tableUsers)
+                {
+                    if (tableuser.getUsername().equals(Administration.get().getLoggedInUser().getUsername()) && !cbCharacters.getValue().equals("None"))
+                    {
+                        tableuserUpdated = tableuser;
+                    }
+                }
+                
+                //RemoveAll for updateEvent
+                tableUsers2.clear();
+                tableUsers2.addAll(tableUsers);
+                tableUsers.removeAll(tableUsers2);
 
-        //RemoveAll for updateEvent
-        tableUsers2.clear();
-        tableUsers2.addAll(tableUsers);
-        tableUsers.removeAll(tableUsers2);
-
-        tableUsers2.remove(tableuserUpdated);
-        if (tableuserUpdated != null)
-        {
-            if (tableuserUpdated.getReady() == false)
-            {
-                tableuserUpdated.setReady(true);
-                btnReady.setText("I'm not ready!");
+                tableUsers2.remove(tableuserUpdated);
+                if (tableuserUpdated != null)
+                {
+                    if (tableuserUpdated.getReady() == false)
+                    {
+                        tableuserUpdated.setReady(true);
+                        sendReady(true);
+                        btnReady.setText("I'm not ready!");
+                    }
+                    else
+                    {
+                        tableuserUpdated.setReady(false);
+                        sendReady(false);
+                        btnReady.setText("I'm ready!");
+                    }
+                }
+                tableUsers2.add(tableuserUpdated);
+                tbvPlayers.getItems().clear();
+                tableUsers.addAll(tableUsers2);
+                tbvPlayers.setItems(tableUsers);
+                return null;
             }
-            else
-            {
-                tableuserUpdated.setReady(false);
-                btnReady.setText("I'm ready!");
-            }
+        });
+    }
+    
+    /**
+     * Sends the newly chosen isReady boolean to the currently active lobby.
+     * @param isReady One of the chosen isReady options
+     */
+    private void sendReady(boolean isReady) {
+        try {
+            lobby.broadcastReady(isReady, Administration.get().getClient());
+        } catch (RemoteException ex) {
+            Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        tableUsers2.add(tableuserUpdated);
-        tbvPlayers.getItems().clear();
-        tableUsers.addAll(tableUsers2);
-        tbvPlayers.setItems(tableUsers);
     }
 
     @FXML
@@ -378,17 +398,17 @@ public class FishPoolController implements Initializable, IChangeGui
     }
 
     @Override
-    public void displayReady(boolean isReady)
+    public void displayReady(boolean isReady, IClient sender)
     {
         Platform.runLater(new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                ArrayList<IClient> temp = (ArrayList<IClient>) lobby.getClients();
                 for (TableUser user : tableUsers) {
-                    for (IClient client : temp) {
-                        if (user.getUsername().equals(client.getUsername())) {
-                            user.setReady(client.getIsReady());
-                        }
+                    if (user.getUsername().equalsIgnoreCase(sender.getUsername())) {
+                        user.setReady(isReady);
+                        tbvPlayers.setItems(tableUsers);
+                        System.out.println(user.getUsername());
+                        System.out.println(sender.getUsername() + " " + isReady);
                     }
                 }
                 return null;

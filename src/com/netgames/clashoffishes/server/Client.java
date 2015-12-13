@@ -62,7 +62,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     @Override
     public void retrieveReady(boolean isReady, IClient sender)  throws RemoteException {
         for (IChangeGui guis : this.GUIs) {
-            guis.displayReady(isReady);
+            guis.displayReady(isReady, sender);
         }
     }
 

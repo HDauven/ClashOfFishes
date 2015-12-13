@@ -6,6 +6,7 @@
 package com.netgames.clashoffishes.interfaces;
 
 import com.netgames.clashoffishes.engine.GameMode;
+import com.netgames.clashoffishes.server.remote.IClient;
 
 /**
  *
@@ -19,7 +20,7 @@ public interface IChangeGui {
     
     void displaySelectedCharacter(String characterName);
     
-    void displayReady(boolean isReady);
+    void displayReady(boolean isReady, IClient sender);
     
     void displayGameMode(GameMode gameMode);
    

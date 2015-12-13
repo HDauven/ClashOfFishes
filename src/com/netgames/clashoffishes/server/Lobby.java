@@ -102,11 +102,6 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
 
     @Override
     public void broadcastReady(boolean isReady, IClient sender)  throws RemoteException {
-        for (IClient client : clients) {
-            if (client.equals(sender)) {
-                sender.setIsReady(isReady);
-            }
-        }
         int i = 0;
         while (i < clients.size()) {
             clients.get(i).retrieveReady(isReady, sender);
