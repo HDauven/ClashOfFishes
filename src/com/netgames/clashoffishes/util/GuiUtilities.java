@@ -85,13 +85,14 @@ public class GuiUtilities
                     {
                         event.consume();
                         try {
-                            // TODO URGENT:check whether the host of the lobby closes the screen
                             if (Administration.get().getLobby().getClients().get(0).getUsername()
                                     .equals(Administration.get().getLoggedInUser().getUsername())) {
                                 LobbyRegistry.getCofServer().removeLobby(Administration.get().getLobbyRegistry().getLobby());
                             } else {
-                                // TODO Remove client from the lobby he is registered to
+                                // Removes a client from the lobby it is in
                                 Administration.get().getLobby().removeClient(Administration.get().getClient());
+                                // Tells the other players in the lobby that the client has left
+                                Administration.get().getLobby().broadcastPlayer(Administration.get().getClient().getUsername(), Administration.get().getClient());
                             }
                         } catch (RemoteException ex) {
                             Logger.getLogger(GuiUtilities.class.getName()).log(Level.SEVERE, null, ex);
