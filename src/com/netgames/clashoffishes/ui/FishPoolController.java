@@ -167,24 +167,42 @@ public class FishPoolController implements Initializable, IChangeGui
         {
             case "Bubbles":
                 System.out.println("Bubbles has been selected");
+                sendCharacter("Bubbles");
                 this.pictCharacter.setImage(new Image(playerDir.toString() + "BubblesIcon.png", 80, 51, true, false, true));
                 break;
             case "Cleo":
                 System.out.println("Cleo has been selected");
+                sendCharacter("Cleo");
                 this.pictCharacter.setImage(new Image(playerDir.toString() + "CleoIcon.png", 80, 50, true, false, true));
                 break;
             case "Fred":
                 System.out.println("Fred has been selected");
+                sendCharacter("Fred");
                 this.pictCharacter.setImage(new Image(playerDir.toString() + "FredIcon.png", 80, 57, true, false, true));
                 break;
             case "Gill":
                 System.out.println("Gill has been selected");
+                sendCharacter("Gill");
                 this.pictCharacter.setImage(new Image(playerDir.toString() + "GillIcon.png", 80, 47, true, false, true));
                 break;
             default:
                 System.out.println("No character selected");
                 this.pictCharacter.setImage(null);
                 break;
+        }
+    }
+    
+    /**
+     * Sends the newly chosen isReady boolean to the currently active lobby to
+     * indicate whether a player is ready or not.
+     * @param isReady One of the chosen isReady options
+     */
+    private void sendCharacter(String characterName) {
+        try {
+            Administration.get().getClient().setCharacter(characterName);
+            lobby.broadcastCharacter(characterName, Administration.get().getClient());
+        } catch (RemoteException ex) {
+            Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -200,7 +218,7 @@ public class FishPoolController implements Initializable, IChangeGui
                     if (tableuser.getUsername().equals(Administration.get().getLoggedInUser().getUsername()) && !cbCharacters.getValue().equals("None"))
                     {
                         tableuserUpdated = tableuser;
-                    }
+                    } 
                 }
                 
                 //RemoveAll for updateEvent
@@ -240,7 +258,9 @@ public class FishPoolController implements Initializable, IChangeGui
      */
     private void sendReady(boolean isReady) {
         try {
+            Administration.get().getClient().setIsReady(isReady);
             lobby.broadcastReady(isReady, Administration.get().getClient());
+            System.out.println(Administration.get().getClient().getIsReady());
         } catch (RemoteException ex) {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -394,9 +414,23 @@ public class FishPoolController implements Initializable, IChangeGui
     }
 
     @Override
-    public void displaySelectedCharacter(String characterName)
+    public void displaySelectedCharacter(String characterName, IClient sender)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Platform.runLater(new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                for (TableUser user : tableUsers) {
+                    if (user.getUsername().equalsIgnoreCase(sender.getUsername())) {
+                        user.setCharacter(characterName);
+                        tbvPlayers.setItems(tableUsers);
+                        tbvPlayers.refresh();
+                        System.out.println(user.getUsername());
+                        System.out.println(sender.getUsername() + " " + characterName);
+                    }
+                }
+                return null;
+            }
+        });
     }
 
     @Override
@@ -438,7 +472,7 @@ public class FishPoolController implements Initializable, IChangeGui
                 tableUsers.clear();
                 for (IClient client : lobby.getClients())
                 {
-                    tableUsers.add(new TableUser(client.getUsername(), "None", client.getIsReady()));
+                    tableUsers.add(new TableUser(client.getUsername(), client.getCharacter(), client.getIsReady()));
                 }
                 //tableUsers.add(new TableUser(player, "None", false));
                 tbvPlayers.setItems(tableUsers);

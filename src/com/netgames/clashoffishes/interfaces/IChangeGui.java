@@ -18,7 +18,7 @@ public interface IChangeGui {
     
     void displayPlayer(String player, IClient sender);
     
-    void displaySelectedCharacter(String characterName);
+    void displaySelectedCharacter(String characterName, IClient sender);
     
     void displayReady(boolean isReady, IClient sender);
     

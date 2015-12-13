@@ -46,4 +46,10 @@ public interface IClient extends Remote {
      */
     boolean getIsReady()
             throws RemoteException;
+    
+    String getCharacter()
+            throws RemoteException;
+
+    void setCharacter(String character)
+            throws RemoteException;
 }

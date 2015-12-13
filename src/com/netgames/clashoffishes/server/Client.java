@@ -55,7 +55,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     @Override
     public void retrieveCharacter(String character, IClient sender)  throws RemoteException {
         for (IChangeGui guis : this.GUIs) {
-            guis.displaySelectedCharacter(character);
+            guis.displaySelectedCharacter(character, sender);
         }
     }
 
@@ -120,12 +120,24 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     }
 
     @Override
-    public void setIsReady(boolean ready) {
+    public void setIsReady(boolean ready) throws RemoteException {
         this.isReady = ready;
     }
     
     @Override
-    public boolean getIsReady() {
+    public boolean getIsReady() throws RemoteException {
         return this.isReady;
     }
+
+    @Override
+    public String getCharacter() throws RemoteException {
+        return character;
+    }
+
+    @Override
+    public void setCharacter(String character) throws RemoteException {
+        this.character = character;
+    }
+    
+    
 }
