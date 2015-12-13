@@ -5,6 +5,10 @@
  */
 package com.netgames.clashoffishes;
 
+import com.netgames.clashoffishes.server.remote.IClient;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -21,9 +25,13 @@ public class TableUser
     private SimpleStringProperty character;
     private SimpleBooleanProperty ready;
 
-    public TableUser(User u)
+    public TableUser(IClient u)
     {
-        this.username = new SimpleStringProperty(u.getUsername());
+        try {
+            this.username = new SimpleStringProperty(u.getUsername());
+        } catch (RemoteException ex) {
+            Logger.getLogger(TableUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.character = new SimpleStringProperty("None");
         this.ready = new SimpleBooleanProperty(false);
     }

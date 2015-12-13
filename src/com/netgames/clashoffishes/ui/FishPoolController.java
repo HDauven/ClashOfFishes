@@ -273,13 +273,13 @@ public class FishPoolController implements Initializable, IChangeGui
      *
      * @param user user which is added to the game
      */
-    public void addUser(User user)
+    public void addUser(IClient user)
     {
         tableUsers.add(new TableUser(user));
         tbvPlayers.setItems(tableUsers);
     }
     
-    public void removeUser(User user) {
+    public void removeUser(IClient user) {
         tableUsers.remove(new TableUser(user));
         tbvPlayers.setItems(tableUsers);
     }
