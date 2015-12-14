@@ -365,7 +365,7 @@ public class Player extends AnimatedObject
     {
         if (object instanceof Seaweed)
         {
-            this.score += 10;
+            this.score -= 5;
         }
         else if (object instanceof FishHook)
         {
@@ -373,7 +373,7 @@ public class Player extends AnimatedObject
         }
         else if (object instanceof EnergyDrink)
         {
-            this.score -=5;
+            this.score +=10;
         }
         gameManager.updateScoreLabel(this.playerID, this.score);
     }
