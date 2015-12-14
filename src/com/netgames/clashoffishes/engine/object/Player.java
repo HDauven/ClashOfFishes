@@ -36,6 +36,7 @@ public class Player extends AnimatedObject
     int framecounter = 0;
     int runningspeed = 6;
 
+    private int playerID;
     /**
      * Constructor for a Player object.
      *
@@ -45,12 +46,14 @@ public class Player extends AnimatedObject
      * @param yLocation The y start coordinate of a Player object.
      * @param spriteCels The images that form the animation of a Player object.
      */
-    public Player(GameManager manager, String SVGData, double xLocation, double yLocation, Image... spriteCels)
+    public Player(GameManager manager, String SVGData, double xLocation, double yLocation, int playerID, Image... spriteCels)
     {
         super(SVGData, xLocation, yLocation, spriteCels);
         gameManager = manager;
         vX = 2;
         vY = 2;
+        this.playerID = playerID;
+        
     }
 
     /**

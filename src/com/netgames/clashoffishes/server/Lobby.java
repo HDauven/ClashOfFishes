@@ -188,8 +188,10 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
             int seed = (int)System.currentTimeMillis();
             Administration.get().setGameServer(new GameServer(this));
             
+            int playerID = 0;
             for(IClient client : this.clients) {
-                client.createGameClient(Administration.get().getGameServer(), seed);
+                client.createGameClient(Administration.get().getGameServer(), seed, playerID);
+                playerID++;
             }
             Administration.get().getGameServer().start();
         } catch (RemoteException ex) {

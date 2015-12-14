@@ -50,6 +50,8 @@ public class GameManager extends Application {
     private Group root;
     private int seed = 0;
     Stage thisStage;
+    
+    int playerID;
 
     EnergyDrink energy;
     private ArrayList<FishHook> fishHooks;
@@ -91,8 +93,9 @@ public class GameManager extends Application {
      *
      * @param character The chosen character
      */
-    public GameManager(String character, int seed) {
+    public GameManager(String character, int seed, int playerID) {
         this.seed = seed;
+        this.playerID = playerID;
         if (character.toUpperCase().equals("BUBBLES")
                 || character.toUpperCase().equals("CLEO")
                 || character.toUpperCase().equals("FRED")
@@ -100,7 +103,7 @@ public class GameManager extends Application {
             this.character = character;
         } else {
             this.character = "BUBBLES";
-        }
+        } 
     }
 
     // TODO make this class dynamic. 
@@ -308,19 +311,19 @@ public class GameManager extends Application {
         switch (this.character.toUpperCase()) {
             case "BUBBLES":
                 player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
+                        WIDTH / 2, HEIGHT / 2, this.playerID, bubbles1, bubbles2, bubbles3, bubbles4);
                 break;
             case "CLEO":
                 player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, cleo1, cleo2, cleo3, cleo4);
+                        WIDTH / 2, HEIGHT / 2, this.playerID, cleo1, cleo2, cleo3, cleo4);
                 break;
             case "FRED":
                 player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, fred1, fred2, fred3, fred4);
+                        WIDTH / 2, HEIGHT / 2, this.playerID, fred1, fred2, fred3, fred4);
                 break;
             case "GILL":
                 player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, gill1, gill2, gill3, gill4);
+                        WIDTH / 2, HEIGHT / 2, this.playerID, gill1, gill2, gill3, gill4);
                 break;
         }
     }

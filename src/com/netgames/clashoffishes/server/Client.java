@@ -150,9 +150,9 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     }
 
     @Override
-    public void createGameClient(IGameServer gameServer, int seed) throws RemoteException {
+    public void createGameClient(IGameServer gameServer, int seed, int playerID) throws RemoteException {
         Administration.get().setGameServer(gameServer);
-        Administration.get().setGameClient(new GameClient(username, character, seed, gameServer));
+        Administration.get().setGameClient(new GameClient(username, character, seed, playerID, gameServer));
     }
     
     
