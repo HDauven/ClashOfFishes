@@ -12,6 +12,7 @@ import com.netgames.clashoffishes.server.remote.IGameClient;
 import com.netgames.clashoffishes.server.remote.IGameServer;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 /**
@@ -46,7 +47,9 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
         //Niet zeker of dit klopt
         //Administration.get().getLobbyRegistry().startGameServer();
         GameManager gameManager = new GameManager(this.characterName, this.mapseed);
-        gameManager.start(new Stage());
+        Platform.runLater(() -> { 
+            gameManager.start(new Stage()); 
+        });
     }
 
     @Override
