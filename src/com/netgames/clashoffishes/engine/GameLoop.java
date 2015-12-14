@@ -60,7 +60,7 @@ public class GameLoop extends AnimationTimer
             //System.out.println(elapsed);
             if ((elapsed / NANO_TO_SECOND) > randInt)
             {
-                gameManager.addRandomObject();
+                //gameManager.addRandomObject();
                 //System.out.println(sdf.format(Calendar.getInstance().getTime()));
                 //add object if randInt % 4 == 0 dit object else % 3 == 0 dat object etc
                 prev = System.nanoTime();

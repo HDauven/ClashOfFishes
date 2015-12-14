@@ -8,7 +8,6 @@ import com.netgames.clashoffishes.engine.object.events.FishHook;
 import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import com.netgames.clashoffishes.engine.object.events.Seaweed;
 import com.netgames.clashoffishes.server.remote.IGameClient;
-import java.io.Serializable;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -50,6 +49,7 @@ public class GameManager extends Application {
     private Group root;
     private int seed = 0;
     Stage thisStage;
+    GameObject object = null;
 
     private int playerID;
 
@@ -102,7 +102,8 @@ public class GameManager extends Application {
                 || character.toUpperCase().equals("FRED")
                 || character.toUpperCase().equals("GILL")) {
             this.character = character;
-        } else {
+        }
+        else {
             this.character = "BUBBLES";
         }
         this.players = new ArrayList<>();
@@ -118,7 +119,7 @@ public class GameManager extends Application {
         scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
         primaryStage.setScene(scene);
         primaryStage.show();
-       
+
         this.startGame();
     }
 
@@ -132,7 +133,6 @@ public class GameManager extends Application {
         addNodesToGroup();
         createStartGameLoop();
     }
-
 
     /**
      * Sets event handling for the scene object. Based on user input, booleans
@@ -203,16 +203,19 @@ public class GameManager extends Application {
             }
         });
     }
-    
+
     /**
-     * Sends an updated key event to the server, which broadcasts the update to all clients.
+     * Sends an updated key event to the server, which broadcasts the update to
+     * all clients.
+     *
      * @param key String value of the key that is being pressed
      * @param pressed Whether the key is pressed or not in boolean
      */
     private void sendUpdateMove(String key, boolean pressed) {
         try {
             Administration.get().getGameServer().updateMove(player.getvX(), key, pressed, player.getiX(), player.getiY(), player.getPlayerID());
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -280,9 +283,9 @@ public class GameManager extends Application {
         jeffrey2 = new Image(eventDir.toString() + "Jeffrey2.png", 110, 105, true, false, true);
         jeffrey3 = new Image(eventDir.toString() + "Jeffrey3.png", 110, 105, true, false, true);
         // </editor-fold>        
-        energyDrink1 = new Image(eventDir.toString() + "EnergyDrink1.png", 50, 95, true, false, true);
+        energyDrink1 = new Image(eventDir.toString() + "EnergyDrink1.png", 40, 76, true, false, true);
         //fishHook1    = new Image(eventDir.toString() + "FishHook1.png", 89, 905, true, false, true);
-        seaweed1 = new Image(eventDir.toString() + "Seaweed1.png", 193, 558, true, false, true);
+        seaweed1 = new Image(eventDir.toString() + "Seaweed1.png", 30, 87, true, false, true);
         //diver1       = new Image(eventDir.toString() + "Diver1.png", 243, 184, true, false, true);
     }
 
@@ -291,14 +294,14 @@ public class GameManager extends Application {
      */
     private void createGameObjects() {
 
-            // TODO adding game objects format:
+        // TODO adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
         if (this.seed == 0) {
             this.seed = (int) System.currentTimeMillis();
         }
         map = new GameMap((int) WIDTH, (int) HEIGHT, this.seed);
         menu = new GameMenu(this);
-        
+
         try {
             //createPlayer(this.character, this.playerID);
             int tempID = 0;
@@ -306,15 +309,15 @@ public class GameManager extends Application {
                 createPlayer(client.getCharacterName(), tempID);
                 tempID++;
             }
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-
     private void createPlayer(String characterName, int playerID) {
         Player createdPlayer = null;
-        
+
         switch (characterName.toUpperCase()) {
             case "BUBBLES":
                 System.out.println(characterName.toUpperCase());
@@ -338,15 +341,11 @@ public class GameManager extends Application {
                 break;
         }
         this.players.add(createdPlayer);
-        
+
         if (createdPlayer.getPlayerID() == this.playerID) {
             this.player = createdPlayer;
         }
     }
-    
-    
-    
-    
 
     /**
      * Adds GameObjects to the root node.
@@ -358,7 +357,7 @@ public class GameManager extends Application {
         // Comment this out to get the regular background
         root.getChildren().add(map.getMap());
 
-        for(Player player : this.players) {
+        for (Player player : this.players) {
             root.getChildren().add(player.getSpriteFrame());
         }
         //root.getChildren().add(player.getSpriteFrame());
@@ -398,10 +397,14 @@ public class GameManager extends Application {
 
     }
 
-    public void addRandomObject() {
+    public GameObject addRandomObject() {
         //Aanmaken waarden
         Image image;
-        GameObject object = null;
+        if (map == null) {
+            map = new GameMap((int) WIDTH, (int) HEIGHT, this.seed);
+            menu = new GameMenu(this);
+            loadImageAssets();
+        }
         double px = map.getMap().getWidth() * Math.random() + 1;
         double py = map.getMap().getHeight() * Math.random() + 1;
 
@@ -457,6 +460,25 @@ public class GameManager extends Application {
          }
          */
         //Moet altijd uitgevoerd worden
+        Runnable r = new Runnable() {
+
+            @Override
+            public void run() {
+                if (object != null) {
+                    addObject(object);
+                    object = null;
+                }
+            }
+        };
+        Platform.runLater(r);
+
+        if (object instanceof FishHook) {
+            fishHooks.add((FishHook) object);
+        }
+        return object;
+    }
+
+    private void addObject(GameObject object) {
         root.getChildren().add(object.getSpriteFrame());
         objectManager.addCurrentObject(object);
     }
@@ -582,7 +604,7 @@ public class GameManager extends Application {
     }
 
     public void objectCreation(int x, int y, ObjectType objectType) throws RemoteException {
-        GameObject object;
+
         switch (objectType) {
             case ENERGYDRINK:
                 object = new EnergyDrink(x, y, energyDrink1);
@@ -592,6 +614,21 @@ public class GameManager extends Application {
                 break;
             case SEAWEED:
                 object = new Seaweed(x, y, seaweed1);
+        }
+        Runnable r = new Runnable() {
+
+            @Override
+            public void run() {
+                if (object != null) {
+                    addObject(object);
+                    object = null;
+                }
+            }
+        };
+        Platform.runLater(r);
+
+        if (object instanceof FishHook) {
+            fishHooks.add((FishHook) object);
         }
 
     }
