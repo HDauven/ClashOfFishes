@@ -6,20 +6,33 @@
 package com.netgames.clashoffishes.server;
 
 import com.netgames.clashoffishes.Administration;
+import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import com.netgames.clashoffishes.server.remote.IGameClient;
+import com.netgames.clashoffishes.server.remote.IGameServer;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
 /**
  *
  * @author Stef
  */
-public class GameClient implements IGameClient
+public class GameClient extends UnicastRemoteObject implements IGameClient
 {
     private String username;
+    private String characterName;
+    private int mapseed;
     
-    public GameClient(String username){
+    private IGameServer gameServer;
+    
+    public GameClient(String username, String characterName, int mapseed, IGameServer gameServer) throws RemoteException {
         this.username = username;
+        this.characterName = characterName;
+        this.mapseed = mapseed;
+        this.gameServer = gameServer;
+        
+        gameServer.registerClient(this);
+        
     }
     
     public String getUsername(){
@@ -27,10 +40,11 @@ public class GameClient implements IGameClient
     }
 
     @Override
-    public void startGame(Integer mapSeed) throws RemoteException
+    public void startGame() throws RemoteException
     {
         //Niet zeker of dit klopt
-        Administration.get().getLobbyRegistry().startGameServer();
+        //Administration.get().getLobbyRegistry().startGameServer();
+        GameManager gameManager = new GameManager(this.characterName, this.mapseed);
     }
 
     @Override

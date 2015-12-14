@@ -11,6 +11,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class that keeps track of all the clients that exist of for this game.
@@ -28,6 +30,8 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     private User host;
 
     private GameMode gameMode = GameMode.EVOLVED;
+    
+    
     
     
 
@@ -180,6 +184,18 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     
     @Override
     public void startGame(){
-        Administration.get().getLobbyRegistry().startGameServer();
+        try {
+            int seed = (int)System.currentTimeMillis();
+            Administration.get().setGameServer(new GameServer(this));
+            
+            for(IClient client : this.clients) {
+                client.createGameClient(Administration.get().getGameServer(), seed);
+                GameClient gameClient = new GameClient(client.getUsername(), client.getCharacter(), seed, Administration.get().getGameServer());
+
+            }
+            Administration.get().getGameServer().start();
+        } catch (RemoteException ex) {
+            Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

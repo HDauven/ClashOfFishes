@@ -8,7 +8,7 @@ package com.netgames.clashoffishes.ui;
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.TableUser;
 import com.netgames.clashoffishes.engine.GameMode;
-import com.netgames.clashoffishes.interfaces.IChangeGui;
+import com.netgames.clashoffishes.interfaces.ILobbyListener;
 import com.netgames.clashoffishes.server.Message;
 import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.IGameServer;
@@ -51,20 +51,16 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author Stef
  */
-public class FishPoolController implements Initializable, IChangeGui
-{
+public class FishPoolController implements Initializable, ILobbyListener {
 
-    // TODO can't set 'ready' when character 'None' selected.
-    // BUG  If characer 'None' is selected, a player pushes the 'ready' button and switches to a 
-    //      different character, the player can't change its status to 'ready' anymore.
     // TODO can't select the same character as another player.
-    // TODO update GUI when a different character is selected.
     // TODO enable/disable character when a different character is selected.
     // TODO allow for multiple players to select character 'None'.
+    
     // BUG  When a player pushes the 'ready' button, they are re-ordered. This shouldn't happen!
-    // TODO The 'start' button should be disabled for everyone except the host and should only
-    //      be enabled when everyone is ready! (Unless another decision is made on this)
+    
     // TODO If the host leaves, everyone should be kicked out of the lobby!
+    
     @FXML
     private AnchorPane paneMainForm;
     @FXML
@@ -100,9 +96,8 @@ public class FishPoolController implements Initializable, IChangeGui
     private TextField tfMessage;
 
     private ILobby lobby;
-    
+
     private final String gameServerURL = "rmi://localhost:1100/Server";
-    IGameServer gameServer = null;
 
     ObservableList<TableUser> tableUsers;
     //This object exists so the changeEvent gets triggered on tableUsers.removeAll()
@@ -116,17 +111,13 @@ public class FishPoolController implements Initializable, IChangeGui
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         // Haal de current lobby op.
         this.lobby = Administration.get().getLobby();
-        try
-        {
-        Administration.get().getClient().addGUIListener(this);
+        try {
+            Administration.get().getClient().addGUIListener(this);
             lblLobbyName.setText(lobby.getPoolNameProperty());
-        }
-        catch (RemoteException ex)
-        {
+        } catch (RemoteException ex) {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -141,33 +132,25 @@ public class FishPoolController implements Initializable, IChangeGui
 
         setupGui();
 
-        try
-        {
+        try {
             System.out.println(this.lobby.getPoolNameProperty());
             lobby.broadcastPlayer(Administration.get().getClient().getUsername(), Administration.get().getClient());
-            for (IClient client : this.lobby.getClients())
-            {
+            for (IClient client : this.lobby.getClients()) {
                 this.tableUsers.add(new TableUser(client.getUsername(), "None", false));
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-        finally
-        {
+        } finally {
             tbvPlayers.setItems(tableUsers);
         }
 
     }
 
     @FXML
-    private void cbCharacters_OnChanged(ActionEvent event)
-    {
+    private void cbCharacters_OnChanged(ActionEvent event) {
         String selectedCharacter = this.cbCharacters.getValue();
         URL playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
-        switch (selectedCharacter)
-        {
+        switch (selectedCharacter) {
             case "Bubbles":
                 System.out.println("Bubbles has been selected");
                 sendCharacter("Bubbles");
@@ -194,10 +177,11 @@ public class FishPoolController implements Initializable, IChangeGui
                 break;
         }
     }
-    
+
     /**
      * Sends the newly chosen isReady boolean to the currently active lobby to
      * indicate whether a player is ready or not.
+     *
      * @param isReady One of the chosen isReady options
      */
     private void sendCharacter(String characterName) {
@@ -210,53 +194,39 @@ public class FishPoolController implements Initializable, IChangeGui
     }
 
     @FXML
-    private void btnReady_OnClick(ActionEvent event)
-    {
+    private void btnReady_OnClick(ActionEvent event) {
         Platform.runLater(new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 TableUser tableuserUpdated = null;
-                for (TableUser tableuser : tableUsers)
-                {
-                    if (tableuser.getUsername().equals(Administration.get().getLoggedInUser().getUsername()) && !cbCharacters.getValue().equals("None"))
-                    {
+                for (TableUser tableuser : tableUsers) {
+                    if (tableuser.getUsername().equals(Administration.get().getLoggedInUser().getUsername())) {
                         tableuserUpdated = tableuser;
-                    } 
+                    }
                 }
-                
-                //RemoveAll for updateEvent
-                tableUsers2.clear();
-                tableUsers2.addAll(tableUsers);
-                tableUsers.removeAll(tableUsers2);
 
-                tableUsers2.remove(tableuserUpdated);
-                if (tableuserUpdated != null)
-                {
-                    if (tableuserUpdated.getReady() == false)
-                    {
+                //RemoveAll for updateEvent
+                if (!cbCharacters.getValue().equals("None")) {
+                    if (tableuserUpdated.getReady() == false) {
                         tableuserUpdated.setReady(true);
                         sendReady(true);
                         btnReady.setText("I'm not ready!");
-                    }
-                    else
-                    {
+                    } else {
                         tableuserUpdated.setReady(false);
                         sendReady(false);
                         btnReady.setText("I'm ready!");
                     }
                 }
-                tableUsers2.add(tableuserUpdated);
-                tbvPlayers.getItems().clear();
-                tableUsers.addAll(tableUsers2);
-                tbvPlayers.setItems(tableUsers);
+                tbvPlayers.refresh();
                 return null;
             }
         });
     }
-    
+
     /**
      * Sends the newly chosen isReady boolean to the currently active lobby to
      * indicate whether a player is ready or not.
+     *
      * @param isReady One of the chosen isReady options
      */
     private void sendReady(boolean isReady) {
@@ -270,36 +240,22 @@ public class FishPoolController implements Initializable, IChangeGui
     }
 
     @FXML
-    private void btnStartGame_OnClick(ActionEvent event)
-    {
-        //xxx Hier zou een gameManager misschien nog toegevoegd worden aan de singleton Administratie?
-        //LobbyRegistry lobbyRegistry = new LobbyRegistry();
-        
-        //Signal to gameserver
-        //Gameserver will send start method to all clients
-        //Start local gameserver
-        try
-        {
-            System.out.println("Start game button pressed");
-            lobby.startGame();
-        }
-        catch (RemoteException ex)
-        {
+    private void btnStartGame_OnClick(ActionEvent event) {
+        try {
+            this.lobby.startGame();
+        } catch (RemoteException ex) {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //GameManager gameManager = new GameManager();
-        //gameManager.start(new Stage());
     }
 
     @FXML
-    private void btnSendMessage_OnClick(ActionEvent event)
-    {
+    private void btnSendMessage_OnClick(ActionEvent event) {
         this.SendMessage();
     }
-    
+
     private void SendMessage() {
         try {
-            lobby.broadcastMessage(new Message(Administration.get().getLoggedInUser().getUsername(),tfMessage.getText()), Administration.get().getClient());
+            lobby.broadcastMessage(new Message(Administration.get().getLoggedInUser().getUsername(), tfMessage.getText()), Administration.get().getClient());
         } catch (RemoteException ex) {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -312,25 +268,23 @@ public class FishPoolController implements Initializable, IChangeGui
             this.SendMessage();
         }
     }
-    
+
     /**
      * Add a user which is not ready yet with the username to the player-table
      *
      * @param user user which is added to the game
      */
-    public void addUser(IClient user)
-    {
+    public void addUser(IClient user) {
         tableUsers.add(new TableUser(user));
         tbvPlayers.setItems(tableUsers);
     }
-    
+
     public void removeUser(IClient user) {
         tableUsers.remove(new TableUser(user));
         tbvPlayers.setItems(tableUsers);
     }
 
-    private void setupGui()
-    {
+    private void setupGui() {
         if (!Administration.get().getClient().getIsHost()) {
             btnStartGame.setVisible(false);
             rbEvolutionOfTime.setDisable(true);
@@ -338,18 +292,18 @@ public class FishPoolController implements Initializable, IChangeGui
             rbLastFishSwimming.setDisable(true);
         } else {
             this.rbEvolved.setOnAction((ActionEvent event) -> {
-            sendGameMode(GameMode.EVOLVED.name());
-        });
-        
-        this.rbEvolutionOfTime.setOnAction((ActionEvent event) -> {
-            sendGameMode(GameMode.EVOLUTION_OF_TIME.name());
-        });
-        
-        this.rbLastFishSwimming.setOnAction((ActionEvent event) -> {
-            sendGameMode(GameMode.LAST_FISH_STANDING.name());
-        });
+                sendGameMode(GameMode.EVOLVED.name());
+            });
+
+            this.rbEvolutionOfTime.setOnAction((ActionEvent event) -> {
+                sendGameMode(GameMode.EVOLUTION_OF_TIME.name());
+            });
+
+            this.rbLastFishSwimming.setOnAction((ActionEvent event) -> {
+                sendGameMode(GameMode.LAST_FISH_STANDING.name());
+            });
         }
-        
+
         clmPlayers = new TableColumn("Players");
         clmCharacter = new TableColumn("Character");
         clmReady = new TableColumn("Ready");
@@ -370,12 +324,11 @@ public class FishPoolController implements Initializable, IChangeGui
         rbLastFishSwimming.selectedProperty().set(true);
 
         cbCharacters.getSelectionModel().select(0);
-        
-        
     }
-    
+
     /**
      * Sends the newly chosen GameMode to the currently active lobby.
+     *
      * @param gameMode One of the chosen GameModes
      */
     private void sendGameMode(String gameMode) {
@@ -386,48 +339,19 @@ public class FishPoolController implements Initializable, IChangeGui
         }
     }
 
-    public ILobby getLobby()
-    {
+    public ILobby getLobby() {
         return lobby;
-    }
-    
-    /**
-     * Method that looks up the Clash of Fishes Lobby Server in the name
-     * registry, based on a given RMI URL.
-     */
-    public void gameServerLookup()
-    {
-        try
-        {
-            //gameServerURL controleren
-            gameServer = (IGameServer) Naming.lookup(gameServerURL);
-            gameServer.start();
-        }
-        catch (NotBoundException ex)
-        {
-            System.out.println("Server: Cannot bind Clash of Fishes server");
-            System.out.println("NotBoundException: " + ex.getMessage());
-        }
-        catch (MalformedURLException ex)
-        {
-            System.out.println("Server: Cannot bind Clash of Fishes server");
-            System.out.println("MalformedURLException: " + ex.getMessage());
-        }
-        catch (RemoteException ex)
-        {
-            System.out.println("Server: Cannot bind Clash of Fishes server");
-            System.out.println("RemoteException: " + ex.getMessage());
-        }
     }
 
     @Override
     public void displayMessage(String message) {
-        Platform.runLater(() -> { lstViewMessages.getItems().add(message); });
+        Platform.runLater(() -> {
+            lstViewMessages.getItems().add(message);
+        });
     }
 
     @Override
-    public void displaySelectedCharacter(String characterName, IClient sender)
-    {
+    public void displaySelectedCharacter(String characterName, IClient sender) {
         Platform.runLater(new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -446,8 +370,7 @@ public class FishPoolController implements Initializable, IChangeGui
     }
 
     @Override
-    public void displayReady(boolean isReady, IClient sender)
-    {
+    public void displayReady(boolean isReady, IClient sender) {
         Platform.runLater(new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -468,11 +391,17 @@ public class FishPoolController implements Initializable, IChangeGui
     @Override
     public void displayGameMode(GameMode gameMode) {
         if (gameMode.equals(GameMode.EVOLUTION_OF_TIME)) {
-            Platform.runLater(() -> { this.gameMode.selectToggle(rbEvolutionOfTime); });
+            Platform.runLater(() -> {
+                this.gameMode.selectToggle(rbEvolutionOfTime);
+            });
         } else if (gameMode.equals(GameMode.EVOLVED)) {
-            Platform.runLater(() -> { this.gameMode.selectToggle(rbEvolved); });
+            Platform.runLater(() -> {
+                this.gameMode.selectToggle(rbEvolved);
+            });
         } else if (gameMode.equals(GameMode.LAST_FISH_STANDING)) {
-            Platform.runLater(() -> { this.gameMode.selectToggle(rbLastFishSwimming); });
+            Platform.runLater(() -> {
+                this.gameMode.selectToggle(rbLastFishSwimming);
+            });
         }
     }
 
@@ -482,8 +411,7 @@ public class FishPoolController implements Initializable, IChangeGui
             @Override
             protected Void call() throws Exception {
                 tableUsers.clear();
-                for (IClient client : lobby.getClients())
-                {
+                for (IClient client : lobby.getClients()) {
                     tableUsers.add(new TableUser(client.getUsername(), client.getCharacter(), client.getIsReady()));
                 }
                 //tableUsers.add(new TableUser(player, "None", false));
@@ -492,5 +420,5 @@ public class FishPoolController implements Initializable, IChangeGui
                 return null;
             }
         });
-    }    
+    }
 }

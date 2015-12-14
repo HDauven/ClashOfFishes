@@ -12,7 +12,7 @@ import com.netgames.clashoffishes.server.remote.IClient;
  *
  * @author Christian Adkin
  */
-public interface IChangeGui {
+public interface ILobbyListener {
     
     void displayMessage(String message);
     

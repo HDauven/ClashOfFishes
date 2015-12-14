@@ -18,7 +18,7 @@ import java.util.Observer;
  *
  * @author Christian Adkin
  */
-public interface IGameServer extends Remote, Observer
+public interface IGameServer extends Remote
 {
 
     /**
@@ -59,33 +59,6 @@ public interface IGameServer extends Remote, Observer
      * @throws RemoteException
      */
     public void stateChanged(GameState newState) throws RemoteException;
-
-    /**
-     * Method that registers an ILobby to the IServer.
-     *
-     * @param user The IUser that is going to be added to the IServer.
-     * @throws RemoteException Warn that the registration has failed.
-     */
-    void registerUser(IPlayer user)
-            throws RemoteException;
-
-    /**
-     * Method that removes the given ILobby from the IServer.
-     *
-     * @param user The IUser that is going to be removed from the IServer.
-     * @throws RemoteException Warn that the removal of this ILobby has failed.
-     */
-    void removeUser(IPlayer user)
-            throws RemoteException;
-
-    /**
-     * Method that gets all the IUsers that are registered with the IServer.
-     *
-     * @return returns a list of messages to the IClient.
-     * @throws RemoteException
-     */
-    List<IPlayer> listUsers()
-            throws RemoteException;
 
     /**
      * Starts the game on all clients

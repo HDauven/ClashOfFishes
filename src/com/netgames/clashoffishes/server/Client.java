@@ -1,8 +1,10 @@
 package com.netgames.clashoffishes.server;
 
+import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.engine.GameMode;
-import com.netgames.clashoffishes.interfaces.IChangeGui;
+import com.netgames.clashoffishes.interfaces.ILobbyListener;
 import com.netgames.clashoffishes.server.remote.IClient;
+import com.netgames.clashoffishes.server.remote.IGameServer;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.server.remote.IMessage;
 import java.rmi.RemoteException;
@@ -27,7 +29,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     private Boolean isReady = false;
     private String character = "None";
 
-    private List<IChangeGui> GUIs;
+    private List<ILobbyListener> GUIs;
 
     public Client(String username, boolean isHost, ILobby lobby) throws RemoteException {
         super();
@@ -42,28 +44,28 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     @Override
     public void retrieveMessage(IMessage message, IClient sender)  throws RemoteException {
         System.out.println(message.toString());
-        for (IChangeGui guis : this.GUIs) {
+        for (ILobbyListener guis : this.GUIs) {
             guis.displayMessage(message.toString());
         }
     }
     
     @Override
     public void retrievePlayer(String player, IClient sender)  throws RemoteException {
-        for (IChangeGui guis : this.GUIs) {
+        for (ILobbyListener guis : this.GUIs) {
             guis.displayPlayer(player, sender);
         }
     }
 
     @Override
     public void retrieveCharacter(String character, IClient sender)  throws RemoteException {
-        for (IChangeGui guis : this.GUIs) {
+        for (ILobbyListener guis : this.GUIs) {
             guis.displaySelectedCharacter(character, sender);
         }
     }
 
     @Override
     public void retrieveReady(boolean isReady, IClient sender)  throws RemoteException {
-        for (IChangeGui guis : this.GUIs) {
+        for (ILobbyListener guis : this.GUIs) {
             guis.displayReady(isReady, sender);
         }
     }
@@ -71,7 +73,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     @Override
     public void retrieveGameMode(String gameMode, IClient sender)  throws RemoteException {
         System.out.println(gameMode);
-        for (IChangeGui guis : this.GUIs) {
+        for (ILobbyListener guis : this.GUIs) {
             for (GameMode gm : GameMode.values()) {
                 if (gm.toString().equalsIgnoreCase(gameMode)) {
                     guis.displayGameMode(gm);
@@ -91,11 +93,11 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     
     
 
-    public void addGUIListener(IChangeGui guiListener) {
+    public void addGUIListener(ILobbyListener guiListener) {
         this.GUIs.add(guiListener);
     }
 
-    public void removeGUIListener(IChangeGui guiListener) {
+    public void removeGUIListener(ILobbyListener guiListener) {
         this.GUIs.remove(guiListener);
     }
 
@@ -107,7 +109,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
             messages = lobby.getMessages();
             for (IMessage m : messages) {
                 System.out.println(m.toString());
-                for (IChangeGui guis : this.GUIs) {
+                for (ILobbyListener guis : this.GUIs) {
                     guis.displayMessage(m.toString());
                 }
             }
@@ -145,6 +147,12 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     @Override
     public void setCharacter(String character) throws RemoteException {
         this.character = character;
+    }
+
+    @Override
+    public void createGameClient(IGameServer gameServer, int seed) throws RemoteException {
+        Administration.get().setGameServer(gameServer);
+        Administration.get().setGameClient(new GameClient(username, character, seed, gameServer));
     }
     
     

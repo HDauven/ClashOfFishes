@@ -28,8 +28,7 @@ import javafx.stage.Stage;
  *
  * @author Hein Dauven
  */
-public class GameManager extends Application implements IGameClient, Serializable
-{
+public class GameManager extends Application {
 
     public static final double WIDTH = 1280, HEIGHT = 720;
     private Scene scene;
@@ -46,6 +45,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
     //Standaardwaarde is single player = evolution of time
     private final GameMode gameMode = GameMode.EVOLUTION_OF_TIME;
     private Group root;
+    private int seed = 0;
     Stage thisStage;
 
     EnergyDrink energy;
@@ -79,8 +79,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
     /**
      * Default constructor
      */
-    public GameManager()
-    {
+    public GameManager() {
         // Empty
     }
 
@@ -89,17 +88,14 @@ public class GameManager extends Application implements IGameClient, Serializabl
      *
      * @param character The chosen character
      */
-    public GameManager(String character)
-    {
+    public GameManager(String character, int seed) {
+        this.seed = seed;
         if (character.toUpperCase().equals("BUBBLES")
                 || character.toUpperCase().equals("CLEO")
                 || character.toUpperCase().equals("FRED")
-                || character.toUpperCase().equals("GILL"))
-        {
+                || character.toUpperCase().equals("GILL")) {
             this.character = character;
-        }
-        else
-        {
+        } else {
             this.character = "BUBBLES";
         }
     }
@@ -107,8 +103,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
     // TODO make this class dynamic. 
     // TODO if this class becomes dynamic we will ascend to god status.
     @Override
-    public void start(Stage primaryStage)
-    {
+    public void start(Stage primaryStage) {
         thisStage = primaryStage;
         primaryStage.setTitle("Clash of Fishes");
         root = new Group();
@@ -119,8 +114,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
         this.startGame();
     }
 
-    private void startGame()
-    {
+    private void startGame() {
         createSceneEventHandling();
         loadAudioAssets();
         loadImageAssets();
@@ -131,8 +125,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
         createStartGameLoop();
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         launch(args);
     }
 
@@ -140,12 +133,9 @@ public class GameManager extends Application implements IGameClient, Serializabl
      * Sets event handling for the scene object. Based on user input, booleans
      * are triggered to decide whether an user is actively using a key or not.
      */
-    private void createSceneEventHandling()
-    {
-        scene.setOnKeyPressed((KeyEvent event) ->
-        {
-            switch (event.getCode())
-            {
+    private void createSceneEventHandling() {
+        scene.setOnKeyPressed((KeyEvent event) -> {
+            switch (event.getCode()) {
                 case UP:
                     player.setUp(true);
                     break;
@@ -176,10 +166,8 @@ public class GameManager extends Application implements IGameClient, Serializabl
             }
         });
 
-        scene.setOnKeyReleased((KeyEvent event) ->
-        {
-            switch (event.getCode())
-            {
+        scene.setOnKeyReleased((KeyEvent event) -> {
+            switch (event.getCode()) {
                 case UP:
                     player.setUp(false);
                     break;
@@ -214,8 +202,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
     /**
      * Loads audio assets into the game.
      */
-    private void loadAudioAssets()
-    {
+    private void loadAudioAssets() {
         // TODO loading audio asset format:
         // URL object = this.getClass().getResource("/resource/sound.wav");
         // AudioClip object = new AudioClip(URL object.toString());
@@ -226,8 +213,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
     /**
      * Loads image assets into the game.
      */
-    private void loadImageAssets()
-    {
+    private void loadImageAssets() {
         // TODO adding image asset format:
         // Image object = new Image("/resource/image.png", width, height, true, false, true);
         playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
@@ -285,11 +271,13 @@ public class GameManager extends Application implements IGameClient, Serializabl
     /**
      * Creates the necessary GameObjects for the game.
      */
-    private void createGameObjects()
-    {
+    private void createGameObjects() {
         // TODO adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
-        map = new GameMap((int) WIDTH, (int) HEIGHT);
+        if (this.seed == 0) {
+            this.seed = (int) System.currentTimeMillis();
+        }
+        map = new GameMap((int) WIDTH, (int) HEIGHT, this.seed);
         menu = new GameMenu(this);
 
         createPlayer();
@@ -298,8 +286,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
     /**
      * Creates the necessary GameObjects for the game.
      */
-    private void createGameObjects(int seed)
-    {
+    private void createGameObjects(int seed) {
         // TODO adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
         map = new GameMap((int) WIDTH, (int) HEIGHT, seed);
@@ -308,10 +295,8 @@ public class GameManager extends Application implements IGameClient, Serializabl
         createPlayer();
     }
 
-    private void createPlayer()
-    {
-        switch (this.character.toUpperCase())
-        {
+    private void createPlayer() {
+        switch (this.character.toUpperCase()) {
             case "BUBBLES":
                 player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
                         WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
@@ -334,8 +319,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
     /**
      * Adds GameObjects to the root node.
      */
-    private void addGameObjectNodes()
-    {
+    private void addGameObjectNodes() {
         // TODO adding game object nodes
         // root.getChildren().add(gameObject);
 
@@ -349,8 +333,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
      * Creates the ObjectManager object. This is necessary for the detection of
      * collision and the removal of objects from the game.
      */
-    public void createObjectManager()
-    {
+    public void createObjectManager() {
         objectManager = new ObjectManager();
         // TODO adding an object to the object manager format:
         // objectManager.addCurrentObject(newobject);
@@ -359,8 +342,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
     /**
      * Adds nodes to the root Group object.
      */
-    private void addNodesToGroup()
-    {
+    private void addNodesToGroup() {
         // TODO add nodes to the root Group:
         // root.getChildren().add(container);
         //root.getChildren().add(gameWindow);
@@ -372,8 +354,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
     /**
      * Creates a GameLoop object and runs an instance of this class.
      */
-    private void createStartGameLoop()
-    {
+    private void createStartGameLoop() {
         fishHooks = new ArrayList<>();
         gameLoop = new GameLoop(this);
         gameLoop.start();
@@ -382,8 +363,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
 
     }
 
-    public void addRandomObject()
-    {
+    public void addRandomObject() {
         //Aanmaken waarden
         Image image;
         GameObject object = null;
@@ -394,52 +374,41 @@ public class GameManager extends Application implements IGameClient, Serializabl
         int randomGetal = (int) (Math.random() * range + 1);
 
         //Random object genereren
-        if (randomGetal == 1)
-        {
+        if (randomGetal == 1) {
             image = new Image(eventDir.toString() + "EnergyDrink1.png", 40, 76, true, false, true);
-            if (px < 30)
-            {
+            if (px < 30) {
                 px = 30;
             }
-            if (px > map.getMap().getWidth() - 30)
-            {
+            if (px > map.getMap().getWidth() - 30) {
                 px = map.getMap().getWidth() - 30;
             }
-            if (py > map.getMap().getHeight() - 144.6)
-            {
+            if (py > map.getMap().getHeight() - 144.6) {
                 py = map.getMap().getHeight() - 144.6;
             }
-            if (py < 144.6)
-            {
+            if (py < 144.6) {
                 py = 144.6;
             }
             object = new EnergyDrink(px, py, image);
         }
 
-        if (randomGetal == 2)
-        {
+        if (randomGetal == 2) {
             image = new Image(eventDir.toString() + "FishHook1.png", 40, 1000, true, false, true);
             object = new FishHook(px, -894, image);
             fishHooks.add((FishHook) object);
         }
 
-        if (randomGetal == 3)
-        {
+        if (randomGetal == 3) {
             image = new Image(eventDir.toString() + "Seaweed1.png", 30, 87, true, false, true);
-            if (px < 30)
-            {
+            if (px < 30) {
                 px = 30;
             }
-            if (px > map.getMap().getWidth() - 30)
-            {
+            if (px > map.getMap().getWidth() - 30) {
                 px = map.getMap().getHeight() - 30;
             }
-            if (py > map.getMap().getHeight() - 87)
-            {
+            if (py > map.getMap().getHeight() - 87) {
                 py = map.getMap().getHeight() - 87;
             }
-            if (py < 87)
-            {
+            if (py < 87) {
                 py = 87;
             }
             object = new Seaweed(px, py, image);
@@ -460,8 +429,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
     /**
      * Plays the bite sound of a fish.
      */
-    public void playBiteSound()
-    {
+    public void playBiteSound() {
         this.biteSound0.play();
     }
 
@@ -471,8 +439,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
      *
      * @return the root Group belonging to this game session.
      */
-    public Group getRoot()
-    {
+    public Group getRoot() {
         return root;
     }
 
@@ -481,8 +448,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
      *
      * @return the objectManager belonging to this game session.
      */
-    public ObjectManager getObjectManager()
-    {
+    public ObjectManager getObjectManager() {
         return objectManager;
     }
 
@@ -491,8 +457,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
      *
      * @return The player belonging to this game session.
      */
-    public Player getPlayer()
-    {
+    public Player getPlayer() {
         return player;
     }
 
@@ -501,8 +466,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
      *
      * @return game score
      */
-    public int getGameScore()
-    {
+    public int getGameScore() {
         return gameScore;
     }
 
@@ -511,16 +475,14 @@ public class GameManager extends Application implements IGameClient, Serializabl
      *
      * @param gameScoreAddition added value
      */
-    public void setGameScore(int gameScoreAddition)
-    {
+    public void setGameScore(int gameScoreAddition) {
         this.gameScore = this.gameScore + gameScoreAddition;
     }
 
     /**
      * Updates the score for Player one on screen.
      */
-    public void updateScoreLabelOne()
-    {
+    public void updateScoreLabelOne() {
         //this.scoreLabelOne.setText(String.valueOf(this.gameScore));
         menu.updateScoreLabelOne();
     }
@@ -530,8 +492,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
      *
      * @return GameLoop
      */
-    public GameLoop getGameLoop()
-    {
+    public GameLoop getGameLoop() {
         return gameLoop;
     }
 
@@ -540,8 +501,7 @@ public class GameManager extends Application implements IGameClient, Serializabl
      *
      * @return gameState enum
      */
-    public GameState getGameState()
-    {
+    public GameState getGameState() {
         return gameState;
     }
 
@@ -550,97 +510,45 @@ public class GameManager extends Application implements IGameClient, Serializabl
      *
      * @param gameState GameState enum
      */
-    public void setGameState(GameState gameState)
-    {
+    public void setGameState(GameState gameState) {
         this.gameState = gameState;
     }
 
-    GameMode getGameMode()
-    {
+    GameMode getGameMode() {
         return this.gameMode;
     }
 
-    public GameMenu getGameMenu()
-    {
+    public GameMenu getGameMenu() {
         return menu;
     }
 
-    public void setTimeLeft(String secondsLeft)
-    {
+    public void setTimeLeft(String secondsLeft) {
         this.timeLeft.set(secondsLeft);
     }
 
-    public SimpleStringProperty getTimeLeft()
-    {
+    public SimpleStringProperty getTimeLeft() {
         return this.timeLeft;
     }
 
-    void closeStage()
-    {
+    void closeStage() {
         thisStage.close();
     }
 
-    Stage getStage()
-    {
+    Stage getStage() {
         return this.thisStage;
     }
 
-    public ArrayList<FishHook> getFishHooks()
-    {
+    public ArrayList<FishHook> getFishHooks() {
         return this.fishHooks;
     }
 
-    void removeFishHook(FishHook h)
-    {
+    void removeFishHook(FishHook h) {
         getObjectManager().removeCurrentObject(h);
     }
 
-    @Override
-    public void startGame(Integer mapSeed) throws RemoteException
-    {
-        System.out.println("GameServer started");
-        System.out.println("Start game on client");
-        Runnable run = new Runnable()
-        {
-
-            @Override
-            public void run()
-            {
-                thisStage = new Stage();
-                thisStage.setTitle("Clash of Fishes");
-                root = new Group();
-                scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
-                thisStage.setScene(scene);
-                thisStage.show();
-                createSceneEventHandling();
-                loadAudioAssets();
-                loadImageAssets();
-                createGameObjects(mapSeed);
-                addGameObjectNodes();
-                createObjectManager();
-                addNodesToGroup();
-                createStartGameLoop();
-            }
-        };
-
-        //Thread t = new Thread(run);
-        Platform.runLater(run);
-
-    }
-
-    @Override
-    public void collisionUpdate(int id, int objectId) throws RemoteException
-    {
-        //TODO add action of object to player
-        GameObject gameObject = objectManager.getObject(objectId);
-        objectManager.removeCurrentObject(gameObject);
-    }
-
-    public void objectCreation(int x, int y, ObjectType objectType) throws RemoteException
-    {
+    public void objectCreation(int x, int y, ObjectType objectType) throws RemoteException {
         GameObject object;
-        switch (objectType)
-        {
+        switch (objectType) {
             case ENERGYDRINK:
                 object = new EnergyDrink(x, y, energyDrink1);
                 break;
@@ -653,48 +561,17 @@ public class GameManager extends Application implements IGameClient, Serializabl
 
     }
 
-    public Player getPlayer(int playerID)
-    {
-        if (this.player.getID() == playerID)
-        {
+    public Player getPlayer(int playerID) {
+        if (this.player.getID() == playerID) {
             return player;
         }
 
-        for (Player p : this.opponents)
-        {
-            if (p.getID() == playerID)
-            {
+        for (Player p : this.opponents) {
+            if (p.getID() == playerID) {
                 return p;
             }
         }
         return null;
     }
 
-    @Override
-    public void updateMove(double speed, String key, boolean isPressed, double x, double y, int playerID)
-    {
-        Player updatePlayer = null;
-        updatePlayer = getPlayer(playerID);
-
-        updatePlayer.setvX(speed);
-        updatePlayer.setvY(speed);
-        updatePlayer.setpX(x);
-        updatePlayer.setpY(y);
-        if (key.equals("UP"))
-        {
-            updatePlayer.setUp(isPressed);
-        }
-        if (key.equals("DOWN"))
-        {
-            updatePlayer.setDown(isPressed);
-        }
-        if (key.equals("LEFT"))
-        {
-            updatePlayer.setLeft(isPressed);
-        }
-        if (key.equals("RIGHT"))
-        {
-            updatePlayer.setRight(isPressed);
-        }
-    }
 }

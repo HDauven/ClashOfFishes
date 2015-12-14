@@ -21,7 +21,7 @@ public interface IGameClient extends Remote, Serializable
      * @param mapSeed variable zodat de map op elke client hetzelfde weergegeven wordt
      * @throws RemoteException Als er iets fout gaat met RMI wordt deze exceptie opgegooid.
      */
-    public void startGame(Integer mapSeed) throws  RemoteException;
+    public void startGame() throws  RemoteException;
     
     /**
      * Deze methode wordt aangeroepen als de positie, snelheid of richting van een object veranderd is,
