@@ -52,4 +52,7 @@ public interface IClient extends Remote {
 
     void setCharacter(String character)
             throws RemoteException;
+    
+    void createGameClient(IGameServer gameServer, int seed)
+            throws RemoteException;
 }

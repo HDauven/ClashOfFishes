@@ -92,10 +92,8 @@ public class HostedGamesController implements Initializable {
                     for (ILobby lobby : cofServer.listLobbies()) {
                         ILobby temp = tbvHostedGames.getSelectionModel().getSelectedItem();
                         if (temp.equals(lobby)) {
-                            System.out.println("Diz niggah enterz dem if");
                             Administration.get().setLobby(lobby);
                             Administration.get().setClient(new Client(Administration.get().getLoggedInUser().getUsername(), false, lobby));
-                            System.out.println("Diz niggah enterz dem if");
                         }
                     }
                     Platform.runLater(() -> {
