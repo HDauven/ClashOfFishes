@@ -82,7 +82,7 @@ public class CharacterSelectionController implements Initializable {
 
     @FXML
     private void btnStartGame_OnClick(ActionEvent event) {
-        GameManager gameManager = new GameManager(this.cbCharacters.getValue(), 0);
+        GameManager gameManager = new GameManager(this.cbCharacters.getValue(), 0, 0);
         gameManager.start(new Stage());
     }
     

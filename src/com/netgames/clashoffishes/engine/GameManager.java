@@ -50,7 +50,7 @@ public class GameManager extends Application {
     private Group root;
     private int seed = 0;
     Stage thisStage;
-    
+
     int playerID;
 
     EnergyDrink energy;
@@ -103,7 +103,8 @@ public class GameManager extends Application {
             this.character = character;
         } else {
             this.character = "BUBBLES";
-        } 
+        }
+        this.players = new ArrayList<>();
     }
 
     // TODO make this class dynamic. 
@@ -116,7 +117,7 @@ public class GameManager extends Application {
         scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
         primaryStage.setScene(scene);
         primaryStage.show();
-
+       
         this.startGame();
     }
 
@@ -278,55 +279,49 @@ public class GameManager extends Application {
      * Creates the necessary GameObjects for the game.
      */
     private void createGameObjects() {
-        try {
+
             // TODO adding game objects format:
-            // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
-            if (this.seed == 0) {
-                this.seed = (int) System.currentTimeMillis();
-            }
-            map = new GameMap((int) WIDTH, (int) HEIGHT, this.seed);
-            menu = new GameMenu(this);
-            
-            createPlayer();
-            Administration.get().getGameServer().broadcastPlayer(player);
-        } catch (RemoteException ex) {
-            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
-
-    /**
-     * Creates the necessary GameObjects for the game.
-     */
-    private void createGameObjects(int seed) {
-        // TODO adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
-        map = new GameMap((int) WIDTH, (int) HEIGHT, seed);
+        if (this.seed == 0) {
+            this.seed = (int) System.currentTimeMillis();
+        }
+        map = new GameMap((int) WIDTH, (int) HEIGHT, this.seed);
         menu = new GameMenu(this);
-
-        createPlayer();
     }
 
-    private void createPlayer() {
-        switch (this.character.toUpperCase()) {
+
+    private Player createPlayer(String characterName, int playerID) {
+        Player player = null;
+        
+        switch (characterName.toUpperCase()) {
             case "BUBBLES":
+                System.out.println(characterName.toUpperCase());
                 player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, this.playerID, bubbles1, bubbles2, bubbles3, bubbles4);
+                        WIDTH / 2, HEIGHT / 2, playerID, bubbles1, bubbles2, bubbles3, bubbles4);
                 break;
             case "CLEO":
+                System.out.println(characterName.toUpperCase());
                 player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, this.playerID, cleo1, cleo2, cleo3, cleo4);
+                        WIDTH / 2, HEIGHT / 2, playerID, cleo1, cleo2, cleo3, cleo4);
                 break;
             case "FRED":
+                System.out.println(characterName.toUpperCase());
                 player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, this.playerID, fred1, fred2, fred3, fred4);
+                        WIDTH / 2, HEIGHT / 2, playerID, fred1, fred2, fred3, fred4);
                 break;
             case "GILL":
+                System.out.println(characterName.toUpperCase());
                 player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, this.playerID, gill1, gill2, gill3, gill4);
+                        WIDTH / 2, HEIGHT / 2, playerID, gill1, gill2, gill3, gill4);
                 break;
         }
+        this.players.add(player);
+        return player;
     }
+    
+    
+    
+    
 
     /**
      * Adds GameObjects to the root node.
@@ -338,6 +333,9 @@ public class GameManager extends Application {
         // Comment this out to get the regular background
         root.getChildren().add(map.getMap());
 
+//        for(Player player : this.players) {
+//            root.getChildren().add(player.getSpriteFrame());
+//        }
         root.getChildren().add(player.getSpriteFrame());
     }
 
@@ -586,8 +584,11 @@ public class GameManager extends Application {
         return null;
     }
 
-    public void addPlayer(Player player) {
-        this.players.add(player);
+    public void addPlayer(String characterName, int playerID) {
+        Player player = this.createPlayer(characterName, playerID);
+        if (this.playerID == playerID) {
+            this.player = player;
+        }   
     }
 
     public List<Player> getPlayers() {

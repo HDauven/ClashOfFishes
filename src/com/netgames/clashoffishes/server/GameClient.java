@@ -13,6 +13,7 @@ import com.netgames.clashoffishes.server.remote.IGameClient;
 import com.netgames.clashoffishes.server.remote.IGameServer;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -47,11 +48,14 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
     }
 
     @Override
-    public void startGame() throws RemoteException
+    public void startGame(List<IGameClient> clients) throws RemoteException
     {
         //Niet zeker of dit klopt
         //Administration.get().getLobbyRegistry().startGameServer();
         this.gameManager = new GameManager(this.characterName, this.mapseed, this.playerID);
+        for (IGameClient client : clients) {
+            this.gameManager.addPlayer(client.getCharacterName(), client.getPlayerID());
+        }
         Platform.runLater(() -> { 
             gameManager.start(new Stage()); 
         });
@@ -76,7 +80,13 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
     }
 
     @Override
-    public void recievePlayer(Player player) throws RemoteException {
-        this.gameManager.addPlayer(player);
+    public String getCharacterName() throws RemoteException {
+        return this.characterName;
     }
+
+    @Override
+    public int getPlayerID() throws RemoteException {
+        return this.playerID;
+    }
+
 }

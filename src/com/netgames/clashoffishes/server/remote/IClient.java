@@ -1,6 +1,5 @@
 package com.netgames.clashoffishes.server.remote;
 
-import com.netgames.clashoffishes.server.GameServer;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

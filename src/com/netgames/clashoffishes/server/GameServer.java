@@ -39,6 +39,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer
     public GameServer(Lobby lobby) throws RemoteException {
         super();
         this.lobby = lobby;
+        
         clients = new ArrayList<>();
     }
 
@@ -71,14 +72,8 @@ public class GameServer extends UnicastRemoteObject implements IGameServer
     public void start() throws RemoteException
     {
         for(IGameClient gameClient : this.clients){
-            gameClient.startGame();
+            gameClient.startGame(this.clients);
         }
     }
 
-    @Override
-    public void broadcastPlayer(Player player) throws RemoteException {
-        for(IGameClient gameClient : this.clients){
-            gameClient.recievePlayer(player);
-        }
-    }
 }

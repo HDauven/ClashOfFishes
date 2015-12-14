@@ -7,6 +7,7 @@ package com.netgames.clashoffishes.server.remote;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  *
@@ -23,7 +24,7 @@ public interface IGameClient extends Remote {
      * @throws RemoteException Als er iets fout gaat met RMI wordt deze exceptie
      * opgegooid.
      */
-    public void startGame()
+    public void startGame(List<IGameClient> clients)
             throws RemoteException;
 
     /**
@@ -65,5 +66,12 @@ public interface IGameClient extends Remote {
      * exceptie opgegooid.
      */
     public void objectCreation(int x, int y, ObjectType objectType)
+            throws RemoteException;
+    
+    
+    public String getCharacterName() 
+            throws RemoteException;
+    
+    public int getPlayerID()
             throws RemoteException;
 }
