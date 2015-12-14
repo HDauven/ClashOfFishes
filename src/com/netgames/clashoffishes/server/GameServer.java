@@ -32,7 +32,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer
     
     /**
      * Constructor for the server
-     * @param registry
+     * @param lobby
      * @throws RemoteException 
      */
     public GameServer(Lobby lobby) throws RemoteException {
@@ -49,21 +49,24 @@ public class GameServer extends UnicastRemoteObject implements IGameServer
     }
 
     @Override
-    public void updateMove(double speed, String key, boolean isPressed, double x, double y, int playerID) throws RemoteException
-    {
-        //TODO
+    public void updateMove(double speed, String key, boolean isPressed, double x, double y, int playerID) throws RemoteException {
+        for (IGameClient client : clients) {
+           client.updateMove(speed, key, isPressed, x, y, playerID);
+        }
     }
 
     @Override
-    public void collision(int playerID, int objectID) throws RemoteException
-    {
-        //TODO
+    public void collision(int playerID, int objectID) throws RemoteException {
+        for (IGameClient client : clients) {
+           client.collisionUpdate(objectID, objectID);
+        }
     }
 
     @Override
-    public void stateChanged(GameState newState) throws RemoteException
-    {
-        //TODO
+    public void stateChanged(GameState newState) throws RemoteException {
+        for (IGameClient client : clients) {
+           client.changeGameState(newState);
+        }
     }
 
     @Override

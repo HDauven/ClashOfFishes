@@ -7,6 +7,7 @@ package com.netgames.clashoffishes.server;
 
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.engine.GameManager;
+import com.netgames.clashoffishes.engine.GameState;
 import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import com.netgames.clashoffishes.server.remote.IGameClient;
 import com.netgames.clashoffishes.server.remote.IGameServer;
@@ -68,5 +69,10 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
     public void objectCreation(int x, int y, ObjectType objectType) throws RemoteException
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void changeGameState(GameState gameState) throws RemoteException {
+        gameManager.setGameState(gameState);
     }
 }

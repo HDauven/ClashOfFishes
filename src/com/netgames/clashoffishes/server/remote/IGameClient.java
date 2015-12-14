@@ -5,6 +5,7 @@
  */
 package com.netgames.clashoffishes.server.remote;
 
+import com.netgames.clashoffishes.engine.GameState;
 import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -66,5 +67,13 @@ public interface IGameClient extends Remote {
      * exceptie opgegooid.
      */
     public void objectCreation(int x, int y, ObjectType objectType)
+            throws RemoteException;
+    
+    /**
+     * Changes the state of the game on the client side.
+     * @param gameState
+     * @throws RemoteException 
+     */
+    void changeGameState(GameState gameState)
             throws RemoteException;
 }
