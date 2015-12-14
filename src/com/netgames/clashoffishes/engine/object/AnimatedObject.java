@@ -31,8 +31,8 @@ public abstract class AnimatedObject extends GameObject {
      * @param yLocation
      * @param spriteCels 
      */
-    public AnimatedObject(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
-        super(SVGData, xLocation, yLocation, spriteCels);
+    public AnimatedObject(int id, String SVGData, double xLocation, double yLocation, Image... spriteCels) {
+        super(id, SVGData, xLocation, yLocation, spriteCels);
         lifeSpan = 1000;
         vX = 0;
         vY = 0;

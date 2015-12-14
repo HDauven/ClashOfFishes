@@ -19,8 +19,7 @@ import javafx.scene.shape.Shape;
  *
  * @author Hein Dauven
  */
-public class Player extends AnimatedObject
-{
+public class Player extends AnimatedObject {
 
     private int id;
     protected GameManager gameManager;
@@ -49,23 +48,21 @@ public class Player extends AnimatedObject
      * @param yLocation The y start coordinate of a Player object.
      * @param spriteCels The images that form the animation of a Player object.
      */
-    public Player(GameManager manager, String SVGData, double xLocation, double yLocation, int playerID, Image... spriteCels)
-    {
-        super(SVGData, xLocation, yLocation, spriteCels);
+    public Player(int id, GameManager manager, String SVGData, double xLocation, double yLocation, int playerID, Image... spriteCels) {
+        super(id, SVGData, xLocation, yLocation, spriteCels);
         gameManager = manager;
         vX = 2;
         vY = 2;
         this.playerID = playerID;
         this.score = 0;
-        
+
     }
 
     /**
      * Executes a number of methods every game refresh.
      */
     @Override
-    public void update()
-    {
+    public void update() {
         setXYLocation();
         setBoundaries();
         setImageState();
@@ -78,22 +75,17 @@ public class Player extends AnimatedObject
      * Changes the X and Y location of the Player object, based on given user
      * inputs.
      */
-    private void setXYLocation()
-    {
-        if (isRight())
-        {
+    private void setXYLocation() {
+        if (isRight()) {
             iX += vX;
         }
-        if (isLeft())
-        {
+        if (isLeft()) {
             iX -= vX;
         }
-        if (isDown())
-        {
+        if (isDown()) {
             iY += vY;
         }
-        if (isUp())
-        {
+        if (isUp()) {
             iY -= vY;
         }
     }
@@ -102,22 +94,17 @@ public class Player extends AnimatedObject
      * Sets the values of a Player objects boundaries, based on the size of the
      * game window.
      */
-    private void setBoundaries()
-    {
-        if (iX >= rightBoundary)
-        {
+    private void setBoundaries() {
+        if (iX >= rightBoundary) {
             iX = rightBoundary;
         }
-        if (iX <= leftBoundary)
-        {
+        if (iX <= leftBoundary) {
             iX = leftBoundary;
         }
-        if (iY >= bottomBoundary)
-        {
+        if (iY >= bottomBoundary) {
             iY = bottomBoundary;
         }
-        if (iY <= topBoundary)
-        {
+        if (iY <= topBoundary) {
             iY = topBoundary;
         }
     }
@@ -126,14 +113,12 @@ public class Player extends AnimatedObject
      * Sets the image state of the Player object, based on user actions.
      * Effectively realizes animation.
      */
-    private void setImageState()
-    {
+    private void setImageState() {
         /* check whether the character stands still */
         if (!isRight()
                 && !isLeft()
                 && !isDown()
-                && !isUp())
-        {
+                && !isUp()) {
             spriteFrame.setImage(imageStates.get(0));
             animator = false;
             framecounter = 0;
@@ -141,105 +126,85 @@ public class Player extends AnimatedObject
             spriteBound.setRotate(0);
         }
 
-        if (isRight())
-        {
+        if (isRight()) {
             spriteFrame.setScaleX(1);
             spriteBound.setScaleX(1);
             this.setIsFlipH(false);
-            if (!animator && (!isDown() && !isUp()))
-            {
+            if (!animator && (!isDown() && !isUp())) {
                 spriteFrame.setImage(imageStates.get(1));
-                if (framecounter >= runningspeed)
-                {
+                if (framecounter >= runningspeed) {
                     animator = true;
                     framecounter = 0;
                     spriteFrame.setRotate(0);
                     spriteBound.setRotate(0);
                 }
-                else
-                {
+                else {
                     framecounter += 1;
                 }
             }
-            else if (animator)
-            {
+            else if (animator) {
                 spriteFrame.setImage(imageStates.get(2));
-                if (framecounter >= runningspeed)
-                {
+                if (framecounter >= runningspeed) {
                     animator = false;
                     framecounter = 0;
                     spriteFrame.setRotate(0);
                     spriteBound.setRotate(0);
                 }
-                else
-                {
+                else {
                     framecounter += 1;
                 }
             }
         }
 
-        if (isLeft())
-        {
+        if (isLeft()) {
             spriteFrame.setScaleX(-1);
             spriteBound.setScaleX(-1);
             this.setIsFlipH(true);
-            if (!animator && (!isDown() && !isUp()))
-            {
+            if (!animator && (!isDown() && !isUp())) {
                 spriteFrame.setImage(imageStates.get(1));
-                if (framecounter >= runningspeed)
-                {
+                if (framecounter >= runningspeed) {
                     animator = true;
                     framecounter = 0;
                     spriteFrame.setRotate(0);
                     spriteBound.setRotate(0);
                 }
-                else
-                {
+                else {
                     framecounter += 1;
                 }
             }
-            else if (animator)
-            {
+            else if (animator) {
                 spriteFrame.setImage(imageStates.get(2));
-                if (framecounter >= runningspeed)
-                {
+                if (framecounter >= runningspeed) {
                     animator = false;
                     framecounter = 0;
                     spriteFrame.setRotate(0);
                     spriteBound.setRotate(0);
                 }
-                else
-                {
+                else {
                     framecounter += 1;
                 }
             }
         }
 
-        if (isDown())
-        {
+        if (isDown()) {
             spriteFrame.setImage(imageStates.get(1));
-            if (isLeft())
-            {
+            if (isLeft()) {
                 spriteFrame.setRotate(-45);
                 spriteBound.setRotate(-45);
             }
-            else if (isRight())
-            {
+            else if (isRight()) {
                 spriteFrame.setRotate(45);
                 spriteBound.setRotate(45);
             }
         }
 
-        if (isUp())
-        {
+        if (isUp()) {
             spriteFrame.setImage(imageStates.get(1));
-            if (isLeft())
-            {
+            if (isLeft()) {
                 spriteFrame.setRotate(45);
                 spriteBound.setRotate(45);
             }
-            else if (isRight())
-            {
+            else if (isRight()) {
                 spriteFrame.setRotate(-45);
                 spriteBound.setRotate(-45);
             }
@@ -253,8 +218,7 @@ public class Player extends AnimatedObject
      * @param x coordinate of the Player object
      * @param y coordinate of the Player object
      */
-    private void movePlayer(double x, double y)
-    {
+    private void movePlayer(double x, double y) {
         spriteFrame.setTranslateX(x);
         spriteFrame.setTranslateY(y);
     }
@@ -262,10 +226,8 @@ public class Player extends AnimatedObject
     /**
      * Controls the playing of an AudioClip based on certain conditions.
      */
-    private void playAudioClip()
-    {
-        if (isSpace())
-        {
+    private void playAudioClip() {
+        if (isSpace()) {
             gameManager.playBiteSound();
         }
     }
@@ -279,13 +241,10 @@ public class Player extends AnimatedObject
      * detects collision with the player, get rid of the object it has collision
      * with.
      */
-    public void checkCollision()
-    {
-        for (int i = 0; i < gameManager.getObjectManager().getCurrentObject().size(); i++)
-        {
+    public void checkCollision() {
+        for (int i = 0; i < gameManager.getObjectManager().getCurrentObject().size(); i++) {
             GameObject object = gameManager.getObjectManager().getCurrentObject().get(i);
-            if (collide(object))
-            {
+            if (collide(object)) {
                 // Calculates the amount of scores a Player gets after a collision takes place.
                 scoringEngine(object);
                 collisionReaction(object);
@@ -300,11 +259,12 @@ public class Player extends AnimatedObject
             }
         }
     }
-    
+
     private void sendCollision(GameObject object) {
         try {
             Administration.get().getGameServer().collision(playerID, object.getID());
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -330,12 +290,10 @@ public class Player extends AnimatedObject
      * @return Whether collision took place or not.
      */
     @Override
-    public boolean collide(GameObject object)
-    {
+    public boolean collide(GameObject object) {
         // Checks if the player ImageView has collided with objects ImageView.
         if (this.spriteFrame.getBoundsInParent().intersects(
-                object.getSpriteFrame().getBoundsInParent()))
-        {
+                object.getSpriteFrame().getBoundsInParent())) {
 
             // A shape is generated based on the SVG path of the player and the object
             // If the shapes intersect, a new shape is created.
@@ -348,8 +306,7 @@ public class Player extends AnimatedObject
             // so the width would result in a '-1' (-1 meaning no width available).
             // We check here for the opposite of '-1' (0 and more) to see whether collision
             // took place.
-            if (intersection.getBoundsInLocal().getWidth() != -1)
-            {
+            if (intersection.getBoundsInLocal().getWidth() != -1) {
                 return true;
             }
         }
@@ -361,6 +318,7 @@ public class Player extends AnimatedObject
      *
      * @param object that the Player object has collision with.
      */
+
     private void scoringEngine(GameObject object)
     {
         if (object instanceof Seaweed)
@@ -378,18 +336,14 @@ public class Player extends AnimatedObject
         gameManager.updateScoreLabel(this.playerID, this.score);
     }
 
-    private void collisionReaction(GameObject object)
-    {
-        if (object instanceof Seaweed)
-        {
+    private void collisionReaction(GameObject object) {
+        if (object instanceof Seaweed) {
             this.updateSpeed(1.3);
         }
-        else if (object instanceof FishHook)
-        {
+        else if (object instanceof FishHook) {
             this.updateSpeed(0.5);
         }
-        else if (object instanceof EnergyDrink)
-        {
+        else if (object instanceof EnergyDrink) {
             this.updateSpeed(2.7);
         }
         gameManager.updateScoreLabel(this.playerID, this.score);
@@ -399,8 +353,7 @@ public class Player extends AnimatedObject
      *
      * @return
      */
-    public boolean isUp()
-    {
+    public boolean isUp() {
         return up;
     }
 
@@ -408,8 +361,7 @@ public class Player extends AnimatedObject
      *
      * @param up
      */
-    public void setUp(boolean up)
-    {
+    public void setUp(boolean up) {
         this.up = up;
     }
 
@@ -417,8 +369,7 @@ public class Player extends AnimatedObject
      *
      * @return
      */
-    public boolean isDown()
-    {
+    public boolean isDown() {
         return down;
     }
 
@@ -426,8 +377,7 @@ public class Player extends AnimatedObject
      *
      * @param down
      */
-    public void setDown(boolean down)
-    {
+    public void setDown(boolean down) {
         this.down = down;
     }
 
@@ -435,8 +385,7 @@ public class Player extends AnimatedObject
      *
      * @return
      */
-    public boolean isLeft()
-    {
+    public boolean isLeft() {
         return left;
     }
 
@@ -444,8 +393,7 @@ public class Player extends AnimatedObject
      *
      * @param left
      */
-    public void setLeft(boolean left)
-    {
+    public void setLeft(boolean left) {
         this.left = left;
     }
 
@@ -453,8 +401,7 @@ public class Player extends AnimatedObject
      *
      * @return
      */
-    public boolean isRight()
-    {
+    public boolean isRight() {
         return right;
     }
 
@@ -462,8 +409,7 @@ public class Player extends AnimatedObject
      *
      * @param right
      */
-    public void setRight(boolean right)
-    {
+    public void setRight(boolean right) {
         this.right = right;
     }
 
@@ -471,8 +417,7 @@ public class Player extends AnimatedObject
      *
      * @return
      */
-    public boolean isSpace()
-    {
+    public boolean isSpace() {
         return space;
     }
 
@@ -480,33 +425,26 @@ public class Player extends AnimatedObject
      *
      * @param space
      */
-    public void setSpace(boolean space)
-    {
+    public void setSpace(boolean space) {
         this.space = space;
     }
 
-    public int getID()
-    {
+    public int getID() {
         return this.id;
     }
 
-    public void updateSpeed(double newSpeed)
-    {
+    public void updateSpeed(double newSpeed) {
         this.setvX(newSpeed);
         this.setvY(newSpeed);
-        Runnable r = new Runnable()
-        {
+        Runnable r = new Runnable() {
             @Override
-            public void run()
-            {
-                try
-                {
+            public void run() {
+                try {
                     Thread.sleep(3000);
                     setvX(2);
                     setvY(2);
                 }
-                catch (InterruptedException ex)
-                {
+                catch (InterruptedException ex) {
                     Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -523,7 +461,5 @@ public class Player extends AnimatedObject
     public int getScore() {
         return score;
     }
-    
-    
     
 }

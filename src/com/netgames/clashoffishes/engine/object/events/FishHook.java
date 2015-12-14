@@ -21,9 +21,9 @@ public class FishHook extends AnimatedObject implements RandomEvent
      * @param yLocation
      * @param spriteCels
      */
-    public FishHook(double xLocation, double yLocation, Image... spriteCels)
+    public FishHook(int id, double xLocation, double yLocation, Image... spriteCels)
     {
-        super("M 27.00,919.50"
+        super(id, "M 27.00,919.50"
                     + "           C 27.00,919.50 0.00,956.50 0.00,956.50"
                     + "             0.00,956.50 0.00,997.50 0.00,997.50"
                     + "             0.00,997.50 37.50,997.50 37.50,997.50"

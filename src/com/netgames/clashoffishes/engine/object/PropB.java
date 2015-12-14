@@ -9,8 +9,8 @@ import javafx.scene.image.Image;
  */
 public class PropB extends GameObject {
 
-    public PropB(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
-        super(SVGData, xLocation, yLocation, spriteCels);
+    public PropB(int id, String SVGData, double xLocation, double yLocation, Image... spriteCels) {
+        super(id, SVGData, xLocation, yLocation, spriteCels);
         this.setIsFlipH(true);
         this.setIsFlipV(true);
         /* Flips the image around the X & Y axis */

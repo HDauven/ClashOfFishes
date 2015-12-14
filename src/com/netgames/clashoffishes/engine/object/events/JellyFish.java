@@ -17,8 +17,8 @@ public class JellyFish extends GameObject implements RandomEvent {
      * @param yLocation
      * @param spriteCels 
      */
-    public JellyFish(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
-        super(SVGData, xLocation, yLocation, spriteCels);
+    public JellyFish(int id, String SVGData, double xLocation, double yLocation, Image... spriteCels) {
+        super(id, SVGData, xLocation, yLocation, spriteCels);
         spriteFrame.setTranslateX(xLocation);
         spriteFrame.setTranslateY(yLocation);
         isFixed  = false;

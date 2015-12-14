@@ -34,6 +34,8 @@ public class GameServer extends UnicastRemoteObject implements IGameServer
     
     GameManager gameManager = new GameManager();
     
+    private int nxtObjectID = 1;
+    
     /**
      * Constructor for the server
      * @param lobby
@@ -95,7 +97,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer
                 //System.out.println(elapsed);
                 ObjectType type = null;
                 if ((elapsed / NANO_TO_SECOND) > randInt) {
-                    GameObject object = gameManager.addRandomObject();
+                    GameObject object = gameManager.addRandomObject(nxtObjectID++);
                     for(IGameClient client : clients){
                         try {
                             if(object instanceof EnergyDrink){
@@ -108,7 +110,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer
                                 type = ObjectType.FISHHOOK;
                             }
                             //moet type zijn
-                            client.objectCreation((int)object.getiX(), (int)object.getiY(), type);
+                            client.objectCreation(object.getID(), (int)object.getiX(), (int)object.getiY(), type);
                         }
                         catch (RemoteException ex) {
                             Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);

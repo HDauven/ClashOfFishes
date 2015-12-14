@@ -120,14 +120,14 @@ public class GameManager extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        this.startGame();
+        this.startGame(1);
     }
 
-    private void startGame() {
+    private void startGame(int id) {
         createSceneEventHandling();
         loadAudioAssets();
         loadImageAssets();
-        createGameObjects();
+        createGameObjects(id);
         addGameObjectNodes();
         createObjectManager();
         addNodesToGroup();
@@ -292,7 +292,7 @@ public class GameManager extends Application {
     /**
      * Creates the necessary GameObjects for the game.
      */
-    private void createGameObjects() {
+    private void createGameObjects(int id) {
 
         // TODO adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
@@ -306,7 +306,7 @@ public class GameManager extends Application {
             //createPlayer(this.character, this.playerID);
             int tempID = 0;
             for (IGameClient client : Administration.get().getGameServer().getClients()) {
-                createPlayer(client.getCharacterName(), tempID);
+                createPlayer(client.getCharacterName(), tempID, id);
                 tempID++;
             }
         }
@@ -315,28 +315,28 @@ public class GameManager extends Application {
         }
     }
 
-    private void createPlayer(String characterName, int playerID) {
+    private void createPlayer(String characterName, int playerID, int objectID) {
         Player createdPlayer = null;
 
         switch (characterName.toUpperCase()) {
             case "BUBBLES":
                 System.out.println(characterName.toUpperCase());
-                createdPlayer = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                createdPlayer = new Player(objectID, this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
                         WIDTH / 2, HEIGHT / 2, playerID, bubbles1, bubbles2, bubbles3, bubbles4);
                 break;
             case "CLEO":
                 System.out.println(characterName.toUpperCase());
-                createdPlayer = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                createdPlayer = new Player(objectID, this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
                         WIDTH / 2, HEIGHT / 2, playerID, cleo1, cleo2, cleo3, cleo4);
                 break;
             case "FRED":
                 System.out.println(characterName.toUpperCase());
-                createdPlayer = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                createdPlayer = new Player(objectID, this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
                         WIDTH / 2, HEIGHT / 2, playerID, fred1, fred2, fred3, fred4);
                 break;
             case "GILL":
                 System.out.println(characterName.toUpperCase());
-                createdPlayer = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                createdPlayer = new Player(objectID, this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
                         WIDTH / 2, HEIGHT / 2, playerID, gill1, gill2, gill3, gill4);
                 break;
         }
@@ -397,13 +397,16 @@ public class GameManager extends Application {
 
     }
 
-    public GameObject addRandomObject() {
+    public GameObject addRandomObject(int id) {
         //Aanmaken waarden
         Image image;
         if (map == null) {
             map = new GameMap((int) WIDTH, (int) HEIGHT, this.seed);
             menu = new GameMenu(this);
             loadImageAssets();
+            if(fishHooks == null){
+                fishHooks = new ArrayList<>();
+            }
         }
         double px = map.getMap().getWidth() * Math.random() + 1;
         double py = map.getMap().getHeight() * Math.random() + 1;
@@ -426,12 +429,12 @@ public class GameManager extends Application {
             if (py < 144.6) {
                 py = 144.6;
             }
-            object = new EnergyDrink(px, py, image);
+            object = new EnergyDrink(id, px, py, image);
         }
 
         if (randomGetal == 2) {
             image = new Image(eventDir.toString() + "FishHook1.png", 40, 1000, true, false, true);
-            object = new FishHook(px, -894, image);
+            object = new FishHook(id, px, -894, image);
             fishHooks.add((FishHook) object);
         }
 
@@ -449,7 +452,7 @@ public class GameManager extends Application {
             if (py < 87) {
                 py = 87;
             }
-            object = new Seaweed(px, py, image);
+            object = new Seaweed(id, px, py, image);
         }
         //TODO Diver object aanmaken
 /*
@@ -603,17 +606,17 @@ public class GameManager extends Application {
         getObjectManager().removeCurrentObject(h);
     }
 
-    public void createObject(int x, int y, ObjectType objectType) throws RemoteException {
+    public void createObject(int id, int x, int y, ObjectType objectType) throws RemoteException {
 
         switch (objectType) {
             case ENERGYDRINK:
-                object = new EnergyDrink(x, y, energyDrink1);
+                object = new EnergyDrink(id, x, y, energyDrink1);
                 break;
             case FISHHOOK:
-                object = new FishHook(x, y, fishHook1);
+                object = new FishHook(id, x, y, fishHook1);
                 break;
             case SEAWEED:
-                object = new Seaweed(x, y, seaweed1);
+                object = new Seaweed(id, x, y, seaweed1);
         }
         Runnable r = new Runnable() {
 

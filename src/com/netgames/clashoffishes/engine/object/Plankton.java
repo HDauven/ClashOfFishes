@@ -15,8 +15,8 @@ public class Plankton extends GameObject implements NPC {
      * @param yLocation
      * @param spriteCels 
      */
-    public Plankton(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
-        super(SVGData, xLocation, yLocation, spriteCels);
+    public Plankton(int id, String SVGData, double xLocation, double yLocation, Image... spriteCels) {
+        super(id, SVGData, xLocation, yLocation, spriteCels);
         spriteFrame.setTranslateX(xLocation);
         spriteFrame.setTranslateY(yLocation);
         isFixed  = false;
