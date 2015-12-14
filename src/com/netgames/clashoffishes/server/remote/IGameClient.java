@@ -9,7 +9,6 @@ import com.netgames.clashoffishes.engine.GameState;
 import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
 
 /**
  *
@@ -67,7 +66,7 @@ public interface IGameClient extends Remote {
      * @throws java.rmi.RemoteException Als er iets fout gaat met RMI wordt deze
      * exceptie opgegooid.
      */
-    public void objectCreation(int x, int y, ObjectType objectType)
+    public void objectCreation(int id, int x, int y, ObjectType objectType)
             throws RemoteException;
     
     

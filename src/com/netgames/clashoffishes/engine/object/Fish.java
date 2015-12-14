@@ -15,8 +15,8 @@ public class Fish extends GameObject implements NPC {
      * @param yLocation
      * @param spriteCels 
      */
-    public Fish(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
-        super(SVGData, xLocation, yLocation, spriteCels);
+    public Fish(int id, String SVGData, double xLocation, double yLocation, Image... spriteCels) {
+        super(id, SVGData, xLocation, yLocation, spriteCels);
         spriteFrame.setTranslateX(xLocation);
         spriteFrame.setTranslateY(yLocation);
         isAlive  = true;

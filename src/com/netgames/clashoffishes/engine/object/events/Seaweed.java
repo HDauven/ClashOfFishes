@@ -16,8 +16,8 @@ public class Seaweed extends GameObject implements RandomEvent {
      * @param yLocation
      * @param spriteCels 
      */
-    public Seaweed(double xLocation, double yLocation, Image... spriteCels) {
-        super("M 66.00,11.00"
+    public Seaweed(int id, double xLocation, double yLocation, Image... spriteCels) {
+        super(id, "M 66.00,11.00"
                     + "           C 66.00,11.00 11.00,192.00 11.00,192.00"
                     + "             11.00,192.00 4.00,285.00 4.00,285.00"
                     + "             4.00,285.00 12.00,453.00 12.00,453.00"

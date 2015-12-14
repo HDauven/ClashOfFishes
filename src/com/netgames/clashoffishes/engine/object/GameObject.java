@@ -1,6 +1,5 @@
 package com.netgames.clashoffishes.engine.object;
 
-import com.netgames.clashoffishes.Administration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,7 +39,7 @@ public abstract class GameObject {
      * @param yLocation
      * @param spriteCels
      */
-    public GameObject(String SVGData, double xLocation, 
+    public GameObject(int id, String SVGData, double xLocation, 
                         double yLocation, Image... spriteCels) {
         this.spriteBound = new SVGPath();
         this.spriteBound.setContent(SVGData);
@@ -56,7 +55,7 @@ public abstract class GameObject {
         this.hasValue = false;
         this.isFlipV = false;
         this.isFlipH = false;
-        this.id = Administration.get().nextObjectNr();
+        id = id;
     }
     
     /**

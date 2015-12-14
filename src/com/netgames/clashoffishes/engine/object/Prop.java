@@ -9,8 +9,8 @@ import javafx.scene.image.Image;
  */
 public class Prop extends GameObject {
 
-    public Prop(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
-        super(SVGData, xLocation, yLocation, spriteCels);
+    public Prop(int id, String SVGData, double xLocation, double yLocation, Image... spriteCels) {
+        super(id, SVGData, xLocation, yLocation, spriteCels);
         spriteFrame.setTranslateX(xLocation);
         spriteFrame.setTranslateY(yLocation);
     }
