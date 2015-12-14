@@ -3,9 +3,9 @@ package com.netgames.clashoffishes;
 import com.netgames.clashoffishes.data.DatabaseStorage;
 import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.server.Client;
-import com.netgames.clashoffishes.server.Lobby;
+import com.netgames.clashoffishes.server.GameClient;
 import com.netgames.clashoffishes.server.LobbyRegistry;
-import com.netgames.clashoffishes.server.remote.IClient;
+import com.netgames.clashoffishes.server.remote.IGameServer;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,6 +35,10 @@ public class Administration {
 
     private ILobby lobby;
     private Client client;
+    
+    private IGameServer gameServer;
+    private GameClient gameClient;
+    
 
     File f = new File("props.txt");
     PrintWriter out;
@@ -114,6 +118,22 @@ public class Administration {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public IGameServer getGameServer() {
+        return gameServer;
+    }
+
+    public void setGameServer(IGameServer gameServer) {
+        this.gameServer = gameServer;
+    }
+
+    public GameClient getGameClient() {
+        return gameClient;
+    }
+
+    public void setGameClient(GameClient gameClient) {
+        this.gameClient = gameClient;
     }
 
     public ArrayList<Highscore> getAllUserHighscoresForGameMode(GameMode gameMode) {
