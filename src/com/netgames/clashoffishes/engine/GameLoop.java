@@ -1,6 +1,7 @@
 package com.netgames.clashoffishes.engine;
 
 import com.netgames.clashoffishes.Administration;
+import com.netgames.clashoffishes.engine.object.Player;
 import com.netgames.clashoffishes.engine.object.events.FishHook;
 import java.text.SimpleDateFormat;
 import java.util.Random;
@@ -50,7 +51,9 @@ public class GameLoop extends AnimationTimer
     public void handle(long now)
     {
         // TODO
-        gameManager.getPlayer().update();
+        for (Player player : gameManager.getPlayers()) {
+            player.update();
+        }
 
         long elapsed = now - prev;
         int randInt = (int) (Math.random() * 1_000 + 1); // moet 10_000 zijn, 1_000 is om te testen
