@@ -24,7 +24,7 @@ public interface IGameClient extends Remote {
      * @throws RemoteException Als er iets fout gaat met RMI wordt deze exceptie
      * opgegooid.
      */
-    public void startGame(List<IGameClient> clients)
+    public void startGame()
             throws RemoteException;
 
     /**

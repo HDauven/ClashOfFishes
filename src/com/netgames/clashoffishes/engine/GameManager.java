@@ -51,7 +51,7 @@ public class GameManager extends Application {
     private int seed = 0;
     Stage thisStage;
 
-    int playerID;
+    private int playerID;
 
     EnergyDrink energy;
     private ArrayList<FishHook> fishHooks;
@@ -96,6 +96,7 @@ public class GameManager extends Application {
     public GameManager(String character, int seed, int playerID) {
         this.seed = seed;
         this.playerID = playerID;
+        System.out.println(playerID);
         if (character.toUpperCase().equals("BUBBLES")
                 || character.toUpperCase().equals("CLEO")
                 || character.toUpperCase().equals("FRED")
@@ -132,9 +133,6 @@ public class GameManager extends Application {
         createStartGameLoop();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 
     /**
      * Sets event handling for the scene object. Based on user input, booleans
@@ -287,36 +285,50 @@ public class GameManager extends Application {
         }
         map = new GameMap((int) WIDTH, (int) HEIGHT, this.seed);
         menu = new GameMenu(this);
+        
+        try {
+            //createPlayer(this.character, this.playerID);
+            int tempID = 0;
+            for (IGameClient client : Administration.get().getGameServer().getClients()) {
+                createPlayer(client.getCharacterName(), tempID);
+                tempID++;
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 
-    private Player createPlayer(String characterName, int playerID) {
-        Player player = null;
+    private void createPlayer(String characterName, int playerID) {
+        Player createdPlayer = null;
         
         switch (characterName.toUpperCase()) {
             case "BUBBLES":
                 System.out.println(characterName.toUpperCase());
-                player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                createdPlayer = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
                         WIDTH / 2, HEIGHT / 2, playerID, bubbles1, bubbles2, bubbles3, bubbles4);
                 break;
             case "CLEO":
                 System.out.println(characterName.toUpperCase());
-                player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                createdPlayer = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
                         WIDTH / 2, HEIGHT / 2, playerID, cleo1, cleo2, cleo3, cleo4);
                 break;
             case "FRED":
                 System.out.println(characterName.toUpperCase());
-                player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                createdPlayer = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
                         WIDTH / 2, HEIGHT / 2, playerID, fred1, fred2, fred3, fred4);
                 break;
             case "GILL":
                 System.out.println(characterName.toUpperCase());
-                player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                createdPlayer = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
                         WIDTH / 2, HEIGHT / 2, playerID, gill1, gill2, gill3, gill4);
                 break;
         }
-        this.players.add(player);
-        return player;
+        this.players.add(createdPlayer);
+        
+        if (createdPlayer.getPlayerID() == this.playerID) {
+            this.player = createdPlayer;
+        }
     }
     
     
@@ -333,10 +345,10 @@ public class GameManager extends Application {
         // Comment this out to get the regular background
         root.getChildren().add(map.getMap());
 
-//        for(Player player : this.players) {
-//            root.getChildren().add(player.getSpriteFrame());
-//        }
-        root.getChildren().add(player.getSpriteFrame());
+        for(Player player : this.players) {
+            root.getChildren().add(player.getSpriteFrame());
+        }
+        //root.getChildren().add(player.getSpriteFrame());
     }
 
     /**
@@ -572,24 +584,10 @@ public class GameManager extends Application {
     }
 
     public Player getPlayer(int playerID) {
-        if (this.player.getID() == playerID) {
-            return player;
-        }
-
-        for (Player p : this.players) {
-            if (p.getID() == playerID) {
-                return p;
-            }
-        }
-        return null;
+        return this.player;
     }
 
-    public void addPlayer(String characterName, int playerID) {
-        Player player = this.createPlayer(characterName, playerID);
-        if (this.playerID == playerID) {
-            this.player = player;
-        }   
-    }
+
 
     public List<Player> getPlayers() {
         return players;

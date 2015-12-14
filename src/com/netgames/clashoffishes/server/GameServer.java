@@ -72,8 +72,13 @@ public class GameServer extends UnicastRemoteObject implements IGameServer
     public void start() throws RemoteException
     {
         for(IGameClient gameClient : this.clients){
-            gameClient.startGame(this.clients);
+            gameClient.startGame();
         }
+    }
+
+    @Override
+    public List<IGameClient> getClients() throws RemoteException {
+        return this.clients;
     }
 
 }

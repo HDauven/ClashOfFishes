@@ -8,6 +8,7 @@ package com.netgames.clashoffishes.server.remote;
 import com.netgames.clashoffishes.engine.GameState;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  * The IGameServer interface for RMI communication between clients and servers
@@ -62,5 +63,8 @@ public interface IGameServer extends Remote
      * @throws RemoteException 
      */
     public void start() throws RemoteException;
+    
+    public List<IGameClient> getClients() 
+            throws RemoteException;
     
 }

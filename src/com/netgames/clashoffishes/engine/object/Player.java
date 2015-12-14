@@ -502,4 +502,10 @@ public class Player extends AnimatedObject
         t.start();
 
     }
+
+    public int getPlayerID() {
+        return playerID;
+    }
+    
+    
 }
