@@ -5,8 +5,11 @@ import com.netgames.clashoffishes.server.Server;
 import com.netgames.clashoffishes.server.interfaces.ILobbyServerObserver;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -59,6 +62,12 @@ public class LobbyServerGUIController implements Initializable, ILobbyServerObse
 
     @FXML
     private void btnCloseLobby_OnClick(ActionEvent event) {
+        ILobby temp = lstViewServers.getSelectionModel().getSelectedItem();
+        try {
+            server.removeLobby(temp);
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyServerGUIController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
