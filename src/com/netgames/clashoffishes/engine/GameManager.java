@@ -211,7 +211,7 @@ public class GameManager extends Application {
      */
     private void sendUpdateMove(String key, boolean pressed) {
         try {
-            Administration.get().getGameServer().updateMove(player.getvX(), key, pressed, player.getiX(), player.getiY(), player.getID());
+            Administration.get().getGameServer().updateMove(player.getvX(), key, pressed, player.getiX(), player.getiY(), player.getPlayerID());
         } catch (RemoteException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         }
