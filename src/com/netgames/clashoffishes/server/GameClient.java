@@ -81,7 +81,7 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
     
     @Override
     public void objectCreation(int x, int y, ObjectType objectType) throws RemoteException {
-        gameManager.objectCreation(x, y, objectType);
+        gameManager.createObject(x, y, objectType);
     }
     
     @Override

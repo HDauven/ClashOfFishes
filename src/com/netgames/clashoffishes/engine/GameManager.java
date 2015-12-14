@@ -603,7 +603,7 @@ public class GameManager extends Application {
         getObjectManager().removeCurrentObject(h);
     }
 
-    public void objectCreation(int x, int y, ObjectType objectType) throws RemoteException {
+    public void createObject(int x, int y, ObjectType objectType) throws RemoteException {
 
         switch (objectType) {
             case ENERGYDRINK:
