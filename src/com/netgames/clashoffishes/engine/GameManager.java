@@ -539,9 +539,9 @@ public class GameManager extends Application {
     /**
      * Updates the score for Player one on screen.
      */
-    public void updateScoreLabelOne() {
+    public void updateScoreLabel(int scoreLabel, int score) {
         //this.scoreLabelOne.setText(String.valueOf(this.gameScore));
-        menu.updateScoreLabelOne();
+        menu.updateScoreLabel(scoreLabel, score);
     }
 
     /**
