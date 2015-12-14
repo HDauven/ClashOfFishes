@@ -26,6 +26,7 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
     private int mapseed;
     
     private IGameServer gameServer;
+    private GameManager gameManager;
     
     public GameClient(String username, String characterName, int mapseed, IGameServer gameServer) throws RemoteException {
         this.username = username;
@@ -34,7 +35,6 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
         this.gameServer = gameServer;
         
         gameServer.registerClient(this);
-        
     }
     
     public String getUsername(){
@@ -46,7 +46,7 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
     {
         //Niet zeker of dit klopt
         //Administration.get().getLobbyRegistry().startGameServer();
-        GameManager gameManager = new GameManager(this.characterName, this.mapseed);
+        gameManager = new GameManager(this.characterName, this.mapseed);
         Platform.runLater(() -> { 
             gameManager.start(new Stage()); 
         });

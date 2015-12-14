@@ -37,7 +37,7 @@ public class GameManager extends Application {
     private GameMap map;
     private GameMenu menu;
     private Player player;
-    private List<Player> opponents;
+    private List<Player> players;
     private String character = "Bubbles";
     private int gameScore = 0;
     private GameState gameState;
@@ -566,7 +566,7 @@ public class GameManager extends Application {
             return player;
         }
 
-        for (Player p : this.opponents) {
+        for (Player p : this.players) {
             if (p.getID() == playerID) {
                 return p;
             }
@@ -574,4 +574,7 @@ public class GameManager extends Application {
         return null;
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
 }
