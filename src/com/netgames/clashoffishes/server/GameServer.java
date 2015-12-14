@@ -7,6 +7,7 @@ package com.netgames.clashoffishes.server;
 
 import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.engine.GameState;
+import com.netgames.clashoffishes.engine.object.Player;
 import com.netgames.clashoffishes.server.remote.IGameClient;
 import com.netgames.clashoffishes.server.remote.IGameServer;
 import java.io.Serializable;
@@ -71,6 +72,13 @@ public class GameServer extends UnicastRemoteObject implements IGameServer
     {
         for(IGameClient gameClient : this.clients){
             gameClient.startGame();
+        }
+    }
+
+    @Override
+    public void broadcastPlayer(Player player) throws RemoteException {
+        for(IGameClient gameClient : this.clients){
+            gameClient.recievePlayer(player);
         }
     }
 }

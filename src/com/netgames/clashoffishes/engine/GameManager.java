@@ -1,5 +1,6 @@
 package com.netgames.clashoffishes.engine;
 
+import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.engine.object.GameObject;
 import com.netgames.clashoffishes.engine.object.Player;
 import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
@@ -12,6 +13,8 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -37,7 +40,7 @@ public class GameManager extends Application {
     private GameMap map;
     private GameMenu menu;
     private Player player;
-    private List<Player> opponents;
+    private List<Player> players;
     private String character = "Bubbles";
     private int gameScore = 0;
     private GameState gameState;
@@ -272,15 +275,21 @@ public class GameManager extends Application {
      * Creates the necessary GameObjects for the game.
      */
     private void createGameObjects() {
-        // TODO adding game objects format:
-        // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
-        if (this.seed == 0) {
-            this.seed = (int) System.currentTimeMillis();
+        try {
+            // TODO adding game objects format:
+            // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
+            if (this.seed == 0) {
+                this.seed = (int) System.currentTimeMillis();
+            }
+            map = new GameMap((int) WIDTH, (int) HEIGHT, this.seed);
+            menu = new GameMenu(this);
+            
+            createPlayer();
+            Administration.get().getGameServer().broadcastPlayer(player);
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        map = new GameMap((int) WIDTH, (int) HEIGHT, this.seed);
-        menu = new GameMenu(this);
-
-        createPlayer();
+        
     }
 
     /**
@@ -566,7 +575,7 @@ public class GameManager extends Application {
             return player;
         }
 
-        for (Player p : this.opponents) {
+        for (Player p : this.players) {
             if (p.getID() == playerID) {
                 return p;
             }
@@ -574,4 +583,11 @@ public class GameManager extends Application {
         return null;
     }
 
+    public void addPlayer(Player player) {
+        this.players.add(player);
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

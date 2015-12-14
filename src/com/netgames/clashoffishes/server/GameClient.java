@@ -7,6 +7,7 @@ package com.netgames.clashoffishes.server;
 
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.engine.GameManager;
+import com.netgames.clashoffishes.engine.object.Player;
 import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import com.netgames.clashoffishes.server.remote.IGameClient;
 import com.netgames.clashoffishes.server.remote.IGameServer;
@@ -27,6 +28,8 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
     
     private IGameServer gameServer;
     
+    private GameManager gameManager;
+    
     public GameClient(String username, String characterName, int mapseed, IGameServer gameServer) throws RemoteException {
         this.username = username;
         this.characterName = characterName;
@@ -46,7 +49,7 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
     {
         //Niet zeker of dit klopt
         //Administration.get().getLobbyRegistry().startGameServer();
-        GameManager gameManager = new GameManager(this.characterName, this.mapseed);
+        this.gameManager = new GameManager(this.characterName, this.mapseed);
         Platform.runLater(() -> { 
             gameManager.start(new Stage()); 
         });
@@ -68,5 +71,10 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
     public void objectCreation(int x, int y, ObjectType objectType) throws RemoteException
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void recievePlayer(Player player) throws RemoteException {
+        this.gameManager.addPlayer(player);
     }
 }

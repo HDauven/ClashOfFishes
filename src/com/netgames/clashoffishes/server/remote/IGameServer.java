@@ -6,6 +6,7 @@
 package com.netgames.clashoffishes.server.remote;
 
 import com.netgames.clashoffishes.engine.GameState;
+import com.netgames.clashoffishes.engine.object.Player;
 import com.netgames.clashoffishes.server.IPlayer;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -65,4 +66,7 @@ public interface IGameServer extends Remote
      * @throws RemoteException 
      */
     public void start() throws RemoteException;
+    
+    public void broadcastPlayer (Player player)
+            throws RemoteException;
 }
