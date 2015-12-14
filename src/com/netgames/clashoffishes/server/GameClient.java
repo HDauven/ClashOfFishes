@@ -56,7 +56,18 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
     @Override
     public void updateMove(double speed, String key, boolean pressed, double x, double y, int playerID)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        gameManager.getPlayers().get(playerID).updateSpeed(speed);
+        gameManager.getPlayers().get(playerID).setiX(x);
+        gameManager.getPlayers().get(playerID).setiY(y);
+        if (key.equals("UP")) {
+            gameManager.getPlayers().get(playerID).setUp(pressed);
+        } else if (key.equals("DOWN")) {
+            gameManager.getPlayers().get(playerID).setDown(pressed);
+        } else if (key.equals("LEFT")) {
+            gameManager.getPlayers().get(playerID).setLeft(pressed);
+        } else if (key.equals("RIGHT")) {
+            gameManager.getPlayers().get(playerID).setRight(pressed);
+        }
     }
 
     @Override

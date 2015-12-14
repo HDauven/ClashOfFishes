@@ -1,5 +1,6 @@
 package com.netgames.clashoffishes.engine;
 
+import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.engine.object.GameObject;
 import com.netgames.clashoffishes.engine.object.Player;
 import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
@@ -12,6 +13,8 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -137,31 +140,31 @@ public class GameManager extends Application {
         scene.setOnKeyPressed((KeyEvent event) -> {
             switch (event.getCode()) {
                 case UP:
-                    player.setUp(true);
+                    this.sendUpdateMove("UP", true);
                     break;
                 case DOWN:
-                    player.setDown(true);
+                    this.sendUpdateMove("DOWN", true);
                     break;
                 case LEFT:
-                    player.setLeft(true);
+                    this.sendUpdateMove("LEFT", true);
                     break;
                 case RIGHT:
-                    player.setRight(true);
+                    this.sendUpdateMove("RIGHT", true);
                     break;
                 case W:
-                    player.setUp(true);
+                    this.sendUpdateMove("UP", true);
                     break;
                 case A:
-                    player.setLeft(true);
+                    this.sendUpdateMove("LEFT", true);
                     break;
                 case S:
-                    player.setDown(true);
+                    this.sendUpdateMove("DOWN", true);
                     break;
                 case D:
-                    player.setRight(true);
+                    this.sendUpdateMove("RIGHT", true);
                     break;
                 case SPACE:
-                    player.setSpace(true);
+                    this.sendUpdateMove("SPACE", true);
                     break;
             }
         });
@@ -169,34 +172,47 @@ public class GameManager extends Application {
         scene.setOnKeyReleased((KeyEvent event) -> {
             switch (event.getCode()) {
                 case UP:
-                    player.setUp(false);
+                    this.sendUpdateMove("UP", false);
                     break;
                 case DOWN:
-                    player.setDown(false);
+                    this.sendUpdateMove("DOWN", false);
                     break;
                 case LEFT:
-                    player.setLeft(false);
+                    this.sendUpdateMove("LEFT", false);
                     break;
                 case RIGHT:
-                    player.setRight(false);
+                    this.sendUpdateMove("RIGHT", false);
                     break;
                 case W:
-                    player.setUp(false);
+                    this.sendUpdateMove("UP", false);
                     break;
                 case A:
-                    player.setLeft(false);
+                    this.sendUpdateMove("LEFT", false);
                     break;
                 case S:
-                    player.setDown(false);
+                    this.sendUpdateMove("DOWN", false);
                     break;
                 case D:
-                    player.setRight(false);
+                    this.sendUpdateMove("RIGHT", false);
                     break;
                 case SPACE:
-                    player.setSpace(false);
+                    this.sendUpdateMove("SPACE", false);
                     break;
             }
         });
+    }
+    
+    /**
+     * Sends an updated key event to the server, which broadcasts the update to all clients.
+     * @param key String value of the key that is being pressed
+     * @param pressed Whether the key is pressed or not in boolean
+     */
+    private void sendUpdateMove(String key, boolean pressed) {
+        try {
+            Administration.get().getGameServer().updateMove(player.getvX(), key, pressed, player.getiX(), player.getiY(), player.getID());
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
