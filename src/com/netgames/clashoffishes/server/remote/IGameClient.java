@@ -9,6 +9,7 @@ import com.netgames.clashoffishes.engine.GameState;
 import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  *
@@ -69,6 +70,13 @@ public interface IGameClient extends Remote {
     public void objectCreation(int x, int y, ObjectType objectType)
             throws RemoteException;
     
+    
+    public String getCharacterName() 
+            throws RemoteException;
+    
+    public int getPlayerID()
+            throws RemoteException;
+
     /**
      * Changes the state of the game on the client side.
      * @param gameState

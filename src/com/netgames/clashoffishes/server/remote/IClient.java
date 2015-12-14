@@ -1,6 +1,5 @@
 package com.netgames.clashoffishes.server.remote;
 
-import com.netgames.clashoffishes.server.GameServer;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -54,6 +53,6 @@ public interface IClient extends Remote {
     void setCharacter(String character)
             throws RemoteException;
     
-    void createGameClient(IGameServer gameServer, int seed)
+    void createGameClient(IGameServer gameServer, int seed, int playerID)
             throws RemoteException;
 }

@@ -7,12 +7,17 @@ package com.netgames.clashoffishes.server;
 
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.engine.GameManager;
+
+import com.netgames.clashoffishes.engine.object.Player;
+
 import com.netgames.clashoffishes.engine.GameState;
+
 import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import com.netgames.clashoffishes.server.remote.IGameClient;
 import com.netgames.clashoffishes.server.remote.IGameServer;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -25,14 +30,18 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
     private String username;
     private String characterName;
     private int mapseed;
+    private int playerID;
     
     private IGameServer gameServer;
     private GameManager gameManager;
     
-    public GameClient(String username, String characterName, int mapseed, IGameServer gameServer) throws RemoteException {
+    
+    public GameClient(String username, String characterName, int mapseed, int playerID, IGameServer gameServer) throws RemoteException {
         this.username = username;
         this.characterName = characterName;
         this.mapseed = mapseed;
+        this.playerID = playerID;
+        
         this.gameServer = gameServer;
         
         gameServer.registerClient(this);
@@ -47,7 +56,7 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
     {
         //Niet zeker of dit klopt
         //Administration.get().getLobbyRegistry().startGameServer();
-        gameManager = new GameManager(this.characterName, this.mapseed);
+        this.gameManager = new GameManager(this.characterName, this.mapseed, this.playerID);
         Platform.runLater(() -> { 
             gameManager.start(new Stage()); 
         });
@@ -83,6 +92,15 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
     }
 
     @Override
+    public String getCharacterName() throws RemoteException {
+        return this.characterName;
+    }
+
+    @Override
+    public int getPlayerID() throws RemoteException {
+        return this.playerID;
+    }
+
     public void changeGameState(GameState gameState) throws RemoteException {
         gameManager.setGameState(gameState);
     }

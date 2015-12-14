@@ -7,6 +7,7 @@ package com.netgames.clashoffishes.server;
 
 import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.engine.GameState;
+import com.netgames.clashoffishes.engine.object.Player;
 import com.netgames.clashoffishes.server.remote.IGameClient;
 import com.netgames.clashoffishes.server.remote.IGameServer;
 import java.io.Serializable;
@@ -38,6 +39,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer
     public GameServer(Lobby lobby) throws RemoteException {
         super();
         this.lobby = lobby;
+        
         clients = new ArrayList<>();
     }
 
@@ -76,4 +78,10 @@ public class GameServer extends UnicastRemoteObject implements IGameServer
             gameClient.startGame();
         }
     }
+
+    @Override
+    public List<IGameClient> getClients() throws RemoteException {
+        return this.clients;
+    }
+
 }

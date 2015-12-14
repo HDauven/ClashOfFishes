@@ -51,6 +51,8 @@ public class GameManager extends Application {
     private int seed = 0;
     Stage thisStage;
 
+    private int playerID;
+
     EnergyDrink energy;
     private ArrayList<FishHook> fishHooks;
 
@@ -91,8 +93,10 @@ public class GameManager extends Application {
      *
      * @param character The chosen character
      */
-    public GameManager(String character, int seed) {
+    public GameManager(String character, int seed, int playerID) {
         this.seed = seed;
+        this.playerID = playerID;
+        System.out.println(playerID);
         if (character.toUpperCase().equals("BUBBLES")
                 || character.toUpperCase().equals("CLEO")
                 || character.toUpperCase().equals("FRED")
@@ -101,6 +105,7 @@ public class GameManager extends Application {
         } else {
             this.character = "BUBBLES";
         }
+        this.players = new ArrayList<>();
     }
 
     // TODO make this class dynamic. 
@@ -113,7 +118,7 @@ public class GameManager extends Application {
         scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
         primaryStage.setScene(scene);
         primaryStage.show();
-
+       
         this.startGame();
     }
 
@@ -128,9 +133,6 @@ public class GameManager extends Application {
         createStartGameLoop();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 
     /**
      * Sets event handling for the scene object. Based on user input, booleans
@@ -288,49 +290,63 @@ public class GameManager extends Application {
      * Creates the necessary GameObjects for the game.
      */
     private void createGameObjects() {
-        // TODO adding game objects format:
+
+            // TODO adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
         if (this.seed == 0) {
             this.seed = (int) System.currentTimeMillis();
         }
         map = new GameMap((int) WIDTH, (int) HEIGHT, this.seed);
         menu = new GameMenu(this);
-
-        createPlayer();
-    }
-
-    /**
-     * Creates the necessary GameObjects for the game.
-     */
-    private void createGameObjects(int seed) {
-        // TODO adding game objects format:
-        // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
-        map = new GameMap((int) WIDTH, (int) HEIGHT, seed);
-        menu = new GameMenu(this);
-
-        createPlayer();
-    }
-
-    private void createPlayer() {
-        switch (this.character.toUpperCase()) {
-            case "BUBBLES":
-                player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, bubbles1, bubbles2, bubbles3, bubbles4);
-                break;
-            case "CLEO":
-                player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, cleo1, cleo2, cleo3, cleo4);
-                break;
-            case "FRED":
-                player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, fred1, fred2, fred3, fred4);
-                break;
-            case "GILL":
-                player = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, gill1, gill2, gill3, gill4);
-                break;
+        
+        try {
+            //createPlayer(this.character, this.playerID);
+            int tempID = 0;
+            for (IGameClient client : Administration.get().getGameServer().getClients()) {
+                createPlayer(client.getCharacterName(), tempID);
+                tempID++;
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+
+    private void createPlayer(String characterName, int playerID) {
+        Player createdPlayer = null;
+        
+        switch (characterName.toUpperCase()) {
+            case "BUBBLES":
+                System.out.println(characterName.toUpperCase());
+                createdPlayer = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                        WIDTH / 2, HEIGHT / 2, playerID, bubbles1, bubbles2, bubbles3, bubbles4);
+                break;
+            case "CLEO":
+                System.out.println(characterName.toUpperCase());
+                createdPlayer = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                        WIDTH / 2, HEIGHT / 2, playerID, cleo1, cleo2, cleo3, cleo4);
+                break;
+            case "FRED":
+                System.out.println(characterName.toUpperCase());
+                createdPlayer = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                        WIDTH / 2, HEIGHT / 2, playerID, fred1, fred2, fred3, fred4);
+                break;
+            case "GILL":
+                System.out.println(characterName.toUpperCase());
+                createdPlayer = new Player(this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
+                        WIDTH / 2, HEIGHT / 2, playerID, gill1, gill2, gill3, gill4);
+                break;
+        }
+        this.players.add(createdPlayer);
+        
+        if (createdPlayer.getPlayerID() == this.playerID) {
+            this.player = createdPlayer;
+        }
+    }
+    
+    
+    
+    
 
     /**
      * Adds GameObjects to the root node.
@@ -342,7 +358,10 @@ public class GameManager extends Application {
         // Comment this out to get the regular background
         root.getChildren().add(map.getMap());
 
-        root.getChildren().add(player.getSpriteFrame());
+        for(Player player : this.players) {
+            root.getChildren().add(player.getSpriteFrame());
+        }
+        //root.getChildren().add(player.getSpriteFrame());
     }
 
     /**
@@ -578,16 +597,7 @@ public class GameManager extends Application {
     }
 
     public Player getPlayer(int playerID) {
-        if (this.player.getID() == playerID) {
-            return player;
-        }
-
-        for (Player p : this.players) {
-            if (p.getID() == playerID) {
-                return p;
-            }
-        }
-        return null;
+        return this.player;
     }
 
     public List<Player> getPlayers() {
