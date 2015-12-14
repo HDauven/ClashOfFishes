@@ -18,6 +18,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,10 +28,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
@@ -63,6 +67,8 @@ public class HostedGamesController implements Initializable {
 
     private final String cofServerURL = "rmi://" + Administration.get().getIpAddress() + ":1100/Server";
     private List<ILobby> lobbyList = new ArrayList<>();
+    @FXML
+    private Label lbl_error;
 
     /**
      * Initializes the controller class.
@@ -89,23 +95,56 @@ public class HostedGamesController implements Initializable {
             protected Void call() throws Exception {
                 // TODO get lobby, create client, register client.
                 try {
+                    ILobby temp = tbvHostedGames.getSelectionModel().getSelectedItem();
                     for (ILobby lobby : cofServer.listLobbies()) {
-                        ILobby temp = tbvHostedGames.getSelectionModel().getSelectedItem();
                         if (temp.equals(lobby)) {
                             Administration.get().setLobby(lobby);
                             Administration.get().setClient(new Client(Administration.get().getLoggedInUser().getUsername(), false, lobby));
                         }
                     }
+                    if (temp == null) {
+                        System.out.println("Select a lobby.");
+                        lbl_error.setTextFill(Color.RED);
+                        lbl_error.setVisible(true);
+                        setLabelInvisible();
+                    }
+                    else{
                     Platform.runLater(() -> {
                         GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "FishPool", GuiUtilities.getFishPoolTitle());
                     });
-                } catch (Exception ex) {
+                    }
+                }
+                catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
                 return null;
             }
         };
         (new Thread(task)).start();
+    }
+
+    private void setLabelInvisible() {
+        Thread tr = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                    Platform.runLater(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            lbl_error.setVisible(false);
+                        }
+
+                    });
+                }
+                catch (InterruptedException ex) {
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        tr.start();
     }
 
     @FXML
@@ -143,11 +182,14 @@ public class HostedGamesController implements Initializable {
             cofServer = (IServer) Naming.lookup(cofServerURL);
             //System.out.println(cofServer.listLobbies().toString());
             lobbyList = (List<ILobby>) cofServer.listLobbies();
-        } catch (NotBoundException ex) {
+        }
+        catch (NotBoundException ex) {
             System.out.println("NotBoundException: " + ex.getMessage());
-        } catch (MalformedURLException ex) {
+        }
+        catch (MalformedURLException ex) {
             System.out.println("MalformedURLException: " + ex.getMessage());
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex) {
             System.out.println("RemoteException: " + ex.getMessage());
         }
     }
