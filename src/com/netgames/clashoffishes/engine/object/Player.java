@@ -1,11 +1,13 @@
 package com.netgames.clashoffishes.engine.object;
 
+import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.engine.GameManager;
 import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
 import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
 import com.netgames.clashoffishes.engine.object.events.FishHook;
 import com.netgames.clashoffishes.engine.object.events.Seaweed;
+import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.image.Image;
@@ -287,12 +289,21 @@ public class Player extends AnimatedObject
                 collisionReaction(object);
                 gameManager.playBiteSound();
                 // Adds the object that the player collided with to the RemovedObjects list.
-                gameManager.getObjectManager().addToRemovedObjects(object);
+                sendCollision(object);
+                //gameManager.getObjectManager().addToRemovedObjects(object);
                 // Removes the object that the player collided with from the root Node.
                 gameManager.getRoot().getChildren().remove(object.getSpriteFrame());
                 // Deletes all the removed objects from the game.
                 gameManager.getObjectManager().resetRemovedObjects();
             }
+        }
+    }
+    
+    private void sendCollision(GameObject object) {
+        try {
+            Administration.get().getGameServer().collision(playerID, object.getID());
+        } catch (RemoteException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
