@@ -25,8 +25,8 @@ import javafx.stage.Stage;
  *
  * @author Stef
  */
-public class GameClient extends UnicastRemoteObject implements IGameClient
-{
+public class GameClient extends UnicastRemoteObject implements IGameClient {
+
     private String username;
     private String characterName;
     private int mapseed;
@@ -34,7 +34,6 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
     
     private IGameServer gameServer;
     private GameManager gameManager;
-    
     
     public GameClient(String username, String characterName, int mapseed, int playerID, IGameServer gameServer) throws RemoteException {
         this.username = username;
@@ -47,24 +46,22 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
         gameServer.registerClient(this);
     }
     
-    public String getUsername(){
+    public String getUsername() {
         return this.username;
     }
-
+    
     @Override
-    public void startGame() throws RemoteException
-    {
+    public void startGame() throws RemoteException {
         //Niet zeker of dit klopt
         //Administration.get().getLobbyRegistry().startGameServer();
         this.gameManager = new GameManager(this.characterName, this.mapseed, this.playerID);
-        Platform.runLater(() -> { 
-            gameManager.start(new Stage()); 
+        Platform.runLater(() -> {            
+            gameManager.start(new Stage());            
         });
     }
-
+    
     @Override
-    public void updateMove(double speed, String key, boolean pressed, double x, double y, int playerID)
-    {
+    public void updateMove(double speed, String key, boolean pressed, double x, double y, int playerID) {
         gameManager.getPlayers().get(playerID).updateSpeed(speed);
         gameManager.getPlayers().get(playerID).setiX(x);
         gameManager.getPlayers().get(playerID).setiY(y);
@@ -78,29 +75,27 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
             gameManager.getPlayers().get(playerID).setRight(pressed);
         }
     }
-
+    
     @Override
-    public void collisionUpdate(int id, int objectId) throws RemoteException
-    {
+    public void collisionUpdate(int id, int objectId) throws RemoteException {
+        gameManager.getObjectManager().addToRemovedObjects(gameManager.getObjectManager().getObject(objectId));
+    }
+    
+    @Override
+    public void objectCreation(int x, int y, ObjectType objectType) throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public void objectCreation(int x, int y, ObjectType objectType) throws RemoteException
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public String getCharacterName() throws RemoteException {
         return this.characterName;
     }
-
+    
     @Override
     public int getPlayerID() throws RemoteException {
         return this.playerID;
     }
-
+    
     @Override
     public void changeGameState(GameState gameState) throws RemoteException {
         gameManager.setGameState(gameState);
