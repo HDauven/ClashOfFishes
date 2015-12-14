@@ -41,7 +41,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         messages = new ArrayList<>();
         host = Administration.get().getLoggedInUser();
         
-        Administration.get().setClient(new Client(host.getUsername(), this));
+        Administration.get().setClient(new Client(host.getUsername(), true, this));
     }
 
     @Override

@@ -23,14 +23,16 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
 
     private ILobby lobby;
     private String username = null;
+    private Boolean isHost;
     private Boolean isReady = false;
     private String character = "None";
 
     private List<IChangeGui> GUIs;
 
-    public Client(String username, ILobby lobby) throws RemoteException {
+    public Client(String username, boolean isHost, ILobby lobby) throws RemoteException {
         super();
         this.username = username;
+        this.isHost = isHost;
         this.lobby = lobby;
         // TODO add fontys listener? 
         lobby.registerClient(this);
@@ -82,6 +84,12 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     public String getUsername() throws RemoteException {
         return this.username;
     }
+
+    public Boolean getIsHost() {
+        return isHost;
+    }
+    
+    
 
     public void addGUIListener(IChangeGui guiListener) {
         this.GUIs.add(guiListener);
@@ -138,6 +146,8 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     public void setCharacter(String character) throws RemoteException {
         this.character = character;
     }
+    
+    
     
     
 }

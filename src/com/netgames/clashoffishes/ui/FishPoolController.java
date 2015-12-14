@@ -7,7 +7,6 @@ package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.TableUser;
-import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.interfaces.IChangeGui;
 import com.netgames.clashoffishes.server.Message;
@@ -29,8 +28,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -334,6 +331,25 @@ public class FishPoolController implements Initializable, IChangeGui
 
     private void setupGui()
     {
+        if (!Administration.get().getClient().getIsHost()) {
+            btnStartGame.setVisible(false);
+            rbEvolutionOfTime.setDisable(true);
+            rbEvolved.setDisable(true);
+            rbLastFishSwimming.setDisable(true);
+        } else {
+            this.rbEvolved.setOnAction((ActionEvent event) -> {
+            sendGameMode(GameMode.EVOLVED.name());
+        });
+        
+        this.rbEvolutionOfTime.setOnAction((ActionEvent event) -> {
+            sendGameMode(GameMode.EVOLUTION_OF_TIME.name());
+        });
+        
+        this.rbLastFishSwimming.setOnAction((ActionEvent event) -> {
+            sendGameMode(GameMode.LAST_FISH_STANDING.name());
+        });
+        }
+        
         clmPlayers = new TableColumn("Players");
         clmCharacter = new TableColumn("Character");
         clmReady = new TableColumn("Ready");
@@ -355,17 +371,7 @@ public class FishPoolController implements Initializable, IChangeGui
 
         cbCharacters.getSelectionModel().select(0);
         
-        this.rbEvolved.setOnAction((ActionEvent event) -> {
-            sendGameMode(GameMode.EVOLVED.name());
-        });
         
-        this.rbEvolutionOfTime.setOnAction((ActionEvent event) -> {
-            sendGameMode(GameMode.EVOLUTION_OF_TIME.name());
-        });
-        
-        this.rbLastFishSwimming.setOnAction((ActionEvent event) -> {
-            sendGameMode(GameMode.LAST_FISH_STANDING.name());
-        });
     }
     
     /**

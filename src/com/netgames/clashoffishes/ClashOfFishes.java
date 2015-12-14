@@ -34,6 +34,7 @@ public class ClashOfFishes extends Application
             LoginController loginController = (LoginController) loader.getController();
             stage.setTitle(GuiUtilities.TITLE_LOGIN);
             stage.setScene(new Scene(root));
+            stage.setResizable(false);
             //stage.show();
             GuiUtilities.buildStage(stage.getScene().getWindow(), "Login", GuiUtilities.TITLE_LOGIN);
         }

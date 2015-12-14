@@ -28,7 +28,7 @@ public interface IGameClient extends Remote, Serializable
      * zodat de client het object kan updaten.
      * @param id ID van het object welke veranderd is
      * @param positie de nieuwe positie van het object
-     * @param snelheid de nieuwe snelheid van het object
+     * @param speed de nieuwe snelheid van het object
      * @param richting de nieuwe richting van het object
      * @throws java.rmi.RemoteException Als er iets fout gaat met RMI wordt deze exceptie opgegooid.
      */

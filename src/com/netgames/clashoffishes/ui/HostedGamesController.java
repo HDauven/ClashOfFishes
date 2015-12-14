@@ -60,12 +60,13 @@ public class HostedGamesController implements Initializable {
     private Administration administration;
 
     private IServer cofServer;
-    
+
     private final String cofServerURL = "rmi://" + Administration.get().getIpAddress() + ":1100/Server";
     private List<ILobby> lobbyList = new ArrayList<>();
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -77,51 +78,50 @@ public class HostedGamesController implements Initializable {
         clmPoolName.setCellValueFactory(new PropertyValueFactory<>("PoolNameProperty"));
         clmPlayers.setCellValueFactory(new PropertyValueFactory<>("PlayersProperty"));
         clmGameMode.setCellValueFactory(new PropertyValueFactory<>("GameModeProperty"));
-        
+
         getNewLobbies();
     }
 
     @FXML
     private void btnJoinGame_OnClick(ActionEvent event) {
-//        Task task = new Task<Void>() {
-//            @Override
-//            protected Void call() throws Exception {
-//                // TODO get lobby, create client, register client.
-        try {
-                for (ILobby lobby : cofServer.listLobbies()) {
-                    ILobby temp = tbvHostedGames.getSelectionModel().getSelectedItem();
-                    if (temp.equals(lobby)) {
-                        System.out.println("Diz niggah enterz dem if");
-                        Administration.get().setLobby(lobby);
-                        Administration.get().setClient(new Client(Administration.get().getLoggedInUser().getUsername(), lobby));
-                        System.out.println("Diz niggah enterz dem if");
+        Task task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                // TODO get lobby, create client, register client.
+                try {
+                    for (ILobby lobby : cofServer.listLobbies()) {
+                        ILobby temp = tbvHostedGames.getSelectionModel().getSelectedItem();
+                        if (temp.equals(lobby)) {
+                            System.out.println("Diz niggah enterz dem if");
+                            Administration.get().setLobby(lobby);
+                            Administration.get().setClient(new Client(Administration.get().getLoggedInUser().getUsername(), false, lobby));
+                            System.out.println("Diz niggah enterz dem if");
+                        }
                     }
+                    Platform.runLater(() -> {
+                        GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "FishPool", GuiUtilities.getFishPoolTitle());
+                    });
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
                 }
-                Platform.runLater(() -> {
-                    GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "FishPool", GuiUtilities.getFishPoolTitle());
-                });
-        }
-        catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-//                return null;
-//            }
-//        };
-//        (new Thread(task)).start();
+                return null;
+            }
+        };
+        (new Thread(task)).start();
     }
 
     @FXML
     private void btnBack_OnClick(ActionEvent event) {
         GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
     }
-    
+
     @FXML
     private void btnRefreshLobbyList_OnClick(ActionEvent event) {
         getNewLobbies();
     }
-    
+
     /**
-     * Executes the Clash of Fishes server lookup and Lobby list refresh on a 
+     * Executes the Clash of Fishes server lookup and Lobby list refresh on a
      * different thread to offload the JAT.
      */
     private void getNewLobbies() {
