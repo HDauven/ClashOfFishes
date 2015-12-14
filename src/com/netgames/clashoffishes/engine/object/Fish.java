@@ -1,25 +1,35 @@
 package com.netgames.clashoffishes.engine.object;
 
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 /**
- * Created by bram on 1/10/15.
+ * 
+ * @author Hein Dauven
  */
-public class Fish extends GameObject {
+public class Fish extends GameObject implements NPC {
 
-    public Fish(int x, int y) {
-        super(x, y);
+    /**
+     * 
+     * @param SVGData
+     * @param xLocation
+     * @param yLocation
+     * @param spriteCels 
+     */
+    public Fish(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
+        super(SVGData, xLocation, yLocation, spriteCels);
+        spriteFrame.setTranslateX(xLocation);
+        spriteFrame.setTranslateY(yLocation);
+        isAlive  = true;
+        hasValue = true;
+        isBonus  = true;
     }
 
+    /**
+     * 
+     */
     @Override
-    protected void update()
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected void update() {
+        // Empty
     }
-
-    @Override
-    protected void render(GraphicsContext ctx)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 }

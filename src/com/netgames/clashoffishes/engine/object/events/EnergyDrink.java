@@ -1,24 +1,35 @@
 package com.netgames.clashoffishes.engine.object.events;
 
 import com.netgames.clashoffishes.engine.object.GameObject;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 /**
- * Created by bram on 1/10/15.
+ * 
+ * @author Hein Dauven
  */
 public class EnergyDrink extends GameObject implements RandomEvent {
 
-    public EnergyDrink(int x, int y) {
-        super(x, y);
+    /** 
+     * 
+     * @param SVGData
+     * @param xLocation
+     * @param yLocation
+     * @param spriteCels 
+     */
+    public EnergyDrink(double xLocation, double yLocation, Image... spriteCels) {
+        super("M 4,00 L 4,0 0,19 0,139 16,148 64,148 78,139 78,18 75,0 Z", xLocation, yLocation, spriteCels);
+        spriteFrame.setTranslateX(xLocation);
+        spriteFrame.setTranslateY(yLocation);
+        isFixed  = false;
+        hasValue = true;
+        isBonus  = true;
     }
 
+    /**
+     * 
+     */
     @Override
     protected void update() {
-
-    }
-
-    @Override
-    protected void render(GraphicsContext ctx) {
-
+        // empty
     }
 }

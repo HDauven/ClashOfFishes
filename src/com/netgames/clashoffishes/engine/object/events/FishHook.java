@@ -1,24 +1,69 @@
 package com.netgames.clashoffishes.engine.object.events;
 
-import com.netgames.clashoffishes.engine.object.GameObject;
-import javafx.scene.canvas.GraphicsContext;
+import com.netgames.clashoffishes.engine.object.AnimatedObject;
+import javafx.scene.image.Image;
 
 /**
- * Created by bram on 1/10/15.
+ *
+ * @author Hein Dauven
  */
-public class FishHook extends GameObject implements RandomEvent {
+public class FishHook extends AnimatedObject implements RandomEvent
+{
 
-    public FishHook(int x, int y) {
-        super(x, y);
+    private double xLocation;
+    private double yLocation;
+    private boolean lowestEntered;
+    int i;
+
+    /**
+     *
+     * @param xLocation
+     * @param yLocation
+     * @param spriteCels
+     */
+    public FishHook(double xLocation, double yLocation, Image... spriteCels)
+    {
+        super("M 27.00,919.50"
+                    + "           C 27.00,919.50 0.00,956.50 0.00,956.50"
+                    + "             0.00,956.50 0.00,997.50 0.00,997.50"
+                    + "             0.00,997.50 37.50,997.50 37.50,997.50"
+                    + "             37.50,997.50 39.50,919.50 39.50,919.50 Z", xLocation, yLocation, spriteCels);
+        this.xLocation = xLocation;
+        this.yLocation = yLocation;
+        spriteFrame.setTranslateX(xLocation);
+        spriteFrame.setTranslateY(yLocation);
+        isFixed = false;
+        hasValue = true;
+        isBonus = true;
+        lowestEntered = false;
+        i = 0;
+        super.setvY(1);
     }
 
     @Override
-    protected void update() {
-
-    }
-
-    @Override
-    protected void render(GraphicsContext ctx) {
-
+    public void update()
+    {
+        if (!lowestEntered)
+        {
+            spriteFrame.setTranslateY(yLocation = yLocation + vY);
+            if(yLocation == -300)
+            {
+                lowestEntered = true;
+            }
+        }
+        if (lowestEntered)
+        {
+            i++;
+            vY = 0;
+        }
+        if (i > 240)
+        {
+            //Is sowieso 300 volgens mij
+            if (yLocation == -300)
+            {
+                vY = -1;
+                lowestEntered = false;
+            }
+        }
     }
 }

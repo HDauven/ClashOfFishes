@@ -7,7 +7,6 @@ package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.Highscore;
-import com.netgames.clashoffishes.Lobby;
 import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.util.GuiUtilities;
 import java.net.URL;
@@ -45,8 +44,7 @@ public class HighscoreController implements Initializable
     @FXML
     private TableColumn<Highscore, String> clmScore;
 
-    //TODO refactor nederlands > engels
-    private Administration administratie;
+    private Administration administration;
     
     /**
      * Initializes the controller class.
@@ -55,7 +53,7 @@ public class HighscoreController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO initialize components for controller
-        this.administratie = Administration.get();
+        this.administration = Administration.get();
         
         this.clmPlayers.setCellValueFactory(new PropertyValueFactory<Highscore, String>("Username"));
         this.clmScore.setCellValueFactory(new PropertyValueFactory<Highscore, String>("Score"));
@@ -67,13 +65,13 @@ public class HighscoreController implements Initializable
 
     @FXML
     private void btnBack_OnClick(ActionEvent event) {
-        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", GuiUtilities.getStartMenuTitle());
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
     }
     
     @FXML
     private void cbGameMode_OnChange(ActionEvent event) {
         GameMode selectedGameMode = this.cbGameMode.getValue();
-        List<Highscore> highscores = this.administratie.getAllUserHighscoresForGameMode(selectedGameMode);
+        List<Highscore> highscores = this.administration.getAllUserHighscoresForGameMode(selectedGameMode);
         ObservableList<Highscore> obHighscores = FXCollections.observableArrayList(highscores);
         this.tbvHighscore.setItems(obHighscores);
     }

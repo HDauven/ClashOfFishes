@@ -5,25 +5,40 @@
  */
 package com.netgames.clashoffishes;
 
+import com.netgames.clashoffishes.data.DatabaseStorage;
+import com.netgames.clashoffishes.engine.GameMode;
+import java.util.ArrayList;
 import org.junit.After;
-import org.junit.AfterClass;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author Stef
  */
 public class AdministrationTest
-{    
+{
+
+    DatabaseStorage dbStorage;
+
     @Before
     public void setUp()
     {
         Administration.get().clear();
+        dbStorage = new DatabaseStorage();
+        User u1 = dbStorage.getUser("Stef");
+        User u2 = dbStorage.getUser("Henk");
+        if(u1 != null){
+            dbStorage.removeUser(u1.getId());
+        }
+        if(u2 != null){
+            dbStorage.removeUser(u2.getId());
+        }
     }
-    
+
     @After
     public void tearDown()
     {
@@ -36,17 +51,18 @@ public class AdministrationTest
     public void testAddUser()
     {
         Administration.get().clear();
-        assertNotNull("User moet worden toegevoegd", Administration.get().addUser(new User("Stef", "StefPhilipsen@gmail.com")));
-        assertNull("Username bestaat al", Administration.get().addUser(new User("Stef", "user1@gmail.com")));
-        assertNull("Email bestaat al", Administration.get().addUser(new User("User1", "StefPhilipsen@gmail.com")));
-        assertNull("Naam mag niet leeg zijn", Administration.get().addUser(new User("", "leeg@gmail.com")));
-        
+        assertNotNull("User moet worden toegevoegd", Administration.get().addUser("Stef", "wachtwoord", "StefPhilipsen@gmail.com"));
+        assertFalse("Username bestaat al", Administration.get().addUser("Stef", "wachtwoord", "user1@gmail.com"));
+        assertFalse("Email bestaat al", Administration.get().addUser("User1", "wachtwoord", "StefPhilipsen@gmail.com"));
+        assertFalse("Naam mag niet leeg zijn", Administration.get().addUser("", "wachtwoord", "leeg@gmail.com"));
+        assertFalse("Wachtwoord mag niet leeg zijn.", Administration.get().addUser("Piet", "", "Stef@Stef.nl"));
+
         //Geldig email-adres testen
-        assertNull("Geen geldig emailadres ingevoerd, moet null zijn", Administration.get().addUser(new User("Henk", "geenApenstaartje")));      
-        assertNull("Geen geldig emailadres ingevoerd, moet null zijn", Administration.get().addUser(new User("Henk", "@aa")));
-        assertNull("Geen geldig emailadres ingevoerd, moet null zijn", Administration.get().addUser(new User("Henk", "aa@")));
-        assertNull("Geen geldig emailadres ingevoerd, moet null zijn", Administration.get().addUser(new User("Henk", "a@a")));
-        assertNull("Geen geldig emailadres ingevoerd, moet null zijn", Administration.get().addUser(new User("Henk", "aa@aa.")));        
+        assertFalse("Geen geldig emailadres ingevoerd, moet null zijn", Administration.get().addUser("Henk", "wachtwoord", "geenApenstaartje"));
+        assertFalse("Geen geldig emailadres ingevoerd, moet null zijn", Administration.get().addUser("Henk", "wachtwoord", "@aa"));
+        assertFalse("Geen geldig emailadres ingevoerd, moet null zijn", Administration.get().addUser("Henk", "wachtwoord", "aa@"));
+        assertFalse("Geen geldig emailadres ingevoerd, moet null zijn", Administration.get().addUser("Henk", "wachtwoord", "a@a"));
+        assertFalse("Geen geldig emailadres ingevoerd, moet null zijn", Administration.get().addUser("Henk", "wachtwoord", "aa@aa."));
     }
 
     /**
@@ -55,8 +71,8 @@ public class AdministrationTest
     @Test
     public void testGetUser()
     {
-        User u = new User("Stef", "StefPhilipsen@gmail.com");
-        assertNotNull("User moet worden toegevoegd", Administration.get().addUser(new User("Stef", "StefPhilipsen@gmail.com")));
+        //Username, password, email
+        assertNotNull("User moet worden toegevoegd", Administration.get().addUser("Stef", "wachtwoord", "StefPhilipsen@gmail.com"));
         assertNull("User 'Henk' bestaat niet, dus moet null zijn", Administration.get().getUser("Henk"));
         assertNull("User '' bestaat niet, dus moet null zijn", Administration.get().getUser(""));
         assertNotNull("User 'Stef' bestaat", Administration.get().getUser("Stef"));
@@ -70,5 +86,41 @@ public class AdministrationTest
     {
         assertNotNull("Administration mag nooit null zijn.", Administration.get());
     }
-    
+
+    @Test
+    public void testLogIn()
+    {
+        assertNull("User bestaat niet, dus moet null zijn", Administration.get().logIn("asdf", "asdf"));
+        assertNotNull("User bestaat, dus mag geen null zijn.", Administration.get().logIn("Admin", "admin"));
+    }
+
+    @Test
+    public void testGetAllUserHighScoresForGameMode()
+    {
+        ArrayList<Highscore> l = Administration.get().getAllUserHighscoresForGameMode(GameMode.EVOLVED);
+        assertFalse("Lijst mag niet leeg zijn.", l.isEmpty());
+    }
+
+    @Test
+    public void testgetUser()
+    {
+        assertNotNull("User moet worden toegevoegd", Administration.get().addUser("Stef", "wachtwoord", "StefPhilipsen@gmail.com"));
+        User u = Administration.get().getUser("Stef");
+        assertNotNull("Opgehaalde user 'Stef' mag niet null zijn.", u);
+    }
+
+//    @Test
+//    public void testSet_GetCurrentLobby()
+//    {
+//        __Lobby lobby = new __Lobby();
+//        Administration.get().setCurrentLobby(lobby);
+//        assertNotNull("Lobby kan geen null zijn", Administration.get().getCurrentLobby());
+//    }
+
+    @Test
+    public void testGetLoggedInUser()
+    {
+        User u = Administration.get().getLoggedInUser();
+        assertNotNull("Ingelogde users kan geen null zijn.", u);
+    }
 }

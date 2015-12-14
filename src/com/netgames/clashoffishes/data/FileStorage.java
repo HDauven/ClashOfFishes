@@ -1,15 +1,16 @@
 package com.netgames.clashoffishes.data;
 
-import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.User;
 
 /**
  * Created by bram on 1/10/15.
  */
-public class FileStorage implements Storage {
-  
+public class FileStorage implements Storage
+{
+
     @Override
-    public Boolean addUser(String username, String confirmedPassword, String email) {
+    public Boolean addUser(String username, String confirmedPassword, String email)
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -19,5 +20,9 @@ public class FileStorage implements Storage {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-  
+    Object logIn(String henk, String verkeerdWW)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

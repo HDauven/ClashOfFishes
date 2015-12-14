@@ -1,23 +1,34 @@
 package com.netgames.clashoffishes.engine.object;
 
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 /**
- * Created by bram on 1/10/15.
+ * 
+ * @author Hein Dauven
  */
-public class Plankton extends GameObject {
+public class Plankton extends GameObject implements NPC {
 
-    public Plankton(int x, int y) {
-        super(x, y);
+    /**
+     * 
+     * @param SVGData
+     * @param xLocation
+     * @param yLocation
+     * @param spriteCels 
+     */
+    public Plankton(String SVGData, double xLocation, double yLocation, Image... spriteCels) {
+        super(SVGData, xLocation, yLocation, spriteCels);
+        spriteFrame.setTranslateX(xLocation);
+        spriteFrame.setTranslateY(yLocation);
+        isFixed  = false;
+        hasValue = true;
+        isBonus  = true;
     }
 
+    /**
+     * 
+     */
     @Override
     protected void update() {
-
-    }
-
-    @Override
-    protected void render(GraphicsContext ctx) {
-
+        //  empty
     }
 }

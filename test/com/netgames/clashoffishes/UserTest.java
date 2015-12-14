@@ -5,10 +5,12 @@
  */
 package com.netgames.clashoffishes;
 
+import com.netgames.clashoffishes.engine.GameMode;
+import java.util.HashMap;
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -16,14 +18,18 @@ import static org.junit.Assert.*;
  */
 public class UserTest
 {
+
     User u;
-    
+
     @Before
     public void setUp()
     {
-        u = new User("Stef", "StefPhilipsen@gmail.com", 1);
+        u = new User(99, "Stef", "StefPhilipsen@gmail.com");
+        u.setHighScore(GameMode.EVOLVED, 100);
+        u.setHighScore(GameMode.EVOLUTION_OF_TIME, 200);
+        u.setHighScore(GameMode.LAST_FISH_STANDING, 100);
     }
-    
+
     @After
     public void tearDown()
     {
@@ -53,7 +59,15 @@ public class UserTest
     @Test
     public void testGetScore()
     {
-        assertEquals("Score is niet goed ingevoerd", 1, u.getScore());
+        assertEquals("Score is niet goed ingevoerd", 200, u.getScore(GameMode.EVOLUTION_OF_TIME));
     }
-    
+
+    @Test
+    public void testUpdateScore()
+    {
+        u.updateHighScore(GameMode.EVOLUTION_OF_TIME, 50);
+        assertEquals("Score moet nu  250 zijn.", 250, u.getScore(GameMode.EVOLUTION_OF_TIME));
+        HashMap<GameMode, Integer> scores = u.getHighscores();
+        assertEquals("Score moet 100 zijn.", new Integer(100), scores.get(GameMode.LAST_FISH_STANDING));
+    }
 }

@@ -7,10 +7,14 @@ package com.netgames.clashoffishes;
 
 import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.engine.GameMode;
+import java.util.HashMap;
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -18,16 +22,27 @@ import static org.junit.Assert.*;
  */
 public class LobbyTest
 {
+
     User u;
     User u2;
-    
+    HashMap<GameMode, Integer> scores = new HashMap<>();
+
     @Before
     public void setUp()
     {
-        u = new User("Stef", "StefPhilipsen@gmail.com", 1);
-        u2 = new User("Henk", "Henkie@hotmail.com", 2);
+        scores.put(GameMode.EVOLVED, 100);
+        scores.put(GameMode.EVOLUTION_OF_TIME, 200);
+        scores.put(GameMode.LAST_FISH_STANDING, 100);
+        u = new User(99, "Stef", "StefPhilipsen@gmail.com");
+        u2 = new User(100, "Henk", "Henkie@hotmail.com");
+        u.setHighScore(GameMode.EVOLVED, 100);
+        u.setHighScore(GameMode.EVOLUTION_OF_TIME, 200);
+        u.setHighScore(GameMode.LAST_FISH_STANDING, 100);
+        u2.setHighScore(GameMode.EVOLVED, 100);
+        u2.setHighScore(GameMode.EVOLUTION_OF_TIME, 200);
+        u2.setHighScore(GameMode.LAST_FISH_STANDING, 100);
     }
-    
+
     @After
     public void tearDown()
     {
@@ -39,7 +54,7 @@ public class LobbyTest
     @Test
     public void testAddUser()
     {
-        Lobby lobby = new Lobby();
+        __Lobby lobby = new __Lobby();
         lobby.addUser(u);
         assertEquals("Eerste persoon is toegevoegd, dus size moet 1 zijn", 1, lobby.getUsers().size());
         lobby.addUser(null);
@@ -56,14 +71,14 @@ public class LobbyTest
     @Test
     public void testRemoveUser()
     {
-        Lobby lobby = new Lobby();
+        __Lobby lobby = new __Lobby();
         lobby.addUser(u);
         lobby.removeUser(u2);
         assertEquals("De toegevoegde user mag niet verwijderd zijn.", 1, lobby.getUsers().size());
         lobby.addUser(u2);
         lobby.removeUser(u);
         assertEquals("De user 'Stef' moet verwijderd zijn.", 1, lobby.getUsers().size());
-        assertEquals("Naam van enige user moet Henk zijn", "Henk",lobby.getUsers().get(0).getUsername());
+        assertEquals("Naam van enige user moet Henk zijn", "Henk", lobby.getUsers().get(0).getUsername());
     }
 
     /**
@@ -72,7 +87,7 @@ public class LobbyTest
     @Test
     public void testUserIsReady_testIsUserReady()
     {
-        Lobby lobby = new Lobby();
+        __Lobby lobby = new __Lobby();
         lobby.addUser(u);
         lobby.addUser(u2);
         lobby.userIsReady(u, true);
@@ -87,7 +102,7 @@ public class LobbyTest
     @Test
     public void testIsEveryoneReady()
     {
-        Lobby lobby = new Lobby();
+        __Lobby lobby = new __Lobby();
         lobby.addUser(u);
         lobby.addUser(u2);
         lobby.userIsReady(u, true);
@@ -102,7 +117,7 @@ public class LobbyTest
     @Test
     public void testGetSelectedGameMode_testSetSelectedGameMode()
     {
-        Lobby lobby = new Lobby();
+        __Lobby lobby = new __Lobby();
         lobby.setGameMode(GameMode.EVOLVED);
         assertEquals("GameMode", GameMode.EVOLVED, lobby.getGameMode());
     }
@@ -113,9 +128,9 @@ public class LobbyTest
     @Test
     public void testCreateGame()
     {
-        Lobby lobby = new Lobby();
+        __Lobby lobby = new __Lobby();
         GameManager gm = lobby.createGame();
         assertNotNull("Lobby moet aangemaakt zijn.", gm);
     }
-    
+
 }
