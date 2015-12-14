@@ -101,6 +101,7 @@ public class GameClient extends UnicastRemoteObject implements IGameClient
         return this.playerID;
     }
 
+    @Override
     public void changeGameState(GameState gameState) throws RemoteException {
         gameManager.setGameState(gameState);
     }
