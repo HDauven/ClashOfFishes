@@ -9,7 +9,7 @@
 
 <AnchorPane fx:id="paneMainForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background-gradient" stylesheets="@OceanUI.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.netgames.clashoffishes.ui.LoginController">
    <children>
-      <TextField fx:id="txtUsername" layoutX="269.0" layoutY="184.0" />
+      <TextField fx:id="txtUsername" layoutX="269.0" layoutY="184.0" onKeyPressed="#txt_onKeyPressed" />
       <PasswordField fx:id="txtPassword" layoutX="269.0" layoutY="220.0" onKeyPressed="#txt_onKeyPressed" />
       <Button layoutX="183.0" layoutY="256.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="116.0" text="Login" />
       <Button layoutX="302.0" layoutY="256.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="116.0" text="Register" />
