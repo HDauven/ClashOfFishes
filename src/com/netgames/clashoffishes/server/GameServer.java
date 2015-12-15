@@ -35,6 +35,9 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     GameManager gameManager = new GameManager();
 
     private int nxtObjectID = 1;
+    long prev = System.nanoTime();
+    long pauseTime = 0;
+    long elapsed;
 
     /**
      * Constructor for the server
@@ -94,38 +97,41 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     private void createRandomObjects() {
-        long prev = System.nanoTime();
         int NANO_TO_SECOND = 1_000_000_000;
         AnimationTimer timer = new AnimationTimer() {
-            long prev = System.nanoTime();
 
             @Override
             public void handle(long now) {
-                long elapsed = now - prev;
-                int randInt = (int) (Math.random() * 1_000 + 1); // moet 10_000 zijn, 1_000 is om te testen
-                //System.out.println(elapsed);
-                ObjectType type = null;
-                if ((elapsed / NANO_TO_SECOND) > randInt) {
-                    GameObject object = gameManager.addRandomObject(nxtObjectID++);
-                    for (IGameClient client : clients) {
-                        try {
-                            if (object instanceof EnergyDrink) {
-                                type = ObjectType.ENERGYDRINK;
-                            }
-                            if (object instanceof Seaweed) {
-                                type = ObjectType.SEAWEED;
-                            }
-                            if (object instanceof FishHook) {
-                                type = ObjectType.FISHHOOK;
-                            }
+                if (gameManager.getGameState() == GameState.RUNNING) {
+                    long elapsed = now - prev;
+                    int randInt = (int) (Math.random() * 1_000 + 1); // moet 10_000 zijn, 1_000 is om te testen
+                    //System.out.println(elapsed);
+                    ObjectType type = null;
+                    if ((elapsed / NANO_TO_SECOND) > randInt) {
+                        GameObject object = gameManager.addRandomObject(nxtObjectID++);
+                        for (IGameClient client : clients) {
+                            try {
+                                if (object instanceof EnergyDrink) {
+                                    type = ObjectType.ENERGYDRINK;
+                                }
+                                if (object instanceof Seaweed) {
+                                    type = ObjectType.SEAWEED;
+                                }
+                                if (object instanceof FishHook) {
+                                    type = ObjectType.FISHHOOK;
+                                }
 
-                            client.objectCreation(object.getID(), (int) object.getiX(), (int) object.getiY(), type);
+                                client.objectCreation(object.getID(), (int) object.getiX(), (int) object.getiY(), type);
+                            }
+                            catch (RemoteException ex) {
+                                Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
-                        catch (RemoteException ex) {
-                            Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        prev = System.nanoTime();
                     }
-                    prev = System.nanoTime();
+                }
+                if (gameManager.getGameState() == GameState.PAUSED) {
+                    pauseTime =+ (elapsed / NANO_TO_SECOND);
                 }
             }
         };
