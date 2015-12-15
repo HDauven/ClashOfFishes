@@ -73,6 +73,11 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
     }
     
     @Override
+    public void updateSpeed(double speed, int playerID) {
+        gameManager.getPlayers().get(playerID).updateSpeed(speed);
+    }
+    
+    @Override
     public void collisionUpdate(int id, int objectId) throws RemoteException {
         gameManager.getObjectManager().addToRemovedObjects(gameManager.getObjectManager().getObject(objectId));
     }
