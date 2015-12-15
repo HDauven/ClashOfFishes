@@ -397,9 +397,24 @@ public class GameMenu {
     /**
      * Updates the score for Player one on screen.
      */
-    public void updateScoreLabelOne() {
-        this.scoreLabelOne.setText(String.valueOf(gameManager.getGameScore()));
+    public void updateScoreLabel(int scoreLabel, int score) {
+        switch (scoreLabel) {
+            case 0:
+                this.scoreLabelOne.setText(String.valueOf(score));
+                break;
+            case 1:
+                this.scoreLabelTwo.setText(String.valueOf(score));
+                break;
+            case 2:
+                this.scoreLabelThree.setText(String.valueOf(score));
+                break;
+            case 3:
+                this.scoreLabelFour.setText(String.valueOf(score));
+                break;
+        }
+        
     }
+    
 
     public Group getScoreMenuGroup() {
         return scoreMenuGroup;

@@ -38,7 +38,7 @@ public class Player extends AnimatedObject {
     int runningspeed = 6;
 
     private int playerID;
-
+    private int score;
     /**
      * Constructor for a Player object.
      *
@@ -54,6 +54,7 @@ public class Player extends AnimatedObject {
         vX = 2;
         vY = 2;
         this.playerID = playerID;
+        this.score = 0;
 
     }
 
@@ -317,17 +318,22 @@ public class Player extends AnimatedObject {
      *
      * @param object that the Player object has collision with.
      */
-    private void scoringEngine(GameObject object) {
-        if (object instanceof Seaweed) {
-            gameManager.setGameScore(-5);
+
+    private void scoringEngine(GameObject object)
+    {
+        if (object instanceof Seaweed)
+        {
+            this.score -= 5;
         }
-        else if (object instanceof FishHook) {
-            gameManager.setGameScore(-2);
+        else if (object instanceof FishHook)
+        {
+            this.score -= 2;
         }
-        else if (object instanceof EnergyDrink) {
-            gameManager.setGameScore(10);
+        else if (object instanceof EnergyDrink)
+        {
+            this.score +=10;
         }
-        gameManager.updateScoreLabelOne();
+        gameManager.updateScoreLabel(this.playerID, this.score);
     }
 
     private void collisionReaction(GameObject object) {
@@ -340,7 +346,7 @@ public class Player extends AnimatedObject {
         else if (object instanceof EnergyDrink) {
             this.updateSpeed(2.7);
         }
-        gameManager.updateScoreLabelOne();
+        gameManager.updateScoreLabel(this.playerID, this.score);
     }
 
     /**
@@ -452,4 +458,8 @@ public class Player extends AnimatedObject {
         return playerID;
     }
 
+    public int getScore() {
+        return score;
+    }
+    
 }
