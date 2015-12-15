@@ -146,9 +146,6 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
                         prev = System.nanoTime();
                     }
                 }
-                if (gameManager.getGameState() == GameState.PAUSED) {
-                    pauseTime =+ (elapsed / NANO_TO_SECOND);
-                }
             }
         };
         timer.start();
