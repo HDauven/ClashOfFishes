@@ -68,7 +68,7 @@ public class Player extends AnimatedObject {
         setImageState();
         movePlayer(iX, iY);
         //playAudioClip();
-        checkCollision();
+        //checkCollision();
     }
 
     /**

@@ -56,8 +56,8 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
     @Override
     public void updateMove(double speed, String key, boolean pressed, double x, double y, int playerID) {
         gameManager.getPlayers().get(playerID).updateSpeed(speed);
-        //gameManager.getPlayers().get(playerID).setiX(x);
-        //gameManager.getPlayers().get(playerID).setiY(y);
+        gameManager.getPlayers().get(playerID).setiX(x);
+        gameManager.getPlayers().get(playerID).setiY(y);
         if (key.equals("UP")) {
             gameManager.getPlayers().get(playerID).setUp(pressed);
         }
