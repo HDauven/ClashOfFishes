@@ -1,9 +1,13 @@
 package com.netgames.clashoffishes.engine;
 
+import com.netgames.clashoffishes.Administration;
 import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
 import com.netgames.clashoffishes.server.GameClient;
 import java.net.URL;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -109,8 +113,7 @@ public class GameMenu {
                 + "-fx-background-radius: 15,14,13,15;"
                 + "-fx-background-insets: 0,1,2,0;");
         pauseGameButton.setOnAction((ActionEvent event) -> {
-            gameManager.getGameLoop().stop();
-            gameManager.setGameState(GameState.PAUSED);
+            sendGameState(GameState.PAUSED);
         });
         menuBarBox.getChildren().add(pauseGameButton);
         
@@ -126,10 +129,17 @@ public class GameMenu {
                 + "-fx-background-radius: 15,14,13,15;"
                 + "-fx-background-insets: 0,1,2,0;");
         continueGameButton.setOnAction((ActionEvent event) -> {
-            gameManager.getGameLoop().start();
-            gameManager.setGameState(GameState.RUNNING);
+            sendGameState(GameState.RUNNING);
         });
         menuBarBox.getChildren().add(continueGameButton);
+    }
+    
+    private void sendGameState(GameState state) {
+        try {
+            Administration.get().getGameServer().stateChanged(state);
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**

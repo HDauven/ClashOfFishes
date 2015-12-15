@@ -95,5 +95,10 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
     @Override
     public void changeGameState(GameState gameState) throws RemoteException {
         gameManager.setGameState(gameState);
+        if (gameManager.getGameState().equals(GameState.RUNNING)) {
+            gameManager.getGameLoop().start();
+        } else {
+            gameManager.getGameLoop().stop();
+        }
     }
 }
