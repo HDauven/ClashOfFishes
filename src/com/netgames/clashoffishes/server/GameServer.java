@@ -33,6 +33,8 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     private List<IGameClient> clients;
 
     GameManager gameManager = new GameManager();
+    
+    AnimationTimer timer;
 
     private int nxtObjectID = 1;
     long prev = System.nanoTime();
@@ -80,6 +82,12 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     @Override
     public void stateChanged(GameState newState) throws RemoteException {
+        if (newState.equals(GameState.RUNNING)) {
+            timer.start();
+        } else {
+            timer.stop();
+        }
+        
         for (IGameClient client : clients) {
             client.changeGameState(newState);
         }
@@ -105,7 +113,8 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     private void createRandomObjects() {
         int NANO_TO_SECOND = 1_000_000_000;
-        AnimationTimer timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
+            long prev = System.nanoTime();
 
             @Override
             public void handle(long now) {
