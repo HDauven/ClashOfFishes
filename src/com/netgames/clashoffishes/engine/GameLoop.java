@@ -121,13 +121,20 @@ public class GameLoop extends AnimationTimer
             secondsLeft = length_of_game - (elapsed2 / NANO_TO_SECOND);
             gameManager.setTimeLeft(String.valueOf(secondsLeft));
             
-            if (secondsLeft == 0)
+            figureOutIfScoreConditionIsMet();
+            
+            if (secondsLeft == 0 || figureOutIfScoreConditionIsMet())
             {
                 //Spel voorbij na 2 minuten
                 if (gameManager.getGameState() != GameState.FINISHED)
                 {
                     gameManager.setGameState(GameState.FINISHED);
                     this.stop();
+                    if (gameManager.getPlayer().getPlayerID() == tempPlayerID) {
+                        winCondition = true;
+                    } else {
+                        winCondition = false;
+                    }
                     hasWon();
                     Administration.get().getLoggedInUser().updateHighScore(gameManager.getGameMode(), gameManager.getGameScore());
                     //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
@@ -135,6 +142,16 @@ public class GameLoop extends AnimationTimer
                 }
             }
         }
+    }
+    
+    private boolean figureOutIfScoreConditionIsMet() {
+        for (Player player : gameManager.getPlayers()) {
+            if (player.getScore() >= 30) {
+                tempPlayerID = player.getPlayerID();
+                return true;
+            }
+        } 
+        return false;
     }
     
         /**
