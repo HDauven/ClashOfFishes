@@ -23,11 +23,11 @@ public class GameLoop extends AnimationTimer
     private long secondsLeft;
     private long prevSeconds;
 
-    private final int length_of_game = 600;
-    private final boolean winCondition = false;
+    private final int length_of_game = 60;
+    private boolean winCondition = false;
     
     private int tempPlayerID = -1;
-    private int interval = 30;
+    private final int interval = 30;
     private int counter = 0;
 
     /* A reference to the GameManager class. */
@@ -71,6 +71,7 @@ public class GameLoop extends AnimationTimer
             }
 
             modeEvolutionOfTime(now);
+            modeEvolved(now);
 
             for (FishHook h : gameManager.getFishHooks())
             {
@@ -119,6 +120,7 @@ public class GameLoop extends AnimationTimer
             long elapsed2 = now - startTime;
             secondsLeft = length_of_game - (elapsed2 / NANO_TO_SECOND);
             gameManager.setTimeLeft(String.valueOf(secondsLeft));
+            
             if (secondsLeft == 0)
             {
                 //Spel voorbij na 2 minuten
@@ -126,6 +128,42 @@ public class GameLoop extends AnimationTimer
                 {
                     gameManager.setGameState(GameState.FINISHED);
                     this.stop();
+                    hasWon();
+                    Administration.get().getLoggedInUser().updateHighScore(gameManager.getGameMode(), gameManager.getGameScore());
+                    //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
+                    System.out.println("Time is up!");
+                }
+            }
+        }
+    }
+    
+        /**
+     * Method that checks if the GameMode is Evolution of Time. If this is true,
+     * the method goes on to check whether the game time has passed. If this is
+     * true, it sets the game state to FINISHED, stops the game, shows a win or
+     * lose screen and updates the score for the player.
+     *
+     * @param now
+     */
+    private void modeEvolved(long now)
+    {
+        if (gameManager.getGameMode() == GameMode.EVOLVED)
+        {
+            long elapsed2 = now - startTime;
+            secondsLeft = length_of_game - (elapsed2 / NANO_TO_SECOND);
+            gameManager.setTimeLeft(String.valueOf(secondsLeft));
+            if (secondsLeft == 0)
+            {
+                //Spel voorbij na 2 minuten
+                if (gameManager.getGameState() != GameState.FINISHED)
+                {
+                    gameManager.setGameState(GameState.FINISHED);
+                    this.stop();
+                    if (gameManager.getPlayer().getPlayerID() == tempPlayerID) {
+                        winCondition = true;
+                    } else {
+                        winCondition = false;
+                    }
                     hasWon();
                     Administration.get().getLoggedInUser().updateHighScore(gameManager.getGameMode(), gameManager.getGameScore());
                     //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
