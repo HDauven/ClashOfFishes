@@ -25,6 +25,9 @@ public class GameLoop extends AnimationTimer
 
     private final int length_of_game = 600;
     private final boolean winCondition = false;
+    
+    private int tempPlayerID = -1;
+    private int tempPlayerScore = 0;
 
     /* A reference to the GameManager class. */
     protected GameManager gameManager;
@@ -109,6 +112,7 @@ public class GameLoop extends AnimationTimer
             long elapsed2 = now - startTime;
             secondsLeft = length_of_game - (elapsed2 / NANO_TO_SECOND);
             gameManager.setTimeLeft(String.valueOf(secondsLeft));
+            figureOutWhoHasTheHighestScore();
             if (secondsLeft == 0)
             {
                 //Spel voorbij na 2 minuten
@@ -122,6 +126,16 @@ public class GameLoop extends AnimationTimer
                     System.out.println("Time is up!");
                 }
             }
+        }
+    }
+    
+    private void figureOutWhoHasTheHighestScore() {
+        for (Player player : gameManager.getPlayers()) {
+            if (tempPlayerScore < player.getScore()) {
+                tempPlayerScore = player.getScore();
+                tempPlayerID = player.getPlayerID();
+            }
+            System.out.println(tempPlayerID + " - " + tempPlayerScore);
         }
     }
 

@@ -307,6 +307,7 @@ public class GameManager extends Application {
             int tempID = 0;
             for (IGameClient client : Administration.get().getGameServer().getClients()) {
                 createPlayer(client.getCharacterName(), tempID, id);
+                menu.createPlayerInfo(client.getCharacterName(), tempID);
                 tempID++;
             }
         }

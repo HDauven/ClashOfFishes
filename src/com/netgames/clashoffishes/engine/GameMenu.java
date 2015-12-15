@@ -1,8 +1,13 @@
 package com.netgames.clashoffishes.engine;
 
+import com.netgames.clashoffishes.Administration;
 import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
+import com.netgames.clashoffishes.server.GameClient;
 import java.net.URL;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -108,8 +113,7 @@ public class GameMenu {
                 + "-fx-background-radius: 15,14,13,15;"
                 + "-fx-background-insets: 0,1,2,0;");
         pauseGameButton.setOnAction((ActionEvent event) -> {
-            gameManager.getGameLoop().stop();
-            gameManager.setGameState(GameState.PAUSED);
+            sendGameState(GameState.PAUSED);
         });
         menuBarBox.getChildren().add(pauseGameButton);
         
@@ -125,10 +129,17 @@ public class GameMenu {
                 + "-fx-background-radius: 15,14,13,15;"
                 + "-fx-background-insets: 0,1,2,0;");
         continueGameButton.setOnAction((ActionEvent event) -> {
-            gameManager.getGameLoop().start();
-            gameManager.setGameState(GameState.RUNNING);
+            sendGameState(GameState.RUNNING);
         });
         menuBarBox.getChildren().add(continueGameButton);
+    }
+    
+    private void sendGameState(GameState state) {
+        try {
+            Administration.get().getGameServer().stateChanged(state);
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
@@ -162,130 +173,6 @@ public class GameMenu {
         scoreText.setLayoutX(10);
         scoreText.setLayoutY((HEIGHT / 2) - 195);
         scoreMenuGroup.getChildren().add(scoreText);
-        
-        playerTextOne = new Text();
-        playerTextOne.setText("Player one: ");
-        playerTextOne.setFill(Color.WHITE);
-        playerTextOne.setFont(Font.font("System", FontWeight.BOLD, 12));
-        playerTextOne.setLayoutX(10);
-        playerTextOne.setLayoutY((HEIGHT / 2) - 170);
-        scoreMenuGroup.getChildren().add(playerTextOne);
-        
-        playerViewOne = new ImageView();
-        playerIconOne = new Image(playerDir.toString() + "BubblesIcon.png", 80, 51, true, false, true);
-        playerViewOne.setImage(playerIconOne);
-        playerViewOne.setLayoutX(10);
-        playerViewOne.setLayoutY((HEIGHT / 2) - 160);
-        scoreMenuGroup.getChildren().add(playerViewOne);
-        
-        scoreTextOne = new Text();
-        scoreTextOne.setText("Score: ");
-        scoreTextOne.setFill(Color.WHITE);
-        scoreTextOne.setFont(Font.font("System", FontWeight.BOLD, 12));
-        scoreTextOne.setLayoutX(10);
-        scoreTextOne.setLayoutY((HEIGHT / 2) - 90);
-        scoreMenuGroup.getChildren().add(scoreTextOne);
-        
-        scoreLabelOne = new Text();
-        scoreLabelOne.setText(String.valueOf(gameManager.getGameScore()));
-        scoreLabelOne.setFill(Color.WHITE);
-        scoreLabelOne.setFont(Font.font("System", FontWeight.BOLD, 12));
-        scoreLabelOne.setLayoutX(50);
-        scoreLabelOne.setLayoutY((HEIGHT / 2) - 90);
-        scoreMenuGroup.getChildren().add(scoreLabelOne);
-        
-        playerTextTwo = new Text();
-        playerTextTwo.setText("Player two: ");
-        playerTextTwo.setFill(Color.WHITE);
-        playerTextTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
-        playerTextTwo.setLayoutX(10);
-        playerTextTwo.setLayoutY((HEIGHT / 2) - 70);
-        scoreMenuGroup.getChildren().add(playerTextTwo);
-        
-        playerViewTwo = new ImageView();
-        playerIconTwo = new Image(playerDir.toString() + "CleoIcon.png", 80, 50, true, false, true);
-        playerViewTwo.setImage(playerIconTwo);
-        playerViewTwo.setLayoutX(10);
-        playerViewTwo.setLayoutY((HEIGHT / 2) - 60);
-        scoreMenuGroup.getChildren().add(playerViewTwo);
-        
-        scoreTextTwo = new Text();
-        scoreTextTwo.setText("Score: ");
-        scoreTextTwo.setFill(Color.WHITE);
-        scoreTextTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
-        scoreTextTwo.setLayoutX(10);
-        scoreTextTwo.setLayoutY((HEIGHT / 2) + 10);
-        scoreMenuGroup.getChildren().add(scoreTextTwo);
-        
-        scoreLabelTwo = new Text();
-        scoreLabelTwo.setText("0");
-        scoreLabelTwo.setFill(Color.WHITE);
-        scoreLabelTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
-        scoreLabelTwo.setLayoutX(50);
-        scoreLabelTwo.setLayoutY((HEIGHT / 2) + 10);
-        scoreMenuGroup.getChildren().add(scoreLabelTwo);
-        
-        playerTextThree = new Text();
-        playerTextThree.setText("Player three: ");
-        playerTextThree.setFill(Color.WHITE);
-        playerTextThree.setFont(Font.font("System", FontWeight.BOLD, 12));
-        playerTextThree.setLayoutX(10);
-        playerTextThree.setLayoutY((HEIGHT / 2) + 30);
-        scoreMenuGroup.getChildren().add(playerTextThree);
-        
-        playerViewThree = new ImageView();
-        playerIconThree = new Image(playerDir.toString() + "FredIcon.png", 80, 57, true, false, true);
-        playerViewThree.setImage(playerIconThree);
-        playerViewThree.setLayoutX(10);
-        playerViewThree.setLayoutY((HEIGHT / 2) + 40);
-        scoreMenuGroup.getChildren().add(playerViewThree);
-        
-        scoreTextThree = new Text();
-        scoreTextThree.setText("Score: ");
-        scoreTextThree.setFill(Color.WHITE);
-        scoreTextThree.setFont(Font.font("System", FontWeight.BOLD, 12));
-        scoreTextThree.setLayoutX(10);
-        scoreTextThree.setLayoutY((HEIGHT / 2) + 110);
-        scoreMenuGroup.getChildren().add(scoreTextThree);
-        
-        scoreLabelThree = new Text();
-        scoreLabelThree.setText("0");
-        scoreLabelThree.setFill(Color.WHITE);
-        scoreLabelThree.setFont(Font.font("System", FontWeight.BOLD, 12));
-        scoreLabelThree.setLayoutX(50);
-        scoreLabelThree.setLayoutY((HEIGHT / 2) + 110);
-        scoreMenuGroup.getChildren().add(scoreLabelThree);
-        
-        playerTextFour = new Text();
-        playerTextFour.setText("Player four: ");
-        playerTextFour.setFill(Color.WHITE);
-        playerTextFour.setFont(Font.font("System", FontWeight.BOLD, 12));
-        playerTextFour.setLayoutX(10);
-        playerTextFour.setLayoutY((HEIGHT / 2) + 130);
-        scoreMenuGroup.getChildren().add(playerTextFour);
-        
-        playerViewFour = new ImageView();
-        playerIconFour = new Image(playerDir.toString() + "GillIcon.png", 80, 47, true, false, true);
-        playerViewFour.setImage(playerIconFour);
-        playerViewFour.setLayoutX(10);
-        playerViewFour.setLayoutY((HEIGHT / 2) + 140);
-        scoreMenuGroup.getChildren().add(playerViewFour);
-        
-        scoreTextFour = new Text();
-        scoreTextFour.setText("Score: ");
-        scoreTextFour.setFill(Color.WHITE);
-        scoreTextFour.setFont(Font.font("System", FontWeight.BOLD, 12));
-        scoreTextFour.setLayoutX(10);
-        scoreTextFour.setLayoutY((HEIGHT / 2) + 210);
-        scoreMenuGroup.getChildren().add(scoreTextFour);
-        
-        scoreLabelFour = new Text();
-        scoreLabelFour.setText("0");
-        scoreLabelFour.setFill(Color.WHITE);
-        scoreLabelFour.setFont(Font.font("System", FontWeight.BOLD, 12));
-        scoreLabelFour.setLayoutX(50);
-        scoreLabelFour.setLayoutY((HEIGHT / 2) + 210);
-        scoreMenuGroup.getChildren().add(scoreLabelFour);
     }
     
     /**
@@ -412,9 +299,193 @@ public class GameMenu {
                 this.scoreLabelFour.setText(String.valueOf(score));
                 break;
         }
-        
     }
     
+    /**
+     * Gets the player icon belonging to the given character name.
+     * @param characterName
+     * @param playerID 
+     */
+    private Image getPlayerIcons(String characterName) {
+        Image tempCharacterIcon = null;
+        switch (characterName.toUpperCase()) {
+            case "BUBBLES":
+                tempCharacterIcon = new Image(playerDir.toString() + "BubblesIcon.png", 80, 51, true, false, true);
+                break;
+            case "CLEO":
+                tempCharacterIcon = new Image(playerDir.toString() + "CleoIcon.png", 80, 50, true, false, true);
+                break;
+            case "FRED":
+                tempCharacterIcon = new Image(playerDir.toString() + "FredIcon.png", 80, 57, true, false, true);
+                break;
+            case "GILL":
+                tempCharacterIcon = new Image(playerDir.toString() + "GillIcon.png", 80, 47, true, false, true);
+                break;
+        }
+        return tempCharacterIcon;
+    }
+    
+    /**
+     * Creates the information belonging to the given playerID and characterName in the scoreboard menu.
+     * @param characterName
+     * @param playerID 
+     */
+    public void createPlayerInfo(String characterName, int playerID) {
+        Image characterIcon = getPlayerIcons(characterName);
+        if (playerID == 0) {
+            generatePlayerOneInfo(characterIcon);
+        } else if (playerID == 1) {
+            generatePlayerTwoInfo(characterIcon);
+        } else if (playerID == 2) {
+            generatePlayerThreeInfo(characterIcon);
+        } else if (playerID == 3) {
+            generatePlayerFourInfo(characterIcon);
+        }
+    }
+    
+    /**
+     * Generates the scoreboard information for player one
+     */
+    private void generatePlayerOneInfo(Image characterIcon) {
+        playerTextOne = new Text();
+        playerTextOne.setText("Player one: ");
+        playerTextOne.setFill(Color.WHITE);
+        playerTextOne.setFont(Font.font("System", FontWeight.BOLD, 12));
+        playerTextOne.setLayoutX(10);
+        playerTextOne.setLayoutY((HEIGHT / 2) - 170);
+        scoreMenuGroup.getChildren().add(playerTextOne);
+        
+        playerViewOne = new ImageView();
+        playerIconOne = characterIcon;
+        playerViewOne.setImage(playerIconOne);
+        playerViewOne.setLayoutX(10);
+        playerViewOne.setLayoutY((HEIGHT / 2) - 160);
+        scoreMenuGroup.getChildren().add(playerViewOne);
+        
+        scoreTextOne = new Text();
+        scoreTextOne.setText("Score: ");
+        scoreTextOne.setFill(Color.WHITE);
+        scoreTextOne.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreTextOne.setLayoutX(10);
+        scoreTextOne.setLayoutY((HEIGHT / 2) - 90);
+        scoreMenuGroup.getChildren().add(scoreTextOne);
+        
+        scoreLabelOne = new Text();
+        scoreLabelOne.setText(String.valueOf(gameManager.getGameScore()));
+        scoreLabelOne.setFill(Color.WHITE);
+        scoreLabelOne.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreLabelOne.setLayoutX(50);
+        scoreLabelOne.setLayoutY((HEIGHT / 2) - 90);
+        scoreMenuGroup.getChildren().add(scoreLabelOne);
+    }
+    
+    /**
+     * Generates the scoreboard information for player two
+     */
+    private void generatePlayerTwoInfo(Image characterIcon) {
+        playerTextTwo = new Text();
+        playerTextTwo.setText("Player two: ");
+        playerTextTwo.setFill(Color.WHITE);
+        playerTextTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
+        playerTextTwo.setLayoutX(10);
+        playerTextTwo.setLayoutY((HEIGHT / 2) - 70);
+        scoreMenuGroup.getChildren().add(playerTextTwo);
+        
+        playerViewTwo = new ImageView();
+        playerIconTwo = characterIcon;
+        playerViewTwo.setImage(playerIconTwo);
+        playerViewTwo.setLayoutX(10);
+        playerViewTwo.setLayoutY((HEIGHT / 2) - 60);
+        scoreMenuGroup.getChildren().add(playerViewTwo);
+        
+        scoreTextTwo = new Text();
+        scoreTextTwo.setText("Score: ");
+        scoreTextTwo.setFill(Color.WHITE);
+        scoreTextTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreTextTwo.setLayoutX(10);
+        scoreTextTwo.setLayoutY((HEIGHT / 2) + 10);
+        scoreMenuGroup.getChildren().add(scoreTextTwo);
+        
+        scoreLabelTwo = new Text();
+        scoreLabelTwo.setText("0");
+        scoreLabelTwo.setFill(Color.WHITE);
+        scoreLabelTwo.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreLabelTwo.setLayoutX(50);
+        scoreLabelTwo.setLayoutY((HEIGHT / 2) + 10);
+        scoreMenuGroup.getChildren().add(scoreLabelTwo);
+    }
+    
+    /**
+     * Generates the scoreboard information for player three
+     */
+    private void generatePlayerThreeInfo(Image characterIcon) {
+        playerTextThree = new Text();
+        playerTextThree.setText("Player three: ");
+        playerTextThree.setFill(Color.WHITE);
+        playerTextThree.setFont(Font.font("System", FontWeight.BOLD, 12));
+        playerTextThree.setLayoutX(10);
+        playerTextThree.setLayoutY((HEIGHT / 2) + 30);
+        scoreMenuGroup.getChildren().add(playerTextThree);
+        
+        playerViewThree = new ImageView();
+        playerIconThree = characterIcon;
+        playerViewThree.setImage(playerIconThree);
+        playerViewThree.setLayoutX(10);
+        playerViewThree.setLayoutY((HEIGHT / 2) + 40);
+        scoreMenuGroup.getChildren().add(playerViewThree);
+        
+        scoreTextThree = new Text();
+        scoreTextThree.setText("Score: ");
+        scoreTextThree.setFill(Color.WHITE);
+        scoreTextThree.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreTextThree.setLayoutX(10);
+        scoreTextThree.setLayoutY((HEIGHT / 2) + 110);
+        scoreMenuGroup.getChildren().add(scoreTextThree);
+        
+        scoreLabelThree = new Text();
+        scoreLabelThree.setText("0");
+        scoreLabelThree.setFill(Color.WHITE);
+        scoreLabelThree.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreLabelThree.setLayoutX(50);
+        scoreLabelThree.setLayoutY((HEIGHT / 2) + 110);
+        scoreMenuGroup.getChildren().add(scoreLabelThree);
+    }
+    
+    /**
+     * Generates the scoreboard information for player four
+     */
+    private void generatePlayerFourInfo(Image characterIcon) {
+        playerTextFour = new Text();
+        playerTextFour.setText("Player four: ");
+        playerTextFour.setFill(Color.WHITE);
+        playerTextFour.setFont(Font.font("System", FontWeight.BOLD, 12));
+        playerTextFour.setLayoutX(10);
+        playerTextFour.setLayoutY((HEIGHT / 2) + 130);
+        scoreMenuGroup.getChildren().add(playerTextFour);
+        
+        playerViewFour = new ImageView();
+        playerIconFour = characterIcon;
+        playerViewFour.setImage(playerIconFour);
+        playerViewFour.setLayoutX(10);
+        playerViewFour.setLayoutY((HEIGHT / 2) + 140);
+        scoreMenuGroup.getChildren().add(playerViewFour);
+        
+        scoreTextFour = new Text();
+        scoreTextFour.setText("Score: ");
+        scoreTextFour.setFill(Color.WHITE);
+        scoreTextFour.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreTextFour.setLayoutX(10);
+        scoreTextFour.setLayoutY((HEIGHT / 2) + 210);
+        scoreMenuGroup.getChildren().add(scoreTextFour);
+        
+        scoreLabelFour = new Text();
+        scoreLabelFour.setText("0");
+        scoreLabelFour.setFill(Color.WHITE);
+        scoreLabelFour.setFont(Font.font("System", FontWeight.BOLD, 12));
+        scoreLabelFour.setLayoutX(50);
+        scoreLabelFour.setLayoutY((HEIGHT / 2) + 210);
+        scoreMenuGroup.getChildren().add(scoreLabelFour);
+    }
 
     public Group getScoreMenuGroup() {
         return scoreMenuGroup;
