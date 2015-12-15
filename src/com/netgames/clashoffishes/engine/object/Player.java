@@ -338,15 +338,26 @@ public class Player extends AnimatedObject {
 
     private void collisionReaction(GameObject object) {
         if (object instanceof Seaweed) {
-            this.updateSpeed(1.3);
+            sendSpeedUpdate(1.3);
         }
         else if (object instanceof FishHook) {
-            this.updateSpeed(0.5);
+            sendSpeedUpdate(0.5);
         }
         else if (object instanceof EnergyDrink) {
-            this.updateSpeed(2.7);
+            sendSpeedUpdate(2.7);
         }
         gameManager.updateScoreLabel(this.playerID, this.score);
+    }
+    
+    /**
+     * Informs the players of an update in the players speed.
+     */
+    private void sendSpeedUpdate(double speed) {
+        try {
+            Administration.get().getGameServer().updateSpeed(speed, playerID);
+        } catch (RemoteException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

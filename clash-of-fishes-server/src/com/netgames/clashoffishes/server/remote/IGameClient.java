@@ -7,7 +7,6 @@ package com.netgames.clashoffishes.server.remote;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
 
 /**
  *
@@ -40,6 +39,15 @@ public interface IGameClient extends Remote {
      */
     public void updateMove(double speed, String key, boolean pressed, double x, double y, int playerID)
             throws RemoteException;
+    
+    /**
+     * Reports changes in the given players speed
+     *
+     * @param speed The speed at which the character is traveling.
+     * @param playerID The player identifier.
+     * @throws RemoteException
+     */
+    public void updateSpeed(double speed, int playerID) throws RemoteException;
 
     /**
      * Deze methode wordt aangeroepen als er op een andere client een collision
@@ -65,7 +73,7 @@ public interface IGameClient extends Remote {
      * @throws java.rmi.RemoteException Als er iets fout gaat met RMI wordt deze
      * exceptie opgegooid.
      */
-    public void objectCreation(int x, int y, ObjectType objectType)
+    public void objectCreation(int id, int x, int y, ObjectType objectType)
             throws RemoteException;
     
     
@@ -73,5 +81,13 @@ public interface IGameClient extends Remote {
             throws RemoteException;
     
     public int getPlayerID()
+            throws RemoteException;
+
+    /**
+     * Changes the state of the game on the client side.
+     * @param gameState
+     * @throws RemoteException 
+     */
+    void changeGameState(GameState gameState)
             throws RemoteException;
 }
