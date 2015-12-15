@@ -26,64 +26,73 @@ import javafx.animation.AnimationTimer;
  *
  * @author Stef
  */
-public class GameServer extends UnicastRemoteObject implements IGameServer
-{
+public class GameServer extends UnicastRemoteObject implements IGameServer {
+
     private transient final Lobby lobby;
-    
+
     private List<IGameClient> clients;
-    
+
     GameManager gameManager = new GameManager();
-    
+
     private int nxtObjectID = 1;
-    
+
     /**
      * Constructor for the server
+     *
      * @param lobby
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     public GameServer(Lobby lobby) throws RemoteException {
         super();
         this.lobby = lobby;
-        
+
         clients = new ArrayList<>();
     }
 
-
     @Override
-    public void registerClient(IGameClient client) throws RemoteException
-    {
+    public void registerClient(IGameClient client) throws RemoteException {
         clients.add(client);
     }
 
     @Override
     public void updateMove(double speed, String key, boolean isPressed, double x, double y, int playerID) throws RemoteException {
         for (IGameClient client : clients) {
-           client.updateMove(speed, key, isPressed, x, y, playerID);
+            client.updateMove(speed, key, isPressed, x, y, playerID);
         }
     }
 
     @Override
     public void collision(int playerID, int objectID) throws RemoteException {
         for (IGameClient client : clients) {
-           client.collisionUpdate(objectID, objectID);
+            client.collisionUpdate(objectID, objectID);
         }
     }
 
     @Override
     public void stateChanged(GameState newState) throws RemoteException {
         for (IGameClient client : clients) {
-           client.changeGameState(newState);
+            client.changeGameState(newState);
         }
     }
 
     @Override
     public void start() throws RemoteException {
-        for (IGameClient gameClient : this.clients) {
-            gameClient.startGame();
+        boolean characterSelected = true;
+        for (IGameClient client : this.clients) {
+            System.out.println(client.getCharacterName());
+            if (client.getCharacterName().equals("None")) {
+                System.out.println("Niet iedereen heeft een character geselecteerd.");
+                characterSelected = false;
+            }
         }
-        this.createRandomObjects();
+        if (characterSelected) {
+            for (IGameClient gameClient : this.clients) {
+                gameClient.startGame();
+            }
+            this.createRandomObjects();
+        }
     }
-    
+
     private void createRandomObjects() {
         long prev = System.nanoTime();
         int NANO_TO_SECOND = 1_000_000_000;
@@ -98,19 +107,19 @@ public class GameServer extends UnicastRemoteObject implements IGameServer
                 ObjectType type = null;
                 if ((elapsed / NANO_TO_SECOND) > randInt) {
                     GameObject object = gameManager.addRandomObject(nxtObjectID++);
-                    for(IGameClient client : clients){
+                    for (IGameClient client : clients) {
                         try {
-                            if(object instanceof EnergyDrink){
+                            if (object instanceof EnergyDrink) {
                                 type = ObjectType.ENERGYDRINK;
                             }
-                            if(object instanceof Seaweed){
+                            if (object instanceof Seaweed) {
                                 type = ObjectType.SEAWEED;
                             }
-                            if(object instanceof FishHook){
+                            if (object instanceof FishHook) {
                                 type = ObjectType.FISHHOOK;
                             }
-                            //moet type zijn
-                            client.objectCreation(object.getID(), (int)object.getiX(), (int)object.getiY(), type);
+
+                            client.objectCreation(object.getID(), (int) object.getiX(), (int) object.getiY(), type);
                         }
                         catch (RemoteException ex) {
                             Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
@@ -127,5 +136,4 @@ public class GameServer extends UnicastRemoteObject implements IGameServer
     public List<IGameClient> getClients() throws RemoteException {
         return this.clients;
     }
-
 }

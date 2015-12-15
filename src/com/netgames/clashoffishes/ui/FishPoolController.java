@@ -11,12 +11,8 @@ import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.interfaces.ILobbyListener;
 import com.netgames.clashoffishes.server.Message;
 import com.netgames.clashoffishes.server.remote.IClient;
-import com.netgames.clashoffishes.server.remote.IGameServer;
 import com.netgames.clashoffishes.server.remote.ILobby;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,11 +52,8 @@ public class FishPoolController implements Initializable, ILobbyListener {
     // TODO can't select the same character as another player.
     // TODO enable/disable character when a different character is selected.
     // TODO allow for multiple players to select character 'None'.
-    
     // BUG  When a player pushes the 'ready' button, they are re-ordered. This shouldn't happen!
-    
     // TODO If the host leaves, everyone should be kicked out of the lobby!
-    
     @FXML
     private AnchorPane paneMainForm;
     @FXML
@@ -94,6 +87,8 @@ public class FishPoolController implements Initializable, ILobbyListener {
     private Button btnSendMessage;
     @FXML
     private TextField tfMessage;
+    @FXML
+    private Label lbl_error;
 
     private ILobby lobby;
 
@@ -112,12 +107,14 @@ public class FishPoolController implements Initializable, ILobbyListener {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        lbl_error.setVisible(false);
         // Haal de current lobby op.
         this.lobby = Administration.get().getLobby();
         try {
             Administration.get().getClient().addGUIListener(this);
             lblLobbyName.setText(lobby.getPoolNameProperty());
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex) {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -138,9 +135,11 @@ public class FishPoolController implements Initializable, ILobbyListener {
             for (IClient client : this.lobby.getClients()) {
                 this.tableUsers.add(new TableUser(client.getUsername(), "None", false));
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.out.println(e.getMessage());
-        } finally {
+        }
+        finally {
             tbvPlayers.setItems(tableUsers);
         }
 
@@ -188,7 +187,8 @@ public class FishPoolController implements Initializable, ILobbyListener {
         try {
             Administration.get().getClient().setCharacter(characterName);
             lobby.broadcastCharacter(characterName, Administration.get().getClient());
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex) {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -211,7 +211,8 @@ public class FishPoolController implements Initializable, ILobbyListener {
                         tableuserUpdated.setReady(true);
                         sendReady(true);
                         btnReady.setText("I'm not ready!");
-                    } else {
+                    }
+                    else {
                         tableuserUpdated.setReady(false);
                         sendReady(false);
                         btnReady.setText("I'm ready!");
@@ -234,7 +235,8 @@ public class FishPoolController implements Initializable, ILobbyListener {
             Administration.get().getClient().setIsReady(isReady);
             lobby.broadcastReady(isReady, Administration.get().getClient());
             System.out.println(Administration.get().getClient().getIsReady());
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex) {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -243,7 +245,8 @@ public class FishPoolController implements Initializable, ILobbyListener {
     private void btnStartGame_OnClick(ActionEvent event) {
         try {
             this.lobby.startGame();
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex) {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -256,7 +259,8 @@ public class FishPoolController implements Initializable, ILobbyListener {
     private void SendMessage() {
         try {
             lobby.broadcastMessage(new Message(Administration.get().getLoggedInUser().getUsername(), tfMessage.getText()), Administration.get().getClient());
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex) {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.tfMessage.clear();
@@ -290,7 +294,8 @@ public class FishPoolController implements Initializable, ILobbyListener {
             rbEvolutionOfTime.setDisable(true);
             rbEvolved.setDisable(true);
             rbLastFishSwimming.setDisable(true);
-        } else {
+        }
+        else {
             this.rbEvolved.setOnAction((ActionEvent event) -> {
                 sendGameMode(GameMode.EVOLVED.name());
             });
@@ -334,7 +339,8 @@ public class FishPoolController implements Initializable, ILobbyListener {
     private void sendGameMode(String gameMode) {
         try {
             lobby.broadcastGameMode(gameMode, Administration.get().getClient());
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex) {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -394,11 +400,13 @@ public class FishPoolController implements Initializable, ILobbyListener {
             Platform.runLater(() -> {
                 this.gameMode.selectToggle(rbEvolutionOfTime);
             });
-        } else if (gameMode.equals(GameMode.EVOLVED)) {
+        }
+        else if (gameMode.equals(GameMode.EVOLVED)) {
             Platform.runLater(() -> {
                 this.gameMode.selectToggle(rbEvolved);
             });
-        } else if (gameMode.equals(GameMode.LAST_FISH_STANDING)) {
+        }
+        else if (gameMode.equals(GameMode.LAST_FISH_STANDING)) {
             Platform.runLater(() -> {
                 this.gameMode.selectToggle(rbLastFishSwimming);
             });

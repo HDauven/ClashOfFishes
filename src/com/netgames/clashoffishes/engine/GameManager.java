@@ -393,8 +393,6 @@ public class GameManager extends Application {
         gameLoop = new GameLoop(this);
         gameLoop.start();
         gameState = GameState.RUNNING;
-        fishHooks = new ArrayList<>();
-
     }
 
     public GameObject addRandomObject(int id) {
@@ -404,7 +402,7 @@ public class GameManager extends Application {
             map = new GameMap((int) WIDTH, (int) HEIGHT, this.seed);
             menu = new GameMenu(this);
             loadImageAssets();
-            if(fishHooks == null){
+            if (fishHooks == null) {
                 fishHooks = new ArrayList<>();
             }
         }
@@ -482,8 +480,25 @@ public class GameManager extends Application {
     }
 
     private void addObject(GameObject object) {
-        root.getChildren().add(object.getSpriteFrame());
-        objectManager.addCurrentObject(object);
+        if (object instanceof FishHook) {
+            fishHooks.add((FishHook) object);            
+        }
+        
+        if (root == null) {
+            //TODO Anders oplossen
+            root = new Group();
+        }
+        if (root != null && object != null && object.getSpriteFrame() != null) {
+            root.getChildren().add(object.getSpriteFrame());
+            if (objectManager == null) {
+                objectManager = new ObjectManager();
+
+            }
+            objectManager.addCurrentObject(object);
+        }
+        else {
+            System.out.println("NullpointerException in root, object of object.getSpriteFrame()");
+        }
     }
 
     /**
@@ -629,11 +644,6 @@ public class GameManager extends Application {
             }
         };
         Platform.runLater(r);
-
-        if (object instanceof FishHook) {
-            fishHooks.add((FishHook) object);
-        }
-
     }
 
     public Player getPlayer(int playerID) {

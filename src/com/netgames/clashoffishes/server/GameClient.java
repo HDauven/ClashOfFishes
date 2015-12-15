@@ -46,8 +46,6 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
     
     @Override
     public void startGame() throws RemoteException {
-        //Niet zeker of dit klopt
-        //Administration.get().getLobbyRegistry().startGameServer();
         this.gameManager = new GameManager(this.characterName, this.mapseed, this.playerID);
 
         Platform.runLater(() -> {            
