@@ -23,5 +23,6 @@
       <Label fx:id="lbl_error" layoutX="269.0" layoutY="156.0" text="Label" />
       <Button fx:id="btnLogin" layoutX="183.0" layoutY="256.0" mnemonicParsing="false" onAction="#login_OnClick" prefHeight="36.0" prefWidth="116.0" text="Login" />
       <Button fx:id="btnRegister" layoutX="302.0" layoutY="256.0" mnemonicParsing="false" onAction="#register_OnClick" prefHeight="36.0" prefWidth="116.0" text="Register" />
+      <CheckBox fx:id="rbtn_remember" layoutX="438.0" layoutY="224.0" mnemonicParsing="false" text="Remember me" />
    </children>
 </AnchorPane>

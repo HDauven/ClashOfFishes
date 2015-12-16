@@ -43,6 +43,8 @@ public class Administration {
     File f = new File("props.txt");
     PrintWriter out;
     private String ipAddress;
+    private String username;
+    private String password;
 
     protected Administration() {
         this.user = null;

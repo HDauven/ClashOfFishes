@@ -135,6 +135,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
                                 }
                                 if (object instanceof FishHook) {
                                     type = ObjectType.FISHHOOK;
+                                    //object 
                                 }
 
                                 client.objectCreation(object.getID(), (int) object.getiX(), (int) object.getiY(), type);
