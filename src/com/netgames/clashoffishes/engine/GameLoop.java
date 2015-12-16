@@ -58,6 +58,7 @@ public class GameLoop extends AnimationTimer
             for (Player player : gameManager.getPlayers()) {
                 player.update();
             }
+            gameManager.getPlayer().checkCollision();
 
             long elapsed = now - prev;
             int randInt = (int) (Math.random() * 1_000 + 1); // moet 10_000 zijn, 1_000 is om te testen
