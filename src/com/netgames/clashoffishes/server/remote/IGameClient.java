@@ -41,7 +41,7 @@ public interface IGameClient extends Remote {
      */
     public void updateMove(double speed, String key, boolean pressed, double x, double y, int playerID)
             throws RemoteException;
-    
+
     /**
      * Reports changes in the given players speed
      *
@@ -77,18 +77,18 @@ public interface IGameClient extends Remote {
      */
     public void objectCreation(int id, int x, int y, ObjectType objectType)
             throws RemoteException;
-    
-    
-    public String getCharacterName() 
+
+    public String getCharacterName()
             throws RemoteException;
-    
+
     public int getPlayerID()
             throws RemoteException;
 
     /**
      * Changes the state of the game on the client side.
+     *
      * @param gameState
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     void changeGameState(GameState gameState)
             throws RemoteException;

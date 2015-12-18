@@ -8,15 +8,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.SVGPath;
 
 /**
- * GameObject
- * abstract class that functions as the basic implementation for
- * all the GameObjects that are available in the game.
- * This class will primarily be used for fixed sprites.
- * 
+ * GameObject abstract class that functions as the basic implementation for all
+ * the GameObjects that are available in the game. This class will primarily be
+ * used for fixed sprites.
+ *
  * @author Hein Dauven
  * @version %I%, %G%
  */
 public abstract class GameObject {
+
     private int id;
     protected List<Image> imageStates = new ArrayList<>();
     protected ImageView spriteFrame;
@@ -31,16 +31,17 @@ public abstract class GameObject {
     protected boolean hasValue;
     protected boolean isFlipV;
     protected boolean isFlipH;
-    
+
     /**
      * The constructor of a GameObject object.
+     *
      * @param SVGData
      * @param xLocation
      * @param yLocation
      * @param spriteCels
      */
-    public GameObject(int id, String SVGData, double xLocation, 
-                        double yLocation, Image... spriteCels) {
+    public GameObject(int id, String SVGData, double xLocation,
+            double yLocation, Image... spriteCels) {
         this.spriteBound = new SVGPath();
         this.spriteBound.setContent(SVGData);
         this.spriteFrame = new ImageView(spriteCels[0]);
@@ -57,221 +58,221 @@ public abstract class GameObject {
         this.isFlipH = false;
         id = id;
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public List<Image> getImageStates() {
         return imageStates;
     }
 
     /**
-     * 
-     * @param imageStates 
+     *
+     * @param imageStates
      */
     public void setImageStates(List<Image> imageStates) {
         this.imageStates = imageStates;
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public ImageView getSpriteFrame() {
         return spriteFrame;
     }
 
     /**
-     * 
-     * @param spriteFrame 
+     *
+     * @param spriteFrame
      */
     public void setSpriteFrame(ImageView spriteFrame) {
         this.spriteFrame = spriteFrame;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public SVGPath getSpriteBound() {
         return spriteBound;
     }
 
     /**
-     * 
-     * @param spriteBound 
+     *
+     * @param spriteBound
      */
     public void setSpriteBound(SVGPath spriteBound) {
         this.spriteBound = spriteBound;
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public double getiX() {
         return iX;
     }
 
     /**
-     * 
-     * @param iX 
+     *
+     * @param iX
      */
     public void setiX(double iX) {
         this.iX = iX;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public double getiY() {
         return iY;
     }
 
     /**
-     * 
-     * @param iY 
+     *
+     * @param iY
      */
     public void setiY(double iY) {
         this.iY = iY;
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public double getpX() {
         return pX;
     }
 
     /**
-     * 
-     * @param pX 
+     *
+     * @param pX
      */
     public void setpX(double pX) {
         this.pX = pX;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public double getpY() {
         return pY;
     }
 
     /**
-     * 
-     * @param pY 
+     *
+     * @param pY
      */
     public void setpY(double pY) {
         this.pY = pY;
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isAlive() {
         return isAlive;
     }
 
     /**
-     * 
-     * @param isAlive 
+     *
+     * @param isAlive
      */
     public void setIsAlive(boolean isAlive) {
         this.isAlive = isAlive;
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isFixed() {
         return isFixed;
     }
 
     /**
-     * 
-     * @param isFixed 
+     *
+     * @param isFixed
      */
     public void setIsFixed(boolean isFixed) {
         this.isFixed = isFixed;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isBonus() {
         return isBonus;
     }
 
     /**
-     * 
-     * @param isBonus 
+     *
+     * @param isBonus
      */
     public void setIsBonus(boolean isBonus) {
         this.isBonus = isBonus;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean hasValue() {
         return hasValue;
     }
 
     /**
-     * 
-     * @param hasValue 
+     *
+     * @param hasValue
      */
     public void setHasValue(boolean hasValue) {
         this.hasValue = hasValue;
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isFlipV() {
         return isFlipV;
     }
 
     /**
-     * 
-     * @param isFlipV 
+     *
+     * @param isFlipV
      */
     public void setIsFlipV(boolean isFlipV) {
         this.isFlipV = isFlipV;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isFlipH() {
         return isFlipH;
     }
 
     /**
-     * 
-     * @param isFlipH 
+     *
+     * @param isFlipH
      */
     public void setIsFlipH(boolean isFlipH) {
         this.isFlipH = isFlipH;
     }
-    
+
     /**
      * The update method updates the position of the GameObject.
      */
     protected abstract void update();
-    
-    public int getID(){
+
+    public int getID() {
         return this.id;
     }
 }

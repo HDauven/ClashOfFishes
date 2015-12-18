@@ -39,6 +39,7 @@ public class Player extends AnimatedObject {
 
     private int playerID;
     private int score;
+
     /**
      * Constructor for a Player object.
      *
@@ -137,20 +138,17 @@ public class Player extends AnimatedObject {
                     framecounter = 0;
                     spriteFrame.setRotate(0);
                     spriteBound.setRotate(0);
-                }
-                else {
+                } else {
                     framecounter += 1;
                 }
-            }
-            else if (animator) {
+            } else if (animator) {
                 spriteFrame.setImage(imageStates.get(2));
                 if (framecounter >= runningspeed) {
                     animator = false;
                     framecounter = 0;
                     spriteFrame.setRotate(0);
                     spriteBound.setRotate(0);
-                }
-                else {
+                } else {
                     framecounter += 1;
                 }
             }
@@ -167,20 +165,17 @@ public class Player extends AnimatedObject {
                     framecounter = 0;
                     spriteFrame.setRotate(0);
                     spriteBound.setRotate(0);
-                }
-                else {
+                } else {
                     framecounter += 1;
                 }
-            }
-            else if (animator) {
+            } else if (animator) {
                 spriteFrame.setImage(imageStates.get(2));
                 if (framecounter >= runningspeed) {
                     animator = false;
                     framecounter = 0;
                     spriteFrame.setRotate(0);
                     spriteBound.setRotate(0);
-                }
-                else {
+                } else {
                     framecounter += 1;
                 }
             }
@@ -191,8 +186,7 @@ public class Player extends AnimatedObject {
             if (isLeft()) {
                 spriteFrame.setRotate(-45);
                 spriteBound.setRotate(-45);
-            }
-            else if (isRight()) {
+            } else if (isRight()) {
                 spriteFrame.setRotate(45);
                 spriteBound.setRotate(45);
             }
@@ -203,8 +197,7 @@ public class Player extends AnimatedObject {
             if (isLeft()) {
                 spriteFrame.setRotate(45);
                 spriteBound.setRotate(45);
-            }
-            else if (isRight()) {
+            } else if (isRight()) {
                 spriteFrame.setRotate(-45);
                 spriteBound.setRotate(-45);
             }
@@ -263,8 +256,7 @@ public class Player extends AnimatedObject {
     private void sendCollision(GameObject object) {
         try {
             Administration.get().getGameServer().collision(playerID, object.getID());
-        }
-        catch (RemoteException ex) {
+        } catch (RemoteException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -318,20 +310,13 @@ public class Player extends AnimatedObject {
      *
      * @param object that the Player object has collision with.
      */
-
-    private void scoringEngine(GameObject object)
-    {
-        if (object instanceof Seaweed)
-        {
+    private void scoringEngine(GameObject object) {
+        if (object instanceof Seaweed) {
             this.score -= 5;
-        }
-        else if (object instanceof FishHook)
-        {
+        } else if (object instanceof FishHook) {
             this.score -= 2;
-        }
-        else if (object instanceof EnergyDrink)
-        {
-            this.score +=10;
+        } else if (object instanceof EnergyDrink) {
+            this.score += 10;
         }
         gameManager.updateScoreLabel(this.playerID, this.score);
     }
@@ -339,16 +324,14 @@ public class Player extends AnimatedObject {
     private void collisionReaction(GameObject object) {
         if (object instanceof Seaweed) {
             sendSpeedUpdate(1.3);
-        }
-        else if (object instanceof FishHook) {
+        } else if (object instanceof FishHook) {
             sendSpeedUpdate(0.5);
-        }
-        else if (object instanceof EnergyDrink) {
+        } else if (object instanceof EnergyDrink) {
             sendSpeedUpdate(2.7);
         }
         gameManager.updateScoreLabel(this.playerID, this.score);
     }
-    
+
     /**
      * Informs the players of an update in the players speed.
      */
@@ -454,8 +437,7 @@ public class Player extends AnimatedObject {
                     Thread.sleep(3000);
                     setvX(2);
                     setvY(2);
-                }
-                catch (InterruptedException ex) {
+                } catch (InterruptedException ex) {
                     Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -472,5 +454,5 @@ public class Player extends AnimatedObject {
     public int getScore() {
         return score;
     }
-    
+
 }

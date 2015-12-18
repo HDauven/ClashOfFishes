@@ -90,6 +90,7 @@ public class GameManager extends Application {
 
     /**
      * Constructor for the multiplayer version of Clash Of Fishes.
+     *
      * @param character The chosen character.
      * @param seed The seed to synchronize the game map.
      * @param playerID The ID of the player that you are in the game.

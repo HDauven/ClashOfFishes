@@ -22,5 +22,5 @@ public class PropH extends GameObject {
     @Override
     public void update() {
         /* not implemented yet */
-    }    
+    }
 }

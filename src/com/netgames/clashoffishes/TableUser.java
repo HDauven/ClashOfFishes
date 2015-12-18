@@ -18,15 +18,13 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * @author Stef
  */
-public class TableUser
-{
+public class TableUser {
 
     private SimpleStringProperty username;
     private SimpleStringProperty character;
     private SimpleBooleanProperty ready;
 
-    public TableUser(IClient u)
-    {
+    public TableUser(IClient u) {
         try {
             this.username = new SimpleStringProperty(u.getUsername());
         } catch (RemoteException ex) {
@@ -35,44 +33,37 @@ public class TableUser
         this.character = new SimpleStringProperty("None");
         this.ready = new SimpleBooleanProperty(false);
     }
-    
-    public TableUser(String username, String character, boolean ready)
-    {
+
+    public TableUser(String username, String character, boolean ready) {
         this.username = new SimpleStringProperty(username);
         this.character = new SimpleStringProperty(character);
         this.ready = new SimpleBooleanProperty(ready);
     }
 
-    public String getUsername()
-    {
+    public String getUsername() {
         return this.username.get();
     }
-    
-    public String getCharacter()
-    {
+
+    public String getCharacter() {
         // TODO Add selected player to user class
         return this.character.get();
     }
-    
-     public void setCharacter(String character)
-    {
+
+    public void setCharacter(String character) {
         // TODO Change selected player
         this.character = new SimpleStringProperty(character);
     }
 
-    public Boolean getReady()
-    {
+    public Boolean getReady() {
         return this.ready.get();
     }
 
-    public void setReady(boolean b)
-    {
+    public void setReady(boolean b) {
         this.ready = new SimpleBooleanProperty(b);
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.username + "Ready = " + ready;
     }
 }

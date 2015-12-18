@@ -92,7 +92,7 @@ public interface ILobby extends Remote {
 
     String getGameModeProperty()
             throws RemoteException;
-    
+
     GameMode getGameMode()
             throws RemoteException;
 

@@ -29,8 +29,8 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author Stef
  */
-public class HighscoreController implements Initializable
-{
+public class HighscoreController implements Initializable {
+
     @FXML
     private Button btnBack;
     @FXML
@@ -45,29 +45,28 @@ public class HighscoreController implements Initializable
     private TableColumn<Highscore, String> clmScore;
 
     private Administration administration;
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         // TODO initialize components for controller
         this.administration = Administration.get();
-        
+
         this.clmPlayers.setCellValueFactory(new PropertyValueFactory<Highscore, String>("Username"));
         this.clmScore.setCellValueFactory(new PropertyValueFactory<Highscore, String>("Score"));
-        
+
         // TODO moet nog dynamisch worden gemaakt.
         ObservableList<GameMode> gameModes = FXCollections.observableArrayList(GameMode.EVOLUTION_OF_TIME, GameMode.EVOLVED, GameMode.LAST_FISH_STANDING);
         this.cbGameMode.setItems(gameModes);
-    }    
+    }
 
     @FXML
     private void btnBack_OnClick(ActionEvent event) {
         GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
     }
-    
+
     @FXML
     private void cbGameMode_OnChange(ActionEvent event) {
         GameMode selectedGameMode = this.cbGameMode.getValue();
@@ -75,5 +74,5 @@ public class HighscoreController implements Initializable
         ObservableList<Highscore> obHighscores = FXCollections.observableArrayList(highscores);
         this.tbvHighscore.setItems(obHighscores);
     }
-    
+
 }

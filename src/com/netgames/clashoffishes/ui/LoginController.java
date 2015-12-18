@@ -73,8 +73,7 @@ public class LoginController implements Initializable {
             s = new Scanner(new File("login.txt"));
             txtUsername.setText(s.nextLine());
             txtPassword.setText(s.nextLine());
-        }
-        catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
     }
@@ -97,8 +96,7 @@ public class LoginController implements Initializable {
                 lbl_error.setTextFill(Color.RED);
                 lbl_error.setVisible(true);
                 return;
-            }
-            else {
+            } else {
                 if (Administration.get().logIn(userIdentifier, password) == null) {
                     lbl_error.setText("Login failed");
                     lbl_error.setTextFill(Color.RED);
@@ -106,16 +104,13 @@ public class LoginController implements Initializable {
                     this.connectLabel();
                     this.userIdentifier = null;
                     this.password = null;
-                }
-                else {
+                } else {
                     GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", GuiUtilities.getMainMenusTitle());
                 }
             }
-        }
-        catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally {
+        } finally {
             if (out != null) {
                 out.close();
             }
@@ -144,8 +139,7 @@ public class LoginController implements Initializable {
                         }
 
                     });
-                }
-                catch (InterruptedException ex) {
+                } catch (InterruptedException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

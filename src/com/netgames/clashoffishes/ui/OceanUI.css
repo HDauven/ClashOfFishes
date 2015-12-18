@@ -13,10 +13,10 @@ and open the template in the editor.
     -fx-padding: 40;
     -fx-background-color: 
         radial-gradient(
-            center 50% 50%, 
-            radius 100%, 
-            rgba(64,154,207,1) 0%,
-            rgba(34,86,169,1) 100%);
+        center 50% 50%, 
+        radius 100%, 
+        rgba(64,154,207,1) 0%,
+        rgba(34,86,169,1) 100%);
 }
 
 /* UI button style */
@@ -58,14 +58,14 @@ and open the template in the editor.
 }
 
 .radio-button .radio {
-   -fx-background-color: 
-       #163049, 
-       #325571, 
-       #325571, 
-       #FFFFFF;
-   -fx-background-insets: 0 0 0 0, 0, 1, 2;
-   -fx-background-radius: 0;
-   -fx-padding: 4;
+    -fx-background-color: 
+        #163049, 
+        #325571, 
+        #325571, 
+        #FFFFFF;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+    -fx-background-radius: 0;
+    -fx-padding: 4;
 }
 
 .radio-button .dot {
@@ -76,8 +76,8 @@ and open the template in the editor.
 }
 
 .radio-button:selected .dot {
-   -fx-background-color: #427ca1, #427ca1;
-   -fx-background-insets: 0 0 -1 0, 0;
+    -fx-background-color: #427ca1, #427ca1;
+    -fx-background-insets: 0 0 -1 0, 0;
 }
 
 /* UI label style */
@@ -129,10 +129,10 @@ and open the template in the editor.
     -fx-control-inner-background: #1d1d1d;
     -fx-background-color: 
         radial-gradient(
-            center 50% 50%, 
-            radius 140%, 
-            rgba(64,154,207,1) 0%,
-            rgba(34,86,169,1) 100%);
+        center 50% 50%, 
+        radius 140%, 
+        rgba(64,154,207,1) 0%,
+        rgba(34,86,169,1) 100%);
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-border-color: #18384d;

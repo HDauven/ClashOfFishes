@@ -25,8 +25,7 @@ import javafx.stage.WindowEvent;
  *
  * @author MuK
  */
-public class GuiUtilities
-{
+public class GuiUtilities {
 
     //TODO GuiTitles aanvullen
     public static final String TITLE_GAME_WORLD = "Clash of Fishes!";
@@ -39,10 +38,8 @@ public class GuiUtilities
     public static final String TITLE_MULTIPLAYER_MENU = "Multiplayer";
 
     //Object window = controller of sender
-    public static Object buildStage(Object window, String fileName, String title)
-    {
-        try
-        {
+    public static Object buildStage(Object window, String fileName, String title) {
+        try {
             Stage stage = (Stage) window;
             FXMLLoader loader = new FXMLLoader(GuiUtilities.class.getResource("/com/netgames/clashoffishes/ui/" + fileName + ".fxml"));
             Parent root = (Parent) loader.load();
@@ -50,39 +47,32 @@ public class GuiUtilities
             stage.setScene(new Scene(root));
 
             //TODO handle onCloseRequest for every fxml file, default is logout
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>()
-            {
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
-                public void handle(WindowEvent event)
-                {
+                public void handle(WindowEvent event) {
                     //TO DO switch/case van maken met ENUM
                     System.out.println(fileName);
-                    if (fileName.equals("StartMenu"))
-                    {
+                    if (fileName.equals("StartMenu")) {
                         event.consume();
                         GuiUtilities.logOut(stage);
                         return;
                     }
-                    if (fileName.equals("Login"))
-                    {
+                    if (fileName.equals("Login")) {
                         event.consume();
                         GuiUtilities.closeApplication(stage);
                         return;
                     }
-                    if (fileName.equals("MultiplayerMenu"))
-                    {
+                    if (fileName.equals("MultiplayerMenu")) {
                         event.consume();
                         GuiUtilities.buildStage(stage.getScene().getWindow(), "StartMenu", TITLE_START_MENU);
                         return;
                     }
-                    if (fileName.equals("HostedGames"))
-                    {
+                    if (fileName.equals("HostedGames")) {
                         event.consume();
                         GuiUtilities.buildStage(stage.getScene().getWindow(), "MultiplayerMenu", TITLE_MULTIPLAYER_MENU);
                         return;
                     }
-                    if (fileName.equals("FishPool"))
-                    {
+                    if (fileName.equals("FishPool")) {
                         event.consume();
                         try {
                             if (Administration.get().getLobby().getClients().get(0).getUsername()
@@ -100,20 +90,16 @@ public class GuiUtilities
                         GuiUtilities.buildStage(stage.getScene().getWindow(), "HostedGames", TITLE_HOSTED_GAMES);
                         return;
                     }
-                    if (fileName.equals("Highscore"))
-                    {
+                    if (fileName.equals("Highscore")) {
                         event.consume();
                         GuiUtilities.buildStage(stage.getScene().getWindow(), "StartMenu", TITLE_START_MENU);
                         return;
                     }
-                    if (fileName.equals("CharacterSelection"))
-                    {
+                    if (fileName.equals("CharacterSelection")) {
                         event.consume();
                         GuiUtilities.buildStage(stage.getScene().getWindow(), "StartMenu", TITLE_START_MENU);
                         return;
-                    }
-                    else
-                    {
+                    } else {
                         event.consume();
                         GuiUtilities.logOut(stage);
                         return;
@@ -123,45 +109,38 @@ public class GuiUtilities
 
             stage.show();
             return loader.getController();
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public static String getMainMenusTitle()
-    {
+    public static String getMainMenusTitle() {
         Administration administration = Administration.get();
         String username = "";
-        if (administration.getLoggedInUser() != null)
-        {
+        if (administration.getLoggedInUser() != null) {
             username = administration.getLoggedInUser().getUsername();
         }
         return "Welcome back: " + username;
     }
 
-    public static String getFishPoolTitle()
-    {
+    public static String getFishPoolTitle() {
         String username = "";
         try {
             Administration administration = Administration.get();
             username = administration.getLobby().getPoolNameProperty();
         } catch (RemoteException ex) {
             Logger.getLogger(GuiUtilities.class.getName()).log(Level.SEVERE, null, ex);
-        } finally { 
+        } finally {
             return username;
         }
     }
 
-    public static void logOut(Stage stage)
-    {
+    public static void logOut(Stage stage) {
         GuiUtilities.buildStage(stage.getScene().getWindow(), "Login", TITLE_LOGIN);
     }
 
-    public static void closeApplication(Stage stage)
-    {
+    public static void closeApplication(Stage stage) {
         stage.hide();
         stage.close();
         Platform.exit();

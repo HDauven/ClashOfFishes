@@ -167,7 +167,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     public void setClients(List<IClient> clients) {
         this.clients = clients;
     }
-    
+
     @Override
     public GameMode getGameMode() {
         return gameMode;

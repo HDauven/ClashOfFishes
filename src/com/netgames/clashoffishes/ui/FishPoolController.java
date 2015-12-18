@@ -142,14 +142,14 @@ public class FishPoolController implements Initializable, ILobbyListener {
         }
 
     }
-    
+
     private GameMode initialGameMode(String gameMode) {
         GameMode tempGameMode = GameMode.EVOLUTION_OF_TIME;
         if (gameMode.equalsIgnoreCase(GameMode.EVOLUTION_OF_TIME.name())) {
             tempGameMode = GameMode.EVOLUTION_OF_TIME;
-        }  else if (gameMode.equalsIgnoreCase(GameMode.EVOLVED.name())) {
+        } else if (gameMode.equalsIgnoreCase(GameMode.EVOLVED.name())) {
             tempGameMode = GameMode.EVOLVED;
-        } else if (gameMode.equalsIgnoreCase(GameMode.LAST_FISH_STANDING.name())){
+        } else if (gameMode.equalsIgnoreCase(GameMode.LAST_FISH_STANDING.name())) {
             tempGameMode = GameMode.LAST_FISH_STANDING;
         }
         return tempGameMode;
@@ -284,7 +284,7 @@ public class FishPoolController implements Initializable, ILobbyListener {
         }
         this.tfMessage.clear();
     }
-    
+
     private void SendServerMessage(String serverMessage) {
         try {
             lobby.broadcastMessage(new Message("SERVER: ", serverMessage), Administration.get().getClient());

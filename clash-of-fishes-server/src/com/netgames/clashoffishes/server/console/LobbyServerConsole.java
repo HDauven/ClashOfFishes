@@ -11,17 +11,16 @@ import java.util.ArrayList;
  *
  * @author Hein Dauven
  */
-public class LobbyServerConsole implements ILobbyServerObserver { 
-    
+public class LobbyServerConsole implements ILobbyServerObserver {
+
     // Reference to server
     private static RegistryServer registry;
     private static Server server;
-    
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         // TODO code application logic here
         RegistryServer registry = new RegistryServer();
         LobbyServerConsole console = new LobbyServerConsole();
@@ -37,11 +36,9 @@ public class LobbyServerConsole implements ILobbyServerObserver {
      *
      * @param message The message you want to write.
      */
-    private static void getRegistryLogMessages(RegistryServer registry)
-    {
+    private static void getRegistryLogMessages(RegistryServer registry) {
         ArrayList<String> temp = registry.getOutput();
-        for (String output : temp)
-        {
+        for (String output : temp) {
             System.out.println(output);
         }
     }

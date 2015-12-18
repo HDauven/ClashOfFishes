@@ -47,16 +47,16 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
     public String getUsername() {
         return this.username;
     }
-    
+
     @Override
     public void startGame() throws RemoteException {
         this.gameManager = new GameManager(this.characterName, this.mapseed, this.playerID, this.gameMode);
 
-        Platform.runLater(() -> {            
-            gameManager.start(new Stage());            
+        Platform.runLater(() -> {
+            gameManager.start(new Stage());
         });
     }
-    
+
     @Override
     public void updateMove(double speed, String key, boolean pressed, double x, double y, int playerID) {
         gameManager.getPlayers().get(playerID).updateSpeed(speed);
@@ -64,43 +64,40 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
         gameManager.getPlayers().get(playerID).setiY(y);
         if (key.equals("UP")) {
             gameManager.getPlayers().get(playerID).setUp(pressed);
-        }
-        else if (key.equals("DOWN")) {
+        } else if (key.equals("DOWN")) {
             gameManager.getPlayers().get(playerID).setDown(pressed);
-        }
-        else if (key.equals("LEFT")) {
+        } else if (key.equals("LEFT")) {
             gameManager.getPlayers().get(playerID).setLeft(pressed);
-        }
-        else if (key.equals("RIGHT")) {
+        } else if (key.equals("RIGHT")) {
             gameManager.getPlayers().get(playerID).setRight(pressed);
         }
     }
-    
+
     @Override
     public void updateSpeed(double speed, int playerID) {
         gameManager.getPlayers().get(playerID).updateSpeed(speed);
     }
-    
+
     @Override
     public void collisionUpdate(int id, int objectId) throws RemoteException {
         gameManager.getObjectManager().addToRemovedObjects(gameManager.getObjectManager().getObject(objectId));
     }
-    
+
     @Override
     public void objectCreation(int id, int x, int y, ObjectType objectType) throws RemoteException {
         gameManager.createObject(id, x, y, objectType);
     }
-    
+
     @Override
     public String getCharacterName() throws RemoteException {
         return this.characterName;
     }
-    
+
     @Override
     public int getPlayerID() throws RemoteException {
         return this.playerID;
     }
-    
+
     @Override
     public void changeGameState(GameState gameState) throws RemoteException {
         gameManager.setGameState(gameState);

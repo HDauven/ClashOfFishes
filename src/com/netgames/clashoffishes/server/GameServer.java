@@ -119,32 +119,32 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
             @Override
             public void handle(long now) {
                 if (gameManager.getGameState() == GameState.RUNNING) {
-                long elapsed = now - prev;
-                int randInt = (int) (Math.random() * 1_000 + 1); // moet 10_000 zijn, 1_000 is om te testen
-                //System.out.println(elapsed);
-                ObjectType type = null;
-                if ((elapsed / NANO_TO_SECOND) > randInt) {
-                    GameObject object = gameManager.addRandomObject(nxtObjectID++);
-                    for (IGameClient client : clients) {
-                        try {
-                            if (object instanceof EnergyDrink) {
-                                type = ObjectType.ENERGYDRINK;
-                            }
-                            if (object instanceof Seaweed) {
-                                type = ObjectType.SEAWEED;
-                            }
-                            if (object instanceof FishHook) {
-                                type = ObjectType.FISHHOOK;
-                            }
+                    long elapsed = now - prev;
+                    int randInt = (int) (Math.random() * 1_000 + 1); // moet 10_000 zijn, 1_000 is om te testen
+                    //System.out.println(elapsed);
+                    ObjectType type = null;
+                    if ((elapsed / NANO_TO_SECOND) > randInt) {
+                        GameObject object = gameManager.addRandomObject(nxtObjectID++);
+                        for (IGameClient client : clients) {
+                            try {
+                                if (object instanceof EnergyDrink) {
+                                    type = ObjectType.ENERGYDRINK;
+                                }
+                                if (object instanceof Seaweed) {
+                                    type = ObjectType.SEAWEED;
+                                }
+                                if (object instanceof FishHook) {
+                                    type = ObjectType.FISHHOOK;
+                                }
 
-                            client.objectCreation(object.getID(), (int) object.getiX(), (int) object.getiY(), type);
-                        } catch (RemoteException ex) {
-                            Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
+                                client.objectCreation(object.getID(), (int) object.getiX(), (int) object.getiY(), type);
+                            } catch (RemoteException ex) {
+                                Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
+                        prev = System.nanoTime();
                     }
-                    prev = System.nanoTime();
                 }
-            }
             }
         };
         timer.start();

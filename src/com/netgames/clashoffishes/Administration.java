@@ -35,10 +35,9 @@ public class Administration {
 
     private ILobby lobby;
     private Client client;
-    
+
     private IGameServer gameServer;
     private GameClient gameClient;
-    
 
     File f = new File("props.txt");
     PrintWriter out;
@@ -161,7 +160,7 @@ public class Administration {
 
     private void readProps() {
         try {
-            if(!f.exists()){
+            if (!f.exists()) {
                 f.createNewFile();
                 out = new PrintWriter("props.txt");
                 out.println("localhost");
@@ -174,11 +173,10 @@ public class Administration {
             Logger.getLogger(Administration.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(Administration.class.getName()).log(Level.SEVERE, null, ex);
-        } catch(NoSuchElementException ex){
+        } catch (NoSuchElementException ex) {
             System.out.println("Zet een geldig ip-adres of localhost in props.txt");
-        }
-        finally{
-            if(out != null){
+        } finally {
+            if (out != null) {
                 out.close();
             }
         }

@@ -16,7 +16,6 @@ public class Highscore {
     private GameMode gameMode;
     private String username;
     private int score;
-    
 
     public Highscore(GameMode gameMode, String username, int score) {
         this.gameMode = gameMode;
@@ -40,7 +39,5 @@ public class Highscore {
     public String toString() {
         return "Highscore{" + "gameMode=" + gameMode + ", username=" + username + ", score=" + score + '}';
     }
-    
-    
 
 }

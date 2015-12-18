@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 /**
  * Static game objects that will be flipped and mirrored.
- * 
+ *
  * @author Hein Dauven
  */
 public class PropB extends GameObject {
@@ -24,5 +24,5 @@ public class PropB extends GameObject {
     @Override
     public void update() {
         /* not implemented yet */
-    }    
+    }
 }

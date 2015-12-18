@@ -6,22 +6,22 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane fx:id="paneMainForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background-gradient" stylesheets="@OceanUI.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.netgames.clashoffishes.ui.RegistrationController">
-   <children>
-      <Label layoutX="196.0" layoutY="39.0" text="Registration">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Label>
-      <Label layoutX="166.0" layoutY="127.0" text="Username:" />
-      <Label layoutX="166.0" layoutY="226.0" prefHeight="17.0" prefWidth="41.0" text="E-mail:" />
-      <Label layoutX="166.0" layoutY="192.0" text="Confirm password:" />
-      <Label layoutX="166.0" layoutY="160.0" text="Password:" />
-      <TextField fx:id="txtUsername" layoutX="274.0" layoutY="123.0" promptText="Username" />
-      <PasswordField fx:id="txtPassword" layoutX="274.0" layoutY="156.0" promptText="Password" />
-      <PasswordField fx:id="txtConfirmPassword" layoutX="274.0" layoutY="188.0" promptText="Password" />
-      <TextField fx:id="txtEmail" layoutX="274.0" layoutY="222.0" promptText="E-mail" />
-      <Button fx:id="btnRegister" layoutX="166.0" layoutY="287.0" mnemonicParsing="false" onAction="#btnRegister_OnClick" prefHeight="39.0" prefWidth="116.0" text="Register" />
-      <Button fx:id="btnCancel" layoutX="307.0" layoutY="287.0" mnemonicParsing="false" onAction="#btnCancel_OnClick" prefHeight="39.0" prefWidth="116.0" text="Cancel" />
-      <Label fx:id="lbl_error" layoutX="268.0" layoutY="96.0" />
-   </children>
+    <children>
+        <Label layoutX="196.0" layoutY="39.0" text="Registration">
+            <font>
+                <Font size="36.0" />
+            </font>
+        </Label>
+        <Label layoutX="166.0" layoutY="127.0" text="Username:" />
+        <Label layoutX="166.0" layoutY="226.0" prefHeight="17.0" prefWidth="41.0" text="E-mail:" />
+        <Label layoutX="166.0" layoutY="192.0" text="Confirm password:" />
+        <Label layoutX="166.0" layoutY="160.0" text="Password:" />
+        <TextField fx:id="txtUsername" layoutX="274.0" layoutY="123.0" promptText="Username" />
+        <PasswordField fx:id="txtPassword" layoutX="274.0" layoutY="156.0" promptText="Password" />
+        <PasswordField fx:id="txtConfirmPassword" layoutX="274.0" layoutY="188.0" promptText="Password" />
+        <TextField fx:id="txtEmail" layoutX="274.0" layoutY="222.0" promptText="E-mail" />
+        <Button fx:id="btnRegister" layoutX="166.0" layoutY="287.0" mnemonicParsing="false" onAction="#btnRegister_OnClick" prefHeight="39.0" prefWidth="116.0" text="Register" />
+        <Button fx:id="btnCancel" layoutX="307.0" layoutY="287.0" mnemonicParsing="false" onAction="#btnCancel_OnClick" prefHeight="39.0" prefWidth="116.0" text="Cancel" />
+        <Label fx:id="lbl_error" layoutX="268.0" layoutY="96.0" />
+    </children>
 </AnchorPane>

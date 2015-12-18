@@ -21,8 +21,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author MuK
  */
-public class StartMenuController implements Initializable
-{
+public class StartMenuController implements Initializable {
 
     @FXML
     private AnchorPane paneMainForm;
@@ -45,8 +44,7 @@ public class StartMenuController implements Initializable
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         // TODO
         URL logoDir = this.getClass().getResource("/com/netgames/clashoffishes/images/logo.png");
         this.pictCoFLogo.setImage(new Image(logoDir.toString(), 777, 471, true, false, true));
@@ -54,39 +52,33 @@ public class StartMenuController implements Initializable
     }
 
     @FXML
-    private void btnSingleplayer_OnClick(ActionEvent event)
-    {
+    private void btnSingleplayer_OnClick(ActionEvent event) {
         //xxx Hier zou een gameManager misschien nog toegevoegd worden aan de singleton Administratie?
         GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "CharacterSelection", GuiUtilities.TITLE_CHARACTER_SELECTION);
     }
 
     @FXML
-    private void btnMultiplayer_OnClick(ActionEvent event)
-    {
+    private void btnMultiplayer_OnClick(ActionEvent event) {
         GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
     }
 
     @FXML
-    private void btnOptions_OnClick(ActionEvent event)
-    {
+    private void btnOptions_OnClick(ActionEvent event) {
         // TODO Options menu maken
     }
 
     @FXML
-    private void btnHelp_OnClick(ActionEvent event)
-    {
+    private void btnHelp_OnClick(ActionEvent event) {
         // TODO Help menu maken
     }
 
     @FXML
-    private void btnCredits_OnClick(ActionEvent event)
-    {
+    private void btnCredits_OnClick(ActionEvent event) {
         // TODO Credits menu maken
     }
 
     @FXML
-    private void btnAchievements_OnClick(ActionEvent event)
-    {
+    private void btnAchievements_OnClick(ActionEvent event) {
         // TODO Achievements menu maken
     }
 }

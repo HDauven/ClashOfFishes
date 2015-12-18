@@ -23,8 +23,8 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author Stef
  */
-public class GameHighscoreController implements Initializable
-{
+public class GameHighscoreController implements Initializable {
+
     @FXML
     private AnchorPane paneMainForm;
     @FXML
@@ -40,15 +40,14 @@ public class GameHighscoreController implements Initializable
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         // TODO initialize components for controller        
         this.clmPlayers.setCellValueFactory(new PropertyValueFactory<Highscore, String>("Username"));
         this.clmScore.setCellValueFactory(new PropertyValueFactory<Highscore, String>("Score"));
-    }    
+    }
 
     @FXML
     private void btnBack_OnClick(ActionEvent event) {
         GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", GuiUtilities.getMainMenusTitle());
-    }    
+    }
 }

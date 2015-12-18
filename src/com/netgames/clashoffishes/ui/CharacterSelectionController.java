@@ -28,6 +28,7 @@ import javafx.stage.Stage;
  * @author MuK
  */
 public class CharacterSelectionController implements Initializable {
+
     @FXML
     private Label lblCharacter;
     @FXML
@@ -51,7 +52,7 @@ public class CharacterSelectionController implements Initializable {
         this.cbCharacters.setItems(FXCollections.observableArrayList(characterNames));
         this.cbCharacters.getSelectionModel().select(0);
         this.pictCharacter.setImage(new Image("/com/netgames/clashoffishes/images/player/" + "BubblesIcon.png", 80, 51, true, false, true));
-    }    
+    }
 
     @FXML
     private void cbCharacters_OnChanged(ActionEvent event) {
@@ -74,7 +75,7 @@ public class CharacterSelectionController implements Initializable {
                 System.out.println("Gill has been selected");
                 this.pictCharacter.setImage(new Image(playerDir.toString() + "GillIcon.png", 80, 47, true, false, true));
                 break;
-            default: 
+            default:
                 System.out.println("No character selected");
                 this.pictCharacter.setImage(null);
                 break;
@@ -86,5 +87,5 @@ public class CharacterSelectionController implements Initializable {
         GameManager gameManager = new GameManager(this.cbCharacters.getValue(), 0, 0, GameMode.EVOLUTION_OF_TIME);
         gameManager.start(new Stage());
     }
-    
+
 }

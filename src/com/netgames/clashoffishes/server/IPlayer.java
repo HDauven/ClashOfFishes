@@ -11,8 +11,8 @@ import com.netgames.clashoffishes.engine.object.GameObject;
  *
  * @author Stef
  */
-public interface IPlayer
-{
+public interface IPlayer {
+
     int getID();
 
     void update();
