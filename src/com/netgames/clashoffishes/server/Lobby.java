@@ -30,10 +30,6 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     private User host;
 
     private GameMode gameMode = GameMode.EVOLVED;
-    
-    
-    
-    
 
     /**
      *
@@ -44,7 +40,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         clients = new ArrayList<>();
         messages = new ArrayList<>();
         host = Administration.get().getLoggedInUser();
-        
+
         Administration.get().setClient(new Client(host.getUsername(), true, this));
     }
 
@@ -60,13 +56,13 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
 
     @Override
     public void registerClient(IClient client) throws RemoteException {
-        if (this.clients.size() >= 4){ 
+        if (this.clients.size() >= 4) {
             System.out.println("Lobby is full mate.");
         } else {
             clients.add(client);
         }
     }
-    
+
     @Override
     public void removeClient(IClient client) throws RemoteException {
         if (this.clients.size() <= 0) {
@@ -77,7 +73,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     }
 
     @Override
-    public void broadcastMessage(IMessage message, IClient sender)  throws RemoteException {
+    public void broadcastMessage(IMessage message, IClient sender) throws RemoteException {
         messages.add(message);
         int i = 0;
         while (i < clients.size()) {
@@ -85,9 +81,9 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
             i++;
         }
     }
-    
+
     @Override
-    public void broadcastPlayer(String player, IClient sender)  throws RemoteException {
+    public void broadcastPlayer(String player, IClient sender) throws RemoteException {
         int i = 0;
         while (i < clients.size()) {
             clients.get(i).retrievePlayer(player, sender);
@@ -96,7 +92,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     }
 
     @Override
-    public void broadcastCharacter(String character, IClient sender)  throws RemoteException {
+    public void broadcastCharacter(String character, IClient sender) throws RemoteException {
         int i = 0;
         while (i < clients.size()) {
             clients.get(i).retrieveCharacter(character, sender);
@@ -105,7 +101,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     }
 
     @Override
-    public void broadcastReady(boolean isReady, IClient sender)  throws RemoteException {
+    public void broadcastReady(boolean isReady, IClient sender) throws RemoteException {
         int i = 0;
         while (i < clients.size()) {
             clients.get(i).retrieveReady(isReady, sender);
@@ -114,7 +110,8 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     }
 
     @Override
-    public void broadcastGameMode(String gameMode, IClient sender)  throws RemoteException {
+    public void broadcastGameMode(String gameMode, IClient sender) throws RemoteException {
+        this.gameMode = updateGameMode(gameMode);
         int i = 0;
         while (i < clients.size()) {
             System.out.println(gameMode);
@@ -144,14 +141,14 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         }
         return usersString;
     }
-    
+
     //TODO Beter formuleren comment 
     //GetStringProperties voor het inzetten van de lobby in de tableView 
     @Override
     public String getPoolNameProperty() {
-            return this.getLobbyTitle();
-        }
-    
+        return this.getLobbyTitle();
+    }
+
     @Override
     public String getPlayersProperty() {
         return this.getUsersString();
@@ -170,8 +167,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     public void setClients(List<IClient> clients) {
         this.clients = clients;
     }
-    
-    
+
     @Override
     public List<IMessage> getMessages() throws RemoteException {
         return Collections.unmodifiableList(messages);
@@ -181,22 +177,34 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     public String toString() {
         return this.ref.remoteToString();
     }
-    
+
     @Override
-    public void startGame(){
+    public void startGame() {
         try {
-            int seed = (int)System.currentTimeMillis();
+            int seed = (int) System.currentTimeMillis();
             Administration.get().setGameServer(new GameServer(this));
-            
+
             int playerID = 0;
-            for(IClient client : this.clients) {
+            for (IClient client : this.clients) {
                 client.createGameClient(Administration.get().getGameServer(), seed, playerID);
                 playerID++;
-                
+
             }
             Administration.get().getGameServer().start();
         } catch (RemoteException ex) {
             Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private GameMode updateGameMode(String gameMode) {
+        GameMode tempGameMode = GameMode.EVOLUTION_OF_TIME;
+        if (gameMode.equalsIgnoreCase(GameMode.EVOLUTION_OF_TIME.name())) {
+            tempGameMode = GameMode.EVOLUTION_OF_TIME;
+        } else if (gameMode.equalsIgnoreCase(GameMode.EVOLVED.name())) {
+            tempGameMode = GameMode.EVOLVED;
+        } else if (gameMode.equalsIgnoreCase(GameMode.LAST_FISH_STANDING.name())) {
+            tempGameMode = GameMode.LAST_FISH_STANDING;
+        }
+        return tempGameMode;
     }
 }

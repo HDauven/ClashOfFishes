@@ -92,6 +92,8 @@ public class GameManager extends Application {
      * Constructor where a character number is given.
      *
      * @param character The chosen character
+     * @param seed
+     * @param playerID
      */
     public GameManager(String character, int seed, int playerID) {
         this.seed = seed;
@@ -102,8 +104,7 @@ public class GameManager extends Application {
                 || character.toUpperCase().equals("FRED")
                 || character.toUpperCase().equals("GILL")) {
             this.character = character;
-        }
-        else {
+        } else {
             this.character = "BUBBLES";
         }
         this.players = new ArrayList<>();
@@ -214,8 +215,7 @@ public class GameManager extends Application {
     private void sendUpdateMove(String key, boolean pressed) {
         try {
             Administration.get().getGameServer().updateMove(player.getvX(), key, pressed, player.getiX(), player.getiY(), player.getPlayerID());
-        }
-        catch (RemoteException ex) {
+        } catch (RemoteException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -310,8 +310,7 @@ public class GameManager extends Application {
                 menu.createPlayerInfo(client.getCharacterName(), tempID);
                 tempID++;
             }
-        }
-        catch (RemoteException ex) {
+        } catch (RemoteException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -482,9 +481,9 @@ public class GameManager extends Application {
 
     private void addObject(GameObject object) {
         if (object instanceof FishHook) {
-            fishHooks.add((FishHook) object);            
+            fishHooks.add((FishHook) object);
         }
-        
+
         if (root == null) {
             //TODO Anders oplossen
             root = new Group();
@@ -496,8 +495,7 @@ public class GameManager extends Application {
 
             }
             objectManager.addCurrentObject(object);
-        }
-        else {
+        } else {
             System.out.println("NullpointerException in root, object of object.getSpriteFrame()");
         }
     }

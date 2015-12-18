@@ -134,12 +134,25 @@ public class FishPoolController implements Initializable, ILobbyListener {
             for (IClient client : this.lobby.getClients()) {
                 this.tableUsers.add(new TableUser(client.getUsername(), "None", false));
             }
+            displayGameMode(initialGameMode(lobby.getGameModeProperty()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             tbvPlayers.setItems(tableUsers);
         }
 
+    }
+    
+    private GameMode initialGameMode(String gameMode) {
+        GameMode tempGameMode = GameMode.EVOLUTION_OF_TIME;
+        if (gameMode.equalsIgnoreCase(GameMode.EVOLUTION_OF_TIME.name())) {
+            tempGameMode = GameMode.EVOLUTION_OF_TIME;
+        }  else if (gameMode.equalsIgnoreCase(GameMode.EVOLVED.name())) {
+            tempGameMode = GameMode.EVOLVED;
+        } else if (gameMode.equalsIgnoreCase(GameMode.LAST_FISH_STANDING.name())){
+            tempGameMode = GameMode.LAST_FISH_STANDING;
+        }
+        return tempGameMode;
     }
 
     @FXML
