@@ -243,9 +243,11 @@ public class FishPoolController implements Initializable, ILobbyListener {
             for (IClient client : lobby.getClients()) {
                 if (!client.getIsReady() == true) {
                     arePlayersReady = false;
+                    SendServerMessage("All players should be ready before starting a game!");
                 }
                 if (client.getCharacter().equalsIgnoreCase("None")) {
                     areCharactersSelected = false;
+                    SendServerMessage("All players should select a character before starting a game!");
                 }
             }
             if (arePlayersReady == true && areCharactersSelected == true) {
@@ -264,6 +266,15 @@ public class FishPoolController implements Initializable, ILobbyListener {
     private void SendMessage() {
         try {
             lobby.broadcastMessage(new Message(Administration.get().getLoggedInUser().getUsername(), tfMessage.getText()), Administration.get().getClient());
+        } catch (RemoteException ex) {
+            Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.tfMessage.clear();
+    }
+    
+    private void SendServerMessage(String serverMessage) {
+        try {
+            lobby.broadcastMessage(new Message("SERVER: ", serverMessage), Administration.get().getClient());
         } catch (RemoteException ex) {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
         }
