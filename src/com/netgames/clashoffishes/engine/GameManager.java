@@ -45,7 +45,7 @@ public class GameManager extends Application {
     private GameState gameState;
     private transient SimpleStringProperty timeLeft = new SimpleStringProperty();
     //Standaardwaarde is single player = evolution of time
-    private final GameMode gameMode = GameMode.EVOLUTION_OF_TIME;
+    private GameMode gameMode = GameMode.EVOLUTION_OF_TIME;
     private Group root;
     private int seed = 0;
     Stage thisStage;
@@ -89,13 +89,15 @@ public class GameManager extends Application {
     }
 
     /**
-     * Constructor where a character number is given.
-     *
-     * @param character The chosen character
-     * @param seed
-     * @param playerID
+     * Constructor for the multiplayer version of Clash Of Fishes.
+     * @param character The chosen character.
+     * @param seed The seed to synchronize the game map.
+     * @param playerID The ID of the player that you are in the game.
+     * @param gameMode The mode which is to be played by everyone in this game.
      */
-    public GameManager(String character, int seed, int playerID) {
+    public GameManager(String character, int seed, int playerID, GameMode gameMode) {
+        this.gameMode = gameMode;
+        System.out.println(gameMode);
         this.seed = seed;
         this.playerID = playerID;
         System.out.println(playerID);

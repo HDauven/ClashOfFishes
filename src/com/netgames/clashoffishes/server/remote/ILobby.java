@@ -1,5 +1,6 @@
 package com.netgames.clashoffishes.server.remote;
 
+import com.netgames.clashoffishes.engine.GameMode;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -91,7 +92,10 @@ public interface ILobby extends Remote {
 
     String getGameModeProperty()
             throws RemoteException;
+    
+    GameMode getGameMode()
+            throws RemoteException;
 
-    public void startGame()
+    void startGame()
             throws RemoteException;
 }

@@ -6,6 +6,7 @@
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.engine.GameManager;
+import com.netgames.clashoffishes.engine.GameMode;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,7 @@ public class CharacterSelectionController implements Initializable {
 
     @FXML
     private void btnStartGame_OnClick(ActionEvent event) {
-        GameManager gameManager = new GameManager(this.cbCharacters.getValue(), 0, 0);
+        GameManager gameManager = new GameManager(this.cbCharacters.getValue(), 0, 0, GameMode.EVOLUTION_OF_TIME);
         gameManager.start(new Stage());
     }
     
