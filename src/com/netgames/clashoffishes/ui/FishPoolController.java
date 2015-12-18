@@ -238,13 +238,17 @@ public class FishPoolController implements Initializable, ILobbyListener {
     @FXML
     private void btnStartGame_OnClick(ActionEvent event) {
         boolean arePlayersReady = true;
+        boolean areCharactersSelected = true;
         try {
             for (IClient client : lobby.getClients()) {
                 if (!client.getIsReady() == true) {
                     arePlayersReady = false;
                 }
+                if (client.getCharacter().equalsIgnoreCase("None")) {
+                    areCharactersSelected = false;
+                }
             }
-            if (arePlayersReady == true) {
+            if (arePlayersReady == true && areCharactersSelected == true) {
                 this.lobby.startGame();
             }
         } catch (RemoteException ex) {
