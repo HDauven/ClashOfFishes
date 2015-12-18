@@ -118,6 +118,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
 
             @Override
             public void handle(long now) {
+                if (gameManager.getGameState() == GameState.RUNNING) {
                 long elapsed = now - prev;
                 int randInt = (int) (Math.random() * 1_000 + 1); // moet 10_000 zijn, 1_000 is om te testen
                 //System.out.println(elapsed);
@@ -143,6 +144,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
                     }
                     prev = System.nanoTime();
                 }
+            }
             }
         };
         timer.start();

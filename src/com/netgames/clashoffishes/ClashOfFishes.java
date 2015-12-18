@@ -40,7 +40,7 @@ public class ClashOfFishes extends Application
         }
         catch (Exception e)
         {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
         Runnable openConnection = new Runnable()
         {
