@@ -49,10 +49,10 @@ import javafx.scene.layout.AnchorPane;
  */
 public class FishPoolController implements Initializable, ILobbyListener {
 
+    // TODO remove the RMI call and move it to an utility class?
     // TODO can't select the same character as another player.
     // TODO enable/disable character when a different character is selected.
     // TODO allow for multiple players to select character 'None'.
-    // BUG  When a player pushes the 'ready' button, they are re-ordered. This shouldn't happen!
     // TODO If the host leaves, everyone should be kicked out of the lobby!
     @FXML
     private AnchorPane paneMainForm;
