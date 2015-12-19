@@ -29,11 +29,11 @@ public class GuiUtilities {
 
     //TODO GuiTitles aanvullen
     public static final String TITLE_GAME_WORLD = "Clash of Fishes!";
-    public static final String TITLE_HIGHSCORE = "Highscores.";
-    public static final String TITLE_HOSTED_GAMES = "Hosted Games.";
-    public static final String TITLE_LOGIN = "Welcome - Please login using your username/email & password.";
-    public static final String TITLE_REGISTRATION = "Register a new account.";
-    public static final String TITLE_CHARACTER_SELECTION = "Select your character!";
+    public static final String TITLE_HIGHSCORE = "Highscores";
+    public static final String TITLE_HOSTED_GAMES = "Hosted Games";
+    public static final String TITLE_LOGIN = "Welcome - Please login using your username/email & password";
+    public static final String TITLE_REGISTRATION = "Register a new account";
+    public static final String TITLE_SINGLE_PLAYER = "Singleplayer";
     public static final String TITLE_START_MENU = "Main Menu";
     public static final String TITLE_MULTIPLAYER_MENU = "Multiplayer";
 
@@ -95,7 +95,7 @@ public class GuiUtilities {
                         GuiUtilities.buildStage(stage.getScene().getWindow(), "StartMenu", TITLE_START_MENU);
                         return;
                     }
-                    if (fileName.equals("CharacterSelection")) {
+                    if (fileName.equals("SinglePlayer")) {
                         event.consume();
                         GuiUtilities.buildStage(stage.getScene().getWindow(), "StartMenu", TITLE_START_MENU);
                         return;

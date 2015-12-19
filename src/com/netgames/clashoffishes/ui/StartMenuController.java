@@ -54,7 +54,7 @@ public class StartMenuController implements Initializable {
     @FXML
     private void btnSingleplayer_OnClick(ActionEvent event) {
         //xxx Hier zou een gameManager misschien nog toegevoegd worden aan de singleton Administratie?
-        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "CharacterSelection", GuiUtilities.TITLE_CHARACTER_SELECTION);
+        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "SinglePlayer", GuiUtilities.TITLE_SINGLE_PLAYER);
     }
 
     @FXML

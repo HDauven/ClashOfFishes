@@ -27,7 +27,7 @@ import javafx.stage.Stage;
  *
  * @author MuK
  */
-public class CharacterSelectionController implements Initializable {
+public class SinglePlayerController implements Initializable {
 
     @FXML
     private Label lblCharacter;
