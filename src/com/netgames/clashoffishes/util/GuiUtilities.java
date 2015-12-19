@@ -72,7 +72,7 @@ public class GuiUtilities {
                         GuiUtilities.buildStage(stage.getScene().getWindow(), "MultiplayerMenu", TITLE_MULTIPLAYER_MENU);
                         return;
                     }
-                    if (fileName.equals("FishPool")) {
+                    if (fileName.equals("Lobby")) {
                         event.consume();
                         try {
                             if (Administration.get().getLobby().getClients().get(0).getUsername()

@@ -109,7 +109,7 @@ public class HostedGamesController implements Initializable {
                         setLabelInvisible();
                     } else {
                         Platform.runLater(() -> {
-                            GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "FishPool", GuiUtilities.getFishPoolTitle());
+                            GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "Lobby", GuiUtilities.getFishPoolTitle());
                         });
                     }
                 } catch (Exception ex) {

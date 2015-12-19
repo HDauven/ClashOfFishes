@@ -60,7 +60,7 @@ public class MultiplayerMenuController implements Initializable {
                 Administration.get().setLobbyRegistry(lobbyRegistry);
                 Administration.get().setLobby(lobbyRegistry.getLobby());
                 Platform.runLater(() -> {
-                    GuiUtilities.buildStage(MultiplayerMenuController.this.paneMainForm.getScene().getWindow(), "FishPool", "Fishpool: " + GuiUtilities.getFishPoolTitle());
+                    GuiUtilities.buildStage(MultiplayerMenuController.this.paneMainForm.getScene().getWindow(), "Lobby", GuiUtilities.getFishPoolTitle());
                 });
                 return null;
             }

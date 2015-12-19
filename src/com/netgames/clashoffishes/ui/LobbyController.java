@@ -47,7 +47,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author Stef
  */
-public class FishPoolController implements Initializable, ILobbyListener {
+public class LobbyController implements Initializable, ILobbyListener {
 
     // TODO remove the RMI call and move it to an utility class?
     // TODO If the host leaves, everyone should be kicked out of the lobby!
@@ -111,7 +111,7 @@ public class FishPoolController implements Initializable, ILobbyListener {
             Administration.get().getClient().addGUIListener(this);
             lblLobbyName.setText(lobby.getPoolNameProperty());
         } catch (RemoteException ex) {
-            Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // Voeg alle characterNamen toe aan de listbox.
@@ -195,7 +195,7 @@ public class FishPoolController implements Initializable, ILobbyListener {
             Administration.get().getClient().setCharacter(characterName);
             lobby.broadcastCharacter(characterName, Administration.get().getClient());
         } catch (RemoteException ex) {
-            Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -241,7 +241,7 @@ public class FishPoolController implements Initializable, ILobbyListener {
             lobby.broadcastReady(isReady, Administration.get().getClient());
             System.out.println(Administration.get().getClient().getIsReady());
         } catch (RemoteException ex) {
-            Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -285,7 +285,7 @@ public class FishPoolController implements Initializable, ILobbyListener {
                 SendServerMessage("All players must select a different character!");
             }
         } catch (RemoteException ex) {
-            Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -298,7 +298,7 @@ public class FishPoolController implements Initializable, ILobbyListener {
         try {
             lobby.broadcastMessage(new Message(Administration.get().getLoggedInUser().getUsername(), tfMessage.getText()), Administration.get().getClient());
         } catch (RemoteException ex) {
-            Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.tfMessage.clear();
     }
@@ -307,7 +307,7 @@ public class FishPoolController implements Initializable, ILobbyListener {
         try {
             lobby.broadcastMessage(new Message("SERVER: ", serverMessage), Administration.get().getClient());
         } catch (RemoteException ex) {
-            Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.tfMessage.clear();
     }
@@ -385,7 +385,7 @@ public class FishPoolController implements Initializable, ILobbyListener {
         try {
             lobby.broadcastGameMode(gameMode, Administration.get().getClient());
         } catch (RemoteException ex) {
-            Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

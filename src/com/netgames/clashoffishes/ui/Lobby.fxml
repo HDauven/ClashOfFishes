@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="paneMainForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="438.0" prefWidth="967.0" styleClass="background-gradient" stylesheets="@OceanUI.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.netgames.clashoffishes.ui.FishPoolController">
+<AnchorPane fx:id="paneMainForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="438.0" prefWidth="967.0" styleClass="background-gradient" stylesheets="@OceanUI.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.netgames.clashoffishes.ui.LobbyController">
     <children>
         <Label fx:id="lblLobbyName" layoutX="56.0" layoutY="15.0" text="\$Username's game">
             <font>
