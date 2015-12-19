@@ -252,19 +252,40 @@ public class FishPoolController implements Initializable, ILobbyListener {
     private void btnStartGame_OnClick(ActionEvent event) {
         boolean arePlayersReady = true;
         boolean areCharactersSelected = true;
+        boolean areDifferentCharactersSelected = true;
+        int numberOfBubbles = 0;
+        int numberOfCleos = 0;
+        int numberOfFreds = 0;
+        int numberOfGills = 0;
         try {
             for (IClient client : lobby.getClients()) {
                 if (!client.getIsReady() == true) {
                     arePlayersReady = false;
-                    SendServerMessage("All players should be ready before starting a game!");
                 }
                 if (client.getCharacter().equalsIgnoreCase("None")) {
                     areCharactersSelected = false;
-                    SendServerMessage("All players should select a character before starting a game!");
+                }
+                if (client.getCharacter().equalsIgnoreCase("Bubbles")) {
+                    numberOfBubbles++;
+                } else if (client.getCharacter().equalsIgnoreCase("Cleo")) {
+                    numberOfCleos++;
+                } else if (client.getCharacter().equalsIgnoreCase("Fred")) {
+                    numberOfFreds++;
+                } else if (client.getCharacter().equalsIgnoreCase("Gill")) {
+                    numberOfGills++;
                 }
             }
-            if (arePlayersReady == true && areCharactersSelected == true) {
+            if (numberOfBubbles > 1 || numberOfCleos > 1 || numberOfFreds > 1 || numberOfGills > 1) {
+                areDifferentCharactersSelected = false;
+            }
+            if (arePlayersReady == true && areCharactersSelected == true && areDifferentCharactersSelected == true) {
                 this.lobby.startGame();
+            } else if (arePlayersReady == false) {
+                SendServerMessage("All players must be ready!");
+            } else if (areCharactersSelected == false) {
+                SendServerMessage("All players must select a character!");
+            } else if (areDifferentCharactersSelected == false) {
+                SendServerMessage("All players must select a different character!");
             }
         } catch (RemoteException ex) {
             Logger.getLogger(FishPoolController.class.getName()).log(Level.SEVERE, null, ex);
