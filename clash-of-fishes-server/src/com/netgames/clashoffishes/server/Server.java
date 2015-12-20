@@ -7,8 +7,6 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Observable;
-import javafx.application.Platform;
 
 /**
  * Class that keeps track of all the lobbies that exist of this game.
@@ -19,7 +17,6 @@ import javafx.application.Platform;
 public class Server implements IServer {
 
     // Version ID of the server
-
     private static final long serialVersionUID = 1L;
 
     private final RegistryServer registry;

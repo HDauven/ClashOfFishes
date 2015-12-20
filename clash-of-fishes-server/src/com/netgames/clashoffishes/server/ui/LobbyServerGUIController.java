@@ -23,7 +23,8 @@ import javafx.scene.layout.AnchorPane;
 /**
  * FXML Controller class
  *
- * @author MuK
+ * @author Christian Adkin
+ * @author Hein Dauven
  */
 public class LobbyServerGUIController implements Initializable, ILobbyServerObserver {
 

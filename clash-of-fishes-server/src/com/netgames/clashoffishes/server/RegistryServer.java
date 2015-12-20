@@ -19,7 +19,6 @@ import java.util.List;
 public class RegistryServer {
 
     // Set port number
-
     private static final int portNumber = 1100;
 
     // Set binding name for the server

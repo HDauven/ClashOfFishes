@@ -6,7 +6,7 @@ import com.netgames.clashoffishes.server.remote.ILobby;
  * Interface that defines methods for an object to inform its listeners to
  * update their UI.
  *
- * @author Hein
+ * @author Hein Dauven
  */
 public interface ILobbyServerObserver {
 
