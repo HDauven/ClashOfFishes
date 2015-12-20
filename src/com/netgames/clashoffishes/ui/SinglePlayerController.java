@@ -18,6 +18,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -37,6 +39,16 @@ public class SinglePlayerController implements Initializable {
     private ImageView pictCharacter;
     @FXML
     private Button btnStartGame;
+    @FXML
+    private RadioButton rbLastFishSwimming;
+    @FXML
+    private RadioButton rbEvolutionOfTime;
+    @FXML
+    private RadioButton rbEvolved;
+    @FXML
+    private ToggleGroup tgGameMode;
+    
+    private GameMode gameMode;
 
     /**
      * Initializes the controller class.
@@ -52,6 +64,18 @@ public class SinglePlayerController implements Initializable {
         this.cbCharacters.setItems(FXCollections.observableArrayList(characterNames));
         this.cbCharacters.getSelectionModel().select(0);
         this.pictCharacter.setImage(new Image("/com/netgames/clashoffishes/images/player/" + "BubblesIcon.png", 80, 51, true, false, true));
+        
+        this.rbEvolved.setOnAction((ActionEvent event) -> {
+                gameMode = GameMode.EVOLVED;
+            });
+
+            this.rbEvolutionOfTime.setOnAction((ActionEvent event) -> {
+                gameMode = GameMode.EVOLUTION_OF_TIME;
+            });
+
+            this.rbLastFishSwimming.setOnAction((ActionEvent event) -> {
+                gameMode= GameMode.LAST_FISH_STANDING;
+            });
     }
 
     @FXML
@@ -84,7 +108,7 @@ public class SinglePlayerController implements Initializable {
 
     @FXML
     private void btnStartGame_OnClick(ActionEvent event) {
-        GameManager gameManager = new GameManager(this.cbCharacters.getValue(), 0, 0, GameMode.EVOLUTION_OF_TIME);
+        GameManager gameManager = new GameManager(this.cbCharacters.getValue(), 0, 0, gameMode);
         gameManager.start(new Stage());
     }
 
