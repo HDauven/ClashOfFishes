@@ -108,8 +108,22 @@ public class SinglePlayerController implements Initializable {
 
     @FXML
     private void btnStartGame_OnClick(ActionEvent event) {
-        GameManager gameManager = new GameManager(this.cbCharacters.getValue(), 0, 0, gameMode);
-        gameManager.start(new Stage());
+        boolean isCharacterSelected = true;
+        boolean isGameModeSelected = true;
+        String selectedCharacter = this.cbCharacters.getValue();
+        
+        if (selectedCharacter.equalsIgnoreCase("None")) {
+            isCharacterSelected = false;
+            System.out.println("Please select a character before starting a game!");
+        }
+        if (gameMode == null) {
+            isGameModeSelected = false;
+            System.out.println("Please select a gamemode before starting a game!");
+        }
+        if (isCharacterSelected == true && isGameModeSelected == true) {
+            GameManager gameManager = new GameManager(this.cbCharacters.getValue(), 0, 0, gameMode);
+            gameManager.start(new Stage());
+        }
     }
 
 }
