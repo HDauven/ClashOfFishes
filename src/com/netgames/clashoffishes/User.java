@@ -4,7 +4,8 @@ import com.netgames.clashoffishes.engine.GameMode;
 import java.util.HashMap;
 
 /**
- * Created by bram on 1/10/15.
+ * @author Stef Philipsen
+ * @author Hein Dauven
  */
 public class User {
 

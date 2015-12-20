@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.engine.GameManager;
@@ -27,7 +22,8 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author MuK
+ * @author Christian Adkin
+ * @author Hein Dauven
  */
 public class SinglePlayerController implements Initializable {
 
@@ -47,7 +43,7 @@ public class SinglePlayerController implements Initializable {
     private RadioButton rbEvolved;
     @FXML
     private ToggleGroup tgGameMode;
-    
+
     private GameMode gameMode;
 
     /**
@@ -64,18 +60,18 @@ public class SinglePlayerController implements Initializable {
         this.cbCharacters.setItems(FXCollections.observableArrayList(characterNames));
         this.cbCharacters.getSelectionModel().select(0);
         this.pictCharacter.setImage(new Image("/com/netgames/clashoffishes/images/player/" + "BubblesIcon.png", 80, 51, true, false, true));
-        
+
         this.rbEvolved.setOnAction((ActionEvent event) -> {
-                gameMode = GameMode.EVOLVED;
-            });
+            gameMode = GameMode.EVOLVED;
+        });
 
-            this.rbEvolutionOfTime.setOnAction((ActionEvent event) -> {
-                gameMode = GameMode.EVOLUTION_OF_TIME;
-            });
+        this.rbEvolutionOfTime.setOnAction((ActionEvent event) -> {
+            gameMode = GameMode.EVOLUTION_OF_TIME;
+        });
 
-            this.rbLastFishSwimming.setOnAction((ActionEvent event) -> {
-                gameMode= GameMode.LAST_FISH_STANDING;
-            });
+        this.rbLastFishSwimming.setOnAction((ActionEvent event) -> {
+            gameMode = GameMode.LAST_FISH_STANDING;
+        });
     }
 
     @FXML
@@ -111,7 +107,7 @@ public class SinglePlayerController implements Initializable {
         boolean isCharacterSelected = true;
         boolean isGameModeSelected = true;
         String selectedCharacter = this.cbCharacters.getValue();
-        
+
         if (selectedCharacter.equalsIgnoreCase("None")) {
             isCharacterSelected = false;
             System.out.println("Please select a character before starting a game!");

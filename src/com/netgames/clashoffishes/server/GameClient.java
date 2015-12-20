@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.netgames.clashoffishes.server;
 
-import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.engine.GameState;
@@ -19,7 +13,8 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Stef
+ * @author Stef Philipsen
+ * @author Hein Dauven
  */
 public class GameClient extends UnicastRemoteObject implements IGameClient {
 

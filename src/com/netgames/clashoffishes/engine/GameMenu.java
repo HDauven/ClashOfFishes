@@ -3,7 +3,6 @@ package com.netgames.clashoffishes.engine;
 import com.netgames.clashoffishes.Administration;
 import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
-import com.netgames.clashoffishes.server.GameClient;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
@@ -29,7 +28,7 @@ import javafx.scene.text.TextAlignment;
 /**
  * Class that holds the GameMenu data.
  *
- * @author Hein
+ * @author Hein Dauven
  */
 public class GameMenu {
 

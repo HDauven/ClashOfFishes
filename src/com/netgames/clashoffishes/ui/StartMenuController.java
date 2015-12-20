@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.util.GuiUtilities;
@@ -19,7 +14,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * FXML Controller class
  *
- * @author MuK
+ * @author Christian Adkin
  */
 public class StartMenuController implements Initializable {
 

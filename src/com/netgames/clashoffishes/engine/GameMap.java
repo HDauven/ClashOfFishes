@@ -15,7 +15,7 @@ import javafx.scene.paint.Stop;
 /**
  * Class that constructs and draws the game map.
  *
- * @author Hein
+ * @author Hein Dauven
  */
 public class GameMap {
 

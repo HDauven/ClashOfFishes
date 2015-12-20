@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.netgames.clashoffishes;
 
 import com.netgames.clashoffishes.server.remote.IClient;
@@ -16,7 +11,8 @@ import javafx.beans.property.SimpleStringProperty;
  * Class for adding a user to a table. Has Simple..Properties for easy adding
  * and removing users from a table.
  *
- * @author Stef
+ * @author Stef Philipsen
+ * @author Hein Dauven
  */
 public class TableUser {
 

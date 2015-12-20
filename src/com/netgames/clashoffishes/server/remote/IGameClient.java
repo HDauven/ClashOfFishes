@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.netgames.clashoffishes.server.remote;
 
 import com.netgames.clashoffishes.engine.GameState;
@@ -12,7 +7,8 @@ import java.rmi.RemoteException;
 
 /**
  *
- * @author Stef
+ * @author Stef Philipsen
+ * @author Hein Dauven
  */
 public interface IGameClient extends Remote {
 

@@ -16,17 +16,17 @@
         <ComboBox fx:id="cbCharacters" layoutX="191.0" layoutY="63.0" onAction="#cbCharacters_OnChanged" prefHeight="25.0" prefWidth="131.0" />
         <ImageView fx:id="pictCharacter" fitHeight="126.0" fitWidth="131.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" />
         <Button fx:id="btnStartGame" layoutX="191.0" layoutY="102.0" mnemonicParsing="false" onAction="#btnStartGame_OnClick" prefHeight="15.0" prefWidth="131.0" text="Start game!" />
-      <RadioButton fx:id="rbEvolved" layoutX="355.0" layoutY="102.0" mnemonicParsing="false" text="Evolved">
-         <toggleGroup>
-            <ToggleGroup fx:id="tgGameMode" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton fx:id="rbEvolutionOfTime" layoutX="355.0" layoutY="80.0" mnemonicParsing="false" text="Evolution of Time" toggleGroup="$tgGameMode" />
-      <RadioButton fx:id="rbLastFishSwimming" layoutX="355.0" layoutY="57.0" mnemonicParsing="false" text="Last Fish Swimming" toggleGroup="$tgGameMode" />
-      <Label layoutX="355.0" layoutY="21.0" text="Game mode:">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
+        <RadioButton fx:id="rbEvolved" layoutX="355.0" layoutY="102.0" mnemonicParsing="false" text="Evolved">
+            <toggleGroup>
+                <ToggleGroup fx:id="tgGameMode" />
+            </toggleGroup>
+        </RadioButton>
+        <RadioButton fx:id="rbEvolutionOfTime" layoutX="355.0" layoutY="80.0" mnemonicParsing="false" text="Evolution of Time" toggleGroup="$tgGameMode" />
+        <RadioButton fx:id="rbLastFishSwimming" layoutX="355.0" layoutY="57.0" mnemonicParsing="false" text="Last Fish Swimming" toggleGroup="$tgGameMode" />
+        <Label layoutX="355.0" layoutY="21.0" text="Game mode:">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
     </children>
 </AnchorPane>

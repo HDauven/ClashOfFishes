@@ -2,7 +2,6 @@ package com.netgames.clashoffishes.server;
 
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.User;
-import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.IServer;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
@@ -13,8 +12,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Class that creates the RMI registry for a Clash Of Fishes Lobby.
@@ -24,7 +21,6 @@ import java.util.logging.Logger;
 public class LobbyRegistry extends Observable {
 
     // Set port number
-
     private static final int portNumber = 1099;
     private static final int portNumber2 = 1097;
 

@@ -18,7 +18,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by Christian on 1/10/15.
+ * @author Christian Adkin
+ * @author Stef Philipsen
+ * @author Hein Dauven
  */
 public class Administration {
 

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.netgames.clashoffishes;
 
 import com.netgames.clashoffishes.ui.LoginController;
@@ -15,7 +10,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Bram
+ * @author Hein Dauven
  */
 public class ClashOfFishes extends Application {
 
