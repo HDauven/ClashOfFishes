@@ -194,4 +194,12 @@ public class Administration {
         public InputStream() {
         }
     }
+    
+    public void resetClient() {
+        this.client = null;
+    }
+    
+    public void resetLobby() {
+        this.lobby = null;
+    }
 }
