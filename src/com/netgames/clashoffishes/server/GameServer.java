@@ -104,6 +104,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
                 gameClient.startGame();
             }
             this.createRandomObjects();
+            gameManager.setGameState(GameState.RUNNING);
         }
     }
 
