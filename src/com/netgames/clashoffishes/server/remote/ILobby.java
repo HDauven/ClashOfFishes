@@ -51,16 +51,39 @@ public interface ILobby extends Remote {
     void broadcastMessage(IMessage message, IClient sender)
             throws RemoteException;
 
-    //TODO JAVADOC
+    /**
+     * Method that broadcasts a new player name to all clients
+     * @param player The new player's name.
+     * @param sender The new Client
+     * @throws RemoteException 
+     */
     void broadcastPlayer(String player, IClient sender)
             throws RemoteException;
 
+    /**
+     * Method that broadcast a change in character to all clients 
+     * @param character The character that has been changed to.
+     * @param sender The client who did the change.
+     * @throws RemoteException 
+     */
     void broadcastCharacter(String character, IClient sender)
             throws RemoteException;
 
+    /**
+     * Method that broadcasts a change in ready state to all clients
+     * @param isReady The ready state that has been changed to.
+     * @param sender The client who did the change.
+     * @throws RemoteException 
+     */
     void broadcastReady(boolean isReady, IClient sender)
             throws RemoteException;
 
+    /**
+     * A method that broadcasts a change in gameMode to all clients
+     * @param gameMode The gameMode that has been changed to
+     * @param sender The client who did the change.
+     * @throws RemoteException 
+     */
     void broadcastGameMode(String gameMode, IClient sender)
             throws RemoteException;
 
@@ -84,18 +107,42 @@ public interface ILobby extends Remote {
     List<IClient> getClients()
             throws RemoteException;
 
+    /**
+     * Return the lobby name
+     * @return The lobby name.
+     * @throws RemoteException 
+     */
     String getPoolNameProperty()
             throws RemoteException;
 
+    /**
+     * Return all the players' names.
+     * @return All the players' names in one string.
+     * @throws RemoteException 
+     */
     String getPlayersProperty()
             throws RemoteException;
 
+    /**
+     * Return the current set gameMode as String.
+     * @return The current set gameMode as String.
+     * @throws RemoteException 
+     */
     String getGameModeProperty()
             throws RemoteException;
 
+    /**
+     * Return the current set gameMode.
+     * @return The current set gameMode.
+     * @throws RemoteException 
+     */
     GameMode getGameMode()
             throws RemoteException;
 
+    /**
+     * A method to start the game.
+     * @throws RemoteException 
+     */
     void startGame()
             throws RemoteException;
 }

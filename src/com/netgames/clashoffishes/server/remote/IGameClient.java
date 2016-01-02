@@ -15,25 +15,22 @@ public interface IGameClient extends Remote {
     /**
      * Deze methode wordt aangeroepen als alle spelers klaar zijn en de game
      * gestart kan worden.
-     *
-     * @param mapSeed variable zodat de map op elke client hetzelfde weergegeven
-     * wordt
      * @throws RemoteException Als er iets fout gaat met RMI wordt deze exceptie
      * opgegooid.
      */
     public void startGame()
             throws RemoteException;
 
+   
     /**
-     * Deze methode wordt aangeroepen als de positie, snelheid of richting van
-     * een object veranderd is, zodat de client het object kan updaten.
-     *
-     * @param id ID van het object welke veranderd is
-     * @param positie de nieuwe positie van het object
-     * @param speed de nieuwe snelheid van het object
-     * @param richting de nieuwe richting van het object
-     * @throws java.rmi.RemoteException Als er iets fout gaat met RMI wordt deze
-     * exceptie opgegooid.
+     * Deze methode wordt aangeroepen als er een verandering in de beweging van een vis wordt gemaakt.
+     * @param speed De snelheid waarmee hij beweegt.
+     * @param key De toets die ingedrukt is.
+     * @param pressed Welke state is de toets in.
+     * @param x x coordinaat.
+     * @param y y coordinaat.
+     * @param playerID De speler die de verandering maakt.
+     * @throws RemoteException 
      */
     public void updateMove(double speed, String key, boolean pressed, double x, double y, int playerID)
             throws RemoteException;
@@ -65,6 +62,7 @@ public interface IGameClient extends Remote {
      * Deze methode creert een object op het coordinaat (x, y) van het type dat
      * meegegeven is.
      *
+     * @param id Het gewenste objectID.
      * @param x Het gewenste x-coordinaat
      * @param y Het gewenste y-coordinaat
      * @param objectType Het object-type dat aangemaakt wordt.
@@ -74,16 +72,26 @@ public interface IGameClient extends Remote {
     public void objectCreation(int id, int x, int y, ObjectType objectType)
             throws RemoteException;
 
+    /**
+     * Haal de character naam van de GameClient op.
+     * @return De character naam van de GameClient.
+     * @throws RemoteException 
+     */
     public String getCharacterName()
             throws RemoteException;
 
+    /**
+     * Haal de playerID van de GameClient op.
+     * @return De playerID van de GameClient.
+     * @throws RemoteException 
+     */
     public int getPlayerID()
             throws RemoteException;
 
     /**
      * Changes the state of the game on the client side.
      *
-     * @param gameState
+     * @param gameState De nieuwe GameState.
      * @throws RemoteException
      */
     void changeGameState(GameState gameState)

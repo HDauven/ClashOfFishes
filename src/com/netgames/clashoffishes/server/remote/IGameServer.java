@@ -69,6 +69,11 @@ public interface IGameServer extends Remote {
      */
     public void start() throws RemoteException;
 
+    /**
+     * Returns a list with all GameClients registered on the GameServer.
+     * @return a list of all GameClients.
+     * @throws RemoteException 
+     */
     public List<IGameClient> getClients()
             throws RemoteException;
 
