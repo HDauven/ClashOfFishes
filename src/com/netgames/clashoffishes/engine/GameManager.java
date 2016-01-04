@@ -43,7 +43,7 @@ public class GameManager extends Application {
     private String character = "Bubbles";
     private int gameScore = 0;
     private GameState gameState;
-    private transient SimpleStringProperty timeLeft = new SimpleStringProperty();
+    private transient SimpleStringProperty timeLeft = new SimpleStringProperty(String.valueOf(60));
     //Standaardwaarde is single player = evolution of time
     private GameMode gameMode = GameMode.EVOLUTION_OF_TIME;
     private Group root;
@@ -479,17 +479,23 @@ public class GameManager extends Application {
          }
          */
         //Moet altijd uitgevoerd worden
-        Runnable r = new Runnable() {
+        if (multiplayer) {
+            Runnable r = new Runnable() {
 
-            @Override
-            public void run() {
-                if (object != null) {
-                    addObject(object);
-                    object = null;
+                @Override
+                public void run() {
+                    if (object != null) {
+                        addObject(object);
+                        object = null;
+                    }
                 }
-            }
-        };
-        Platform.runLater(r);
+            };
+            Platform.runLater(r);
+        }
+        else {
+            root.getChildren().add(object.getSpriteFrame());
+            objectManager.addCurrentObject(object);
+        }
 
         if (object instanceof FishHook) {
             fishHooks.add((FishHook) object);
@@ -670,5 +676,9 @@ public class GameManager extends Application {
 
     public List<Player> getPlayers() {
         return players;
+    }
+    
+    public boolean isMultiplayer(){
+        return this.multiplayer;
     }
 }

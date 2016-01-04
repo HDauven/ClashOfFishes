@@ -25,6 +25,7 @@ public class Player extends AnimatedObject {
     protected GameManager gameManager;
     private boolean up, down, left, right;
     private boolean space;
+    private static int standardSpeed = 2;
     // TODO make the sprite size dynamic
     protected static final double SPRITE_PIXELS_X = 81;
     protected static final double SPRITE_PIXELS_Y = 81;
@@ -39,6 +40,8 @@ public class Player extends AnimatedObject {
 
     private int playerID;
     private int score;
+
+    Thread tSpeed;
 
     /**
      * Constructor for a Player object.
@@ -251,7 +254,9 @@ public class Player extends AnimatedObject {
                 collisionReaction(object);
                 gameManager.playBiteSound();
                 // Adds the object that the player collided with to the RemovedObjects list.
-                sendCollision(object);
+                if (gameManager.isMultiplayer()) {
+                    sendCollision(object);
+                }
                 //gameManager.getObjectManager().addToRemovedObjects(object);
                 // Removes the object that the player collided with from the root Node.
                 gameManager.getRoot().getChildren().remove(object.getSpriteFrame());
@@ -334,13 +339,31 @@ public class Player extends AnimatedObject {
 
     private void collisionReaction(GameObject object) {
         if (object instanceof Seaweed) {
-            sendSpeedUpdate(1.3);
+            if (gameManager.isMultiplayer()) {
+                sendSpeedUpdate(1.3);
+            }
+            else {
+                this.updateSpeed(1.3);
+            }
         }
         else if (object instanceof FishHook) {
-            sendSpeedUpdate(0.5);
+            if (gameManager.isMultiplayer()) {
+                sendSpeedUpdate(0.5);
+            }
+            else {
+                this.updateSpeed(0.5);
+            }
         }
         else if (object instanceof EnergyDrink) {
-            sendSpeedUpdate(2.7);
+            if (gameManager.isMultiplayer()) {
+                sendSpeedUpdate(2.7);
+            }
+            else {
+                this.updateSpeed(2.7);
+            }
+        }
+        if (!gameManager.isMultiplayer()) {
+            gameManager.getObjectManager().removeCurrentObject(object);
         }
     }
 
@@ -444,6 +467,23 @@ public class Player extends AnimatedObject {
         this.setvX(newSpeed);
         this.setvY(newSpeed);
         // TODO reset value after 3 seconds
+        if (!gameManager.isMultiplayer()) {
+            tSpeed = new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(3000);
+                        vX = standardSpeed;
+                        vY = standardSpeed;
+                    }
+                    catch (InterruptedException ex) {
+                        Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            tSpeed.start();
+        }
     }
 
     public int getPlayerID() {

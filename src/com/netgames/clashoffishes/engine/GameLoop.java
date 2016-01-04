@@ -28,6 +28,7 @@ public class GameLoop extends AnimationTimer {
     private int tempPlayerID = -1;
     private final int interval = 30;
     private int counter = 0;
+    private int objectNr = 1;
 
     /* A reference to the GameManager class. */
     protected GameManager gameManager;
@@ -53,19 +54,29 @@ public class GameLoop extends AnimationTimer {
     public void handle(long now) {
         if (gameManager.getGameState() == GameState.RUNNING) {
             // TODO Timer systeem fixen
+
             for (Player player : gameManager.getPlayers()) {
                 player.update();
             }
             gameManager.getPlayer().checkCollision();
-
+            
+            //elapsed is the time since the game started
             long elapsed = now - prev;
+            
+            //secondsLeft = length_of_game - (elapsed / NANO_TO_SECOND);
+            //gameManager.setTimeLeft(String.valueOf(secondsLeft));
+
             int randInt = (int) (Math.random() * 1_000 + 1); // moet 10_000 zijn, 1_000 is om te testen
             //System.out.println(elapsed);
-            if ((elapsed / NANO_TO_SECOND) > randInt) {
-                //gameManager.addRandomObject();
-                //System.out.println(sdf.format(Calendar.getInstance().getTime()));
-                //add object if randInt % 4 == 0 dit object else % 3 == 0 dat object etc
-                prev = System.nanoTime();
+            if (!gameManager.multiplayer) {
+                if ((elapsed / NANO_TO_SECOND) > randInt) {
+                    gameManager.addRandomObject(objectNr);
+                    //add object if randInt % 4 == 0 dit object else % 3 == 0 dat object etc
+
+                    objectNr++;
+                    prev = System.nanoTime();
+                }
+                
             }
 
             modeEvolutionOfTime(now);
@@ -123,7 +134,8 @@ public class GameLoop extends AnimationTimer {
                     this.stop();
                     if (gameManager.getPlayer().getPlayerID() == tempPlayerID) {
                         winCondition = true;
-                    } else {
+                    }
+                    else {
                         winCondition = false;
                     }
                     hasWon();
@@ -131,7 +143,7 @@ public class GameLoop extends AnimationTimer {
                     //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
                     System.out.println("Time is up!");
                 }
-            } 
+            }
         }
     }
 
@@ -165,7 +177,8 @@ public class GameLoop extends AnimationTimer {
                     this.stop();
                     if (gameManager.getPlayer().getPlayerID() == tempPlayerID) {
                         winCondition = true;
-                    } else {
+                    }
+                    else {
                         winCondition = false;
                     }
                     hasWon();
@@ -199,7 +212,8 @@ public class GameLoop extends AnimationTimer {
             if (winCondition == true) {
                 gameManager.getRoot().getChildren().add(
                         gameManager.getGameMenu().getVictoryScreen());
-            } else {
+            }
+            else {
                 gameManager.getRoot().getChildren().add(
                         gameManager.getGameMenu().getDefeatScreen());
             }
