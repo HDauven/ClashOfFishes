@@ -12,6 +12,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class that creates the RMI registry for a Clash Of Fishes Lobby.
@@ -173,6 +175,18 @@ public class LobbyRegistry extends Observable {
         // Create server
         LobbyRegistry server = new LobbyRegistry();
         server.clashOfFishesServerLookup();
+    }
+
+    public void exit() {
+        try {
+            Naming.unbind("//localhost:" + portNumber + "/" + bindingName);
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyRegistry.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex) {
+            Logger.getLogger(LobbyRegistry.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(LobbyRegistry.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
