@@ -106,4 +106,11 @@ public interface IClient extends Remote {
      */
     void createGameClient(IGameServer gameServer, int seed, int playerID)
             throws RemoteException;
+
+    /**
+     * Kicks a player from the lobby.
+     * @throws java.rmi.RemoteException
+     */
+    void kickPlayer()
+            throws RemoteException;
 }

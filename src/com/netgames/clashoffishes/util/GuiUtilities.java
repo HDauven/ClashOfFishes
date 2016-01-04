@@ -72,6 +72,7 @@ public class GuiUtilities {
                         try {
                             if (Administration.get().getLobby().getClients().get(0).getUsername()
                                     .equals(Administration.get().getLoggedInUser().getUsername())) {
+                                Administration.get().getLobby().hostLeaves();
                                 LobbyRegistry.getCofServer().removeLobby(Administration.get().getLobbyRegistry().getLobby());
                                 Administration.get().resetLobby();
                                 Administration.get().getLobbyRegistry().exit();

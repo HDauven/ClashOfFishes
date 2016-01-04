@@ -127,4 +127,11 @@ public class Client extends UnicastRemoteObject implements IClient {
         Administration.get().setGameClient(new GameClient(username, character, seed, playerID, gameServer, lobby.getGameMode()));
     }
 
+    @Override
+    public void kickPlayer() throws RemoteException {
+        for (ILobbyListener guis : this.GUIs) {
+            guis.handleKick();
+        }
+    }
+
 }

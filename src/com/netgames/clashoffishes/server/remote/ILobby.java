@@ -145,4 +145,11 @@ public interface ILobby extends Remote {
      */
     void startGame()
             throws RemoteException;
+    
+    /**
+     * A method that kicks all the players in the lobby.
+     * @throws RemoteException 
+     */
+    void hostLeaves()
+            throws RemoteException;
 }

@@ -210,4 +210,11 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         }
         return tempGameMode;
     }
+
+    @Override
+    public void hostLeaves() throws RemoteException {
+        for (IClient client : this.clients) {
+             client.kickPlayer();
+        }
+    }
 }

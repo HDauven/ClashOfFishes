@@ -19,4 +19,6 @@ public interface ILobbyListener {
 
     void displayGameMode(GameMode gameMode);
 
+    public void handleKick();
+
 }

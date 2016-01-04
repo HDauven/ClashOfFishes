@@ -469,4 +469,15 @@ public class LobbyController implements Initializable, ILobbyListener {
             }
         });
     }
+
+    @Override
+    public void handleKick() {
+        Platform.runLater(new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                HandlerUtilities.disconnectionHandler(paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
+                return null;
+            }            
+        });
+    }
 }
