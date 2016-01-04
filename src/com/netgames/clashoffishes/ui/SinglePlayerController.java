@@ -59,7 +59,8 @@ public class SinglePlayerController implements Initializable {
         this.cbCharacters.setItems(FXCollections.observableArrayList(characterNames));
         this.cbCharacters.getSelectionModel().select(0);
         this.pictCharacter.setImage(new Image("/com/netgames/clashoffishes/images/player/" + "BubblesIcon.png", 80, 51, true, false, true));
-
+        this.rbLastFishSwimming.setSelected(true);
+        gameMode = GameMode.LAST_FISH_STANDING;
         this.rbEvolved.setOnAction((ActionEvent event) -> {
             gameMode = GameMode.EVOLVED;
         });
@@ -116,7 +117,7 @@ public class SinglePlayerController implements Initializable {
             System.out.println("Please select a gamemode before starting a game!");
         }
         if (isCharacterSelected == true && isGameModeSelected == true) {
-            GameManager gameManager = new GameManager(this.cbCharacters.getValue(), 0, 0, gameMode);
+            GameManager gameManager = new GameManager(this.cbCharacters.getValue(), 0, 0, gameMode, false);
             gameManager.start(new Stage());
         }
     }
