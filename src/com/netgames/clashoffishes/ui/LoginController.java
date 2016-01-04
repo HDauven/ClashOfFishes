@@ -76,45 +76,41 @@ public class LoginController implements Initializable {
 
     @FXML
     private void login_OnClick(ActionEvent event) {
-//        try {
-//            this.userIdentifier = this.txtUsername.getText();
-//            this.password = this.txtPassword.getText();
-//            if (rbtn_remember.isSelected()) {
-//                File f = new File("login.txt");
-//                out = new PrintWriter(f);
-//                out.println(userIdentifier);
-//                out.println(password);
-//                out.close();
-//            }
-//
-//            if (!Administration.get().hasConnection()) {
-//                lbl_error.setText("No database-connection.");
-//                lbl_error.setTextFill(Color.RED);
-//                lbl_error.setVisible(true);
-//                return;
-//            } else {
-//                if (Administration.get().logIn(userIdentifier, password) == null) {
-//                    lbl_error.setText("Login failed");
-//                    lbl_error.setTextFill(Color.RED);
-//                    lbl_error.setVisible(true);
-//                    this.connectLabel();
-//                    this.userIdentifier = null;
-//                    this.password = null;
-//                } else {
-//                    GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", GuiUtilities.getMainMenusTitle());
-//                }
-//            }
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            if (out != null) {
-//                out.close();
-//            }
-//        }
-        
-        // xxx TIJDELIJK ZONDER DB LOGIN
-        Administration.get().setUser(new User(0, "Hein", "Hein@Hein.com"));    
-        GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", GuiUtilities.getMainMenusTitle());
+        try {
+            this.userIdentifier = this.txtUsername.getText();
+            this.password = this.txtPassword.getText();
+            if (rbtn_remember.isSelected()) {
+                File f = new File("login.txt");
+                out = new PrintWriter(f);
+                out.println(userIdentifier);
+                out.println(password);
+                out.close();
+            }
+
+            if (!Administration.get().hasConnection()) {
+                lbl_error.setText("No database-connection.");
+                lbl_error.setTextFill(Color.RED);
+                lbl_error.setVisible(true);
+                return;
+            } else {
+                if (Administration.get().logIn(userIdentifier, password) == null) {
+                    lbl_error.setText("Login failed");
+                    lbl_error.setTextFill(Color.RED);
+                    lbl_error.setVisible(true);
+                    this.connectLabel();
+                    this.userIdentifier = null;
+                    this.password = null;
+                } else {
+                    GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", GuiUtilities.getMainMenusTitle());
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
     }
 
 
