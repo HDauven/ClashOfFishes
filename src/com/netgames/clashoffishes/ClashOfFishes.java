@@ -13,6 +13,7 @@ import javafx.stage.Stage;
  * @author Hein Dauven
  */
 public class ClashOfFishes extends Application {
+    Thread t;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -40,7 +41,7 @@ public class ClashOfFishes extends Application {
                 System.out.println("Connected with the database.");
             }
         };
-        Thread t = new Thread(openConnection);
+        t = new Thread(openConnection);
         t.start();
     }
 

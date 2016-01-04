@@ -1,7 +1,6 @@
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
-import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.util.GuiUtilities;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,6 +51,7 @@ public class LoginController implements Initializable {
     private CheckBox rbtn_remember;
 
     Scanner s;
+    Thread tr;
 
     /**
      * Initializes the controller class.
@@ -120,7 +120,7 @@ public class LoginController implements Initializable {
     }
 
     private void connectLabel() {
-        Thread tr = new Thread(new Runnable() {
+        tr = new Thread(new Runnable() {
 
             @Override
             public void run() {
@@ -151,6 +151,8 @@ public class LoginController implements Initializable {
 
     void setUsername(String username) {
         txtUsername.setText(username);
+        txtPassword.setText("");
+        txtPassword.requestFocus();
     }
 
     public void openDatabase() {

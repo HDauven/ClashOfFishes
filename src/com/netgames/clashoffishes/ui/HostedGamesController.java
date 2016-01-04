@@ -56,15 +56,16 @@ public class HostedGamesController implements Initializable {
     private TableColumn<ILobby, String> clmPlayers;
     @FXML
     private TableColumn<ILobby, String> clmGameMode;
-
+    @FXML
+    private Label lbl_error;
+    
+    Thread tr;
     private Administration administration;
 
     private IServer cofServer;
 
     private final String cofServerURL = "rmi://" + Administration.get().getIpAddress() + ":1100/Server";
     private List<ILobby> lobbyList = new ArrayList<>();
-    @FXML
-    private Label lbl_error;
 
     /**
      * Initializes the controller class.
@@ -118,7 +119,7 @@ public class HostedGamesController implements Initializable {
     }
 
     private void setLabelInvisible() {
-        Thread tr = new Thread(new Runnable() {
+        tr = new Thread(new Runnable() {
 
             @Override
             public void run() {

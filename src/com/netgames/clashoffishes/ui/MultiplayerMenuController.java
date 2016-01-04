@@ -39,8 +39,8 @@ public class MultiplayerMenuController implements Initializable {
         this.administration = Administration.get();
         URL logoDir = this.getClass().getResource("/com/netgames/clashoffishes/images/logo.png");
         this.pictCoFLogo.setImage(new Image(logoDir.toString(), 777, 471, true, false, true));
-        System.out.println(this.administration.getLoggedInUser().getUsername());
-        System.out.println(this.administration.getLoggedInUser().getEmail());
+       // System.out.println(this.administration.getLoggedInUser().getUsername());
+        //System.out.println(this.administration.getLoggedInUser().getEmail());
     }
 
     @FXML

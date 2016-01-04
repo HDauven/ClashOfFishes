@@ -47,6 +47,7 @@ public class RegistrationController implements Initializable {
 
     //Datafields
     private Administration administration;
+    Thread tr;
 
     /**
      * Initializes the controller class.
@@ -119,7 +120,7 @@ public class RegistrationController implements Initializable {
         lbl_error.setTextFill(Color.RED);
         lbl_error.setText(error);
         lbl_error.setVisible(true);
-        Thread tr = new Thread(new Runnable() {
+        tr = new Thread(new Runnable() {
 
             @Override
             public void run() {
