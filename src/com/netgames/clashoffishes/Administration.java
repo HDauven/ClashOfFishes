@@ -202,4 +202,9 @@ public class Administration {
     public void resetLobby() {
         this.lobby = null;
     }
+    
+    // xxx TIJDELIJK ZONDER DB LOGIN
+    public void setUser (User user) {
+        this.user = user;
+    }
 }
