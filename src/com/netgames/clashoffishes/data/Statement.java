@@ -2,7 +2,7 @@ package com.netgames.clashoffishes.data;
 
 /**
  *
- * @author MuK
+ * @author Christian Adkin
  */
 public enum Statement {
 

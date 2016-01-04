@@ -9,7 +9,7 @@ import java.util.TreeMap;
 
 /**
  *
- * @author Stef
+ * @author Stef Philipsen
  */
 public class DatabaseConnector {
 

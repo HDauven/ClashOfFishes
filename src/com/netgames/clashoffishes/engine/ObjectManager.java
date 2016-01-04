@@ -9,102 +9,102 @@ import java.util.Set;
 
 /**
  * Class that manages all the objects in the game.
- * 
+ *
  * @author Hein Dauven
  */
 public class ObjectManager {
+
     private final List<GameObject> currentObjects;
     private final List<GameObject> collideChecklist;
-    private final Set<GameObject>  removedObjects;
-    
+    private final Set<GameObject> removedObjects;
+
     /**
-     * 
+     *
      */
     public ObjectManager() {
-        this.currentObjects   = new ArrayList<>();
+        this.currentObjects = new ArrayList<>();
         this.collideChecklist = new ArrayList<>();
-        this.removedObjects   = new HashSet<>();
+        this.removedObjects = new HashSet<>();
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public List<GameObject> getCurrentObject() {
         return currentObjects;
     }
-    
+
     /**
-     * 
-     * @param objects 
+     *
+     * @param objects
      */
     public void addCurrentObject(GameObject... objects) {
         currentObjects.addAll(Arrays.asList(objects));
     }
-    
+
     /**
-     * 
-     * @param objects 
+     *
+     * @param objects
      */
     public void removeCurrentObject(GameObject... objects) {
         currentObjects.removeAll(Arrays.asList(objects));
     }
-    
+
     /**
-     * 
+     *
      */
     public void resetCurrentObject() {
         currentObjects.clear();
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public List getCollideChecklist() {
         return collideChecklist;
     }
-    
+
     /**
-     * 
+     *
      */
     public void resetCollideChecklist() {
         collideChecklist.clear();
         collideChecklist.addAll(currentObjects);
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public Set getRemovedObject() {
         return removedObjects;
     }
-    
+
     /**
-     * 
-     * @param actors 
+     *
+     * @param actors
      */
     public void addToRemovedObjects(GameObject... objects) {
         if (objects.length > 1) {
             removedObjects.addAll(Arrays.asList((GameObject[]) objects));
-        }else {
+        } else {
             removedObjects.add(objects[0]);
         }
     }
-    
+
     /**
-     * 
+     *
      */
     public void resetRemovedObjects() {
         currentObjects.removeAll(removedObjects);
         removedObjects.clear();
     }
 
-    public GameObject getObject(int objectId)
-    {
-        for(GameObject go : this.currentObjects){
-            if(go.getID() == objectId){
+    public GameObject getObject(int objectId) {
+        for (GameObject go : this.currentObjects) {
+            if (go.getID() == objectId) {
                 return go;
             }
         }

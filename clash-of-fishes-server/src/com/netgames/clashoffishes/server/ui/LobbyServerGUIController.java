@@ -23,7 +23,8 @@ import javafx.scene.layout.AnchorPane;
 /**
  * FXML Controller class
  *
- * @author MuK
+ * @author Christian Adkin
+ * @author Hein Dauven
  */
 public class LobbyServerGUIController implements Initializable, ILobbyServerObserver {
 
@@ -48,6 +49,7 @@ public class LobbyServerGUIController implements Initializable, ILobbyServerObse
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -56,7 +58,7 @@ public class LobbyServerGUIController implements Initializable, ILobbyServerObse
         registry = new RegistryServer();
         registry.addGUIListener(this);
         server = registry.getServer();
-        
+
         getRegistryLogMessages(registry);
     }
 
@@ -69,12 +71,13 @@ public class LobbyServerGUIController implements Initializable, ILobbyServerObse
             Logger.getLogger(LobbyServerGUIController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * Method that processes the server output by calling the output ArrayList,
-     * iterating over it and adding the output to the ListView.
-     * This method is used only to get the logged output from before the Controller
-     * is registered as an observer.
+     * iterating over it and adding the output to the ListView. This method is
+     * used only to get the logged output from before the Controller is
+     * registered as an observer.
+     *
      * @param message The message you want to write.
      */
     private void getRegistryLogMessages(RegistryServer registry) {
@@ -85,7 +88,9 @@ public class LobbyServerGUIController implements Initializable, ILobbyServerObse
     }
 
     /**
-     * Executes each time a change takes place on the registry server log output.
+     * Executes each time a change takes place on the registry server log
+     * output.
+     *
      * @param message
      */
     @Override
@@ -103,7 +108,8 @@ public class LobbyServerGUIController implements Initializable, ILobbyServerObse
 
     /**
      * Executes each time a change takes place on the server.
-     * @param lobby 
+     *
+     * @param lobby
      */
     @Override
     public void updateLobby(ILobby lobby) {

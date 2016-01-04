@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 /**
  * Static game objects that will be flipped around the Y axis.
- * 
+ *
  * @author Hein Dauven
  */
 public class PropV extends GameObject {
@@ -22,5 +22,5 @@ public class PropV extends GameObject {
     @Override
     public void update() {
         /* not implemented yet */
-    }    
+    }
 }

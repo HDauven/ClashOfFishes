@@ -42,36 +42,36 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     }
 
     @Override
-    public void retrieveMessage(IMessage message, IClient sender)  throws RemoteException {
+    public void retrieveMessage(IMessage message, IClient sender) throws RemoteException {
         System.out.println(message.toString());
         for (ILobbyListener guis : this.GUIs) {
             guis.displayMessage(message.toString());
         }
     }
-    
+
     @Override
-    public void retrievePlayer(String player, IClient sender)  throws RemoteException {
+    public void retrievePlayer(String player, IClient sender) throws RemoteException {
         for (ILobbyListener guis : this.GUIs) {
             guis.displayPlayer(player, sender);
         }
     }
 
     @Override
-    public void retrieveCharacter(String character, IClient sender)  throws RemoteException {
+    public void retrieveCharacter(String character, IClient sender) throws RemoteException {
         for (ILobbyListener guis : this.GUIs) {
             guis.displaySelectedCharacter(character, sender);
         }
     }
 
     @Override
-    public void retrieveReady(boolean isReady, IClient sender)  throws RemoteException {
+    public void retrieveReady(boolean isReady, IClient sender) throws RemoteException {
         for (ILobbyListener guis : this.GUIs) {
             guis.displayReady(isReady, sender);
         }
     }
 
     @Override
-    public void retrieveGameMode(String gameMode, IClient sender)  throws RemoteException {
+    public void retrieveGameMode(String gameMode, IClient sender) throws RemoteException {
         System.out.println(gameMode);
         for (ILobbyListener guis : this.GUIs) {
             for (GameMode gm : GameMode.values()) {
@@ -90,8 +90,6 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     public Boolean getIsHost() {
         return isHost;
     }
-    
-    
 
     public void addGUIListener(ILobbyListener guiListener) {
         this.GUIs.add(guiListener);
@@ -122,7 +120,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
         while (true) {
             message = scanner.nextLine();
             try {
-                lobby.broadcastMessage(new Message(this.username, message),(IClient)this);
+                lobby.broadcastMessage(new Message(this.username, message), (IClient) this);
             } catch (RemoteException e) {
                 System.out.println("RemoteException: " + e.getMessage());
             }
@@ -133,7 +131,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     public void setIsReady(boolean ready) throws RemoteException {
         this.isReady = ready;
     }
-    
+
     @Override
     public boolean getIsReady() throws RemoteException {
         return this.isReady;
@@ -152,10 +150,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
     @Override
     public void createGameClient(IGameServer gameServer, int seed, int playerID) throws RemoteException {
         Administration.get().setGameServer(gameServer);
-        Administration.get().setGameClient(new GameClient(username, character, seed, playerID, gameServer));
+        Administration.get().setGameClient(new GameClient(username, character, seed, playerID, gameServer, lobby.getGameMode()));
     }
-    
-    
-    
-    
+
 }

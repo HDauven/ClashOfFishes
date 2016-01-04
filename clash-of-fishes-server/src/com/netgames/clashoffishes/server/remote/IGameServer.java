@@ -15,8 +15,7 @@ import java.util.List;
  *
  * @author Christian Adkin
  */
-public interface IGameServer extends Remote
-{
+public interface IGameServer extends Remote {
 
     /**
      * Register a client as listener to the IGameServer
@@ -40,7 +39,6 @@ public interface IGameServer extends Remote
      */
     public void updateMove(double speed, String key, boolean isPressed, double x, double y, int playerID) throws RemoteException;
 
-    
     /**
      * Reports changes in the given players speed
      *
@@ -69,11 +67,12 @@ public interface IGameServer extends Remote
 
     /**
      * Starts the game on all clients
-     * @throws RemoteException 
+     *
+     * @throws RemoteException
      */
     public void start() throws RemoteException;
-    
-    public List<IGameClient> getClients() 
+
+    public List<IGameClient> getClients()
             throws RemoteException;
-    
+
 }

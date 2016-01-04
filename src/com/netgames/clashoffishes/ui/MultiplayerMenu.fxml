@@ -8,11 +8,11 @@
 <?import javafx.scene.paint.*?>
 
 <AnchorPane id="AnchorPane" fx:id="paneMainForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background-gradient" stylesheets="@OceanUI.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.netgames.clashoffishes.ui.MultiplayerMenuController">
-  <children>
-    <Button layoutX="149.0" layoutY="149.0" mnemonicParsing="false" onAction="#hostGame" prefHeight="40.0" prefWidth="323.0" text="Host game" />
-    <Button layoutX="149.0" layoutY="200.0" mnemonicParsing="false" onAction="#joinGame" prefHeight="40.0" prefWidth="323.0" text="Join game" />
-    <Button layoutX="149.0" layoutY="249.0" mnemonicParsing="false" onAction="#highscore" prefHeight="40.0" prefWidth="323.0" text="Highscore" />
-    <Button fx:id="btnBack" layoutX="149.0" layoutY="297.0" mnemonicParsing="false" onAction="#btnBack_OnClick" prefHeight="40.0" prefWidth="323.0" text="Back" />
-    <ImageView fx:id="pictCoFLogo" fitHeight="127.2" fitWidth="341.6" layoutX="140.0" layoutY="13.0" pickOnBounds="true" preserveRatio="false" />
-  </children>
+    <children>
+        <Button layoutX="149.0" layoutY="149.0" mnemonicParsing="false" onAction="#hostGame" prefHeight="40.0" prefWidth="323.0" text="Host game" />
+        <Button layoutX="149.0" layoutY="200.0" mnemonicParsing="false" onAction="#joinGame" prefHeight="40.0" prefWidth="323.0" text="Join game" />
+        <Button layoutX="149.0" layoutY="249.0" mnemonicParsing="false" onAction="#highscore" prefHeight="40.0" prefWidth="323.0" text="Highscore" />
+        <Button fx:id="btnBack" layoutX="149.0" layoutY="297.0" mnemonicParsing="false" onAction="#btnBack_OnClick" prefHeight="40.0" prefWidth="323.0" text="Back" />
+        <ImageView fx:id="pictCoFLogo" fitHeight="127.2" fitWidth="341.6" layoutX="140.0" layoutY="13.0" pickOnBounds="true" preserveRatio="false" />
+    </children>
 </AnchorPane>

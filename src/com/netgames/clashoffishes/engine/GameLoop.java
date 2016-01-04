@@ -12,8 +12,7 @@ import javafx.animation.AnimationTimer;
  *
  * @author Hein Dauven
  */
-public class GameLoop extends AnimationTimer
-{
+public class GameLoop extends AnimationTimer {
 
     private final long NANO_TO_SECOND;
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
@@ -25,7 +24,7 @@ public class GameLoop extends AnimationTimer
 
     private final int length_of_game = 60;
     private boolean winCondition = false;
-    
+
     private int tempPlayerID = -1;
     private final int interval = 30;
     private int counter = 0;
@@ -38,8 +37,7 @@ public class GameLoop extends AnimationTimer
      *
      * @param manager GameManager class reference.
      */
-    public GameLoop(GameManager manager)
-    {
+    public GameLoop(GameManager manager) {
         this.NANO_TO_SECOND = 1_000_000_000;
         gameManager = manager;
     }
@@ -63,8 +61,7 @@ public class GameLoop extends AnimationTimer
             long elapsed = now - prev;
             int randInt = (int) (Math.random() * 1_000 + 1); // moet 10_000 zijn, 1_000 is om te testen
             //System.out.println(elapsed);
-            if ((elapsed / NANO_TO_SECOND) > randInt)
-            {
+            if ((elapsed / NANO_TO_SECOND) > randInt) {
                 //gameManager.addRandomObject();
                 //System.out.println(sdf.format(Calendar.getInstance().getTime()));
                 //add object if randInt % 4 == 0 dit object else % 3 == 0 dat object etc
@@ -74,11 +71,10 @@ public class GameLoop extends AnimationTimer
             modeEvolutionOfTime(now);
             modeEvolved(now);
 
-            for (FishHook h : gameManager.getFishHooks())
-            {
+            for (FishHook h : gameManager.getFishHooks()) {
                 h.update();
             }
-            
+
             counter++;
             if (counter == interval) {
                 figureOutWhoHasTheHighestScore();
@@ -92,8 +88,7 @@ public class GameLoop extends AnimationTimer
      * of this AnimationTimers will be called in every frame.
      */
     @Override
-    public void start()
-    {
+    public void start() {
         super.start();
     }
 
@@ -101,8 +96,7 @@ public class GameLoop extends AnimationTimer
      * Stops the AnimationTimers.
      */
     @Override
-    public void stop()
-    {
+    public void stop() {
         super.stop();
     }
 
@@ -114,21 +108,17 @@ public class GameLoop extends AnimationTimer
      *
      * @param now
      */
-    private void modeEvolutionOfTime(long now)
-    {
-        if (gameManager.getGameMode() == GameMode.EVOLUTION_OF_TIME)
-        {
+    private void modeEvolutionOfTime(long now) {
+        if (gameManager.getGameMode() == GameMode.EVOLUTION_OF_TIME) {
             long elapsed2 = now - startTime;
             secondsLeft = length_of_game - (elapsed2 / NANO_TO_SECOND);
             gameManager.setTimeLeft(String.valueOf(secondsLeft));
-            
+
             figureOutIfScoreConditionIsMet();
-            
-            if (secondsLeft == 0 || figureOutIfScoreConditionIsMet())
-            {
+
+            if (secondsLeft == 0 || figureOutIfScoreConditionIsMet()) {
                 //Spel voorbij na 2 minuten
-                if (gameManager.getGameState() != GameState.FINISHED)
-                {
+                if (gameManager.getGameState() != GameState.FINISHED) {
                     gameManager.setGameState(GameState.FINISHED);
                     this.stop();
                     if (gameManager.getPlayer().getPlayerID() == tempPlayerID) {
@@ -144,18 +134,18 @@ public class GameLoop extends AnimationTimer
             } 
         }
     }
-    
+
     private boolean figureOutIfScoreConditionIsMet() {
         for (Player player : gameManager.getPlayers()) {
             if (player.getScore() >= 30) {
                 tempPlayerID = player.getPlayerID();
                 return true;
             }
-        } 
+        }
         return false;
     }
-    
-        /**
+
+    /**
      * Method that checks if the GameMode is Evolution of Time. If this is true,
      * the method goes on to check whether the game time has passed. If this is
      * true, it sets the game state to FINISHED, stops the game, shows a win or
@@ -163,18 +153,14 @@ public class GameLoop extends AnimationTimer
      *
      * @param now
      */
-    private void modeEvolved(long now)
-    {
-        if (gameManager.getGameMode() == GameMode.EVOLVED)
-        {
+    private void modeEvolved(long now) {
+        if (gameManager.getGameMode() == GameMode.EVOLVED) {
             long elapsed2 = now - startTime;
             secondsLeft = length_of_game - (elapsed2 / NANO_TO_SECOND);
             gameManager.setTimeLeft(String.valueOf(secondsLeft));
-            if (secondsLeft == 0)
-            {
+            if (secondsLeft == 0) {
                 //Spel voorbij na 2 minuten
-                if (gameManager.getGameState() != GameState.FINISHED)
-                {
+                if (gameManager.getGameState() != GameState.FINISHED) {
                     gameManager.setGameState(GameState.FINISHED);
                     this.stop();
                     if (gameManager.getPlayer().getPlayerID() == tempPlayerID) {
@@ -190,7 +176,7 @@ public class GameLoop extends AnimationTimer
             }
         }
     }
-    
+
     private void figureOutWhoHasTheHighestScore() {
         int tempPlayerScore = -999;
         for (Player player : gameManager.getPlayers()) {
@@ -208,17 +194,12 @@ public class GameLoop extends AnimationTimer
      * won. Based on the win condition (true for win, false for lose), a
      * corresponding screen is shown.
      */
-    private void hasWon()
-    {
-        if (gameManager.getGameState() == GameState.FINISHED)
-        {
-            if (winCondition == true)
-            {
+    private void hasWon() {
+        if (gameManager.getGameState() == GameState.FINISHED) {
+            if (winCondition == true) {
                 gameManager.getRoot().getChildren().add(
                         gameManager.getGameMenu().getVictoryScreen());
-            }
-            else
-            {
+            } else {
                 gameManager.getRoot().getChildren().add(
                         gameManager.getGameMenu().getDefeatScreen());
             }

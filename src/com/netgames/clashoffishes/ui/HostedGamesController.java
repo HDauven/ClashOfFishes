@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
@@ -38,7 +33,8 @@ import javafx.scene.paint.Color;
 /**
  * FXML Controller class
  *
- * @author Stef
+ * @author Stef Philipsen
+ * @author Hein Dauven
  */
 public class HostedGamesController implements Initializable {
 
@@ -107,14 +103,12 @@ public class HostedGamesController implements Initializable {
                         lbl_error.setTextFill(Color.RED);
                         lbl_error.setVisible(true);
                         setLabelInvisible();
+                    } else {
+                        Platform.runLater(() -> {
+                            GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "Lobby", GuiUtilities.getFishPoolTitle());
+                        });
                     }
-                    else{
-                    Platform.runLater(() -> {
-                        GuiUtilities.buildStage(paneMainForm.getScene().getWindow(), "FishPool", GuiUtilities.getFishPoolTitle());
-                    });
-                    }
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
                 return null;
@@ -138,8 +132,7 @@ public class HostedGamesController implements Initializable {
                         }
 
                     });
-                }
-                catch (InterruptedException ex) {
+                } catch (InterruptedException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -182,14 +175,11 @@ public class HostedGamesController implements Initializable {
             cofServer = (IServer) Naming.lookup(cofServerURL);
             //System.out.println(cofServer.listLobbies().toString());
             lobbyList = (List<ILobby>) cofServer.listLobbies();
-        }
-        catch (NotBoundException ex) {
+        } catch (NotBoundException ex) {
             System.out.println("NotBoundException: " + ex.getMessage());
-        }
-        catch (MalformedURLException ex) {
+        } catch (MalformedURLException ex) {
             System.out.println("MalformedURLException: " + ex.getMessage());
-        }
-        catch (RemoteException ex) {
+        } catch (RemoteException ex) {
             System.out.println("RemoteException: " + ex.getMessage());
         }
     }

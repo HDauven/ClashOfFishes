@@ -6,22 +6,22 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane fx:id="paneMainForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="464.0" prefWidth="530.0" styleClass="background-gradient" stylesheets="@OceanUI.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.netgames.clashoffishes.ui.HostedGamesController">
-   <children>
-      <TableView fx:id="tbvHostedGames" layoutX="39.0" layoutY="73.0" prefHeight="328.0" prefWidth="458.0">
-        <columns>
-          <TableColumn fx:id="clmPoolName" prefWidth="150.0" text="PoolName" />
-          <TableColumn fx:id="clmPlayers" minWidth="0.0" prefWidth="136.0" text="Players" />
-            <TableColumn fx:id="clmGameMode" prefWidth="167.0" text="GameMode" />
-        </columns>
-      </TableView>
-      <Label layoutX="36.0" layoutY="14.0" text="Hosted games">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Label>
-      <Button fx:id="btnJoinGame" layoutX="407.0" layoutY="409.0" mnemonicParsing="false" onAction="#btnJoinGame_OnClick" prefHeight="41.0" prefWidth="90.0" text="Join" />
-      <Button fx:id="btnBack" layoutX="406.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnBack_OnClick" prefHeight="41.0" prefWidth="90.0" text="Back" />
-      <Label fx:id="lbl_error" layoutX="148.0" layoutY="421.0" text="Please select a lobby" textFill="#ff0404" visible="false" />
-      <Button fx:id="btnRefreshLobbyList" layoutX="285.0" layoutY="409.0" mnemonicParsing="false" onAction="#btnRefreshLobbyList_OnClick" text="Refresh" />
-   </children>
+    <children>
+        <TableView fx:id="tbvHostedGames" layoutX="39.0" layoutY="73.0" prefHeight="328.0" prefWidth="458.0">
+            <columns>
+                <TableColumn fx:id="clmPoolName" prefWidth="150.0" text="PoolName" />
+                <TableColumn fx:id="clmPlayers" minWidth="0.0" prefWidth="136.0" text="Players" />
+                <TableColumn fx:id="clmGameMode" prefWidth="167.0" text="GameMode" />
+            </columns>
+        </TableView>
+        <Label layoutX="36.0" layoutY="14.0" text="Hosted games">
+            <font>
+                <Font size="36.0" />
+            </font>
+        </Label>
+        <Button fx:id="btnJoinGame" layoutX="407.0" layoutY="409.0" mnemonicParsing="false" onAction="#btnJoinGame_OnClick" prefHeight="41.0" prefWidth="90.0" text="Join" />
+        <Button fx:id="btnBack" layoutX="406.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnBack_OnClick" prefHeight="41.0" prefWidth="90.0" text="Back" />
+        <Label fx:id="lbl_error" layoutX="148.0" layoutY="421.0" text="Please select a lobby" textFill="#ff0404" visible="false" />
+        <Button fx:id="btnRefreshLobbyList" layoutX="285.0" layoutY="409.0" mnemonicParsing="false" onAction="#btnRefreshLobbyList_OnClick" text="Refresh" />
+    </children>
 </AnchorPane>

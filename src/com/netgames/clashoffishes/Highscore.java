@@ -1,22 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.netgames.clashoffishes;
 
 import com.netgames.clashoffishes.engine.GameMode;
 
 /**
  *
- * @author MuK
+ * @author Christian Adkin
  */
 public class Highscore {
 
     private GameMode gameMode;
     private String username;
     private int score;
-    
 
     public Highscore(GameMode gameMode, String username, int score) {
         this.gameMode = gameMode;
@@ -40,7 +34,5 @@ public class Highscore {
     public String toString() {
         return "Highscore{" + "gameMode=" + gameMode + ", username=" + username + ", score=" + score + '}';
     }
-    
-    
 
 }

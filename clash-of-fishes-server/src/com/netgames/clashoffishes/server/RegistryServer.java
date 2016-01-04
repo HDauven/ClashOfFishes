@@ -13,35 +13,37 @@ import java.util.List;
 
 /**
  * Class that creates the RMI registry for the Clash Of Fishes Lobby Server.
+ *
  * @author Hein Dauven
  */
 public class RegistryServer {
+
     // Set port number
     private static final int portNumber = 1100;
-    
+
     // Set binding name for the server
     private static final String bindingName = "Server";
-    
+
     // List of the output of the Registry Server
     private ArrayList<String> output = new ArrayList<>();
-    
+
     // Reference to server
     private Server server = null;
-    
+
     // List of all the GUIs that are tracking changes in the RegistryServer and Server class
     private List<ILobbyServerObserver> GUIs;
-    
+
     // Constructor
     public RegistryServer() {
         // Initialize the GUIs list
         GUIs = new ArrayList();
-        
+
         // Print the IP addresses of the host device
         printIPAddresses();
-        
+
         // Print port number for registry
         logMessage("Server: Port number " + portNumber);
-        
+
         // Create server
         try {
             server = new Server(this);
@@ -51,7 +53,7 @@ public class RegistryServer {
             logMessage("Server: RemoteException: " + ex.getMessage());
             server = null;
         }
-        
+
         // Bind server using Naming
         if (server != null) {
             try {
@@ -70,7 +72,7 @@ public class RegistryServer {
             logMessage("Server: server not bound");
         }
     }
-    
+
     // Print IP addresses and network interfaces
     private void printIPAddresses() {
         try {
@@ -92,14 +94,16 @@ public class RegistryServer {
 
     /**
      * Method that gets the ArrayList containing output from the server.
+     *
      * @return ArrayList containing logged server output
      */
     public ArrayList<String> getOutput() {
         return output;
     }
-    
+
     /**
      * Method that gets the last server output.
+     *
      * @return The last output the server reported
      */
     public String getLastOutput() {
@@ -110,6 +114,7 @@ public class RegistryServer {
 
     /**
      * Method that writes server output to an ArrayList.
+     *
      * @param message The message the server reports
      */
     public void logMessage(String message) {
@@ -117,7 +122,7 @@ public class RegistryServer {
         for (ILobbyServerObserver guis : this.GUIs) {
             guis.updateMessage(message);
         }
-    }   
+    }
 
     public Server getServer() {
         return server;
@@ -126,7 +131,7 @@ public class RegistryServer {
     public List<ILobbyServerObserver> getGUIs() {
         return GUIs;
     }
-    
+
     public void addGUIListener(ILobbyServerObserver guiListener) {
         this.GUIs.add(guiListener);
     }

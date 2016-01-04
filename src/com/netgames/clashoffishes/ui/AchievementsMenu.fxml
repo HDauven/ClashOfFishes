@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background-gradient" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label layoutX="113.0" layoutY="68.0" text="Achievements" />
-   </children>
-   <stylesheets>
-      <URL value="@../Documents/GitHub/clash-of-fishes/src/com/netgames/clashoffishes/ui/OceanUI.css" />
-      <URL value="@OceanUI.css" />
-   </stylesheets>
+    <children>
+        <Label layoutX="113.0" layoutY="68.0" text="Achievements" />
+    </children>
+    <stylesheets>
+        <URL value="@../Documents/GitHub/clash-of-fishes/src/com/netgames/clashoffishes/ui/OceanUI.css" />
+        <URL value="@OceanUI.css" />
+    </stylesheets>
 </AnchorPane>

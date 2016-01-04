@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.netgames.clashoffishes;
 
 import com.netgames.clashoffishes.ui.LoginController;
@@ -15,20 +10,17 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Bram
+ * @author Hein Dauven
  */
-public class ClashOfFishes extends Application
-{
+public class ClashOfFishes extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception
-    {
+    public void start(Stage stage) throws Exception {
         // Stops my PC from crashing:
         System.setProperty("glass.accessible.force", "false");
-        
+
         Parent root;
-        try
-        {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/netgames/clashoffishes/ui/Login.fxml"));
             root = (Parent) loader.load();
             LoginController loginController = (LoginController) loader.getController();
@@ -37,17 +29,13 @@ public class ClashOfFishes extends Application
             stage.setResizable(false);
             //stage.show();
             GuiUtilities.buildStage(stage.getScene().getWindow(), "Login", GuiUtilities.TITLE_LOGIN);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        Runnable openConnection = new Runnable()
-        {
+        Runnable openConnection = new Runnable() {
 
             @Override
-            public void run()
-            {
+            public void run() {
                 Administration.get();
                 System.out.println("Connected with the database.");
             }
@@ -59,8 +47,7 @@ public class ClashOfFishes extends Application
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         launch(args);
     }
 

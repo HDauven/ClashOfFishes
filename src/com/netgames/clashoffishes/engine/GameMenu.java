@@ -3,7 +3,6 @@ package com.netgames.clashoffishes.engine;
 import com.netgames.clashoffishes.Administration;
 import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
-import com.netgames.clashoffishes.server.GameClient;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
@@ -28,10 +27,11 @@ import javafx.scene.text.TextAlignment;
 
 /**
  * Class that holds the GameMenu data.
- * 
- * @author Hein
+ *
+ * @author Hein Dauven
  */
 public class GameMenu {
+
     private GameManager gameManager;
     private Group scoreMenuGroup, menuBarGroup, miniMapGroup, victoryScreenGroup, defeatScreenGroup;
     private Canvas menuBar, miniMap, scoreWindow, victoryScreen, defeatScreen;
@@ -47,35 +47,35 @@ public class GameMenu {
     private Image playerIconOne, playerIconTwo, playerIconThree, playerIconFour;
     private URL playerDir;
     private Text timeText;
-    
+
     public GameMenu(GameManager manager) {
         this.gameManager = manager;
         init();
     }
-    
+
     // Initializer for the GameMenu
     private void init() {
-        scoreMenuGroup     = new Group();
-        menuBarGroup       = new Group();
-        miniMapGroup       = new Group();
+        scoreMenuGroup = new Group();
+        menuBarGroup = new Group();
+        miniMapGroup = new Group();
         victoryScreenGroup = new Group();
-        defeatScreenGroup  = new Group();
-        
+        defeatScreenGroup = new Group();
+
         playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
-        
+
         menuBar();
         scoreMenu();
         miniMap();
         victoryScreen();
         defeatScreen();
-        
+
         menuBarGroup.getChildren().add(menuBarBox);
     }
-    
+
     /**
      * Method that creates the Menu bar.
      */
-    private void menuBar() {   
+    private void menuBar() {
         menuBar = new Canvas(600, 50);
         gc = menuBar.getGraphicsContext2D();
         gc.beginPath();
@@ -95,12 +95,12 @@ public class GameMenu {
         menuBar.setTranslateX((WIDTH - 600) / 2);
         menuBar.setTranslateY(HEIGHT - 50);
         menuBarGroup.getChildren().add(menuBar);
-        
+
         menuBarBox = new HBox(20);
         menuBarBox.setPadding(new Insets(7));
         menuBarBox.setTranslateX((WIDTH - 600) / 2);
         menuBarBox.setTranslateY(HEIGHT - 50);
-        
+
         pauseGameButton = new Button();
         pauseGameButton.setText("Pause Game");
         pauseGameButton.setStyle("-fx-font: 12 system; -fx-text-fill: black;"
@@ -116,7 +116,7 @@ public class GameMenu {
             sendGameState(GameState.PAUSED);
         });
         menuBarBox.getChildren().add(pauseGameButton);
-        
+
         continueGameButton = new Button();
         continueGameButton.setText("Continue Game");
         continueGameButton.setStyle("-fx-font: 12 system; -fx-text-fill: black;"
@@ -133,7 +133,7 @@ public class GameMenu {
         });
         menuBarBox.getChildren().add(continueGameButton);
     }
-    
+
     private void sendGameState(GameState state) {
         try {
             Administration.get().getGameServer().stateChanged(state);
@@ -141,7 +141,7 @@ public class GameMenu {
             Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * Method that creates the Score menu.
      */
@@ -165,7 +165,7 @@ public class GameMenu {
         scoreWindow.setTranslateX(0);
         scoreWindow.setTranslateY((HEIGHT / 2) - 220);
         scoreMenuGroup.getChildren().add(scoreWindow);
-        
+
         scoreText = new Text();
         scoreText.setText("Scoreboard");
         scoreText.setFill(Color.WHITE);
@@ -174,7 +174,7 @@ public class GameMenu {
         scoreText.setLayoutY((HEIGHT / 2) - 195);
         scoreMenuGroup.getChildren().add(scoreText);
     }
-    
+
     /**
      * Method that creates the minimap.
      */
@@ -195,7 +195,7 @@ public class GameMenu {
         gc.stroke();
         miniMap.setTranslateX(WIDTH - 200);
         miniMapGroup.getChildren().add(miniMap);
-        
+
         timeText = new Text();
         timeText.textProperty().bind(gameManager.getTimeLeft());
         timeText.setFill(Color.WHITE);
@@ -205,7 +205,7 @@ public class GameMenu {
         timeText.setTextAlignment(TextAlignment.RIGHT);
         miniMapGroup.getChildren().add(timeText);
     }
-    
+
     /**
      * Method that creates the Victory screen.
      */
@@ -228,7 +228,7 @@ public class GameMenu {
         victoryScreen.setTranslateX((WIDTH / 2) - (victoryScreen.getWidth() / 2));
         victoryScreen.setTranslateY((HEIGHT / 2) - (victoryScreen.getHeight() / 2));
         victoryScreenGroup.getChildren().add(victoryScreen);
-        
+
         victoryText = new Text();
         victoryText.setText("Victory!");
         victoryText.setFill(Color.WHITE);
@@ -238,7 +238,7 @@ public class GameMenu {
         victoryText.setLayoutY((HEIGHT / 2 - 50));
         victoryScreenGroup.getChildren().add(victoryText);
     }
-    
+
     /**
      * Method that creates the Defeat screen.
      */
@@ -261,7 +261,7 @@ public class GameMenu {
         defeatScreen.setTranslateX((WIDTH / 2) - (victoryScreen.getWidth() / 2));
         defeatScreen.setTranslateY((HEIGHT / 2) - (defeatScreen.getHeight() / 2));
         defeatScreenGroup.getChildren().add(defeatScreen);
-        
+
         defeatText = new Text();
         defeatText.setText("Defeat!");
         defeatText.setFill(Color.WHITE);
@@ -273,14 +273,13 @@ public class GameMenu {
     }
 
     private LinearGradient generateLinearGradient(String beginColor, String endColor) {
-        Stop[] stops = new Stop[] { 
-            new Stop(0, Color.web(beginColor)), new Stop(1, Color.web(endColor)) 
+        Stop[] stops = new Stop[]{
+            new Stop(0, Color.web(beginColor)), new Stop(1, Color.web(endColor))
         };
-        LinearGradient linearGradient = new LinearGradient(0,0,0,1, true, CycleMethod.NO_CYCLE, stops);
+        LinearGradient linearGradient = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE, stops);
         return linearGradient;
     }
-    
-    
+
     /**
      * Updates the score for Player one on screen.
      */
@@ -300,11 +299,12 @@ public class GameMenu {
                 break;
         }
     }
-    
+
     /**
      * Gets the player icon belonging to the given character name.
+     *
      * @param characterName
-     * @param playerID 
+     * @param playerID
      */
     private Image getPlayerIcons(String characterName) {
         Image tempCharacterIcon = null;
@@ -324,11 +324,13 @@ public class GameMenu {
         }
         return tempCharacterIcon;
     }
-    
+
     /**
-     * Creates the information belonging to the given playerID and characterName in the scoreboard menu.
+     * Creates the information belonging to the given playerID and characterName
+     * in the scoreboard menu.
+     *
      * @param characterName
-     * @param playerID 
+     * @param playerID
      */
     public void createPlayerInfo(String characterName, int playerID) {
         Image characterIcon = getPlayerIcons(characterName);
@@ -342,7 +344,7 @@ public class GameMenu {
             generatePlayerFourInfo(characterIcon);
         }
     }
-    
+
     /**
      * Generates the scoreboard information for player one
      */
@@ -354,14 +356,14 @@ public class GameMenu {
         playerTextOne.setLayoutX(10);
         playerTextOne.setLayoutY((HEIGHT / 2) - 170);
         scoreMenuGroup.getChildren().add(playerTextOne);
-        
+
         playerViewOne = new ImageView();
         playerIconOne = characterIcon;
         playerViewOne.setImage(playerIconOne);
         playerViewOne.setLayoutX(10);
         playerViewOne.setLayoutY((HEIGHT / 2) - 160);
         scoreMenuGroup.getChildren().add(playerViewOne);
-        
+
         scoreTextOne = new Text();
         scoreTextOne.setText("Score: ");
         scoreTextOne.setFill(Color.WHITE);
@@ -369,7 +371,7 @@ public class GameMenu {
         scoreTextOne.setLayoutX(10);
         scoreTextOne.setLayoutY((HEIGHT / 2) - 90);
         scoreMenuGroup.getChildren().add(scoreTextOne);
-        
+
         scoreLabelOne = new Text();
         scoreLabelOne.setText(String.valueOf(gameManager.getGameScore()));
         scoreLabelOne.setFill(Color.WHITE);
@@ -378,7 +380,7 @@ public class GameMenu {
         scoreLabelOne.setLayoutY((HEIGHT / 2) - 90);
         scoreMenuGroup.getChildren().add(scoreLabelOne);
     }
-    
+
     /**
      * Generates the scoreboard information for player two
      */
@@ -390,14 +392,14 @@ public class GameMenu {
         playerTextTwo.setLayoutX(10);
         playerTextTwo.setLayoutY((HEIGHT / 2) - 70);
         scoreMenuGroup.getChildren().add(playerTextTwo);
-        
+
         playerViewTwo = new ImageView();
         playerIconTwo = characterIcon;
         playerViewTwo.setImage(playerIconTwo);
         playerViewTwo.setLayoutX(10);
         playerViewTwo.setLayoutY((HEIGHT / 2) - 60);
         scoreMenuGroup.getChildren().add(playerViewTwo);
-        
+
         scoreTextTwo = new Text();
         scoreTextTwo.setText("Score: ");
         scoreTextTwo.setFill(Color.WHITE);
@@ -405,7 +407,7 @@ public class GameMenu {
         scoreTextTwo.setLayoutX(10);
         scoreTextTwo.setLayoutY((HEIGHT / 2) + 10);
         scoreMenuGroup.getChildren().add(scoreTextTwo);
-        
+
         scoreLabelTwo = new Text();
         scoreLabelTwo.setText("0");
         scoreLabelTwo.setFill(Color.WHITE);
@@ -414,7 +416,7 @@ public class GameMenu {
         scoreLabelTwo.setLayoutY((HEIGHT / 2) + 10);
         scoreMenuGroup.getChildren().add(scoreLabelTwo);
     }
-    
+
     /**
      * Generates the scoreboard information for player three
      */
@@ -426,14 +428,14 @@ public class GameMenu {
         playerTextThree.setLayoutX(10);
         playerTextThree.setLayoutY((HEIGHT / 2) + 30);
         scoreMenuGroup.getChildren().add(playerTextThree);
-        
+
         playerViewThree = new ImageView();
         playerIconThree = characterIcon;
         playerViewThree.setImage(playerIconThree);
         playerViewThree.setLayoutX(10);
         playerViewThree.setLayoutY((HEIGHT / 2) + 40);
         scoreMenuGroup.getChildren().add(playerViewThree);
-        
+
         scoreTextThree = new Text();
         scoreTextThree.setText("Score: ");
         scoreTextThree.setFill(Color.WHITE);
@@ -441,7 +443,7 @@ public class GameMenu {
         scoreTextThree.setLayoutX(10);
         scoreTextThree.setLayoutY((HEIGHT / 2) + 110);
         scoreMenuGroup.getChildren().add(scoreTextThree);
-        
+
         scoreLabelThree = new Text();
         scoreLabelThree.setText("0");
         scoreLabelThree.setFill(Color.WHITE);
@@ -450,7 +452,7 @@ public class GameMenu {
         scoreLabelThree.setLayoutY((HEIGHT / 2) + 110);
         scoreMenuGroup.getChildren().add(scoreLabelThree);
     }
-    
+
     /**
      * Generates the scoreboard information for player four
      */
@@ -462,14 +464,14 @@ public class GameMenu {
         playerTextFour.setLayoutX(10);
         playerTextFour.setLayoutY((HEIGHT / 2) + 130);
         scoreMenuGroup.getChildren().add(playerTextFour);
-        
+
         playerViewFour = new ImageView();
         playerIconFour = characterIcon;
         playerViewFour.setImage(playerIconFour);
         playerViewFour.setLayoutX(10);
         playerViewFour.setLayoutY((HEIGHT / 2) + 140);
         scoreMenuGroup.getChildren().add(playerViewFour);
-        
+
         scoreTextFour = new Text();
         scoreTextFour.setText("Score: ");
         scoreTextFour.setFill(Color.WHITE);
@@ -477,7 +479,7 @@ public class GameMenu {
         scoreTextFour.setLayoutX(10);
         scoreTextFour.setLayoutY((HEIGHT / 2) + 210);
         scoreMenuGroup.getChildren().add(scoreTextFour);
-        
+
         scoreLabelFour = new Text();
         scoreLabelFour.setText("0");
         scoreLabelFour.setFill(Color.WHITE);

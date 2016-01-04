@@ -6,7 +6,7 @@
 
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background-gradient" stylesheets="@../Documents/GitHub/clash-of-fishes/src/com/netgames/clashoffishes/ui/OceanUI.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label layoutX="162.0" layoutY="93.0" text="CreditsMenu" />
-   </children>
+    <children>
+        <Label layoutX="162.0" layoutY="93.0" text="CreditsMenu" />
+    </children>
 </AnchorPane>

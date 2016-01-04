@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.Administration;
@@ -23,10 +18,11 @@ import javafx.scene.layout.AnchorPane;
 /**
  * FXML Controller class
  *
- * @author Stef
+ * @author Stef Philipsen
+ * @author Hein Dauven
  */
-public class MultiplayerMenuController implements Initializable
-{
+public class MultiplayerMenuController implements Initializable {
+
     private Administration administration;
     @FXML
     private AnchorPane paneMainForm;
@@ -39,14 +35,13 @@ public class MultiplayerMenuController implements Initializable
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         this.administration = Administration.get();
         URL logoDir = this.getClass().getResource("/com/netgames/clashoffishes/images/logo.png");
         this.pictCoFLogo.setImage(new Image(logoDir.toString(), 777, 471, true, false, true));
         System.out.println(this.administration.getLoggedInUser().getUsername());
         System.out.println(this.administration.getLoggedInUser().getEmail());
-    }    
+    }
 
     @FXML
     private void hostGame(ActionEvent event) {
@@ -61,7 +56,7 @@ public class MultiplayerMenuController implements Initializable
                 Administration.get().setLobbyRegistry(lobbyRegistry);
                 Administration.get().setLobby(lobbyRegistry.getLobby());
                 Platform.runLater(() -> {
-                    GuiUtilities.buildStage(MultiplayerMenuController.this.paneMainForm.getScene().getWindow(), "FishPool", "Fishpool: " + GuiUtilities.getFishPoolTitle());
+                    GuiUtilities.buildStage(MultiplayerMenuController.this.paneMainForm.getScene().getWindow(), "Lobby", GuiUtilities.getFishPoolTitle());
                 });
                 return null;
             }
@@ -70,22 +65,18 @@ public class MultiplayerMenuController implements Initializable
     }
 
     @FXML
-    private void joinGame(ActionEvent event)
-    {
+    private void joinGame(ActionEvent event) {
         GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "HostedGames", GuiUtilities.TITLE_HOSTED_GAMES);
     }
 
     @FXML
-    private void highscore(ActionEvent event)
-    {
+    private void highscore(ActionEvent event) {
         GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "Highscore", GuiUtilities.TITLE_HIGHSCORE);
     }
 
     @FXML
-    private void btnBack_OnClick(ActionEvent event)
-    {
+    private void btnBack_OnClick(ActionEvent event) {
         GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "StartMenu", GuiUtilities.getMainMenusTitle());
     }
 
-    
 }

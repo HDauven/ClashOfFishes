@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.netgames.clashoffishes.ui;
 
 import com.netgames.clashoffishes.engine.GameManager;
+import com.netgames.clashoffishes.engine.GameMode;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +13,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -24,9 +22,11 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author MuK
+ * @author Christian Adkin
+ * @author Hein Dauven
  */
-public class CharacterSelectionController implements Initializable {
+public class SinglePlayerController implements Initializable {
+
     @FXML
     private Label lblCharacter;
     @FXML
@@ -35,6 +35,16 @@ public class CharacterSelectionController implements Initializable {
     private ImageView pictCharacter;
     @FXML
     private Button btnStartGame;
+    @FXML
+    private RadioButton rbLastFishSwimming;
+    @FXML
+    private RadioButton rbEvolutionOfTime;
+    @FXML
+    private RadioButton rbEvolved;
+    @FXML
+    private ToggleGroup tgGameMode;
+
+    private GameMode gameMode;
 
     /**
      * Initializes the controller class.
@@ -50,7 +60,19 @@ public class CharacterSelectionController implements Initializable {
         this.cbCharacters.setItems(FXCollections.observableArrayList(characterNames));
         this.cbCharacters.getSelectionModel().select(0);
         this.pictCharacter.setImage(new Image("/com/netgames/clashoffishes/images/player/" + "BubblesIcon.png", 80, 51, true, false, true));
-    }    
+
+        this.rbEvolved.setOnAction((ActionEvent event) -> {
+            gameMode = GameMode.EVOLVED;
+        });
+
+        this.rbEvolutionOfTime.setOnAction((ActionEvent event) -> {
+            gameMode = GameMode.EVOLUTION_OF_TIME;
+        });
+
+        this.rbLastFishSwimming.setOnAction((ActionEvent event) -> {
+            gameMode = GameMode.LAST_FISH_STANDING;
+        });
+    }
 
     @FXML
     private void cbCharacters_OnChanged(ActionEvent event) {
@@ -73,7 +95,7 @@ public class CharacterSelectionController implements Initializable {
                 System.out.println("Gill has been selected");
                 this.pictCharacter.setImage(new Image(playerDir.toString() + "GillIcon.png", 80, 47, true, false, true));
                 break;
-            default: 
+            default:
                 System.out.println("No character selected");
                 this.pictCharacter.setImage(null);
                 break;
@@ -82,8 +104,22 @@ public class CharacterSelectionController implements Initializable {
 
     @FXML
     private void btnStartGame_OnClick(ActionEvent event) {
-        GameManager gameManager = new GameManager(this.cbCharacters.getValue(), 0, 0);
-        gameManager.start(new Stage());
+        boolean isCharacterSelected = true;
+        boolean isGameModeSelected = true;
+        String selectedCharacter = this.cbCharacters.getValue();
+
+        if (selectedCharacter.equalsIgnoreCase("None")) {
+            isCharacterSelected = false;
+            System.out.println("Please select a character before starting a game!");
+        }
+        if (gameMode == null) {
+            isGameModeSelected = false;
+            System.out.println("Please select a gamemode before starting a game!");
+        }
+        if (isCharacterSelected == true && isGameModeSelected == true) {
+            GameManager gameManager = new GameManager(this.cbCharacters.getValue(), 0, 0, gameMode);
+            gameManager.start(new Stage());
+        }
     }
-    
+
 }

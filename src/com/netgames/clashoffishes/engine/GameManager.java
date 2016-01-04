@@ -45,7 +45,7 @@ public class GameManager extends Application {
     private GameState gameState;
     private transient SimpleStringProperty timeLeft = new SimpleStringProperty();
     //Standaardwaarde is single player = evolution of time
-    private final GameMode gameMode = GameMode.EVOLUTION_OF_TIME;
+    private GameMode gameMode = GameMode.EVOLUTION_OF_TIME;
     private Group root;
     private int seed = 0;
     Stage thisStage;
@@ -89,11 +89,16 @@ public class GameManager extends Application {
     }
 
     /**
-     * Constructor where a character number is given.
+     * Constructor for the multiplayer version of Clash Of Fishes.
      *
-     * @param character The chosen character
+     * @param character The chosen character.
+     * @param seed The seed to synchronize the game map.
+     * @param playerID The ID of the player that you are in the game.
+     * @param gameMode The mode which is to be played by everyone in this game.
      */
-    public GameManager(String character, int seed, int playerID) {
+    public GameManager(String character, int seed, int playerID, GameMode gameMode) {
+        this.gameMode = gameMode;
+        System.out.println(gameMode);
         this.seed = seed;
         this.playerID = playerID;
         System.out.println(playerID);
@@ -102,8 +107,7 @@ public class GameManager extends Application {
                 || character.toUpperCase().equals("FRED")
                 || character.toUpperCase().equals("GILL")) {
             this.character = character;
-        }
-        else {
+        } else {
             this.character = "BUBBLES";
         }
         this.players = new ArrayList<>();
@@ -214,8 +218,7 @@ public class GameManager extends Application {
     private void sendUpdateMove(String key, boolean pressed) {
         try {
             Administration.get().getGameServer().updateMove(player.getvX(), key, pressed, player.getiX(), player.getiY(), player.getPlayerID());
-        }
-        catch (RemoteException ex) {
+        } catch (RemoteException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -310,8 +313,7 @@ public class GameManager extends Application {
                 menu.createPlayerInfo(client.getCharacterName(), tempID);
                 tempID++;
             }
-        }
-        catch (RemoteException ex) {
+        } catch (RemoteException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -482,9 +484,9 @@ public class GameManager extends Application {
 
     private void addObject(GameObject object) {
         if (object instanceof FishHook) {
-            fishHooks.add((FishHook) object);            
+            fishHooks.add((FishHook) object);
         }
-        
+
         if (root == null) {
             //TODO Anders oplossen
             root = new Group();
@@ -496,8 +498,7 @@ public class GameManager extends Application {
 
             }
             objectManager.addCurrentObject(object);
-        }
-        else {
+        } else {
             System.out.println("NullpointerException in root, object of object.getSpriteFrame()");
         }
     }

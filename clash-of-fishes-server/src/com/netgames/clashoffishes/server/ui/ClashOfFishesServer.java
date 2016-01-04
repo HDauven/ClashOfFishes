@@ -10,28 +10,29 @@ import javafx.stage.WindowEvent;
 
 /**
  * GUI version of the Clash of Fishes Lobby Server.
+ *
  * @author Hein Dauven
  */
 public class ClashOfFishesServer extends Application {
-        
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root;
         try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/netgames/clashoffishes/server/ui/LobbyServerGUI.fxml"));
-        root = (Parent) loader.load();
-        primaryStage.setTitle("Admin lobby control center");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-        primaryStage.setOnCloseRequest((WindowEvent event) -> {
-            Platform.exit();
-            System.exit(0);
-        });
-        } catch(Exception e) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/netgames/clashoffishes/server/ui/LobbyServerGUI.fxml"));
+            root = (Parent) loader.load();
+            primaryStage.setTitle("Admin lobby control center");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+            primaryStage.setOnCloseRequest((WindowEvent event) -> {
+                Platform.exit();
+                System.exit(0);
+            });
+        } catch (Exception e) {
             System.out.println(e.toString());
         }
-    }  
-    
+    }
+
     /**
      * @param args the command line arguments
      */

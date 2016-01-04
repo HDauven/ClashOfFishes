@@ -1,4 +1,4 @@
-package com.netgames.clashoffishes.engine;
+package com.netgames.clashoffishes.server.remote;
 
 /**
  * @author Hein Dauven

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.netgames.clashoffishes.server.remote;
 
 import com.netgames.clashoffishes.engine.GameState;
@@ -15,9 +10,9 @@ import java.util.List;
  * for Clash of Fishes.
  *
  * @author Christian Adkin
+ * @author Hein Dauven
  */
-public interface IGameServer extends Remote
-{
+public interface IGameServer extends Remote {
 
     /**
      * Register a client as listener to the IGameServer
@@ -41,7 +36,6 @@ public interface IGameServer extends Remote
      */
     public void updateMove(double speed, String key, boolean isPressed, double x, double y, int playerID) throws RemoteException;
 
-    
     /**
      * Reports changes in the given players speed
      *
@@ -70,11 +64,17 @@ public interface IGameServer extends Remote
 
     /**
      * Starts the game on all clients
-     * @throws RemoteException 
+     *
+     * @throws RemoteException
      */
     public void start() throws RemoteException;
-    
-    public List<IGameClient> getClients() 
+
+    /**
+     * Returns a list with all GameClients registered on the GameServer.
+     * @return a list of all GameClients.
+     * @throws RemoteException 
+     */
+    public List<IGameClient> getClients()
             throws RemoteException;
-    
+
 }
