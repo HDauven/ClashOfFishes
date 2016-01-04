@@ -76,6 +76,7 @@ public class GuiUtilities {
                                 LobbyRegistry.getCofServer().removeLobby(Administration.get().getLobbyRegistry().getLobby());
                                 Administration.get().resetLobby();
                                 Administration.get().getLobbyRegistry().exit();
+                                // TODO remove all clients with the disconnectionHandler
                             } else {
                                 // Removes a client from the lobby it is in
                                 Administration.get().getLobby().removeClient(Administration.get().getClient());

@@ -479,7 +479,7 @@ public class LobbyController implements Initializable, ILobbyListener {
      * Method that should be used to deal with Java RMI disconnects caused by
      * the connection with the remote lobby being broken
      */
-    private void disconnectionHandler() {
+    public void disconnectionHandler() {
         if (Administration.get().getLobby() != null) {
             Administration.get().resetLobby();
             Administration.get().resetClient();

@@ -171,6 +171,7 @@ public class HostedGamesController implements Initializable {
      * based on a given RMI URL.
      */
     private void clashOfFishesServerLookup() {
+        // TODO put this in a RMIUtilities class
         try {
             cofServer = (IServer) Naming.lookup(cofServerURL);
             //System.out.println(cofServer.listLobbies().toString());
