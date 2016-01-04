@@ -8,6 +8,7 @@ import com.netgames.clashoffishes.server.Message;
 import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.ILobby;
 import com.netgames.clashoffishes.util.GuiUtilities;
+import com.netgames.clashoffishes.util.HandlerUtilities;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -192,8 +193,7 @@ public class LobbyController implements Initializable, ILobbyListener {
             Administration.get().getClient().setCharacter(characterName);
             lobby.broadcastCharacter(characterName, Administration.get().getClient());
         } catch (RemoteException ex) {
-            disconnectionHandler();
-            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+            HandlerUtilities.disconnectionHandler(this.paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
         }
     }
 
@@ -239,8 +239,7 @@ public class LobbyController implements Initializable, ILobbyListener {
             lobby.broadcastReady(isReady, Administration.get().getClient());
             System.out.println(Administration.get().getClient().getIsReady());
         } catch (RemoteException ex) {
-            disconnectionHandler();
-            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+            HandlerUtilities.disconnectionHandler(this.paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
         }
     }
 
@@ -284,8 +283,7 @@ public class LobbyController implements Initializable, ILobbyListener {
                 SendServerMessage("All players must select a different character!");
             }
         } catch (RemoteException ex) {
-            disconnectionHandler();
-            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+            HandlerUtilities.disconnectionHandler(this.paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
         }
     }
 
@@ -298,8 +296,7 @@ public class LobbyController implements Initializable, ILobbyListener {
         try {
             lobby.broadcastMessage(new Message(Administration.get().getLoggedInUser().getUsername(), tfMessage.getText()), Administration.get().getClient());
         } catch (RemoteException ex) {
-            disconnectionHandler();
-            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+            HandlerUtilities.disconnectionHandler(this.paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
         }
         this.tfMessage.clear();
     }
@@ -308,8 +305,7 @@ public class LobbyController implements Initializable, ILobbyListener {
         try {
             lobby.broadcastMessage(new Message("SERVER: ", serverMessage), Administration.get().getClient());
         } catch (RemoteException ex) {
-            disconnectionHandler();
-            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+            HandlerUtilities.disconnectionHandler(this.paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
         }
         this.tfMessage.clear();
     }
@@ -387,8 +383,7 @@ public class LobbyController implements Initializable, ILobbyListener {
         try {
             lobby.broadcastGameMode(gameMode, Administration.get().getClient());
         } catch (RemoteException ex) {
-            disconnectionHandler();
-            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+            HandlerUtilities.disconnectionHandler(this.paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
         }
     }
 
@@ -473,19 +468,5 @@ public class LobbyController implements Initializable, ILobbyListener {
                 return null;
             }
         });
-    }
-
-    /**
-     * Method that should be used to deal with Java RMI disconnects caused by
-     * the connection with the remote lobby being broken
-     */
-    public void disconnectionHandler() {
-        if (Administration.get().getLobby() != null) {
-            Administration.get().resetLobby();
-            Administration.get().resetClient();
-            GuiUtilities.buildStage(this.paneMainForm.getScene().getWindow(), "MultiplayerMenu", GuiUtilities.getMainMenusTitle());
-            System.out.println("The connection with the lobby has been lost.");
-            System.out.println("User should be more clearly informed?");
-        }
     }
 }
