@@ -51,7 +51,6 @@ public class SinglePlayerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         List<String> characterNames = new ArrayList<>();
         characterNames.add("Bubbles");
         characterNames.add("Cleo");

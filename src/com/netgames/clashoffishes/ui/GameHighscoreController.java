@@ -35,8 +35,7 @@ public class GameHighscoreController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO initialize components for controller        
+    public void initialize(URL url, ResourceBundle rb) {     
         this.clmPlayers.setCellValueFactory(new PropertyValueFactory<Highscore, String>("Username"));
         this.clmScore.setCellValueFactory(new PropertyValueFactory<Highscore, String>("Score"));
     }

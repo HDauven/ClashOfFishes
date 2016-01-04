@@ -50,7 +50,6 @@ public class MultiplayerMenuController implements Initializable {
         Task task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                //TODO werkend krijgen voor multiplayer
                 LobbyRegistry lobbyRegistry = new LobbyRegistry();
                 lobbyRegistry.clashOfFishesServerLookup();
                 Administration.get().setLobbyRegistry(lobbyRegistry);

@@ -52,7 +52,7 @@ public class GameLoop extends AnimationTimer {
     @Override
     public void handle(long now) {
         if (gameManager.getGameState() == GameState.RUNNING) {
-            // TODO
+            // TODO Timer systeem fixen
             for (Player player : gameManager.getPlayers()) {
                 player.update();
             }

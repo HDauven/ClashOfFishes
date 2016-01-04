@@ -227,7 +227,7 @@ public class GameManager extends Application {
      * Loads audio assets into the game.
      */
     private void loadAudioAssets() {
-        // TODO loading audio asset format:
+        // xxx loading audio asset format:
         // URL object = this.getClass().getResource("/resource/sound.wav");
         // AudioClip object = new AudioClip(URL object.toString());
         biteSoundFile0 = this.getClass().getResource("/com/netgames/clashoffishes/audio/bite.wav");
@@ -238,7 +238,7 @@ public class GameManager extends Application {
      * Loads image assets into the game.
      */
     private void loadImageAssets() {
-        // TODO adding image asset format:
+        // xxx adding image asset format:
         // Image object = new Image("/resource/image.png", width, height, true, false, true);
         playerDir = this.getClass().getResource("/com/netgames/clashoffishes/images/player/");
         // <editor-fold defaultstate="collapsed" desc="Bubbles image instantiation">
@@ -297,7 +297,7 @@ public class GameManager extends Application {
      */
     private void createGameObjects(int id) {
 
-        // TODO adding game objects format:
+        // xxx adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
         if (this.seed == 0) {
             this.seed = (int) System.currentTimeMillis();
@@ -354,7 +354,7 @@ public class GameManager extends Application {
      * Adds GameObjects to the root node.
      */
     private void addGameObjectNodes() {
-        // TODO adding game object nodes
+        // xxx adding game object nodes
         // root.getChildren().add(gameObject);
 
         // Comment this out to get the regular background
@@ -372,7 +372,7 @@ public class GameManager extends Application {
      */
     public void createObjectManager() {
         objectManager = new ObjectManager();
-        // TODO adding an object to the object manager format:
+        // xxx adding an object to the object manager format:
         // objectManager.addCurrentObject(newobject);
     }
 
@@ -380,7 +380,7 @@ public class GameManager extends Application {
      * Adds nodes to the root Group object.
      */
     private void addNodesToGroup() {
-        // TODO add nodes to the root Group:
+        // xxx add nodes to the root Group:
         // root.getChildren().add(container);
         //root.getChildren().add(gameWindow);
         root.getChildren().add(menu.getScoreMenuGroup());
@@ -488,7 +488,7 @@ public class GameManager extends Application {
         }
 
         if (root == null) {
-            //TODO Anders oplossen
+            //TODO Anders oplossen <<<TEST EVEN OF NOG MOET BLIJVEN STAAN>>>
             root = new Group();
         }
         if (root != null && object != null && object.getSpriteFrame() != null) {

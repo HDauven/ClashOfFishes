@@ -75,7 +75,6 @@ public class HostedGamesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //TODO initialize components for controller
         this.administration = Administration.get();
 
         clmPoolName.setCellValueFactory(new PropertyValueFactory<>("PoolNameProperty"));
@@ -90,7 +89,6 @@ public class HostedGamesController implements Initializable {
         Task task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                // TODO get lobby, create client, register client.
                 try {
                     ILobby temp = tbvHostedGames.getSelectionModel().getSelectedItem();
                     for (ILobby lobby : cofServer.listLobbies()) {

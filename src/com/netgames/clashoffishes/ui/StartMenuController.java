@@ -40,7 +40,6 @@ public class StartMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         URL logoDir = this.getClass().getResource("/com/netgames/clashoffishes/images/logo.png");
         this.pictCoFLogo.setImage(new Image(logoDir.toString(), 777, 471, true, false, true));
 

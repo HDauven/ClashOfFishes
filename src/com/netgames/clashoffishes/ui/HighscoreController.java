@@ -46,13 +46,11 @@ public class HighscoreController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO initialize components for controller
         this.administration = Administration.get();
 
         this.clmPlayers.setCellValueFactory(new PropertyValueFactory<Highscore, String>("Username"));
         this.clmScore.setCellValueFactory(new PropertyValueFactory<Highscore, String>("Score"));
 
-        // TODO moet nog dynamisch worden gemaakt.
         ObservableList<GameMode> gameModes = FXCollections.observableArrayList(GameMode.EVOLUTION_OF_TIME, GameMode.EVOLVED, GameMode.LAST_FISH_STANDING);
         this.cbGameMode.setItems(gameModes);
     }

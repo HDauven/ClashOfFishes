@@ -41,12 +41,10 @@ public class TableUser {
     }
 
     public String getCharacter() {
-        // TODO Add selected player to user class
         return this.character.get();
     }
 
     public void setCharacter(String character) {
-        // TODO Change selected player
         this.character = new SimpleStringProperty(character);
     }
 

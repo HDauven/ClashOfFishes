@@ -19,7 +19,7 @@ import java.util.Scanner;
  *
  * @author Hein Dauven
  */
-public class Client extends UnicastRemoteObject implements IClient, Runnable {
+public class Client extends UnicastRemoteObject implements IClient {
 
     private static final long serialVersionUID = 1L;
 
@@ -99,33 +99,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
         this.GUIs.remove(guiListener);
     }
 
-    @Override
-    public void run() {
-        // TODO recode this for practical purposes, with a string instead of a System.out.println
-        List<IMessage> messages;
-        try {
-            messages = lobby.getMessages();
-            for (IMessage m : messages) {
-                System.out.println(m.toString());
-                for (ILobbyListener guis : this.GUIs) {
-                    guis.displayMessage(m.toString());
-                }
-            }
-        } catch (RemoteException ex) {
-            System.out.println("RemoteException: " + ex.getMessage());
-        }
 
-        Scanner scanner = new Scanner(System.in);
-        String message;
-        while (true) {
-            message = scanner.nextLine();
-            try {
-                lobby.broadcastMessage(new Message(this.username, message), (IClient) this);
-            } catch (RemoteException e) {
-                System.out.println("RemoteException: " + e.getMessage());
-            }
-        }
-    }
 
     @Override
     public void setIsReady(boolean ready) throws RemoteException {

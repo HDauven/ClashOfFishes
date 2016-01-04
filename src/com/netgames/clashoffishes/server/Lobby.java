@@ -22,7 +22,6 @@ import java.util.logging.Logger;
  */
 public class Lobby extends UnicastRemoteObject implements ILobby {
 
-    // TODO add more game/lobby info
     private static final long serialVersionUID = 1L;
 
     private List<IClient> clients;
@@ -142,7 +141,6 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         return usersString;
     }
 
-    //TODO Beter formuleren comment 
     //GetStringProperties voor het inzetten van de lobby in de tableView 
     @Override
     public String getPoolNameProperty() {

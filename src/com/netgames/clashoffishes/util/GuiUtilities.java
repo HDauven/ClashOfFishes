@@ -23,7 +23,6 @@ import javafx.stage.WindowEvent;
  */
 public class GuiUtilities {
 
-    //TODO GuiTitles aanvullen
     public static final String TITLE_GAME_WORLD = "Clash of Fishes!";
     public static final String TITLE_HIGHSCORE = "Highscores";
     public static final String TITLE_HOSTED_GAMES = "Hosted Games";
@@ -42,7 +41,7 @@ public class GuiUtilities {
             stage.setTitle(title);
             stage.setScene(new Scene(root));
 
-            //TODO handle onCloseRequest for every fxml file, default is logout
+            //xxx handle onCloseRequest for every fxml file, default is logout
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
