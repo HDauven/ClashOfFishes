@@ -15,6 +15,7 @@ public class DatabaseConnector {
 
     private SortedMap<Statement, CallableStatement> statements = new TreeMap<>();
     private boolean hasConnection;
+    Connection connection;
 
     public DatabaseConnector() {
         hasConnection = false;
@@ -26,9 +27,9 @@ public class DatabaseConnector {
         Connection connection = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            //connection = DriverManager.getConnection("jdbc:mysql://stefp.nl/philips1_db?noAccessToProcedureBodies=true", "philips1_user", "Hallo123");
-            connection = DriverManager.getConnection("jdbc:mysql://athena01.fhict.local/dbi298833?noAccessToProcedureBodies=true", "dbi298833", "iofG51DpF8");
-        } catch (ClassNotFoundException | SQLException ex) {
+            connection = DriverManager.getConnection("jdbc:mysql://185.13.227.197:3306/stefpfq165_data?noAccessToProcedureBodies=true", "stefpfq165_dream", "teamdream");
+        }
+        catch (ClassNotFoundException | SQLException ex) {
             System.out.println(ex.toString());
         }
         return connection;
@@ -40,7 +41,9 @@ public class DatabaseConnector {
 
     public void createStatements() {
         try {
-            Connection connection = this.getConnection();
+            if (connection == null) {
+                connection = this.getConnection();
+            }
             if (connection != null) {
                 hasConnection = true;
                 statements.put(Statement.LOGIN, connection.prepareCall("{call spLogin(?, ?, ?, ?, ?)}"));
@@ -51,7 +54,8 @@ public class DatabaseConnector {
                 statements.put(Statement.REMOVE_USER, connection.prepareCall("call removeUser(?)"));
             }
 
-        } catch (ClassNotFoundException | SQLException ex) {
+        }
+        catch (ClassNotFoundException | SQLException ex) {
             System.out.println(ex.toString());
         }
     }
