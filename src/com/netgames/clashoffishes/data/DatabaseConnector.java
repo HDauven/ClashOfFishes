@@ -26,7 +26,8 @@ public class DatabaseConnector {
         Connection connection = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://stefp.nl/philips1_db?noAccessToProcedureBodies=true", "philips1_user", "Hallo123");
+            //connection = DriverManager.getConnection("jdbc:mysql://stefp.nl/philips1_db?noAccessToProcedureBodies=true", "philips1_user", "Hallo123");
+            connection = DriverManager.getConnection("jdbc:mysql://stefp2.nl:3306/c10512data?noAccessToProcedureBodies=true", "c10512dreamteam", "teamdream");
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println(ex.toString());
         }

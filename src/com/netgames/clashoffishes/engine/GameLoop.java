@@ -141,7 +141,7 @@ public class GameLoop extends AnimationTimer
                     //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
                     System.out.println("Time is up!");
                 }
-            }
+            } 
         }
     }
     
