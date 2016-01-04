@@ -72,7 +72,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     @Override
     public void collision(int playerID, int objectID) throws RemoteException {
         for (IGameClient client : clients) {
-            client.collisionUpdate(objectID, objectID);
+            client.collisionUpdate(playerID, objectID);
         }
     }
 
