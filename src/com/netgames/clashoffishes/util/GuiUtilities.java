@@ -74,6 +74,8 @@ public class GuiUtilities {
                             if (Administration.get().getLobby().getClients().get(0).getUsername()
                                     .equals(Administration.get().getLoggedInUser().getUsername())) {
                                 LobbyRegistry.getCofServer().removeLobby(Administration.get().getLobbyRegistry().getLobby());
+                                Administration.get().resetLobby();
+                                Administration.get().getLobbyRegistry().exit();
                             } else {
                                 // Removes a client from the lobby it is in
                                 Administration.get().getLobby().removeClient(Administration.get().getClient());

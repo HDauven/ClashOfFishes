@@ -202,4 +202,8 @@ public class Administration {
     public void resetLobby() {
         this.lobby = null;
     }
+    
+    public void resetLobbyRegistry() {
+        this.lobbyRegistry = null;
+    }
 }
