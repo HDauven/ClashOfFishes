@@ -430,21 +430,7 @@ public class Player extends AnimatedObject {
     public void updateSpeed(double newSpeed) {
         this.setvX(newSpeed);
         this.setvY(newSpeed);
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(3000);
-                    setvX(2);
-                    setvY(2);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        Thread t = new Thread(r);
-        t.start();
-
+        // TODO reset value after 3 seconds
     }
 
     public int getPlayerID() {
