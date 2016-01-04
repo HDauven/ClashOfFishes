@@ -11,5 +11,3 @@ DELETE FROM `User`
 WHERE User_ID = p_userID;
 
 END
-
-call removeUser('Stef');
