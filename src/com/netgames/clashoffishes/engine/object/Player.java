@@ -329,7 +329,6 @@ public class Player extends AnimatedObject {
         } else if (object instanceof EnergyDrink) {
             sendSpeedUpdate(2.7);
         }
-        gameManager.updateScoreLabel(this.playerID, this.score);
     }
 
     /**
