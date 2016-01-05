@@ -51,12 +51,12 @@ public class GameManager extends Application {
     private int seed = 0;
     Stage thisStage;
     GameObject object = null;
+    boolean multiplayer;
 
     private int playerID;
 
     EnergyDrink energy;
     private ArrayList<FishHook> fishHooks;
-    
     // Test:
     private IGameServer gameServer;
 
@@ -100,8 +100,9 @@ public class GameManager extends Application {
      * @param playerID The ID of the player that you are in the game.
      * @param gameMode The mode which is to be played by everyone in this game.
      */
-    public GameManager(String character, int seed, int playerID, GameMode gameMode) {
+    public GameManager(String character, int seed, int playerID, GameMode gameMode, boolean multiplayer) {
         this.gameMode = gameMode;
+        this.multiplayer = multiplayer;
         System.out.println(gameMode);
         this.seed = seed;
         this.playerID = playerID;
@@ -222,7 +223,11 @@ public class GameManager extends Application {
      */
     private void sendUpdateMove(String key, boolean pressed) {
         try {
-            gameServer.updateMove(player.getvX(), key, pressed, player.getiX(), player.getiY(), player.getPlayerID());
+            if (multiplayer) {
+                gameServer.updateMove(player.getvX(), key, pressed, player.getiX(), player.getiY(), player.getPlayerID());
+            } else {
+                player.updateMove(key, pressed);
+            }
         } catch (RemoteException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -301,7 +306,7 @@ public class GameManager extends Application {
      * Creates the necessary GameObjects for the game.
      */
     private void createGameObjects(int id) {
-
+        // TODO edit method for single player
         // xxx adding game objects format:
         // gameObject = new GameObject(this, SVG data, startX, startY, Images...);
         if (this.seed == 0) {
@@ -310,16 +315,21 @@ public class GameManager extends Application {
         map = new GameMap((int) WIDTH, (int) HEIGHT, this.seed);
         menu = new GameMenu(this);
 
-        try {
-            //createPlayer(this.character, this.playerID);
-            int tempID = 0;
-            for (IGameClient client : gameServer.getClients()) {
-                createPlayer(client.getCharacterName(), tempID, id);
-                menu.createPlayerInfo(client.getCharacterName(), tempID);
-                tempID++;
+        if (multiplayer) {
+            try {
+                //createPlayer(this.character, this.playerID);
+                int tempID = 0;
+                for (IGameClient client : gameServer.getClients()) {
+                    createPlayer(client.getCharacterName(), tempID, id);
+                    menu.createPlayerInfo(client.getCharacterName(), tempID);
+                    tempID++;
+                }
+            } catch (RemoteException ex) {
+                Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (RemoteException ex) {
-            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            createPlayer(character, playerID, id);
+            menu.createPlayerInfo(character, playerID);
         }
     }
 
@@ -660,7 +670,7 @@ public class GameManager extends Application {
     public List<Player> getPlayers() {
         return this.players;
     }
-    
+
     public IGameServer getGameServer() {
         return this.gameServer;
     }

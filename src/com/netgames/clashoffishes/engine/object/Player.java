@@ -439,4 +439,20 @@ public class Player extends AnimatedObject {
         return score;
     }
 
+    public void updateMove(String key, boolean pressed) {
+        switch (key) {
+            case "UP":
+                this.setUp(pressed);
+                break;
+            case "DOWN":
+                this.setDown(pressed);
+                break;
+            case "LEFT":
+                this.setLeft(pressed);
+                break;
+            case "RIGHT":
+                this.setRight(pressed);
+                break;
+        }
+    }
 }
