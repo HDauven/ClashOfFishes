@@ -8,6 +8,7 @@ import com.netgames.clashoffishes.engine.object.events.FishHook;
 import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import com.netgames.clashoffishes.engine.object.events.Seaweed;
 import com.netgames.clashoffishes.server.remote.IGameClient;
+import com.netgames.clashoffishes.server.remote.IGameServer;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -55,6 +56,9 @@ public class GameManager extends Application {
 
     EnergyDrink energy;
     private ArrayList<FishHook> fishHooks;
+    
+    // Test:
+    private IGameServer gameServer;
 
     // <editor-fold defaultstate="collapsed" desc="Audioclips & URL declaration">
     private AudioClip biteSound0;
@@ -111,6 +115,7 @@ public class GameManager extends Application {
             this.character = "BUBBLES";
         }
         this.players = new ArrayList<>();
+        this.gameServer = Administration.get().getGameServer();
     }
 
     // TODO make this class dynamic. 
@@ -217,7 +222,7 @@ public class GameManager extends Application {
      */
     private void sendUpdateMove(String key, boolean pressed) {
         try {
-            Administration.get().getGameServer().updateMove(player.getvX(), key, pressed, player.getiX(), player.getiY(), player.getPlayerID());
+            gameServer.updateMove(player.getvX(), key, pressed, player.getiX(), player.getiY(), player.getPlayerID());
         } catch (RemoteException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -308,7 +313,7 @@ public class GameManager extends Application {
         try {
             //createPlayer(this.character, this.playerID);
             int tempID = 0;
-            for (IGameClient client : Administration.get().getGameServer().getClients()) {
+            for (IGameClient client : gameServer.getClients()) {
                 createPlayer(client.getCharacterName(), tempID, id);
                 menu.createPlayerInfo(client.getCharacterName(), tempID);
                 tempID++;
@@ -653,6 +658,10 @@ public class GameManager extends Application {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return this.players;
+    }
+    
+    public IGameServer getGameServer() {
+        return this.gameServer;
     }
 }

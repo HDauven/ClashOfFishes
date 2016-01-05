@@ -59,7 +59,7 @@ public class RegistryServer {
             try {
                 LocateRegistry.createRegistry(portNumber);
                 UnicastRemoteObject.exportObject(server, portNumber);
-                Naming.rebind("//145.93.165.2:" + portNumber + "/" + bindingName, server);
+                Naming.rebind("//localhost:" + portNumber + "/" + bindingName, server);
             } catch (MalformedURLException ex) {
                 logMessage("Server: Cannot bind server");
                 logMessage("Server: MalformedURLException: " + ex.getMessage());
