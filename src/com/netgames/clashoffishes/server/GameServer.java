@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 
 /**
  *
@@ -176,7 +177,18 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     @Override
     public void deleteObject (int id) throws RemoteException {
         for (IGameClient client : this.clients) {
-            client.receiveObjectDeletion(id);
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        client.receiveObjectDeletion(id);
+                    }
+                    catch (RemoteException ex) {
+                        Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
         }
     }
 }
