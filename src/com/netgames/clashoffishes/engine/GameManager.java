@@ -112,7 +112,8 @@ public class GameManager extends Application {
                 || character.toUpperCase().equals("FRED")
                 || character.toUpperCase().equals("GILL")) {
             this.character = character;
-        } else {
+        }
+        else {
             this.character = "BUBBLES";
         }
         this.players = new ArrayList<>();
@@ -225,10 +226,12 @@ public class GameManager extends Application {
         try {
             if (multiplayer) {
                 gameServer.updateMove(player.getvX(), key, pressed, player.getiX(), player.getiY(), player.getPlayerID());
-            } else {
+            }
+            else {
                 player.updateMove(key, pressed);
             }
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex) {
             Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -324,10 +327,12 @@ public class GameManager extends Application {
                     menu.createPlayerInfo(client.getCharacterName(), tempID);
                     tempID++;
                 }
-            } catch (RemoteException ex) {
+            }
+            catch (RemoteException ex) {
                 Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
+        }
+        else {
             createPlayer(character, playerID, id);
             menu.createPlayerInfo(character, playerID);
         }
@@ -497,7 +502,7 @@ public class GameManager extends Application {
                 root = new Group();
             }
             root.getChildren().add(object.getSpriteFrame());
-            if(objectManager == null){
+            if (objectManager == null) {
                 objectManager = new ObjectManager();
             }
             objectManager.addCurrentObject(object);
@@ -525,7 +530,8 @@ public class GameManager extends Application {
 
             }
             objectManager.addCurrentObject(object);
-        } else {
+        }
+        else {
             System.out.println("NullpointerException in root, object of object.getSpriteFrame()");
         }
     }
@@ -686,20 +692,25 @@ public class GameManager extends Application {
     public IGameServer getGameServer() {
         return this.gameServer;
     }
-    
-    public boolean isMultiplayer(){
+
+    public boolean isMultiplayer() {
         return this.multiplayer;
     }
-    
-    public void removeObject(int id){
+
+    public void removeObject(int id) {
         System.out.println("Remove object with id: " + id);
-        for(GameObject o : objectManager.getCurrentObject()){
-            if(o.getID() == id){
-                root.getChildren().remove(o.getSpriteFrame());
-                objectManager.removeCurrentObject(o);
-                return;
+        for (GameObject o : objectManager.getCurrentObject()) {
+            if (o.getID() == id) {
+                Platform.runLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        root.getChildren().remove(o.getSpriteFrame());
+                        objectManager.removeCurrentObject(o);
+                        return;
+                    }
+                });
             }
         }
-        
     }
 }

@@ -18,7 +18,6 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
 
 /**
  *
@@ -65,7 +64,8 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
             executor.execute(() -> {
                 try {
                     client.updateMove(speed, key, isPressed, x, y, playerID);
-                } catch (RemoteException ex) {
+                }
+                catch (RemoteException ex) {
 
                 }
             });
@@ -78,7 +78,8 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
             executor.execute(() -> {
                 try {
                     client.updateSpeed(speed, playerID);
-                } catch (RemoteException ex) {
+                }
+                catch (RemoteException ex) {
 
                 }
             });
@@ -91,7 +92,8 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
             executor.execute(() -> {
                 try {
                     client.collisionUpdate(playerID, objectID);
-                } catch (RemoteException ex) {
+                }
+                catch (RemoteException ex) {
 
                 }
             });
@@ -102,7 +104,8 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     public void stateChanged(GameState newState) throws RemoteException {
         if (newState.equals(GameState.RUNNING)) {
             timer.start();
-        } else {
+        }
+        else {
             timer.stop();
         }
 
@@ -157,7 +160,8 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
                                 }
 
                                 client.objectCreation(object.getID(), (int) object.getiX(), (int) object.getiY(), type);
-                            } catch (RemoteException ex) {
+                            }
+                            catch (RemoteException ex) {
                                 Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
@@ -175,20 +179,10 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public void deleteObject (int id) throws RemoteException {
+    public void deleteObject(int id) throws RemoteException {
         for (IGameClient client : this.clients) {
-            Platform.runLater(new Runnable() {
+            client.receiveObjectDeletion(id);
 
-                @Override
-                public void run() {
-                    try {
-                        client.receiveObjectDeletion(id);
-                    }
-                    catch (RemoteException ex) {
-                        Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            });
         }
     }
 }
