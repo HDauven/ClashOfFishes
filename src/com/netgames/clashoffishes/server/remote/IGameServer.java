@@ -77,4 +77,11 @@ public interface IGameServer extends Remote {
     public List<IGameClient> getClients()
             throws RemoteException;
 
+    /**
+     * Stuur een bericht naar alle clients dat de objecten verwijdert moeten worden.
+     * @param id het object id
+     * @throws RemoteException 
+     */
+    public void deleteObject (int id) 
+            throws RemoteException;
 }
