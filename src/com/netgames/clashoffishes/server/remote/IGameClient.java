@@ -106,6 +106,4 @@ public interface IGameClient extends Remote {
     void changeGameState(GameState gameState)
             throws RemoteException;
     
-    public void updateScores(int playerId, int score)
-            throws RemoteException;
 }

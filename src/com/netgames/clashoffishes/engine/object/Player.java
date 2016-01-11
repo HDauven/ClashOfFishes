@@ -316,20 +316,13 @@ public class Player extends AnimatedObject {
      * @param object that the Player object has collision with.
      */
     private void scoringEngine(GameObject object) {
-        try {
             if (object instanceof Seaweed) {
                 updateScore(-5);
-                this.gameManager.getGameServer().updateScore(this.score, this.playerID, Administration.get().getGameClient());
             } else if (object instanceof FishHook) {
                 updateScore(-2);
-                this.gameManager.getGameServer().updateScore(this.score, this.playerID, Administration.get().getGameClient());
             } else if (object instanceof EnergyDrink) {
                 updateScore(10);
-                this.gameManager.getGameServer().updateScore(this.score, this.playerID, Administration.get().getGameClient());
             }
-        } catch (RemoteException ex) {
-            System.out.println(ex.getMessage());
-        }
 
         gameManager.updateScoreLabel(this.playerID, this.score);
     }

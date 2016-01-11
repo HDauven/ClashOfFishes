@@ -118,13 +118,5 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
         this.gameManager.removeObject(id);
     }
 
-    @Override
-    public void updateScores(int playerId, int score) {
-        for (Player player : this.gameManager.getPlayers()) {
-            if (player.getPlayerID() == playerId) {
-                player.updateScore(score);
-                
-            }
-        }
-    }
+
 }

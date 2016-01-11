@@ -186,13 +186,5 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         }
     }
 
-    @Override
-    public void updateScore(int score, int playerID, IGameClient sender) throws RemoteException {
-        for (IGameClient client : this.clients) {
-            if (client != sender) {
-               client.updateScores(playerID, score);  
-               this.gameManager.updateScoreLabel(playerID, score);
-            }
-        }
-    }
+
 }
