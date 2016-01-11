@@ -22,7 +22,7 @@ public class GameLoop extends AnimationTimer {
     private long secondsLeft;
     private long prevSeconds;
 
-    private final int length_of_game = 60;
+    private final int length_of_game = 2000;
     private boolean winCondition = false;
 
     private int tempPlayerID = -1;

@@ -341,7 +341,7 @@ public class Player extends AnimatedObject {
     }
     
     public void updateScore (int score) {
-        this.score += score;
+         this.score += score;
     }
 
     private void collisionReaction(GameObject object) {
