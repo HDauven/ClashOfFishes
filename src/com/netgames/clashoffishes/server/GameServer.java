@@ -174,7 +174,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public void broadcastObjectDeletion(int id) throws RemoteException {
+    public void deleteObject (int id) throws RemoteException {
         for (IGameClient client : this.clients) {
             client.receiveObjectDeletion(id);
         }

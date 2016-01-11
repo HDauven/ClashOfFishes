@@ -82,6 +82,6 @@ public interface IGameServer extends Remote {
      * @param id het object id
      * @throws RemoteException 
      */
-    public void broadcastObjectDeletion (int id) 
+    public void deleteObject (int id) 
             throws RemoteException;
 }
