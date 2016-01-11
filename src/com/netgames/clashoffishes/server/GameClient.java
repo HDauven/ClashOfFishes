@@ -120,6 +120,11 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
 
     @Override
     public void updateScores(int playerId, int score) {
-        
+        for (Player player : this.gameManager.getPlayers()) {
+            if (player.getPlayerID() == playerId) {
+                player.updateScore(score);
+                
+            }
+        }
     }
 }

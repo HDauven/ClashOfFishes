@@ -85,6 +85,6 @@ public interface IGameServer extends Remote {
     public void deleteObject (int id) 
             throws RemoteException;
     
-    public void updateScore (int score, int playerID)
+    public void updateScore (int score, int playerID, IGameClient sender)
             throws RemoteException;
 }

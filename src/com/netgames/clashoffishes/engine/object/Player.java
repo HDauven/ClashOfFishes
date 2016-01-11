@@ -1,5 +1,6 @@
 package com.netgames.clashoffishes.engine.object;
 
+import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.engine.GameManager;
 import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
@@ -140,20 +141,17 @@ public class Player extends AnimatedObject {
                     framecounter = 0;
                     spriteFrame.setRotate(0);
                     spriteBound.setRotate(0);
-                }
-                else {
+                } else {
                     framecounter += 1;
                 }
-            }
-            else if (animator) {
+            } else if (animator) {
                 spriteFrame.setImage(imageStates.get(2));
                 if (framecounter >= runningspeed) {
                     animator = false;
                     framecounter = 0;
                     spriteFrame.setRotate(0);
                     spriteBound.setRotate(0);
-                }
-                else {
+                } else {
                     framecounter += 1;
                 }
             }
@@ -170,20 +168,17 @@ public class Player extends AnimatedObject {
                     framecounter = 0;
                     spriteFrame.setRotate(0);
                     spriteBound.setRotate(0);
-                }
-                else {
+                } else {
                     framecounter += 1;
                 }
-            }
-            else if (animator) {
+            } else if (animator) {
                 spriteFrame.setImage(imageStates.get(2));
                 if (framecounter >= runningspeed) {
                     animator = false;
                     framecounter = 0;
                     spriteFrame.setRotate(0);
                     spriteBound.setRotate(0);
-                }
-                else {
+                } else {
                     framecounter += 1;
                 }
             }
@@ -194,8 +189,7 @@ public class Player extends AnimatedObject {
             if (isLeft()) {
                 spriteFrame.setRotate(-45);
                 spriteBound.setRotate(-45);
-            }
-            else if (isRight()) {
+            } else if (isRight()) {
                 spriteFrame.setRotate(45);
                 spriteBound.setRotate(45);
             }
@@ -206,8 +200,7 @@ public class Player extends AnimatedObject {
             if (isLeft()) {
                 spriteFrame.setRotate(45);
                 spriteBound.setRotate(45);
-            }
-            else if (isRight()) {
+            } else if (isRight()) {
                 spriteFrame.setRotate(-45);
                 spriteBound.setRotate(-45);
             }
@@ -244,7 +237,7 @@ public class Player extends AnimatedObject {
      * detects collision with the player, get rid of the object it has collision
      * with.
      */
-    public void checkCollision(){
+    public void checkCollision() {
         for (int i = 0; i < gameManager.getObjectManager().getCurrentObject().size(); i++) {
             GameObject object = gameManager.getObjectManager().getCurrentObject().get(i);
             if (collide(object)) {
@@ -268,8 +261,7 @@ public class Player extends AnimatedObject {
     private void sendCollision(GameObject object) {
         try {
             gameManager.getGameServer().collision(playerID, object.getID());
-        }
-        catch (RemoteException ex) {
+        } catch (RemoteException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -324,48 +316,45 @@ public class Player extends AnimatedObject {
      * @param object that the Player object has collision with.
      */
     private void scoringEngine(GameObject object) {
-        if (object instanceof Seaweed) {
-            updateScore(-5);
-            this.gameManager.updateScore(this.score, this.playerID);
-        }
-        else if (object instanceof FishHook) {
-            updateScore(-2);
-            this.gameManager.updateScore(this.score, this.playerID);
-        }
-        else if (object instanceof EnergyDrink) {
-            updateScore(10);
-            this.gameManager.updateScore(this.score, this.playerID);
+        try {
+            if (object instanceof Seaweed) {
+                updateScore(-5);
+                this.gameManager.getGameServer().updateScore(this.score, this.playerID, Administration.get().getGameClient());
+            } else if (object instanceof FishHook) {
+                updateScore(-2);
+                this.gameManager.getGameServer().updateScore(this.score, this.playerID, Administration.get().getGameClient());
+            } else if (object instanceof EnergyDrink) {
+                updateScore(10);
+                this.gameManager.getGameServer().updateScore(this.score, this.playerID, Administration.get().getGameClient());
+            }
+        } catch (RemoteException ex) {
+            System.out.println(ex.getMessage());
         }
 
         gameManager.updateScoreLabel(this.playerID, this.score);
     }
-    
-    public void updateScore (int score) {
-         this.score += score;
+
+    public void updateScore(int score) {
+        this.score += score;
     }
 
     private void collisionReaction(GameObject object) {
         if (object instanceof Seaweed) {
             if (gameManager.isMultiplayer()) {
                 sendSpeedUpdate(1.3);
-            }
-            else {
+            } else {
                 this.updateSpeed(1.3);
             }
-        }
-        else if (object instanceof FishHook) {
+        } else if (object instanceof FishHook) {
             if (gameManager.isMultiplayer()) {
                 sendSpeedUpdate(0.5);
-            }
-            else {
+            } else {
                 this.updateSpeed(0.5);
             }
-        }
-        else if (object instanceof EnergyDrink) {
+        } else if (object instanceof EnergyDrink) {
             if (gameManager.isMultiplayer()) {
                 sendSpeedUpdate(2.7);
-            }
-            else {
+            } else {
                 this.updateSpeed(2.7);
             }
         }
@@ -373,22 +362,18 @@ public class Player extends AnimatedObject {
         if (!gameManager.isMultiplayer()) {
             gameManager.getObjectManager().removeCurrentObject(object);
             sendSpeedUpdate(1.3);
-        }
-        else if (object instanceof FishHook) {
+        } else if (object instanceof FishHook) {
             sendSpeedUpdate(0.5);
-        }
-        else if (object instanceof EnergyDrink) {
+        } else if (object instanceof EnergyDrink) {
             sendSpeedUpdate(2.7);
         }
 
         if (!gameManager.isMultiplayer()) {
             gameManager.getObjectManager().removeCurrentObject(object);
-        }
-        else {
-            try{
-            gameManager.getGameServer().deleteObject(object.getID());
-            }
-            catch(RemoteException re){
+        } else {
+            try {
+                gameManager.getGameServer().deleteObject(object.getID());
+            } catch (RemoteException re) {
                 re.printStackTrace();
             }
         }
@@ -400,8 +385,7 @@ public class Player extends AnimatedObject {
     private void sendSpeedUpdate(double speed) {
         try {
             gameManager.getGameServer().updateSpeed(speed, playerID);
-        }
-        catch (RemoteException ex) {
+        } catch (RemoteException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -503,8 +487,7 @@ public class Player extends AnimatedObject {
                         Thread.sleep(3000);
                         vX = standardSpeed;
                         vY = standardSpeed;
-                    }
-                    catch (InterruptedException ex) {
+                    } catch (InterruptedException ex) {
                         Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
