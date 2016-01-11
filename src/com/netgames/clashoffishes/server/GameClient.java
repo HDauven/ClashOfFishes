@@ -102,4 +102,9 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
             gameManager.getGameLoop().stop();
         }
     }
+
+    @Override
+    public void receiveObjectDeletion(int id) throws RemoteException {
+        gameManager.removeObject(id);
+    }
 }

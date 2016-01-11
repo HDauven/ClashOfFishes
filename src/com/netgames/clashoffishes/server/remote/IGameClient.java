@@ -73,6 +73,15 @@ public interface IGameClient extends Remote {
             throws RemoteException;
 
     /**
+     * Verwijdert een object aan de client side
+     * @param id Het geweste objectID
+     * @throws RemoteException 
+     */
+    public void receiveObjectDeletion (int id) 
+            throws RemoteException;
+
+    
+    /**
      * Haal de character naam van de GameClient op.
      * @return De character naam van de GameClient.
      * @throws RemoteException 
