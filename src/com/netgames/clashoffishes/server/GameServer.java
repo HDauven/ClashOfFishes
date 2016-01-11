@@ -92,7 +92,6 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
             executor.execute(() -> {
                 try {
                     client.collisionUpdate(playerID, objectID);
-                    client.updateScores(playerID, gameManager.getPlayer(playerID).getScore());
                 }
                 catch (RemoteException ex) {
 
@@ -184,6 +183,13 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         for (IGameClient client : this.clients) {
             client.receiveObjectDeletion(id);
 
+        }
+    }
+
+    @Override
+    public void updateScore(int score, int playerID) throws RemoteException {
+        for (IGameClient client : this.clients) {
+            client.updateScores(playerID, score);
         }
     }
 }
