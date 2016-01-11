@@ -3,6 +3,7 @@ package com.netgames.clashoffishes.server;
 import com.netgames.clashoffishes.engine.GameManager;
 import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.engine.GameState;
+import com.netgames.clashoffishes.engine.object.Player;
 import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import com.netgames.clashoffishes.server.remote.IGameClient;
 import com.netgames.clashoffishes.server.remote.IGameServer;
@@ -59,11 +60,14 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
         this.gameManager.getPlayers().get(playerID).setiY(y);
         if (key.equals("UP")) {
             this.gameManager.getPlayers().get(playerID).setUp(pressed);
-        } else if (key.equals("DOWN")) {
+        }
+        else if (key.equals("DOWN")) {
             this.gameManager.getPlayers().get(playerID).setDown(pressed);
-        } else if (key.equals("LEFT")) {
+        }
+        else if (key.equals("LEFT")) {
             this.gameManager.getPlayers().get(playerID).setLeft(pressed);
-        } else if (key.equals("RIGHT")) {
+        }
+        else if (key.equals("RIGHT")) {
             this.gameManager.getPlayers().get(playerID).setRight(pressed);
         }
     }
@@ -76,6 +80,11 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
     @Override
     public void collisionUpdate(int id, int objectId) throws RemoteException {
         this.gameManager.getObjectManager().addToRemovedObjects(this.gameManager.getObjectManager().getObject(objectId));
+        for (Player p : gameManager.getPlayers()) {
+            if (p.getID() == id) {
+
+            }
+        }
     }
 
     @Override
@@ -98,7 +107,8 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
         this.gameManager.setGameState(gameState);
         if (this.gameManager.getGameState().equals(GameState.RUNNING)) {
             this.gameManager.getGameLoop().start();
-        } else {
+        }
+        else {
             this.gameManager.getGameLoop().stop();
         }
     }
@@ -106,5 +116,10 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
     @Override
     public void receiveObjectDeletion(int id) throws RemoteException {
         this.gameManager.removeObject(id);
+    }
+
+    @Override
+    public void updateScores(int playerId, int score) {
+        gameManager.updateScoreLabel(playerId, score);
     }
 }

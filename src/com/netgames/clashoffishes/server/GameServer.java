@@ -92,6 +92,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
             executor.execute(() -> {
                 try {
                     client.collisionUpdate(playerID, objectID);
+                    client.updateScores(playerID, gameManager.getPlayer(playerID).getScore());
                 }
                 catch (RemoteException ex) {
 
