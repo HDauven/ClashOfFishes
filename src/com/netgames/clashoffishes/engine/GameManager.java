@@ -357,22 +357,26 @@ public class GameManager extends Application {
             case "BUBBLES":
                 System.out.println(characterName.toUpperCase());
                 createdPlayer = new Player(objectID, this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, playerID, bubbles1, bubbles2, bubbles3, bubbles4);
+                        WIDTH / 2, HEIGHT / 2, playerID, bubbles1, bubbles2, bubbles3, bubbles4, 
+                        bubblesBite1, bubblesBite2, bubblesBite3);
                 break;
             case "CLEO":
                 System.out.println(characterName.toUpperCase());
                 createdPlayer = new Player(objectID, this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, playerID, cleo1, cleo2, cleo3, cleo4);
+                        WIDTH / 2, HEIGHT / 2, playerID, cleo1, cleo2, cleo3, cleo4,
+                        cleoBite1, cleoBite2, cleoBite3);
                 break;
             case "FRED":
                 System.out.println(characterName.toUpperCase());
                 createdPlayer = new Player(objectID, this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, playerID, fred1, fred2, fred3, fred4);
+                        WIDTH / 2, HEIGHT / 2, playerID, fred1, fred2, fred3, fred4, 
+                        fredBite1, fredBite2, fredBite3);
                 break;
             case "GILL":
                 System.out.println(characterName.toUpperCase());
                 createdPlayer = new Player(objectID, this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, playerID, gill1, gill2, gill3, gill4);
+                        WIDTH / 2, HEIGHT / 2, playerID, gill1, gill2, gill3, gill4, 
+                        gillBite1, gillBite2, gillBite3);
                 break;
         }
         this.players.add(createdPlayer);
