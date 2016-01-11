@@ -333,12 +333,12 @@ public class Player extends AnimatedObject {
         else if (object instanceof EnergyDrink) {
             updateScore(10);
         }
+        this.gameManager.updateScore(this.score, this.playerID);
         gameManager.updateScoreLabel(this.playerID, this.score);
     }
     
     public void updateScore (int score) {
         this.score += score;
-        this.gameManager.updateScore(this.score, this.playerID);
     }
 
     private void collisionReaction(GameObject object) {
