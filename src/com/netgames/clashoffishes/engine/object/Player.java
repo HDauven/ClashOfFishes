@@ -244,7 +244,7 @@ public class Player extends AnimatedObject {
      * detects collision with the player, get rid of the object it has collision
      * with.
      */
-    public void checkCollision() {
+    public void checkCollision(){
         for (int i = 0; i < gameManager.getObjectManager().getCurrentObject().size(); i++) {
             GameObject object = gameManager.getObjectManager().getCurrentObject().get(i);
             if (collide(object)) {
@@ -377,7 +377,12 @@ public class Player extends AnimatedObject {
             gameManager.getObjectManager().removeCurrentObject(object);
         }
         else {
+            try{
             gameManager.getGameServer().deleteObject(object.getID());
+            }
+            catch(RemoteException re){
+                re.printStackTrace();
+            }
         }
     }
 
