@@ -729,4 +729,12 @@ public class GameManager extends Application {
             }
         }
     }
+    
+    public void updateScore (int score, int playerID) {
+        try {
+            this.gameServer.updateScore(score, playerID);
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

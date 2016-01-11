@@ -325,13 +325,13 @@ public class Player extends AnimatedObject {
      */
     private void scoringEngine(GameObject object) {
         if (object instanceof Seaweed) {
-            this.score -= 5;
+            this.gameManager.updateScore(-5, this.playerID);
         }
         else if (object instanceof FishHook) {
-            this.score -= 2;
+            this.gameManager.updateScore(-2, this.playerID);
         }
         else if (object instanceof EnergyDrink) {
-            this.score += 10;
+            this.gameManager.updateScore(10, this.playerID);
         }
         gameManager.updateScoreLabel(this.playerID, this.score);
     }
