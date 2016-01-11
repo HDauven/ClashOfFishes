@@ -56,7 +56,7 @@ public abstract class GameObject {
         this.hasValue = false;
         this.isFlipV = false;
         this.isFlipH = false;
-        id = id;
+        this.id = id;
     }
 
     /**

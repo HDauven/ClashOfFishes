@@ -692,9 +692,12 @@ public class GameManager extends Application {
     }
     
     public void removeObject(int id){
+        System.out.println("Remove object with id: " + id);
         for(GameObject o : objectManager.getCurrentObject()){
             if(o.getID() == id){
+                root.getChildren().remove(o.getSpriteFrame());
                 objectManager.removeCurrentObject(o);
+                return;
             }
         }
         
