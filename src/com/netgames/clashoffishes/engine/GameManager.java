@@ -66,10 +66,10 @@ public class GameManager extends Application {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Player images declaration">
-    private Image bubbles1, bubbles2, bubbles3, bubbles4;
-    private Image cleo1, cleo2, cleo3, cleo4;
-    private Image fred1, fred2, fred3, fred4;
-    private Image gill1, gill2, gill3, gill4;
+    private Image bubbles1, bubbles2, bubbles3, bubbles4, bubblesBite1, bubblesBite2, bubblesBite3;
+    private Image cleo1, cleo2, cleo3, cleo4, cleoBite1, cleoBite2, cleoBite3;
+    private Image fred1, fred2, fred3, fred4, fredBite1, fredBite2, fredBite3;
+    private Image gill1, gill2, gill3, gill4, gillBite1, gillBite2, gillBite3;
     private URL playerDir;
     // </editor-fold>
 
@@ -259,6 +259,9 @@ public class GameManager extends Application {
         bubbles2 = new Image(playerDir.toString() + "Bubbles2.png", 100, 66, true, false, true);
         bubbles3 = new Image(playerDir.toString() + "Bubbles3.png", 103, 66, true, false, true);
         bubbles4 = new Image(playerDir.toString() + "Bubbles4.png", 105, 66, true, false, true);
+        bubblesBite1 = new Image(playerDir.toString() + "BubblesBite1.png", 105, 66, true, false, true);
+        bubblesBite2 = new Image(playerDir.toString() + "BubblesBite2.png", 103, 66, true, false, true);
+        bubblesBite3 = new Image(playerDir.toString() + "BubblesBite3.png", 99, 66, true, false, true);
         // </editor-fold>
 
         // <editor-fold defaultstate="collapsed" desc="Cleo image instantiation">        
@@ -266,6 +269,9 @@ public class GameManager extends Application {
         cleo2 = new Image(playerDir.toString() + "Cleo2.png", 117, 76, true, false, true);
         cleo3 = new Image(playerDir.toString() + "Cleo3.png", 120, 78, true, false, true);
         cleo4 = new Image(playerDir.toString() + "Cleo4.png", 125, 72, true, false, true);
+        cleoBite1 = new Image(playerDir.toString() + "CleoBite1.png", 125, 72, true, false, true);
+        cleoBite2 = new Image(playerDir.toString() + "CleoBite2.png", 123, 75, true, false, true);
+        cleoBite3 = new Image(playerDir.toString() + "CleoBite3.png", 121, 76, true, false, true);
         // </editor-fold>
 
         // <editor-fold defaultstate="collapsed" desc="Fred image instantiation">
@@ -273,6 +279,9 @@ public class GameManager extends Application {
         fred2 = new Image(playerDir.toString() + "Fred2.png", 160, 109, true, false, true);
         fred3 = new Image(playerDir.toString() + "Fred3.png", 157, 109, true, false, true);
         fred4 = new Image(playerDir.toString() + "Fred4.png", 147, 109, true, false, true);
+        fredBite1 = new Image(playerDir.toString() + "FredBite1.png", 147, 113, true, false, true);
+        fredBite2 = new Image(playerDir.toString() + "FredBite2.png", 156, 118, true, false, true);
+        fredBite3 = new Image(playerDir.toString() + "FredBite3.png", 158, 115, true, false, true);
         // </editor-fold>
 
         // <editor-fold defaultstate="collapsed" desc="Gill image instantiation">
@@ -280,6 +289,9 @@ public class GameManager extends Application {
         gill2 = new Image(playerDir.toString() + "Gill2.png", 126, 72, true, false, true);
         gill3 = new Image(playerDir.toString() + "Gill3.png", 123, 72, true, false, true);
         gill4 = new Image(playerDir.toString() + "Gill4.png", 120, 72, true, false, true);
+        gillBite1 = new Image(playerDir.toString() + "GillBite1.png", 123, 72, true, false, true);
+        gillBite2 = new Image(playerDir.toString() + "GillBite2.png", 121, 72, true, false, true);
+        gillBite3 = new Image(playerDir.toString() + "GillBite3.png", 124, 72, true, false, true);
         // </editor-fold>
 
         npcDir = this.getClass().getResource("/com/netgames/clashoffishes/images/npc/");
@@ -345,22 +357,26 @@ public class GameManager extends Application {
             case "BUBBLES":
                 System.out.println(characterName.toUpperCase());
                 createdPlayer = new Player(objectID, this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, playerID, bubbles1, bubbles2, bubbles3, bubbles4);
+                        WIDTH / 2, HEIGHT / 2, playerID, bubbles1, bubbles2, bubbles3, bubbles4, 
+                        bubblesBite1, bubblesBite2, bubblesBite3);
                 break;
             case "CLEO":
                 System.out.println(characterName.toUpperCase());
                 createdPlayer = new Player(objectID, this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, playerID, cleo1, cleo2, cleo3, cleo4);
+                        WIDTH / 2, HEIGHT / 2, playerID, cleo1, cleo2, cleo3, cleo4,
+                        cleoBite1, cleoBite2, cleoBite3);
                 break;
             case "FRED":
                 System.out.println(characterName.toUpperCase());
                 createdPlayer = new Player(objectID, this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, playerID, fred1, fred2, fred3, fred4);
+                        WIDTH / 2, HEIGHT / 2, playerID, fred1, fred2, fred3, fred4, 
+                        fredBite1, fredBite2, fredBite3);
                 break;
             case "GILL":
                 System.out.println(characterName.toUpperCase());
                 createdPlayer = new Player(objectID, this, "M 81,5 L 81,5 23,6 26,57 80,54 80,54 Z",
-                        WIDTH / 2, HEIGHT / 2, playerID, gill1, gill2, gill3, gill4);
+                        WIDTH / 2, HEIGHT / 2, playerID, gill1, gill2, gill3, gill4, 
+                        gillBite1, gillBite2, gillBite3);
                 break;
         }
         this.players.add(createdPlayer);
