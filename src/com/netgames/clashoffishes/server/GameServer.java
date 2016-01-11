@@ -13,6 +13,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
@@ -25,7 +27,7 @@ import javafx.animation.AnimationTimer;
 public class GameServer extends UnicastRemoteObject implements IGameServer {
 
     private transient final Lobby lobby;
-
+    private ExecutorService executor;
     private List<IGameClient> clients;
 
     GameManager gameManager = new GameManager();
@@ -48,6 +50,7 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         this.lobby = lobby;
 
         clients = new ArrayList<>();
+        executor = Executors.newFixedThreadPool(4);
     }
 
     @Override
@@ -58,21 +61,39 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     @Override
     public void updateMove(double speed, String key, boolean isPressed, double x, double y, int playerID) throws RemoteException {
         for (IGameClient client : clients) {
-            client.updateMove(speed, key, isPressed, x, y, playerID);
+            executor.execute(() -> {
+                try {
+                    client.updateMove(speed, key, isPressed, x, y, playerID);
+                } catch (RemoteException ex) {
+
+                }
+            });
         }
     }
 
     @Override
     public void updateSpeed(double speed, int playerID) throws RemoteException {
         for (IGameClient client : clients) {
-            client.updateSpeed(speed, playerID);
+            executor.execute(() -> {
+                try {
+                    client.updateSpeed(speed, playerID);
+                } catch (RemoteException ex) {
+
+                }
+            });
         }
     }
 
     @Override
     public void collision(int playerID, int objectID) throws RemoteException {
         for (IGameClient client : clients) {
-            client.collisionUpdate(playerID, objectID);
+            executor.execute(() -> {
+                try {
+                    client.collisionUpdate(playerID, objectID);
+                } catch (RemoteException ex) {
+
+                }
+            });
         }
     }
 

@@ -1,6 +1,5 @@
 package com.netgames.clashoffishes.engine.object;
 
-import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.engine.GameManager;
 import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
@@ -268,7 +267,7 @@ public class Player extends AnimatedObject {
 
     private void sendCollision(GameObject object) {
         try {
-            Administration.get().getGameServer().collision(playerID, object.getID());
+            gameManager.getGameServer().collision(playerID, object.getID());
         }
         catch (RemoteException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
@@ -362,8 +361,23 @@ public class Player extends AnimatedObject {
                 this.updateSpeed(2.7);
             }
         }
+
         if (!gameManager.isMultiplayer()) {
             gameManager.getObjectManager().removeCurrentObject(object);
+            sendSpeedUpdate(1.3);
+        }
+        else if (object instanceof FishHook) {
+            sendSpeedUpdate(0.5);
+        }
+        else if (object instanceof EnergyDrink) {
+            sendSpeedUpdate(2.7);
+        }
+
+        if (!gameManager.isMultiplayer()) {
+            gameManager.getObjectManager().removeCurrentObject(object);
+        }
+        else {
+            gameManager.getGameServer().deleteObject(object.getID());
         }
     }
 
@@ -372,7 +386,7 @@ public class Player extends AnimatedObject {
      */
     private void sendSpeedUpdate(double speed) {
         try {
-            Administration.get().getGameServer().updateSpeed(speed, playerID);
+            gameManager.getGameServer().updateSpeed(speed, playerID);
         }
         catch (RemoteException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
