@@ -25,6 +25,7 @@ public class Player extends AnimatedObject {
     protected GameManager gameManager;
     private boolean up, down, left, right;
     private boolean space;
+    private boolean biteAnimationActive;
     private static int standardSpeed = 2;
     // TODO make the sprite size dynamic
     protected static final double SPRITE_PIXELS_X = 81;
@@ -119,91 +120,95 @@ public class Player extends AnimatedObject {
      */
     private void setImageState() {
         /* check whether the character stands still */
-        if (!isRight()
-                && !isLeft()
-                && !isDown()
-                && !isUp()) {
-            spriteFrame.setImage(imageStates.get(0));
-            animator = false;
-            framecounter = 0;
-            spriteFrame.setRotate(0);
-            spriteBound.setRotate(0);
-        }
+        if (!biteAnimationActive) {
+            if (!isRight()
+                    && !isLeft()
+                    && !isDown()
+                    && !isUp()) {
+                spriteFrame.setImage(imageStates.get(0));
+                animator = false;
+                framecounter = 0;
+                spriteFrame.setRotate(0);
+                spriteBound.setRotate(0);
+            }
 
-        if (isRight()) {
-            spriteFrame.setScaleX(1);
-            spriteBound.setScaleX(1);
-            this.setIsFlipH(false);
-            if (!animator && (!isDown() && !isUp())) {
-                spriteFrame.setImage(imageStates.get(1));
-                if (framecounter >= runningspeed) {
-                    animator = true;
-                    framecounter = 0;
-                    spriteFrame.setRotate(0);
-                    spriteBound.setRotate(0);
-                } else {
-                    framecounter += 1;
-                }
-            } else if (animator) {
-                spriteFrame.setImage(imageStates.get(2));
-                if (framecounter >= runningspeed) {
-                    animator = false;
-                    framecounter = 0;
-                    spriteFrame.setRotate(0);
-                    spriteBound.setRotate(0);
-                } else {
-                    framecounter += 1;
+            if (isRight()) {
+                spriteFrame.setScaleX(1);
+                spriteBound.setScaleX(1);
+                this.setIsFlipH(false);
+                if (!animator && (!isDown() && !isUp())) {
+                    spriteFrame.setImage(imageStates.get(1));
+                    if (framecounter >= runningspeed) {
+                        animator = true;
+                        framecounter = 0;
+                        spriteFrame.setRotate(0);
+                        spriteBound.setRotate(0);
+                    } else {
+                        framecounter += 1;
+                    }
+                } else if (animator) {
+                    spriteFrame.setImage(imageStates.get(2));
+                    if (framecounter >= runningspeed) {
+                        animator = false;
+                        framecounter = 0;
+                        spriteFrame.setRotate(0);
+                        spriteBound.setRotate(0);
+                    } else {
+                        framecounter += 1;
+                    }
                 }
             }
-        }
 
-        if (isLeft()) {
-            spriteFrame.setScaleX(-1);
-            spriteBound.setScaleX(-1);
-            this.setIsFlipH(true);
-            if (!animator && (!isDown() && !isUp())) {
-                spriteFrame.setImage(imageStates.get(1));
-                if (framecounter >= runningspeed) {
-                    animator = true;
-                    framecounter = 0;
-                    spriteFrame.setRotate(0);
-                    spriteBound.setRotate(0);
-                } else {
-                    framecounter += 1;
-                }
-            } else if (animator) {
-                spriteFrame.setImage(imageStates.get(2));
-                if (framecounter >= runningspeed) {
-                    animator = false;
-                    framecounter = 0;
-                    spriteFrame.setRotate(0);
-                    spriteBound.setRotate(0);
-                } else {
-                    framecounter += 1;
-                }
-            }
-        }
-
-        if (isDown()) {
-            spriteFrame.setImage(imageStates.get(1));
             if (isLeft()) {
-                spriteFrame.setRotate(-45);
-                spriteBound.setRotate(-45);
-            } else if (isRight()) {
-                spriteFrame.setRotate(45);
-                spriteBound.setRotate(45);
+                spriteFrame.setScaleX(-1);
+                spriteBound.setScaleX(-1);
+                this.setIsFlipH(true);
+                if (!animator && (!isDown() && !isUp())) {
+                    spriteFrame.setImage(imageStates.get(1));
+                    if (framecounter >= runningspeed) {
+                        animator = true;
+                        framecounter = 0;
+                        spriteFrame.setRotate(0);
+                        spriteBound.setRotate(0);
+                    } else {
+                        framecounter += 1;
+                    }
+                } else if (animator) {
+                    spriteFrame.setImage(imageStates.get(2));
+                    if (framecounter >= runningspeed) {
+                        animator = false;
+                        framecounter = 0;
+                        spriteFrame.setRotate(0);
+                        spriteBound.setRotate(0);
+                    } else {
+                        framecounter += 1;
+                    }
+                }
             }
-        }
 
-        if (isUp()) {
-            spriteFrame.setImage(imageStates.get(1));
-            if (isLeft()) {
-                spriteFrame.setRotate(45);
-                spriteBound.setRotate(45);
-            } else if (isRight()) {
-                spriteFrame.setRotate(-45);
-                spriteBound.setRotate(-45);
+            if (isDown()) {
+                spriteFrame.setImage(imageStates.get(1));
+                if (isLeft()) {
+                    spriteFrame.setRotate(-45);
+                    spriteBound.setRotate(-45);
+                } else if (isRight()) {
+                    spriteFrame.setRotate(45);
+                    spriteBound.setRotate(45);
+                }
             }
+
+            if (isUp()) {
+                spriteFrame.setImage(imageStates.get(1));
+                if (isLeft()) {
+                    spriteFrame.setRotate(45);
+                    spriteBound.setRotate(45);
+                } else if (isRight()) {
+                    spriteFrame.setRotate(-45);
+                    spriteBound.setRotate(-45);
+                }
+            }
+        } else {
+            // execute bite animation 
         }
     }
 
