@@ -61,14 +61,16 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     @Override
     public void updateMove(double speed, String key, boolean isPressed, double x, double y, int playerID) throws RemoteException {
         for (IGameClient client : clients) {
-            executor.execute(() -> {
-                try {
-                    client.updateMove(speed, key, isPressed, x, y, playerID);
-                }
-                catch (RemoteException ex) {
+            if (client.getPlayerID() != playerID) {
+                executor.execute(() -> {
+                    try {
+                        client.updateMove(speed, key, isPressed, x, y, playerID);
+                    }
+                    catch (RemoteException ex) {
 
-                }
-            });
+                    }
+                });
+            }
         }
     }
 
