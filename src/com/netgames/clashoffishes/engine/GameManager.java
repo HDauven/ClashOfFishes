@@ -226,6 +226,7 @@ public class GameManager extends Application {
         try {
             if (multiplayer) {
                 gameServer.updateMove(player.getvX(), key, pressed, player.getiX(), player.getiY(), player.getPlayerID());
+                player.updateMove(key, pressed);
             }
             else {
                 player.updateMove(key, pressed);
