@@ -506,7 +506,7 @@ public class Player extends AnimatedObject {
         this.setvX(newSpeed);
         this.setvY(newSpeed);
         // TODO reset value after 3 seconds
-        if (!gameManager.isMultiplayer()) {
+        if (gameManager.isMultiplayer()) {
             tSpeed = new Thread(new Runnable() {
 
                 @Override
