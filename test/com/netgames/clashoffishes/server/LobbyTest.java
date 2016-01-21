@@ -5,6 +5,7 @@
  */
 package com.netgames.clashoffishes.server;
 
+import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.server.remote.ILobby;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -27,11 +29,16 @@ public class LobbyTest {
     HashMap<GameMode, Integer> scores = new HashMap<>();
     Client c;
     Client c2;
+    Client c3;
 
+    @Before
     public void setUp() throws RemoteException {
+        Administration.get().clear();
+        Administration.get().logIn("Admin", "admin");
         this.lobby = new Lobby();
-        c = new Client("Stef", true, lobby);
+        c = new Client("Admin", true, lobby);
         c2 = new Client("Henk", false, lobby);
+        c3 = new Client("Stef", false, lobby);
         scores.put(GameMode.EVOLVED, 100);
         scores.put(GameMode.EVOLUTION_OF_TIME, 200);
         scores.put(GameMode.LAST_FISH_STANDING, 100);
@@ -50,6 +57,7 @@ public class LobbyTest {
      */
     @Test
     public void testRegisterClient() throws Exception {
+        lobby.getClients().clear();
         lobby.registerClient(c);
         assertEquals(1, lobby.getClients().size());
         lobby.registerClient(c2);
@@ -63,7 +71,6 @@ public class LobbyTest {
      * Test of removeClient method, of class Lobby.
      */
     public void testRemoveClient() throws Exception {
-        
         lobby.removeClient(c);
         assertEquals(1, lobby.getClients().size());
         lobby.removeClient(c);
@@ -108,7 +115,11 @@ public class LobbyTest {
     @Test
     public void testBroadcastReady() throws Exception {
         lobby.broadcastReady(true, c);
-        assertTrue(lobby.getClients().get(0).getIsReady());
+        for(int i = 0; i < lobby.getClients().size(); i++){
+            if(c.getUsername().equals(lobby.getClients().get(i).getUsername())){
+                assertTrue(lobby.getClients().get(i).getIsReady());
+            }
+        }
     }
 
     /**
@@ -116,12 +127,13 @@ public class LobbyTest {
      */
     @Test
     public void testBroadcastGameMode() throws Exception {
+        lobby = new Lobby();
         lobby.broadcastGameMode(GameMode.EVOLUTION_OF_TIME.toString(), c);
         assertEquals(lobby.getGameMode(), GameMode.EVOLUTION_OF_TIME);
-        assertEquals(lobby.getGameModeProperty(), GameMode.EVOLUTION_OF_TIME.toString());
+        assertEquals(lobby.getGameModeProperty(), GameMode.EVOLUTION_OF_TIME.toString().toLowerCase());
         lobby.broadcastGameMode(GameMode.EVOLVED.toString(), c);
         assertEquals(lobby.getGameMode(), GameMode.EVOLVED);
-        assertEquals(lobby.getGameModeProperty(), GameMode.EVOLVED.toString());
+        assertEquals(lobby.getGameModeProperty(), GameMode.EVOLVED.toString().toLowerCase());
         lobby.broadcastGameMode(GameMode.LAST_FISH_STANDING.toString(), c2);
         Assert.assertNotSame("Alleen host mag de game-mode veranderen", GameMode.LAST_FISH_STANDING, lobby.getGameMode());
         Assert.assertNotSame("Alleen host mag de game-mode veranderen", GameMode.LAST_FISH_STANDING.toString(), lobby.getGameModeProperty());
@@ -156,9 +168,10 @@ public class LobbyTest {
      */
     @Test
     public void testGetMessages() throws Exception {
-        lobby.broadcastMessage(new Message("Stef", "Hallo"), c);
-        lobby.broadcastMessage(new Message("Stef", "Hallo2"), c);
-        assertEquals(lobby.getMessages().size(), 2);
+        lobby.registerClient(c3);
+        lobby.broadcastMessage(new Message("Stef", "Hallo"), c3);
+        lobby.broadcastMessage(new Message("Stef", "Hallo2"), c3);
+        assertEquals(2, lobby.getMessages().size());
     }
 
     /**

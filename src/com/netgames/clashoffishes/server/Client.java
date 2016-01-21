@@ -11,7 +11,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Client class that holds a link to a lobby it registers to. Implementation of
@@ -65,6 +64,7 @@ public class Client extends UnicastRemoteObject implements IClient {
 
     @Override
     public void retrieveReady(boolean isReady, IClient sender) throws RemoteException {
+        sender.setIsReady(isReady);
         for (ILobbyListener guis : this.GUIs) {
             guis.displayReady(isReady, sender);
         }

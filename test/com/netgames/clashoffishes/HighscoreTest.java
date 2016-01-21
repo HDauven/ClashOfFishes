@@ -1,10 +1,12 @@
+package com.netgames.clashoffishes;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.netgames.clashoffishes;
 
+import com.netgames.clashoffishes.Highscore;
 import com.netgames.clashoffishes.engine.GameMode;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,9 +20,8 @@ import org.junit.Test;
  *
  * @author Stef
  */
-public class HighscoreTest
-{
-
+public class HighscoreTest {
+    
     Highscore score1 = new Highscore(GameMode.EVOLVED, "Stef", 100);
     Highscore score2 = new Highscore(GameMode.EVOLUTION_OF_TIME, "Stef", 200);
     Highscore score3 = new Highscore(GameMode.LAST_FISH_STANDING, "Stef", 300);

@@ -156,7 +156,7 @@ public class Administration {
     }
 
     public int nextObjectNr() {
-        return objectNr++;
+        return ++objectNr;
     }
 
     private void readProps() {

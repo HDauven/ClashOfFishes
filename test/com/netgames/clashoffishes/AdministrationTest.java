@@ -1,17 +1,30 @@
+package com.netgames.clashoffishes;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.netgames.clashoffishes;
 
+import com.netgames.clashoffishes.Administration;
+import com.netgames.clashoffishes.Highscore;
+import com.netgames.clashoffishes.User;
 import com.netgames.clashoffishes.data.DatabaseStorage;
 import com.netgames.clashoffishes.engine.GameMode;
+import com.netgames.clashoffishes.server.Client;
+import com.netgames.clashoffishes.server.GameClient;
+import com.netgames.clashoffishes.server.GameServer;
+import com.netgames.clashoffishes.server.Lobby;
+import com.netgames.clashoffishes.server.LobbyRegistry;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import org.junit.After;
+import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,15 +32,15 @@ import org.junit.Test;
  *
  * @author Stef
  */
-public class AdministrationTest
-{
-
-    DatabaseStorage dbStorage;
+public class AdministrationTest {
+    
+DatabaseStorage dbStorage;
 
     @Before
     public void setUp()
     {
         Administration.get().clear();
+        Administration.get().logIn("Admin", "admin");
         dbStorage = new DatabaseStorage();
         User u1 = dbStorage.getUser("Stef");
         User u2 = dbStorage.getUser("Henk");
@@ -90,7 +103,7 @@ public class AdministrationTest
     @Test
     public void testLogIn()
     {
-        assertNull("User bestaat niet, dus moet null zijn", Administration.get().logIn("asdf", "asdf"));
+        assertNull("User bestaat niet, dus moet null zijn", Administration.get().logIn("asdfasdfasdfasdfasdfaweraerawserfds", "kjhljkl"));
         assertNotNull("User bestaat, dus mag geen null zijn.", Administration.get().logIn("Admin", "admin"));
     }
 
@@ -120,7 +133,88 @@ public class AdministrationTest
     @Test
     public void testGetLoggedInUser()
     {
+        //Administration.get().logIn("Admin", "admin");
         User u = Administration.get().getLoggedInUser();
         assertNotNull("Ingelogde users kan geen null zijn.", u);
+    }
+    
+        /**
+     * Test of hasConnection method, of class Administration.
+     */
+    @Test
+    public void testHasConnection() {
+        Assert.assertTrue(Administration.get().hasConnection());
+    }
+
+    /**
+     * Test of nextObjectNr method, of class Administration.
+     */
+    @Test
+    public void testNextObjectNr() {
+        int nr = Administration.get().nextObjectNr();
+        assertTrue(nr > 0);
+        assertEquals(nr + 1, Administration.get().nextObjectNr());
+    }
+
+    /**
+     * Test of getIpAddress method, of class Administration.
+     */
+    @Test
+    public void testGetIpAddress() {
+        assertTrue(Administration.get().getIpAddress().length() > 7);//13
+    }
+
+    /**
+     * Test of resetClient method, of class Administration.
+     */
+    @Test
+    public void testResetClient() throws RemoteException {
+        //Administration.get().logIn("Admin", "admin");
+        Lobby l = new Lobby();
+        Client c = new Client("Stef", true, l);
+        Administration.get().setClient(c);
+        assertNotNull(Administration.get().getClient());
+        Administration.get().resetClient();
+        assertNull(Administration.get().getClient());
+    }
+
+    /**
+     * Test of resetLobby method, of class Administration.
+     */
+    @Test
+    public void testResetLobby() throws RemoteException {
+        //Administration.get().logIn("Admin", "admin");
+        Administration.get().setLobby(new Lobby());
+        assertNotNull(Administration.get().getLobby());
+        Administration.get().resetLobby();
+        assertNull(Administration.get().getLobby());
+    }
+
+    /**
+     * Test of resetLobbyRegistry method, of class Administration.
+     */
+    @Test
+    public void testResetLobbyRegistry() {
+        //Administration.get().logIn("Admin", "admin");
+        Administration.get().setLobbyRegistry(new LobbyRegistry());
+        assertNotNull(Administration.get().getLobbyRegistry());
+        Administration.get().resetLobbyRegistry();
+        assertNull(Administration.get().getLobbyRegistry());
+    }
+    
+    @Test
+    public void testSetGameClient() throws RemoteException{
+        //Administration.get().logIn("Admin", "admin");
+        assertNull(Administration.get().getGameClient());
+        Administration.get().setGameClient(new GameClient("Admin", "Cleo", 123, 1, new GameServer(new Lobby()), GameMode.EVOLVED));
+        assertNotNull(Administration.get().getGameClient());
+    }
+    
+    @Test
+    public void testSetGameServer() throws RemoteException{
+        //Administration.get().logIn("Admin", "admin");
+        assertNull(Administration.get().getGameServer());
+        Administration.get().setGameServer(new GameServer(new Lobby()));
+        assertNotNull(Administration.get().getGameServer());
     }
 }
