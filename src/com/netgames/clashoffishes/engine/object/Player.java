@@ -43,6 +43,7 @@ public class Player extends AnimatedObject {
     int biteframethree = 18;
     int biteframefour = 24;
     int biteframefive = 30;
+    int scoreChange = 0;
 
     private int playerID;
     private int score;
@@ -290,7 +291,7 @@ public class Player extends AnimatedObject {
 
     private void sendCollision(GameObject object) {
         try {
-            gameManager.getGameServer().collision(playerID, object.getID(), score);
+            gameManager.getGameServer().collision(playerID, object.getID(), this.scoreChange);
         } catch (RemoteException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -346,11 +347,15 @@ public class Player extends AnimatedObject {
      * @param object that the Player object has collision with.
      */
     private void scoringEngine(GameObject object) {
+        scoreChange = 0;
             if (object instanceof Seaweed) {
+                scoreChange = -5;
                 updateScore(-5);
             } else if (object instanceof FishHook) {
+                scoreChange = -2;
                 updateScore(-2);
             } else if (object instanceof EnergyDrink) {
+                scoreChange = 10;
                 updateScore(10);
             }
 

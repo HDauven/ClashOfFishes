@@ -197,7 +197,7 @@ public class GameLoop extends AnimationTimer {
                 tempPlayerScore = player.getScore();
                 tempPlayerID = player.getPlayerID();
             }
-            System.out.println("PlayerID: " + tempPlayerID + " - PlayerScore: " + tempPlayerScore);
+            System.out.println("PlayerID: " + player.getPlayerID() + " - PlayerScore: " + player.getScore());
         }
         System.out.println("Highest scorer: " + tempPlayerID);
     }
