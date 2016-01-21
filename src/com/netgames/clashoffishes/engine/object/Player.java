@@ -36,6 +36,7 @@ public class Player extends AnimatedObject {
     protected static final double bottomBoundary = (HEIGHT - SPRITE_PIXELS_Y);
     protected static final double topBoundary = 0;
     boolean animator = false;
+    private boolean reverseMovement = false;
     int framecounter = 0;
     int runningspeed = 6;
     int biteframeone = 6;
@@ -78,8 +79,6 @@ public class Player extends AnimatedObject {
         setBoundaries();
         setImageState();
         movePlayer(iX, iY);
-        //playAudioClip();
-        //checkCollision();
     }
 
     /**
@@ -348,16 +347,16 @@ public class Player extends AnimatedObject {
      */
     private void scoringEngine(GameObject object) {
         scoreChange = 0;
-            if (object instanceof Seaweed) {
-                scoreChange = -5;
-                updateScore(-5);
-            } else if (object instanceof FishHook) {
-                scoreChange = -2;
-                updateScore(-2);
-            } else if (object instanceof EnergyDrink) {
-                scoreChange = 10;
-                updateScore(10);
-            }
+        if (object instanceof Seaweed) {
+            scoreChange = -5;
+            updateScore(-5);
+        } else if (object instanceof FishHook) {
+            scoreChange = -2;
+            updateScore(-2);
+        } else if (object instanceof EnergyDrink) {
+            scoreChange = 10;
+            updateScore(10);
+        }
 
         gameManager.updateScoreLabel(this.playerID, this.score);
     }
@@ -369,19 +368,24 @@ public class Player extends AnimatedObject {
     private void collisionReaction(GameObject object) {
         if (object instanceof Seaweed) {
             if (gameManager.isMultiplayer()) {
-                sendSpeedUpdate(1.3);
+                sendSpeedUpdate(1.3, true);
+                enforceReverseMovement(true);
+                reverseMovement = true;
             } else {
                 this.updateSpeed(1.3);
             }
         } else if (object instanceof FishHook) {
             if (gameManager.isMultiplayer()) {
-                sendSpeedUpdate(0.5);
+                sendSpeedUpdate(0.5, false);
+                enforceReverseMovement(false);
             } else {
                 this.updateSpeed(0.5);
             }
         } else if (object instanceof EnergyDrink) {
             if (gameManager.isMultiplayer()) {
-                sendSpeedUpdate(2.7);
+                sendSpeedUpdate(2.7, false);
+                enforceReverseMovement(false);
+                reverseMovement = false;
             } else {
                 this.updateSpeed(2.7);
             }
@@ -389,11 +393,14 @@ public class Player extends AnimatedObject {
 
         if (!gameManager.isMultiplayer()) {
             gameManager.getObjectManager().removeCurrentObject(object);
-            sendSpeedUpdate(1.3);
+            sendSpeedUpdate(1.3, true);
+            enforceReverseMovement(true);
         } else if (object instanceof FishHook) {
-            sendSpeedUpdate(0.5);
+            sendSpeedUpdate(0.5, false);
+            enforceReverseMovement(false);
         } else if (object instanceof EnergyDrink) {
-            sendSpeedUpdate(2.7);
+            sendSpeedUpdate(2.7, false);
+            enforceReverseMovement(false);
         }
 
         if (!gameManager.isMultiplayer()) {
@@ -410,9 +417,9 @@ public class Player extends AnimatedObject {
     /**
      * Informs the players of an update in the players speed.
      */
-    private void sendSpeedUpdate(double speed) {
+    private void sendSpeedUpdate(double speed, boolean reverseMovement) {
         try {
-            gameManager.getGameServer().updateSpeed(speed, playerID);
+            gameManager.getGameServer().updateSpeed(speed, playerID, reverseMovement);
         } catch (RemoteException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -533,19 +540,78 @@ public class Player extends AnimatedObject {
     }
 
     public void updateMove(String key, boolean pressed) {
-        switch (key) {
-            case "UP":
-                this.setUp(pressed);
-                break;
-            case "DOWN":
-                this.setDown(pressed);
-                break;
-            case "LEFT":
-                this.setLeft(pressed);
-                break;
-            case "RIGHT":
-                this.setRight(pressed);
-                break;
+        if (!reverseMovement) {
+            switch (key) {
+                case "UP":
+                    this.setUp(pressed);
+                    break;
+                case "DOWN":
+                    this.setDown(pressed);
+                    break;
+                case "LEFT":
+                    this.setLeft(pressed);
+                    break;
+                case "RIGHT":
+                    this.setRight(pressed);
+                    break;
+            }
+        } else {
+            switch (key) {
+                case "UP":
+                    this.setDown(pressed);
+                    break;
+                case "DOWN":
+                    this.setUp(pressed);
+                    break;
+                case "LEFT":
+                    this.setRight(pressed);
+                    break;
+                case "RIGHT":
+                    this.setLeft(pressed);
+                    break;
+            }
         }
+
+    }
+
+    public boolean isReverseMovement() {
+        return reverseMovement;
+    }
+
+    public void enforceReverseMovement(boolean isReversed) {
+        if (reverseMovement != isReversed) {
+            reverseKeys();
+        }
+    }
+
+    public void reverseKeys() {
+        boolean tempRight = right;
+        boolean tempLeft = left;
+        boolean tempUp = up;
+        boolean tempDown = down;
+        
+        if (tempRight) {
+            this.setRight(false);
+            this.setLeft(true);
+        }
+
+        if (tempLeft) {
+            this.setLeft(false);
+            this.setRight(true);
+        }
+
+        if (tempUp) {
+            this.setUp(false);
+            this.setDown(true);
+        }
+
+        if (tempDown) {
+            this.setDown(false);
+            this.setUp(true);
+        }
+    }
+
+    public void setReverseMovement(boolean reverseMovement) {
+        this.reverseMovement = reverseMovement;
     }
 }

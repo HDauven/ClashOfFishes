@@ -58,23 +58,44 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
         this.gameManager.getPlayers().get(playerID).updateSpeed(speed);
         this.gameManager.getPlayers().get(playerID).setiX(x);
         this.gameManager.getPlayers().get(playerID).setiY(y);
-        if (key.equals("UP")) {
-            this.gameManager.getPlayers().get(playerID).setUp(pressed);
-        }
-        else if (key.equals("DOWN")) {
-            this.gameManager.getPlayers().get(playerID).setDown(pressed);
-        }
-        else if (key.equals("LEFT")) {
-            this.gameManager.getPlayers().get(playerID).setLeft(pressed);
-        }
-        else if (key.equals("RIGHT")) {
-            this.gameManager.getPlayers().get(playerID).setRight(pressed);
+        if (!gameManager.getPlayers().get(playerID).isReverseMovement()){
+            if (key.equals("UP")) {
+                this.gameManager.getPlayers().get(playerID).setUp(pressed);
+            }
+            else if (key.equals("DOWN")) {
+                this.gameManager.getPlayers().get(playerID).setDown(pressed);
+            }
+            else if (key.equals("LEFT")) {
+                this.gameManager.getPlayers().get(playerID).setLeft(pressed);
+            }
+            else if (key.equals("RIGHT")) {
+                this.gameManager.getPlayers().get(playerID).setRight(pressed);
+            }
+        } else {
+            if (key.equals("UP")) {
+                this.gameManager.getPlayers().get(playerID).setDown(pressed);
+            }
+            else if (key.equals("DOWN")) {
+                this.gameManager.getPlayers().get(playerID).setUp(pressed);
+            }
+            else if (key.equals("LEFT")) {
+                this.gameManager.getPlayers().get(playerID).setRight(pressed);
+            }
+            else if (key.equals("RIGHT")) {
+                this.gameManager.getPlayers().get(playerID).setLeft(pressed);
+            }           
         }
     }
 
     @Override
-    public void updateSpeed(double speed, int playerID) {
-        this.gameManager.getPlayers().get(playerID).updateSpeed(speed);
+    public void updateSpeed(double speed, int playerID, boolean reverseMovement) {
+        for (Player p : gameManager.getPlayers()) {
+            if (p.getPlayerID() == playerID) {
+                p.updateSpeed(speed);
+                p.enforceReverseMovement(reverseMovement);
+                p.setReverseMovement(reverseMovement);
+            }
+        }
     }
 
     @Override

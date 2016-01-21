@@ -40,9 +40,10 @@ public interface IGameClient extends Remote {
      *
      * @param speed The speed at which the character is traveling.
      * @param playerID The player identifier.
+     * @param reverseMovement Whether the movement of a player is reversed or not
      * @throws RemoteException
      */
-    public void updateSpeed(double speed, int playerID) throws RemoteException;
+    public void updateSpeed(double speed, int playerID, boolean reverseMovement) throws RemoteException;
 
     /**
      * Deze methode wordt aangeroepen als er op een andere client een collision
