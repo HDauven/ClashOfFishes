@@ -20,6 +20,7 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
@@ -34,6 +35,7 @@ import javafx.stage.Stage;
 public class GameManager extends Application {
 
     public static final double WIDTH = 1280, HEIGHT = 720;
+    public static final int MAPWIDTH = 4000, MAPHEIGHT = 800;
     private Scene scene;
     private GameLoop gameLoop;
     private ObjectManager objectManager;
@@ -47,9 +49,9 @@ public class GameManager extends Application {
     private transient SimpleStringProperty timeLeft = new SimpleStringProperty(String.valueOf(60));
     //Standaardwaarde is single player = evolution of time
     private GameMode gameMode = GameMode.EVOLUTION_OF_TIME;
-    private Group root;
+    public Group root;
     private int seed = 0;
-    Stage thisStage;
+    public Stage thisStage;
     GameObject object = null;
     boolean multiplayer;
 
@@ -118,6 +120,8 @@ public class GameManager extends Application {
         }
         this.players = new ArrayList<>();
         this.gameServer = Administration.get().getGameServer();
+        
+        
     }
 
     // TODO make this class dynamic. 
@@ -128,10 +132,12 @@ public class GameManager extends Application {
         primaryStage.setTitle("Clash of Fishes");
         root = new Group();
         scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
-        primaryStage.show();
-
+        primaryStage.show();  
         this.startGame(1);
+        
+        
     }
 
     private void startGame(int id) {
@@ -328,7 +334,7 @@ public class GameManager extends Application {
         if (this.seed == 0) {
             this.seed = (int) System.currentTimeMillis();
         }
-        map = new GameMap((int) WIDTH, (int) HEIGHT, this.seed);
+        map = new GameMap(MAPWIDTH, MAPHEIGHT, this.seed);
         menu = new GameMenu(this);
 
         if (multiplayer) {
@@ -729,6 +735,10 @@ public class GameManager extends Application {
                 });
             }
         }
+    }
+    
+    public Canvas getMapCanvas() {
+        return this.map.getMap();
     }
     
 }

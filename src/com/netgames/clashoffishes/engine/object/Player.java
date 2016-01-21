@@ -2,6 +2,8 @@ package com.netgames.clashoffishes.engine.object;
 
 import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.engine.GameManager;
+import static com.netgames.clashoffishes.engine.GameManager.MAPHEIGHT;
+import static com.netgames.clashoffishes.engine.GameManager.MAPWIDTH;
 import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
 import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
@@ -31,9 +33,9 @@ public class Player extends AnimatedObject {
     protected static final double SPRITE_PIXELS_X = 81;
     protected static final double SPRITE_PIXELS_Y = 81;
     // TODO make the boundaries dynamic
-    protected static final double rightBoundary = (WIDTH - SPRITE_PIXELS_X);
+    protected static final double rightBoundary = (MAPWIDTH - SPRITE_PIXELS_X);
     protected static final double leftBoundary = 0;
-    protected static final double bottomBoundary = (HEIGHT - SPRITE_PIXELS_Y);
+    protected static final double bottomBoundary = (MAPHEIGHT - SPRITE_PIXELS_Y);
     protected static final double topBoundary = 0;
     boolean animator = false;
     int framecounter = 0;
@@ -87,17 +89,38 @@ public class Player extends AnimatedObject {
      * inputs.
      */
     private void setXYLocation() {
+        
+        System.out.println("X = " + this.gameManager.root.getLayoutX());
+        System.out.println("Y = " + this.gameManager.root.getLayoutY());
+        
         if (isRight()) {
             iX += vX;
+            if (this.gameManager.root.getLayoutX() > -(MAPWIDTH - WIDTH) + 10) {
+            double test = this.gameManager.root.getLayoutX();
+            this.gameManager.root.setLayoutX(test -= vX);
+            }
+
         }
         if (isLeft()) {
             iX -= vX;
+            if (this.gameManager.root.getLayoutX() < 0) {
+            double test = this.gameManager.root.getLayoutX();
+            this.gameManager.root.setLayoutX(test += vX);
+            }
         }
         if (isDown()) {
             iY += vY;
+            if (this.gameManager.root.getLayoutY() > -(MAPHEIGHT - HEIGHT) + 10) {
+            double test = this.gameManager.root.getLayoutY();
+            this.gameManager.root.setLayoutY(test -= vY);
+            }
         }
         if (isUp()) {
             iY -= vY;
+            if (this.gameManager.root.getLayoutY() < 0) {
+            double test = this.gameManager.root.getLayoutY();
+            this.gameManager.root.setLayoutY(test += vY);
+            }
         }
     }
 
@@ -348,16 +371,16 @@ public class Player extends AnimatedObject {
      */
     private void scoringEngine(GameObject object) {
         scoreChange = 0;
-            if (object instanceof Seaweed) {
-                scoreChange = -5;
-                updateScore(-5);
-            } else if (object instanceof FishHook) {
-                scoreChange = -2;
-                updateScore(-2);
-            } else if (object instanceof EnergyDrink) {
-                scoreChange = 10;
-                updateScore(10);
-            }
+        if (object instanceof Seaweed) {
+            scoreChange = -5;
+            updateScore(-5);
+        } else if (object instanceof FishHook) {
+            scoreChange = -2;
+            updateScore(-2);
+        } else if (object instanceof EnergyDrink) {
+            scoreChange = 10;
+            updateScore(10);
+        }
 
         gameManager.updateScoreLabel(this.playerID, this.score);
     }
