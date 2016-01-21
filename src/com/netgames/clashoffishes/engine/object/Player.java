@@ -38,6 +38,11 @@ public class Player extends AnimatedObject {
     boolean animator = false;
     int framecounter = 0;
     int runningspeed = 6;
+    int biteframeone = 6;
+    int biteframetwo = 12;
+    int biteframethree = 18;
+    int biteframefour = 24;
+    int biteframefive = 30;
 
     private int playerID;
     private int score;
@@ -209,6 +214,25 @@ public class Player extends AnimatedObject {
             }
         } else {
             // execute bite animation 
+            if (framecounter >= biteframefive) {
+                spriteFrame.setImage(imageStates.get(4));
+                biteAnimationActive = false;
+                framecounter = 0;
+            } else if (framecounter >= biteframefour) {
+                spriteFrame.setImage(imageStates.get(5));
+                framecounter++;
+            } else if (framecounter >= biteframethree) {
+                spriteFrame.setImage(imageStates.get(6));
+                framecounter++;
+            } else if (framecounter >= biteframetwo) {
+                spriteFrame.setImage(imageStates.get(5));
+                framecounter++;
+            } else if (framecounter >= biteframeone) {
+                spriteFrame.setImage(imageStates.get(4));
+                framecounter++;
+            } else {
+                framecounter++;
+            }
         }
     }
 
@@ -247,6 +271,7 @@ public class Player extends AnimatedObject {
             GameObject object = gameManager.getObjectManager().getCurrentObject().get(i);
             if (collide(object)) {
                 // Calculates the amount of scores a Player gets after a collision takes place.
+                biteAnimationActive = true;
                 scoringEngine(object);
                 collisionReaction(object);
                 gameManager.playBiteSound();
@@ -265,7 +290,7 @@ public class Player extends AnimatedObject {
 
     private void sendCollision(GameObject object) {
         try {
-            gameManager.getGameServer().collision(playerID, object.getID());
+            gameManager.getGameServer().collision(playerID, object.getID(), score);
         } catch (RemoteException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -50,9 +50,10 @@ public interface IGameServer extends Remote {
      *
      * @param playerID The player identifier that caused the collision.
      * @param objectID The object identifier that the player has collided with
+     * @param playerScore Nieuwe score van de player die collision doorgeeft
      * @throws RemoteException
      */
-    public void collision(int playerID, int objectID) throws RemoteException;
+    public void collision(int playerID, int objectID, int playerScore) throws RemoteException;
 
     /**
      * The game state has been changed
