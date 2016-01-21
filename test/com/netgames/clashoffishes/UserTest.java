@@ -98,7 +98,7 @@ public class UserTest {
      */
     @Test
     public void testToString() {
-        
+        assertEquals("99 Stef", u.toString());
     }
 
 }
