@@ -52,10 +52,11 @@ public interface IGameClient extends Remote {
      *
      * @param id ID van de speler
      * @param objectId ID van het object wat verwijderd kan worden
+     * @param playerScore Nieuwe score van de player die collision doorgeeft
      * @throws java.rmi.RemoteException Als er iets fout gaat met RMI wordt deze
      * exceptie opgegooid.
      */
-    public void collisionUpdate(int id, int objectId)
+    public void collisionUpdate(int id, int objectId, int playerScore)
             throws RemoteException;
 
     /**

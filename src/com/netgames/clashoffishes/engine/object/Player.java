@@ -265,7 +265,7 @@ public class Player extends AnimatedObject {
 
     private void sendCollision(GameObject object) {
         try {
-            gameManager.getGameServer().collision(playerID, object.getID());
+            gameManager.getGameServer().collision(playerID, object.getID(), score);
         } catch (RemoteException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }

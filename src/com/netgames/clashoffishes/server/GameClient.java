@@ -78,8 +78,9 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
     }
 
     @Override
-    public void collisionUpdate(int id, int objectId) throws RemoteException {
+    public void collisionUpdate(int id, int objectId, int playerScore) throws RemoteException {
         this.gameManager.getObjectManager().addToRemovedObjects(this.gameManager.getObjectManager().getObject(objectId));
+        this.gameManager.updateScoreLabel(id, playerScore);
         for (Player p : gameManager.getPlayers()) {
             if (p.getID() == id) {
 

@@ -283,8 +283,8 @@ public class GameMenu {
     /**
      * Updates the score for Player one on screen.
      */
-    public void updateScoreLabel(int scoreLabel, int score) {
-        switch (scoreLabel) {
+    public void updateScoreLabel(int playerID, int score) {
+        switch (playerID) {
             case 0:
                 this.scoreLabelOne.setText(String.valueOf(score));
                 break;
