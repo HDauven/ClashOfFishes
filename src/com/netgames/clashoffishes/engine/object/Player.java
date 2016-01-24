@@ -48,7 +48,7 @@ public class Player extends AnimatedObject {
     int scoreChange = 0;
     
     // TODO ints that hold values with regard to isAlive status.
-    int maxTimeDead = 60;
+    int maxTimeDead = 300;
     int timeDead = 0;
 
     private int playerID;
@@ -257,20 +257,25 @@ public class Player extends AnimatedObject {
     // Check the life status of the player
     // and pick whether a player should be revived or not
     private void checkLifeStatus() {
-        // TODO implement rules based on fish being dead
         if (!isAlive) {
             if (gameManager.getGameMode().equals(GameMode.EVOLUTION_OF_TIME)) {
                 // Evolution of time game rule
                 // xxx Example of possible implementation.
                 timeDead++;
                 if (timeDead == maxTimeDead) {
-                    // reviveFish();
+                    reviveFish();
                     timeDead = 0;
                 }
             } else if (gameManager.getGameMode().equals(GameMode.EVOLVED)) {
                 // Evolved game rule
+                timeDead++;
+                if (timeDead == maxTimeDead) {
+                    reviveFish();
+                    timeDead = 0;
+                }
             }else if (gameManager.getGameMode().equals(GameMode.LAST_FISH_STANDING)) {
                 // Last fish standing game rule
+                // Fishes do not respawn in LFS
             }            
         }
     }
@@ -539,7 +544,6 @@ public class Player extends AnimatedObject {
     public void updateSpeed(double newSpeed) {
         this.setvX(newSpeed);
         this.setvY(newSpeed);
-        // TODO reset value after 3 seconds
         if (gameManager.isMultiplayer()) {
             tSpeed = new Thread(new Runnable() {
 
@@ -615,6 +619,16 @@ public class Player extends AnimatedObject {
         // TODO implement eat fish
         // a new method should be made named checkFishCollision with some modifications to checkCollision.
         // Collide method can be re-used for this method.
+        
+        System.out.println("test: " + this.isAlive);
+        for (Player player : gameManager.getPlayers()) {
+            if (collide(player)) {
+                player.isAlive = false;
+                System.out.println(player.getPlayerID());
+            }
+        }
+        
+        
     }
 
     public boolean isReverseMovement() {
@@ -660,5 +674,9 @@ public class Player extends AnimatedObject {
 
     public void setBiteAnimationActive(boolean biteAnimationActive) {
         this.biteAnimationActive = biteAnimationActive;
+    }
+
+    private void reviveFish() {
+        this.isAlive = true;
     }
 }
