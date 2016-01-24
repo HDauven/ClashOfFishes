@@ -176,8 +176,8 @@ public class GameManager extends Application {
                 case D:
                     this.sendUpdateMove("RIGHT", true);
                     break;
-                case SPACE:
-                    this.sendUpdateMove("SPACE", true);
+                case ENTER:
+                    this.sendUpdateMove("ENTER", true);
                     break;
             }
         });
@@ -208,8 +208,8 @@ public class GameManager extends Application {
                 case D:
                     this.sendUpdateMove("RIGHT", false);
                     break;
-                case SPACE:
-                    this.sendUpdateMove("SPACE", false);
+                case ENTER:
+                    this.sendUpdateMove("ENTER", false);
                     break;
             }
         });

@@ -585,7 +585,7 @@ public class Player extends AnimatedObject {
                 case "RIGHT":
                     this.setRight(pressed);
                     break;
-                case "SPACE":
+                case "ENTER":
                     // Method that eats fish
                     eatFish();
                     break;
@@ -604,7 +604,7 @@ public class Player extends AnimatedObject {
                 case "RIGHT":
                     this.setLeft(pressed);
                     break;
-                case "SPACE":
+                case "ENTER":
                     // Method that eats fish
                     eatFish();
                     break;
