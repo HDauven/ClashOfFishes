@@ -641,7 +641,7 @@ public class GameManager extends Application {
         this.gameState = gameState;
     }
 
-    GameMode getGameMode() {
+    public GameMode getGameMode() {
         return this.gameMode;
     }
 

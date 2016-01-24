@@ -4,6 +4,7 @@ import com.netgames.clashoffishes.Administration;
 import com.netgames.clashoffishes.engine.GameManager;
 import static com.netgames.clashoffishes.engine.GameManager.HEIGHT;
 import static com.netgames.clashoffishes.engine.GameManager.WIDTH;
+import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
 import com.netgames.clashoffishes.engine.object.events.FishHook;
 import com.netgames.clashoffishes.engine.object.events.Seaweed;
@@ -45,6 +46,10 @@ public class Player extends AnimatedObject {
     int biteframefour = 24;
     int biteframefive = 30;
     int scoreChange = 0;
+    
+    // TODO ints that hold values with regard to isAlive status.
+    int maxTimeDead = 60;
+    int timeDead = 0;
 
     private int playerID;
     private int score;
@@ -67,7 +72,7 @@ public class Player extends AnimatedObject {
         vY = 2;
         this.playerID = playerID;
         this.score = 0;
-
+        this.isAlive = true;
     }
 
     /**
@@ -79,6 +84,7 @@ public class Player extends AnimatedObject {
         setBoundaries();
         setImageState();
         movePlayer(iX, iY);
+        checkLifeStatus();
     }
 
     /**
@@ -246,6 +252,27 @@ public class Player extends AnimatedObject {
     private void movePlayer(double x, double y) {
         spriteFrame.setTranslateX(x);
         spriteFrame.setTranslateY(y);
+    }
+    
+    // Check the life status of the player
+    // and pick whether a player should be revived or not
+    private void checkLifeStatus() {
+        // TODO implement rules based on fish being dead
+        if (!isAlive) {
+            if (gameManager.getGameMode().equals(GameMode.EVOLUTION_OF_TIME)) {
+                // Evolution of time game rule
+                // xxx Example of possible implementation.
+                timeDead++;
+                if (timeDead == maxTimeDead) {
+                    // reviveFish();
+                    timeDead = 0;
+                }
+            } else if (gameManager.getGameMode().equals(GameMode.EVOLVED)) {
+                // Evolved game rule
+            }else if (gameManager.getGameMode().equals(GameMode.LAST_FISH_STANDING)) {
+                // Last fish standing game rule
+            }            
+        }
     }
 
     /**
@@ -554,6 +581,10 @@ public class Player extends AnimatedObject {
                 case "RIGHT":
                     this.setRight(pressed);
                     break;
+                case "SPACE":
+                    // Method that eats fish
+                    eatFish();
+                    break;
             }
         } else {
             switch (key) {
@@ -569,9 +600,21 @@ public class Player extends AnimatedObject {
                 case "RIGHT":
                     this.setLeft(pressed);
                     break;
+                case "SPACE":
+                    // Method that eats fish
+                    eatFish();
+                    break;
             }
         }
-
+    }
+    
+    // Method that checks whether a fish collides with another fish
+    // If fish collides with other fish, check who has the highest score,
+    // remove other fish and inform others of the removal.
+    public void eatFish() {
+        // TODO implement eat fish
+        // a new method should be made named checkFishCollision with some modifications to checkCollision.
+        // Collide method can be re-used for this method.
     }
 
     public boolean isReverseMovement() {
