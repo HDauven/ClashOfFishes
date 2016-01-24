@@ -105,6 +105,7 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
             if (p.getPlayerID() == id) {
                 p.updateScore(playerScore);
                 this.gameManager.updateScoreLabel(id, p.getScore());
+                p.setBiteAnimationActive(true);
             }
         }
     }

@@ -614,4 +614,8 @@ public class Player extends AnimatedObject {
     public void setReverseMovement(boolean reverseMovement) {
         this.reverseMovement = reverseMovement;
     }
+
+    public void setBiteAnimationActive(boolean biteAnimationActive) {
+        this.biteAnimationActive = biteAnimationActive;
+    }
 }
