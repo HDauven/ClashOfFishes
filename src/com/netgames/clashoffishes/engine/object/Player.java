@@ -8,13 +8,16 @@ import com.netgames.clashoffishes.engine.GameMode;
 import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
 import com.netgames.clashoffishes.engine.object.events.FishHook;
 import com.netgames.clashoffishes.engine.object.events.Seaweed;
+import java.awt.Point;
 import java.rmi.RemoteException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
+import jdk.nashorn.internal.codegen.CompilerConstants;
 
 /**
  * Class that represents an actual in-game player.
@@ -84,7 +87,9 @@ public class Player extends AnimatedObject {
         setXYLocation();
         setBoundaries();
         setImageState();
-        movePlayer(iX, iY);
+        if (this.isAlive) {
+            movePlayer(iX, iY);
+        }
         checkLifeStatus();
     }
 
@@ -606,7 +611,6 @@ public class Player extends AnimatedObject {
                     this.setLeft(pressed);
                     break;
                 case "ENTER":
-                    // Method that eats fish
                     eatFish();
                     break;
             }
@@ -623,7 +627,13 @@ public class Player extends AnimatedObject {
 
         System.out.println("test: " + this.isAlive);
         for (Player player : gameManager.getPlayers()) {
-            if (collide(player)) {
+            if (collide(player) && player != this && this.score > player.getScore()) {
+                // Method that eats fish
+                try {
+                    gameManager.getGameServer().killPlayer(player.getPlayerID());
+                } catch (RemoteException ex) {
+                    Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 player.killed();
             }
         }
@@ -678,6 +688,9 @@ public class Player extends AnimatedObject {
     private void reviveFish() {
         //Fish is spawned again.
         this.isAlive = true;
+        Point p = giveRandomPoint();
+        this.iX = p.x;
+        this.iY = p.y;
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -686,9 +699,14 @@ public class Player extends AnimatedObject {
         });
     }
 
-    protected void killed() {
+    private Point giveRandomPoint() {
+        return new Point((int) (Math.random() * GameManager.WIDTH) - 81, (int) (Math.random() * GameManager.HEIGHT) - 81);
+    }
+
+    public void killed() {
         //Fish is killed.
         this.isAlive = false;
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

@@ -141,5 +141,10 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
         this.gameManager.removeObject(id);
     }
 
+    @Override
+    public void killPlayer(int playerID) throws RemoteException {
+        this.gameManager.getPlayer(playerID).killed();
+    }
+
 
 }

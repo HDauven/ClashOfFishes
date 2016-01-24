@@ -7,6 +7,7 @@ import com.netgames.clashoffishes.engine.object.events.EnergyDrink;
 import com.netgames.clashoffishes.engine.object.events.FishHook;
 import com.netgames.clashoffishes.engine.object.events.ObjectType;
 import com.netgames.clashoffishes.engine.object.events.Seaweed;
+import com.netgames.clashoffishes.server.remote.IClient;
 import com.netgames.clashoffishes.server.remote.IGameClient;
 import com.netgames.clashoffishes.server.remote.IGameServer;
 import java.rmi.RemoteException;
@@ -184,6 +185,13 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         for (IGameClient client : this.clients) {
             client.receiveObjectDeletion(id);
 
+        }
+    }
+
+    @Override
+    public void killPlayer(int playerID) throws RemoteException {
+        for (IGameClient client : this.clients) {
+            client.killPlayer(playerID); 
         }
     }
 

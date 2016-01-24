@@ -699,7 +699,12 @@ public class GameManager extends Application {
     }
 
     public Player getPlayer(int playerID) {
-        return this.player;
+        for (Player player : this.players) {
+            if (player.getPlayerID() == playerID) {
+                return player;
+            }
+        }
+        return null;
     }
 
     public List<Player> getPlayers() {
