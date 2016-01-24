@@ -11,6 +11,7 @@ import com.netgames.clashoffishes.engine.object.events.Seaweed;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
@@ -46,7 +47,7 @@ public class Player extends AnimatedObject {
     int biteframefour = 24;
     int biteframefive = 30;
     int scoreChange = 0;
-    
+
     // TODO ints that hold values with regard to isAlive status.
     int maxTimeDead = 300;
     int timeDead = 0;
@@ -253,7 +254,7 @@ public class Player extends AnimatedObject {
         spriteFrame.setTranslateX(x);
         spriteFrame.setTranslateY(y);
     }
-    
+
     // Check the life status of the player
     // and pick whether a player should be revived or not
     private void checkLifeStatus() {
@@ -273,10 +274,10 @@ public class Player extends AnimatedObject {
                     reviveFish();
                     timeDead = 0;
                 }
-            }else if (gameManager.getGameMode().equals(GameMode.LAST_FISH_STANDING)) {
+            } else if (gameManager.getGameMode().equals(GameMode.LAST_FISH_STANDING)) {
                 // Last fish standing game rule
                 // Fishes do not respawn in LFS
-            }            
+            }
         }
     }
 
@@ -611,7 +612,7 @@ public class Player extends AnimatedObject {
             }
         }
     }
-    
+
     // Method that checks whether a fish collides with another fish
     // If fish collides with other fish, check who has the highest score,
     // remove other fish and inform others of the removal.
@@ -619,16 +620,14 @@ public class Player extends AnimatedObject {
         // TODO implement eat fish
         // a new method should be made named checkFishCollision with some modifications to checkCollision.
         // Collide method can be re-used for this method.
-        
+
         System.out.println("test: " + this.isAlive);
         for (Player player : gameManager.getPlayers()) {
             if (collide(player)) {
-                player.isAlive = false;
-                System.out.println(player.getPlayerID());
+                player.killed();
             }
         }
-        
-        
+
     }
 
     public boolean isReverseMovement() {
@@ -646,7 +645,7 @@ public class Player extends AnimatedObject {
         boolean tempLeft = left;
         boolean tempUp = up;
         boolean tempDown = down;
-        
+
         if (tempRight) {
             this.setRight(false);
             this.setLeft(true);
@@ -677,6 +676,25 @@ public class Player extends AnimatedObject {
     }
 
     private void reviveFish() {
+        //Fish is spawned again.
         this.isAlive = true;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                gameManager.getRoot().getChildren().add(getSpriteFrame());
+            }
+        });
+    }
+
+    protected void killed() {
+        //Fish is killed.
+        this.isAlive = false;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                gameManager.getRoot().getChildren().remove(getSpriteFrame());
+            }
+        });
+
     }
 }
