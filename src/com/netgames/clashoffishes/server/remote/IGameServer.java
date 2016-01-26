@@ -87,7 +87,7 @@ public interface IGameServer extends Remote {
     public void deleteObject (int id) 
             throws RemoteException;
     
-    public void killPlayer (int playerID)
+    public void killPlayer (int killedPlayerID, int playerID)
             throws RemoteException;
         
 }

@@ -629,11 +629,14 @@ public class Player extends AnimatedObject {
         for (Player player : gameManager.getPlayers()) {
             if (collide(player) && player != this && this.score > player.getScore()) {
                 // Method that eats fish
+                biteAnimationActive = true;
+                gameManager.playBiteSound();
                 try {
-                    gameManager.getGameServer().killPlayer(player.getPlayerID());
+                    gameManager.getGameServer().killPlayer(player.getPlayerID(), this.playerID);
                 } catch (RemoteException ex) {
                     Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
                 player.killed();
             }
         }

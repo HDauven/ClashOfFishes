@@ -108,7 +108,7 @@ public interface IGameClient extends Remote {
     void changeGameState(GameState gameState)
             throws RemoteException;
     
-    public void killPlayer(int playerID)
+    public void killPlayer(int killedPlayerID, int playerID)
             throws RemoteException;
     
 }

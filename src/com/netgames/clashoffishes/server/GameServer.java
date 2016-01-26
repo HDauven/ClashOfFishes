@@ -189,9 +189,9 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
     }
 
     @Override
-    public void killPlayer(int playerID) throws RemoteException {
+    public void killPlayer(int killedPlayerID, int playerID) throws RemoteException {
         for (IGameClient client : this.clients) {
-            client.killPlayer(playerID); 
+            client.killPlayer(killedPlayerID, playerID); 
         }
     }
 
