@@ -59,13 +59,12 @@ public class GameLoop extends AnimationTimer {
                 player.update();
             }
             gameManager.getPlayer().checkCollision();
-            
+
             //elapsed is the time since the game started
             long elapsed = now - prev;
-            
+
             //secondsLeft = length_of_game - (elapsed / NANO_TO_SECOND);
             //gameManager.setTimeLeft(String.valueOf(secondsLeft));
-
             int randInt = (int) (Math.random() * 1_000 + 1); // moet 10_000 zijn, 1_000 is om te testen
             //System.out.println(elapsed);
             if (!gameManager.multiplayer) {
@@ -76,11 +75,12 @@ public class GameLoop extends AnimationTimer {
                     objectNr++;
                     prev = System.nanoTime();
                 }
-                
+
             }
 
             modeEvolutionOfTime(now);
             modeEvolved(now);
+            modeLastFishStanding(now);
 
             for (FishHook h : gameManager.getFishHooks()) {
                 h.update();
@@ -134,8 +134,7 @@ public class GameLoop extends AnimationTimer {
                     this.stop();
                     if (gameManager.getPlayer().getPlayerID() == tempPlayerID) {
                         winCondition = true;
-                    }
-                    else {
+                    } else {
                         winCondition = false;
                     }
                     hasWon();
@@ -177,8 +176,7 @@ public class GameLoop extends AnimationTimer {
                     this.stop();
                     if (gameManager.getPlayer().getPlayerID() == tempPlayerID) {
                         winCondition = true;
-                    }
-                    else {
+                    } else {
                         winCondition = false;
                     }
                     hasWon();
@@ -203,6 +201,46 @@ public class GameLoop extends AnimationTimer {
     }
 
     /**
+     * Method that checks if the GameMode is Last Fish Standing. If this is
+     * true, the method goes on to check whether the game time has passed or
+     * whether one fish is the last fish standing. If this is true, it sets the
+     * game state to FINISHED, stops the game, shows a win or lose screen and
+     * updates the score for the player.
+     *
+     * @param now
+     */
+    private void modeLastFishStanding(long now) {
+        if (gameManager.getGameMode() == GameMode.LAST_FISH_STANDING) {
+            long elapsed2 = now - startTime;
+            secondsLeft = length_of_game - (elapsed2 / NANO_TO_SECOND);
+            gameManager.setTimeLeft(String.valueOf(secondsLeft));
+            int nrPlayers = gameManager.getPlayers().size();
+            for (Player p : gameManager.getPlayers()) {
+                if (!p.isAlive()) {
+                    nrPlayers--;
+                } else {
+                    tempPlayerID = p.getPlayerID();
+                }
+            }
+            if (nrPlayers == 1) {
+                if (gameManager.getGameState() != GameState.FINISHED) {
+                    gameManager.setGameState(GameState.FINISHED);
+                    this.stop();
+                    if (gameManager.getPlayer().getPlayerID() == tempPlayerID) {
+                        winCondition = true;
+                    } else {
+                        winCondition = false;
+                    }
+                    hasWon();
+                    Administration.get().getLoggedInUser().updateHighScore(gameManager.getGameMode(), gameManager.getGameScore());
+                    //GuiUtilities.buildStage(gameManager.getStage().getScene().getWindow(), "GameHighscore", "Score");
+                    System.out.println("Last man standing!");
+                }
+            }
+        }
+    }
+
+    /**
      * Method that checks whether the game has finished and if the player has
      * won. Based on the win condition (true for win, false for lose), a
      * corresponding screen is shown.
@@ -212,8 +250,7 @@ public class GameLoop extends AnimationTimer {
             if (winCondition == true) {
                 gameManager.getRoot().getChildren().add(
                         gameManager.getGameMenu().getVictoryScreen());
-            }
-            else {
+            } else {
                 gameManager.getRoot().getChildren().add(
                         gameManager.getGameMenu().getDefeatScreen());
             }
