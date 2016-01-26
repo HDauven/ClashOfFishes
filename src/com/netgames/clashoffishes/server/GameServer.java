@@ -195,4 +195,19 @@ public class GameServer extends UnicastRemoteObject implements IGameServer {
         }
     }
 
+    @Override
+    public void reviveFish(int playerID, int rX, int rY) throws RemoteException {
+        for (IGameClient client : clients) {
+            if (client.getPlayerID() != playerID) {
+                executor.execute(() -> {
+                    try {
+                        client.reviveFish(playerID, rX, rY);
+                    } catch (RemoteException ex) {
+
+                    }
+                });
+            }
+        }
+    }
+
 }

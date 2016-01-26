@@ -59,6 +59,7 @@ public class GameLoop extends AnimationTimer {
                 player.update();
             }
             gameManager.getPlayer().checkCollision();
+            gameManager.getPlayer().checkLifeStatus();
 
             //elapsed is the time since the game started
             long elapsed = now - prev;

@@ -54,6 +54,8 @@ public class Player extends AnimatedObject {
     // TODO ints that hold values with regard to isAlive status.
     int maxTimeDead = 300;
     int timeDead = 0;
+    
+    Point p;
 
     private int playerID;
     private int score;
@@ -90,7 +92,7 @@ public class Player extends AnimatedObject {
         if (this.isAlive) {
             movePlayer(iX, iY);
         }
-        checkLifeStatus();
+        //checkLifeStatus();
     }
 
     /**
@@ -262,7 +264,7 @@ public class Player extends AnimatedObject {
 
     // Check the life status of the player
     // and pick whether a player should be revived or not
-    private void checkLifeStatus() {
+    public void checkLifeStatus() {
         if (!isAlive) {
             if (gameManager.getGameMode().equals(GameMode.EVOLUTION_OF_TIME)) {
                 // Evolution of time game rule
@@ -270,6 +272,10 @@ public class Player extends AnimatedObject {
                 timeDead++;
                 if (timeDead == maxTimeDead) {
                     reviveFish();
+                    if (gameManager.isMultiplayer()) {
+                        // inform other players of revival
+                        sendReviveFish();
+                    }
                     timeDead = 0;
                 }
             } else if (gameManager.getGameMode().equals(GameMode.EVOLVED)) {
@@ -277,12 +283,24 @@ public class Player extends AnimatedObject {
                 timeDead++;
                 if (timeDead == maxTimeDead) {
                     reviveFish();
+                    if (gameManager.isMultiplayer()) {
+                        // inform other players of revival
+                        sendReviveFish();
+                    }
                     timeDead = 0;
                 }
             } else if (gameManager.getGameMode().equals(GameMode.LAST_FISH_STANDING)) {
                 // Last fish standing game rule
                 // Fishes do not respawn in LFS
             }
+        }
+    }
+    
+    private void sendReviveFish() {
+        try {
+            gameManager.getGameServer().reviveFish(playerID, p.x, p.y);
+        } catch (RemoteException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -636,7 +654,7 @@ public class Player extends AnimatedObject {
                 } catch (RemoteException ex) {
                     Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
                 player.killed();
             }
         }
@@ -691,9 +709,22 @@ public class Player extends AnimatedObject {
     private void reviveFish() {
         //Fish is spawned again.
         this.isAlive = true;
-        Point p = giveRandomPoint();
+        p = giveRandomPoint();
         this.iX = p.x;
         this.iY = p.y;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                gameManager.getRoot().getChildren().add(getSpriteFrame());
+            }
+        });
+    }
+    
+    public void reviveFish(int rX, int rY) {
+        //Fish is spawned again.
+        this.isAlive = true;
+        this.iX = rX;
+        this.iY = rY;
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

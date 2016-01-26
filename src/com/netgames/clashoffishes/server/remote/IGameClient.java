@@ -110,5 +110,8 @@ public interface IGameClient extends Remote {
     
     public void killPlayer(int killedPlayerID, int playerID)
             throws RemoteException;
+
+    public void reviveFish(int playerID, int rX, int rY)
+            throws RemoteException;
     
 }

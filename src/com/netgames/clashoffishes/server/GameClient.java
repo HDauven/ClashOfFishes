@@ -147,4 +147,9 @@ public class GameClient extends UnicastRemoteObject implements IGameClient {
         this.gameManager.getPlayer(killedPlayerID).killed();
     }
 
+    @Override
+    public void reviveFish(int playerID, int rX, int rY) throws RemoteException {
+        this.gameManager.getPlayer(playerID).reviveFish(rX, rY);
+    }
+
 }
